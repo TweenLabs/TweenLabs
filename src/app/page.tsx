@@ -50,7 +50,7 @@ const animations = [
   },
   {
     id: "06",
-    name: "Kinetic Purple Sandbox",
+    name: "Adding soon",
     route: "/06-kinetic-purple-sandbox",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
@@ -137,7 +137,7 @@ export default function Home() {
 
               <Link href={anim.route} className="w-full mt-2 block">
                 <button className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}>
-                  Open Sandbox →
+                  Open →
                 </button>
               </Link>
             </div>
