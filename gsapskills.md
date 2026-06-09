@@ -45,7 +45,6 @@ The GSAP skills are installed locally on the system at:
 - **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-frameworks\`
 - **Key Guidelines:** Framework integrations. For Next.js, ensure any registry and plugin registration (`gsap.registerPlugin(...)`) only runs on the client-side, and ensure animations target hydration-safe elements.
 
-
 ### 8. Utilities (`gsap-utils`)
 - **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-utils\`
 - **Key Guidelines:** Leveraging GSAP utility methods (e.g., `gsap.utils.mapRange()`, `gsap.utils.interpolate()`).
