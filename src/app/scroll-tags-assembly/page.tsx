@@ -65,9 +65,6 @@ export default function AnimationTwoPage() {
       );
     });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
   }, { scope: containerRef });
 
   return (

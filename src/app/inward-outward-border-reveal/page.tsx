@@ -25,18 +25,16 @@ export default function AnimationThreePage() {
         pin: true,
         scrub: 1,
         start: "top top",
-        end: () => `+=${textTrackRef.current?.scrollWidth || 3000}`,
+        end: "+=3000", // Fixed scroll height to guarantee user can always scroll fully
         invalidateOnRefresh: true,
       },
     });
 
     // 2. Animate characters relative to their position in the viewport
     chars.forEach((char) => {
-      const direction = Number(char.getAttribute("data-dir") || 1);
-      
-      // Dramatic border-to-border vertical entrance (fully off-screen)
-      const startY = direction * window.innerHeight * 0.9; 
-      const startRot = direction * 35; 
+      // Unified entry/exit behavior for all letters: enter from top, exit to bottom
+      const startY = -window.innerHeight * 0.9; // Starts above screen
+      const startRot = -35; // Standardized tilt
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -61,24 +59,32 @@ export default function AnimationThreePage() {
           rotation: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.2, // 20% of scroll span for smooth diagonal glide-in
+          duration: 0.35, // Slower entry
           ease: "power3.out",
         }
       )
+      // Add subtle kinetic wave motion while scrolling through the DOM
       .to(char, {
-        y: 0,
-        rotation: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.60, // 60% of scroll span for holding flat in DOM
+        y: -15,
+        rotation: 4,
+        scale: 1.03,
+        duration: 0.15,
+        ease: "sine.inOut",
       })
       .to(char, {
-        // Exit outward in the opposite direction over the final 20% of scroll span
-        y: -startY,
-        rotation: -startRot,
+        y: 15,
+        rotation: -4,
+        scale: 0.97,
+        duration: 0.15,
+        ease: "sine.inOut",
+      })
+      .to(char, {
+        // Exit to the bottom
+        y: -startY, // Positive y value (exits to bottom)
+        rotation: -startRot, // Positive 35 degrees
         opacity: 0,
         scale: 0.6,
-        duration: 0.2,
+        duration: 0.35, // Slower exit
         ease: "power3.in",
       });
     });
@@ -89,14 +95,21 @@ export default function AnimationThreePage() {
     };
     window.addEventListener("load", handleLoad);
 
+    // Modern fonts ready API to dynamically refresh triggers when custom fonts swap in
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+      });
+    }
+
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 800);
+    }, 1500);
 
     return () => {
       window.removeEventListener("load", handleLoad);
       clearTimeout(timer);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      // Let the useGSAP hook handle ScrollTrigger cleanup automatically to avoid React unmount crashes
     };
   }, { scope: containerRef });
 
@@ -108,16 +121,13 @@ export default function AnimationThreePage() {
       <span className="inline-block whitespace-nowrap">
         {word.split("").map((char) => {
           const idx = globalCharIndex++;
-          const direction = idx % 2 === 0 ? -1 : 1; // Alternating UP (-1) and DOWN (1)
           return (
             <span
               key={idx}
-              className={`reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw] ${
-                isOrange ? "text-wtf-orange" : "text-white"
-              }`}
-              data-dir={direction}
+              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw] text-white"
               style={{
                 textShadow: "4px 4px 0px #121212",
+                color: isOrange ? "var(--color-wtf-orange)" : "white"
               }}
             >
               {char}
@@ -129,7 +139,7 @@ export default function AnimationThreePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#1e1e1e] text-white overflow-hidden selection:bg-wtf-yellow selection:text-black" ref={containerRef}>
+    <div className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-wtf-yellow selection:text-black" ref={containerRef}>
       
       {/* Subtle Dot Grid Background Overlay */}
       <div className="absolute inset-0 dot-grid pointer-events-none z-10" style={{ opacity: 0.05 }} />
@@ -151,12 +161,13 @@ export default function AnimationThreePage() {
       <div ref={scrollSectionRef} className="h-screen w-full flex items-center relative overflow-hidden">
         
         {/* Horizontal text scroll track */}
-        <div ref={textTrackRef} className="relative flex items-center pl-[100vw] pr-[100vw] whitespace-nowrap h-full select-none z-20">
+        <div ref={textTrackRef} className="relative flex items-center pl-[100vw] pr-[100vw] whitespace-nowrap h-full select-none z-20 w-max flex-shrink-0">
           
-          <div className="flex gap-[6vw]">
-            {renderWord("INDIA'S")}
-            {renderWord("NEXT")}
-            {renderWord("CHAPTER.", true)}
+          <div className="flex gap-[6vw] flex-shrink-0 w-max">
+            {renderWord("HELLO")}
+            {renderWord("THIS")}
+            {renderWord("IS")}
+            {renderWord("RITESH", true)}
           </div>
 
         </div>
@@ -165,4 +176,3 @@ export default function AnimationThreePage() {
     </div>
   );
 }
-
