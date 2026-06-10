@@ -23,7 +23,7 @@ const animations = [
   },
   {
     id: "03",
-    name: "Inward-Outward Border Reveal",
+    name: "Inward-Outward Sentence",
     route: "/03-inward-outward-border-reveal",
     bgColor: "bg-wtf-red",
     textColor: "text-white",
@@ -32,7 +32,7 @@ const animations = [
   },
   {
     id: "04",
-    name: "Horizontal Cards Showcase",
+    name: "HorizontaL Cards Showcase",
     route: "/04-horizontal-cards-showcase",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
@@ -41,7 +41,7 @@ const animations = [
   },
   {
     id: "05",
-    name: "Tactile Stack Showcase",
+    name: "PAGE CHANGE ANIMATION",
     route: "/05-tactile-yellow-sandbox",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
