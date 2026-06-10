@@ -185,7 +185,7 @@ export default function ScreenSkillFitPage() {
   );
 
   return (
-    <div ref={containerRef} className="bg-[#0d0d10] text-[#f5f3ef]">
+    <div ref={containerRef} className="bg-[#f5f0e8] text-[#1c1714]">
 
       {/* ══ SECTION 1: Intro ══════════════════════════════════════════════ */}
       <div className="h-screen w-full flex flex-col items-center justify-center relative gap-6">
@@ -202,22 +202,22 @@ export default function ScreenSkillFitPage() {
         </span>
 
         {/* Main heading */}
-        <h1 className="font-serif font-black text-[clamp(2.6rem,6vw,5.5rem)] text-white leading-[1.0] tracking-tight uppercase text-center select-none">
+        <h1 className="font-serif font-black text-[clamp(2.6rem,6vw,5.5rem)] text-[#1c1714] leading-[1.0] tracking-tight uppercase text-center select-none">
           Style.<br />
           <span className="text-[#0c9367]">Scroll to see.</span>
         </h1>
 
         {/* Sub copy */}
-        <p className="font-mono text-[11px] text-zinc-500 tracking-wide text-center max-w-[300px] leading-relaxed select-none">
+        <p className="font-mono text-[11px] text-stone-400 tracking-wide text-center max-w-[300px] leading-relaxed select-none">
           Fashion editorials · Portrait · Beauty creators.<br />Scroll to meet the cards.
         </p>
 
         {/* Scroll cue */}
         <div className="flex flex-col items-center gap-2 opacity-40 mt-4 select-none">
-          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-zinc-500">Scroll</span>
-          <div className="w-px h-10 bg-zinc-600 rounded-full overflow-hidden relative">
+          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-stone-400">Scroll</span>
+          <div className="w-px h-10 bg-stone-300 rounded-full overflow-hidden relative">
             <div
-              className="absolute top-0 left-0 w-full h-1/2 bg-zinc-300 rounded-full"
+              className="absolute top-0 left-0 w-full h-1/2 bg-stone-600 rounded-full"
               style={{ animation: "scrollPulse 1.8s ease-in-out infinite" }}
             />
           </div>
@@ -239,19 +239,19 @@ export default function ScreenSkillFitPage() {
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
-            opacity: 0.04,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='%23fff'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23fff'/%3E%3C/svg%3E")`,
+            opacity: 0.035,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='%23000'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23000'/%3E%3C/svg%3E")`,
             backgroundSize: "4px 4px",
           }}
         />
 
         {/* Top status bar */}
-        <div className="absolute top-0 left-0 right-0 z-50 h-12 flex items-center justify-between px-8 border-b border-white/[0.04]">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-zinc-700">
-            Screen for Skill &amp; Fit
+        <div className="absolute top-0 left-0 right-0 z-50 h-12 flex items-center justify-between px-8 border-b border-black/[0.06]">
+          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-stone-400">
+            Studio Shodwe · Editorial
           </span>
-          <span className="font-mono text-[8px] text-zinc-800 uppercase tracking-widest">
-            {N} Engineers · Vetted
+          <span className="font-mono text-[8px] text-stone-400 uppercase tracking-widest">
+            {N} Looks · Curated
           </span>
         </div>
 
@@ -276,7 +276,7 @@ export default function ScreenSkillFitPage() {
 
                   {/* Headline */}
                   <h2
-                    className="font-serif font-black text-[clamp(1.9rem,2.8vw,3.2rem)] text-white leading-[1.06] tracking-tight uppercase"
+                    className="font-serif font-black text-[clamp(1.9rem,2.8vw,3.2rem)] text-[#1c1714] leading-[1.06] tracking-tight uppercase"
                     style={{ whiteSpace: "pre-line" }}
                   >
                     {c.left.headline}
@@ -286,13 +286,13 @@ export default function ScreenSkillFitPage() {
                   <div className="flex flex-col gap-3.5 mt-1">
                     {c.left.stats.map((s) => (
                       <div key={s.label}>
-                        <span className="font-mono text-[8px] uppercase tracking-widest text-zinc-600 font-bold block mb-0.5">
+                        <span className="font-mono text-[8px] uppercase tracking-widest text-stone-400 font-bold block mb-0.5">
                           {s.label}
                         </span>
-                        <span className="font-sans font-bold text-[13px] text-zinc-200 block">
+                        <span className="font-sans font-bold text-[13px] text-stone-700 block">
                           {s.value}
                         </span>
-                        <div className="h-px bg-zinc-800/70 w-full mt-2" />
+                        <div className="h-px bg-stone-300 w-full mt-2" />
                       </div>
                     ))}
                   </div>
@@ -358,7 +358,7 @@ export default function ScreenSkillFitPage() {
                   className={`sc-dot-${i} h-[3px] rounded-full transition-all duration-500`}
                   style={{
                     width: i === 0 ? "18px" : "6px",
-                    backgroundColor: i === 0 ? c.color : "#252528",
+                    backgroundColor: i === 0 ? c.color : "#d4cfc8",
                   }}
                 />
               ))}
@@ -375,14 +375,14 @@ export default function ScreenSkillFitPage() {
                 >
                   {/* Companies */}
                   <div>
-                    <span className="font-mono text-[8px] uppercase tracking-widest text-zinc-600 font-bold block mb-2">
+                    <span className="font-mono text-[8px] uppercase tracking-widest text-stone-400 font-bold block mb-2">
                       Worked at
                     </span>
                     <div className="flex gap-2 flex-wrap">
                       {c.right.companies.map((co) => (
                         <span
                           key={co}
-                          className="font-mono text-[9px] font-bold border border-zinc-800 bg-zinc-900/60 text-zinc-200 px-3 py-1 rounded-full"
+                          className="font-mono text-[9px] font-bold border border-stone-300 bg-stone-100 text-stone-700 px-3 py-1 rounded-full"
                         >
                           {co}
                         </span>
@@ -392,7 +392,7 @@ export default function ScreenSkillFitPage() {
 
                   {/* Quote */}
                   <blockquote
-                    className="font-serif font-bold text-[clamp(1.05rem,1.9vw,1.5rem)] text-white leading-snug tracking-tight pl-4"
+                    className="font-serif font-bold text-[clamp(1.05rem,1.9vw,1.5rem)] text-[#1c1714] leading-snug tracking-tight pl-4"
                     style={{ borderLeft: `3px solid ${c.color}` }}
                   >
                     &ldquo;{c.right.quote}&rdquo;
@@ -400,14 +400,14 @@ export default function ScreenSkillFitPage() {
 
                   {/* Skills */}
                   <div>
-                    <span className="font-mono text-[8px] uppercase tracking-widest text-zinc-600 font-bold block mb-2">
+                    <span className="font-mono text-[8px] uppercase tracking-widest text-stone-400 font-bold block mb-2">
                       Core Skills
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {c.right.skills.map((sk) => (
                         <span
                           key={sk}
-                          className="font-mono text-[8px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-md border border-zinc-800 text-zinc-400 bg-zinc-900/40"
+                          className="font-mono text-[8px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-md border border-stone-200 text-stone-500 bg-white/60"
                         >
                           {sk}
                         </span>
@@ -430,9 +430,9 @@ export default function ScreenSkillFitPage() {
         </div>
 
         {/* Bottom-center: thin scroll progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-zinc-900">
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-stone-200">
           <div
-            className="h-full bg-zinc-700"
+            className="h-full bg-stone-500"
             style={{ width: "0%", transition: "width 0.3s ease" }}
           />
         </div>
