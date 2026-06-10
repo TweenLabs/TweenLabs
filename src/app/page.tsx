@@ -98,9 +98,9 @@ export default function Home() {
           </div>
 
           <h1 className="text-4xl md:text-7xl font-serif font-black tracking-tight text-[#2a2a2a] max-w-4xl leading-[1.05] uppercase">
-            Animation{" "}
+            GSAP Animation{" "}
             <span className="block mt-2 text-wtf-orange">
-              Playground Directory
+              Playground 
             </span>
           </h1>
 
