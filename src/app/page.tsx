@@ -57,6 +57,15 @@ const animations = [
     description: "Interactive kinetic text sandbox showcasing liquid wave, character scramble, and magnetic motion.",
     tiltClass: "tilt-left",
   },
+  {
+    id: "07",
+    name: "Scroll Orbit Gallery",
+    route: "/07-scroll-orbit-gallery",
+    bgColor: "bg-wtf-blue",
+    textColor: "text-white",
+    description: "Premium scroll-driven layout where orbiting abstract cards converge into a sleek horizontal timeline.",
+    tiltClass: "tilt-right",
+  },
 ];
 
 const hoverColorsMap: Record<string, string> = {
