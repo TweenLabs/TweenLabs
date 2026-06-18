@@ -14,6 +14,7 @@ interface ParsedMarkdown {
   coreGsap: string | null;
   standalone: string | null;
   setupGuide: string | null;
+  customization: string | null;
 }
 
 // Helper to parse HOW_TO_USE.md
@@ -24,6 +25,7 @@ function parseHowToUse(markdown: string): ParsedMarkdown {
     coreGsap: null,
     standalone: null,
     setupGuide: null,
+    customization: null,
   };
 
   // Extract Title
@@ -57,6 +59,8 @@ function parseHowToUse(markdown: string): ParsedMarkdown {
       result.coreGsap = code;
     } else if (headerText.startsWith("setup & integration") || headerText.startsWith("setup and integration")) {
       result.setupGuide = sec.trim();
+    } else if (headerText.includes("customization") || headerText.includes("properties") || headerText.includes("props")) {
+      result.customization = sec.trim();
     }
   }
 
@@ -110,6 +114,7 @@ export default async function CodePage({ params }: PageProps) {
   let standaloneCode: string | null = null;
   let coreGsapCode: string | null = null;
   let setupGuide: string | null = null;
+  let customization: string | null = null;
 
   if (fs.existsSync(howToUsePath)) {
     try {
@@ -118,6 +123,7 @@ export default async function CodePage({ params }: PageProps) {
       standaloneCode = parsed.standalone;
       coreGsapCode = parsed.coreGsap;
       setupGuide = parsed.setupGuide;
+      customization = parsed.customization;
     } catch (err) {
       console.error(`Error reading/parsing HOW_TO_USE.md at ${howToUsePath}:`, err);
     }
@@ -132,6 +138,7 @@ export default async function CodePage({ params }: PageProps) {
       standaloneCode={standaloneCode}
       coreGsapCode={coreGsapCode}
       setupGuide={setupGuide}
+      customization={customization}
     />
   );
 }

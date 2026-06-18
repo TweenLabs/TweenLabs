@@ -233,7 +233,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 You can pass the following settings to configure the layout and animation details:
 
-- `phrase` (string): The message string that scrolls horizontally and drops characters. Defaults to `'HELLO WORLD THIS IS GSAP'`.
+- `phrase` (string): The message string that scrolls horizontally and drops characters. Defaults to `'HELLO THIS IS GSAP'`.
 
 ### 🎨 Neo-Brutalist Theme Tokens
 To match TweenLabs' signature premium editorial styling:

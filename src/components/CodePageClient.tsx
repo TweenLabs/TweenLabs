@@ -11,6 +11,7 @@ interface CodePageClientProps {
   standaloneCode: string | null;
   coreGsapCode: string | null;
   setupGuide: string | null;
+  customization: string | null;
 }
 
 const componentNamesMap: Record<string, string> = {
@@ -84,6 +85,13 @@ const getFileIcon = (fileName: string) => {
       </span>
     );
   }
+  if (fileName.endsWith(".css")) {
+    return (
+      <svg className="w-3.5 h-3.5 text-[#e55b3c]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+    );
+  }
   return (
     <span className="w-3.5 h-3.5 bg-[#3498db] text-white text-[8px] font-bold rounded flex items-center justify-center font-sans">
       MD
@@ -119,8 +127,185 @@ const CopyButton = ({ text }: { text: string }) => {
   );
 };
 
+// CSS Syntax Highlighter using One Dark Pro theme colors
+const highlightCss = (code: string) => {
+  let html = code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // 1. Extract comments first to prevent styling collisions
+  const comments: string[] = [];
+  html = html.replace(/(\/\*[\s\S]*?\*\/)/g, (match) => {
+    comments.push(`<span class="text-[#5c6370] italic">${match}</span>`);
+    return `___CSS_COMMENT_PLACEHOLDER_${comments.length - 1}___`;
+  });
+
+  // 2. Highlight selectors (e.g. .brutalist-card, :root)
+  html = html.replace(/([^{}\n]+)\s*(?={)/g, (match) => {
+    if (!match.trim()) return match;
+    return `<span class="text-[#e06c75] font-semibold">${match}</span>`;
+  });
+
+  // 3. Highlight properties (e.g. background, border)
+  html = html.replace(/([a-zA-Z-]+)\s*:/g, (match, p1) => {
+    return `<span class="text-[#d19a66]">${p1}</span>:`;
+  });
+
+  // 4. Highlight values
+  html = html.replace(/:\s*([^;{}]+)/g, (match, p1) => {
+    return `: <span class="text-[#98c379]">${p1}</span>`;
+  });
+
+  // 5. Restore comments
+  html = html.replace(/___CSS_COMMENT_PLACEHOLDER_(\d+)___/g, (_, idxStr) => {
+    const idx = parseInt(idxStr, 10);
+    return comments[idx];
+  });
+
+  // 6. Highlight braces
+  html = html.replace(/([{};])/g, '<span class="text-[#abb2bf]">$1</span>');
+
+  return html;
+};
+
+// CSS compiler extracting needed styling tokens for each animation component
+const getRequiredCssForCode = (code: string) => {
+  const cssBlocks: string[] = [];
+  const rootVars = `/* Theme Custom Properties */
+:root {
+  --background: #f0eadf;
+  --foreground: #2a2a2a;
+  --card-bg: #ffffff;
+  --border-color: #2a2a2a;
+  --shadow-color: #2a2a2a;
+  
+  /* Accent Colors */
+  --wtf-purple: #6758a5;
+  --wtf-green: #0c9367;
+  --wtf-red: #c53b3a;
+  --wtf-orange: #e55b3c;
+  --wtf-yellow: #f1b333;
+  --wtf-blue: #3b82f6;
+}`;
+
+  // Always include CSS theme variables
+  cssBlocks.push(rootVars);
+
+  if (code.includes("brutalist-card")) {
+    cssBlocks.push(`/* Neo-Brutalist Card Styles */
+.brutalist-card {
+  background: var(--card-bg);
+  border: 3px solid var(--border-color);
+  box-shadow: 6px 6px 0px var(--shadow-color);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brutalist-card-interactive:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0px var(--shadow-color);
+}
+
+.brutalist-card-interactive:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px var(--shadow-color);
+}`);
+  }
+
+  if (code.includes("brutalist-btn")) {
+    cssBlocks.push(`/* Neo-Brutalist Button Styles */
+.brutalist-btn {
+  border: 3px solid var(--border-color);
+  box-shadow: 4px 4px 0px var(--shadow-color);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.brutalist-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--shadow-color);
+}
+
+.brutalist-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--shadow-color);
+}`);
+  }
+
+  if (code.includes("dot-grid")) {
+    cssBlocks.push(`/* Dot Grid Background Pattern */
+.dot-grid {
+  background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.15;
+}`);
+  }
+
+  if (code.includes("noise-overlay")) {
+    cssBlocks.push(`/* Tactile Noise Grain Overlay */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+}`);
+  }
+
+  if (code.includes("preserve-3d") || code.includes("backface-hidden") || code.includes("rotate-y-180")) {
+    cssBlocks.push(`/* 3D Card Flip & Perspective Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}`);
+  }
+
+  if (code.includes("tilt-right") || code.includes("tilt-left")) {
+    cssBlocks.push(`/* Asymmetric Tilt Utilities */
+.tilt-right {
+  transform: rotate(2deg);
+}
+.tilt-left {
+  transform: rotate(-2deg);
+}
+.tilt-right-lg {
+  transform: rotate(8deg);
+}
+.tilt-left-lg {
+  transform: rotate(-8deg);
+}`);
+  }
+
+  if (code.includes("scrollbar-none")) {
+    cssBlocks.push(`/* Hide Scrollbar Utilities */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}`);
+  }
+
+  // Parse out custom page-specific keyframes and animations inside style tags
+  if (code.includes("<style>{`")) {
+    const styleMatches = code.match(/<style>\{`([\s\S]*?)`\}<\/style>/);
+    if (styleMatches && styleMatches[1]) {
+      cssBlocks.push(`/* Custom Inline CSS */\n${styleMatches[1].trim()}`);
+    }
+  }
+
+  return cssBlocks.join("\n\n");
+};
+
 // Custom RegExp syntax highlighter utilizing VS Code One Dark Pro scheme
-const highlightCode = (code: string) => {
+const highlightCode = (code: string, fileName: string) => {
+  if (fileName.endsWith(".css")) {
+    return highlightCss(code);
+  }
   let html = code
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -356,6 +541,7 @@ export default function CodePageClient({
   standaloneCode,
   coreGsapCode,
   setupGuide,
+  customization,
 }: CodePageClientProps) {
   // Determine available tabs
   const tabs = [];
@@ -367,13 +553,20 @@ export default function CodePageClient({
     tabs.push({ id: "core", label: "Core GSAP Timeline", code: coreGsapCode, file: "animation.js" });
   }
 
+  // Compile required CSS styles dynamically based on classes used in code
+  const codeToAnalyze = standaloneCode || pageCode;
+  const cssCode = getRequiredCssForCode(codeToAnalyze);
+  if (cssCode) {
+    tabs.push({ id: "css", label: "Required CSS", code: cssCode, file: "styles.css" });
+  }
+
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
   const [copied, setCopied] = useState(false);
   const [pkgManager, setPkgManager] = useState<"npm" | "pnpm" | "yarn" | "bun">("npm");
   const [isExpanded, setIsExpanded] = useState(false);
 
   const activeTab = tabs.find((t) => t.id === activeTabId) || tabs[0];
-  const highlighted = highlightCode(activeTab.code);
+  const highlighted = highlightCode(activeTab.code, activeTab.file);
 
   const handleCopy = async () => {
     try {
@@ -386,21 +579,31 @@ export default function CodePageClient({
   };
 
   const handleDownload = () => {
-    const blob = new Blob([activeTab.code], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    
+    const downloadFile = (codeStr: string, nameStr: string) => {
+      const blob = new Blob([codeStr], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = nameStr;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    };
+
     let fileName = activeTab.file;
     if (activeTab.id === "page") {
       fileName = `${getClassName(slug)}.tsx`;
     }
     
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadFile(activeTab.code, fileName);
+
+    // Automatically download styles.css as well when a component is downloaded
+    if ((activeTab.id === "page" || activeTab.id === "standalone") && cssCode) {
+      setTimeout(() => {
+        downloadFile(cssCode, "styles.css");
+      }, 150);
+    }
   };
 
   const usesScrollTrigger = activeTab.code.includes("ScrollTrigger");
@@ -582,7 +785,7 @@ export default function CodePageClient({
               <span>Spaces: 2</span>
               <span>UTF-8</span>
               <span className="hover:bg-[#008be6] px-1.5 py-0.5 rounded cursor-pointer">
-                {activeTab.file.endsWith(".tsx") ? "TypeScript JSX" : activeTab.file.endsWith(".js") ? "JavaScript" : "Markdown"}
+                {activeTab.file.endsWith(".tsx") ? "TypeScript JSX" : activeTab.file.endsWith(".js") ? "JavaScript" : activeTab.file.endsWith(".css") ? "CSS" : "Markdown"}
               </span>
               <span>Prettier</span>
             </div>
@@ -687,10 +890,27 @@ export default function CodePageClient({
               </div>
             </div>
 
-            {/* Step 2: Add Component File */}
+            {/* Step 2: Add Required CSS */}
+            {cssCode && (
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
+                  2
+                </div>
+                <div className="flex-1 flex flex-col gap-3">
+                  <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
+                    Add Required CSS Styles
+                  </h3>
+                  <p>
+                    Copy the styles from the <span className="font-bold text-black underline decoration-wtf-purple decoration-2">Required CSS</span> tab above, or open the <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-purple">styles.css</code> file that was automatically downloaded with your component. Paste these classes into your global stylesheet (e.g. <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-purple">src/app/globals.css</code> or similar).
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Add Component File */}
             <div className="flex gap-4 items-start">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-green border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                2
+                3
               </div>
               <div className="flex-1 flex flex-col gap-3">
                 <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
@@ -707,7 +927,7 @@ export default function CodePageClient({
               </div>
             </div>
 
-            {/* Step 3: ScrollTrigger (If needed) */}
+            {/* Step 4: ScrollTrigger (If needed) */}
             {usesScrollTrigger && (
               <div className="flex gap-4 items-start border-l-4 border-wtf-yellow pl-4 my-2">
                 <div className="flex-1 flex flex-col gap-2">
@@ -731,10 +951,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);`}
               </div>
             )}
 
-            {/* Step 4: Import & Render */}
+            {/* Step 5: Import & Render */}
             <div className="flex gap-4 items-start">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-blue border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                3
+                4
               </div>
               <div className="flex-1 flex flex-col gap-3">
                 <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
@@ -765,18 +985,18 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Custom markdown instructions from HOW_TO_USE.md if present */}
-            {setupGuide && setupGuide.trim() !== "" && (
+            {/* Custom markdown customization section from HOW_TO_USE.md if present */}
+            {customization && customization.trim() !== "" && (
               <div className="mt-8 border-t-2 border-zinc-200 pt-8 flex gap-4 items-start">
                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
                   💡
                 </div>
                 <div className="flex-1 flex flex-col gap-4">
                   <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                    Additional Custom Instructions
+                    Customization & Component Properties
                   </h3>
                   <div className="prose prose-zinc max-w-none text-zinc-750 font-sans font-medium text-sm">
-                    {renderMarkdown(setupGuide)}
+                    {renderMarkdown(customization)}
                   </div>
                 </div>
               </div>

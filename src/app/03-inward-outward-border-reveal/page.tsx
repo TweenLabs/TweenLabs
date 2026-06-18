@@ -191,7 +191,7 @@ export default function AnimationThreePage() {
             {renderWord("HELLO")}
             {renderWord("THIS")}
             {renderWord("IS")}
-            {renderWord("RITESH", true)}
+            {renderWord("GSAP", true)}
           </div>
         </div>
       </div>

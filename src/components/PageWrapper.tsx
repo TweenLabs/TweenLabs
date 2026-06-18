@@ -20,6 +20,24 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
   // Check if current page is one of the component demo pages
   const isDemoPage = animations.some((anim) => anim.route === normalizedPath);
 
+  // Hide scrollbar on the main homepage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (pathname === "/") {
+      document.documentElement.classList.add("scrollbar-none");
+      document.body.classList.add("scrollbar-none");
+    } else {
+      document.documentElement.classList.remove("scrollbar-none");
+      document.body.classList.remove("scrollbar-none");
+    }
+
+    return () => {
+      document.documentElement.classList.remove("scrollbar-none");
+      document.body.classList.remove("scrollbar-none");
+    };
+  }, [pathname]);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
