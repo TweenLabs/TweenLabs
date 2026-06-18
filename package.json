@@ -1,7 +1,10 @@
 {
-  "name": "gsap-playground",
+  "name": "tweenlabs",
   "version": "0.1.0",
   "private": true,
+  "bin": {
+    "tweenlabs": "./bin/cli.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -169,6 +169,16 @@ export default function PageChangeAnimation({ panels = defaultPanels }: PageChan
 
 ## Setup & Integration Guide
 
+### 💻 Option A: Install via CLI (Recommended)
+You can install this component directly into your project via the TweenLabs CLI:
+```bash
+npx tweenlabs add page-change-animation
+```
+
+---
+
+### 🛠️ Option B: Manual Installation
+
 Follow these beginner-friendly, step-by-step instructions to integrate the component into your project.
 
 ### ⚡ Step 1: Install Dependencies

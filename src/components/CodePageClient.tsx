@@ -278,6 +278,33 @@ function renderMarkdown(md: string) {
   return <div className="markdown-body mt-2">{elements}</div>;
 }
 
+const getInstallCommand = (pm: "npm" | "pnpm" | "yarn" | "bun") => {
+  switch (pm) {
+    case "npm":
+      return "npm install gsap @gsap/react";
+    case "pnpm":
+      return "pnpm add gsap @gsap/react";
+    case "yarn":
+      return "yarn add gsap @gsap/react";
+    case "bun":
+      return "bun add gsap @gsap/react";
+  }
+};
+
+const getCliCommand = (pm: "npm" | "pnpm" | "yarn" | "bun", slug: string) => {
+  const cleanSlug = slug.replace(/^\d+[a-z]?[-_]/, "");
+  switch (pm) {
+    case "npm":
+      return `npx tweenlabs add ${cleanSlug}`;
+    case "pnpm":
+      return `pnpm dlx tweenlabs add ${cleanSlug}`;
+    case "yarn":
+      return `yarn dlx tweenlabs add ${cleanSlug}`;
+    case "bun":
+      return `bunx tweenlabs add ${cleanSlug}`;
+  }
+};
+
 export default function CodePageClient({
   slug,
   name,
@@ -299,6 +326,7 @@ export default function CodePageClient({
 
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
   const [copied, setCopied] = useState(false);
+  const [pkgManager, setPkgManager] = useState<"npm" | "pnpm" | "yarn" | "bun">("npm");
 
   const activeTab = tabs.find((t) => t.id === activeTabId) || tabs[0];
   const highlighted = highlightCode(activeTab.code);
@@ -502,6 +530,54 @@ export default function CodePageClient({
           </div>
 
           <div className="flex flex-col gap-8 font-sans font-medium text-zinc-700 leading-relaxed text-sm">
+            {/* CLI Option (Recommended) */}
+            <div className="flex gap-4 items-start pb-8 border-b-2 border-dashed border-zinc-200">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
+                💻
+              </div>
+              <div className="flex-1 flex flex-col gap-3">
+                <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
+                  Option A: Install via CLI (Recommended)
+                </h3>
+                <p>
+                  You can install this component directly into your project via the TweenLabs CLI. It automatically creates the file and configures dependencies:
+                </p>
+                <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[3px_3px_0px_#2a2a2a] max-w-md mt-1">
+                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
+                    <div className="flex gap-2">
+                      {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
+                        <button
+                          key={pm}
+                          onClick={() => setPkgManager(pm)}
+                          className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                            pkgManager === pm
+                              ? "bg-wtf-orange text-white"
+                              : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
+                          }`}
+                        >
+                          {pm}
+                        </button>
+                      ))}
+                    </div>
+                    <CopyButton text={getCliCommand(pkgManager, slug)} />
+                  </div>
+                  <div className="p-4 font-mono text-xs text-emerald-400 select-all">
+                    {getCliCommand(pkgManager, slug)}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Manual Option */}
+            <div className="flex flex-col gap-2 -mb-2 mt-2">
+              <h3 className="text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none">
+                Option B: Manual Installation
+              </h3>
+              <p className="text-xs text-zinc-500 font-medium">
+                Follow these steps to integrate the component into your project manually:
+              </p>
+            </div>
+
             {/* Step 1: Install Dependencies */}
             <div className="flex gap-4 items-start">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] text-white font-mono font-bold text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
@@ -516,11 +592,25 @@ export default function CodePageClient({
                 </p>
                 <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[3px_3px_0px_#2a2a2a] max-w-md mt-1">
                   <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-                    <span>Terminal</span>
-                    <CopyButton text="npm install gsap @gsap/react" />
+                    <div className="flex gap-2">
+                      {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
+                        <button
+                          key={pm}
+                          onClick={() => setPkgManager(pm)}
+                          className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                            pkgManager === pm
+                              ? "bg-wtf-orange text-white"
+                              : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
+                          }`}
+                        >
+                          {pm}
+                        </button>
+                      ))}
+                    </div>
+                    <CopyButton text={getInstallCommand(pkgManager)} />
                   </div>
                   <div className="p-4 font-mono text-xs text-emerald-400 select-all">
-                    npm install gsap @gsap/react
+                    {getInstallCommand(pkgManager)}
                   </div>
                 </div>
               </div>
