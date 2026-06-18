@@ -4,8 +4,8 @@
 
   <g transform="translate(340,340)">
     <rect x="-200" y="-200" width="400" height="400" rx="80" fill="#EDE8DF" stroke="#000000" stroke-width="14"/>
-    <text x="-10" y="90" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="320" font-weight="700" fill="#000000" opacity="0.05">G</text>
-    <text x="-10" y="60" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="210" font-weight="700" fill="#000000">G</text>
+    <text x="-10" y="90" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="320" font-weight="700" fill="#000000" opacity="0.05">T</text>
+    <text x="-10" y="60" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="210" font-weight="700" fill="#000000">T</text>
     <circle cx="114" cy="-94" r="42" fill="#E05A2B"/>
     <polygon points="102,-110 102,-78 134,-94" fill="#EDE8DF"/>
   </g>
