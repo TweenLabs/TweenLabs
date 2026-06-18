@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import { useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin);
 
@@ -20,178 +20,285 @@ interface NetworkItem {
 }
 
 const networkData: NetworkItem[] = [
-  { id: 1, title: "Discover", imgUrl: "/Untitled design.png", x: "50%", y: "22%", accentHex: "229, 91, 60", themeColor: "bg-wtf-orange" },
-  { id: 2, title: "Explore", imgUrl: "/Untitled design (1).png", x: "66%", y: "26%", accentHex: "12, 147, 103", themeColor: "bg-wtf-green" },
-  { id: 3, title: "Interact", imgUrl: "/Untitled design (2).png", x: "79%", y: "34%", accentHex: "241, 179, 51", themeColor: "bg-wtf-yellow" },
-  { id: 4, title: "Connect", imgUrl: "/Untitled design (3).png", x: "81%", y: "50%", accentHex: "59, 130, 246", themeColor: "bg-wtf-blue" },
-  { id: 5, title: "Engage", imgUrl: "/Untitled design (4).png", x: "76%", y: "71%", accentHex: "103, 88, 165", themeColor: "bg-wtf-purple" },
-  { id: 6, title: "Immerse", imgUrl: "/Untitled design.png", x: "58%", y: "81%", accentHex: "229, 91, 60", themeColor: "bg-wtf-orange" },
-  { id: 7, title: "Navigate", imgUrl: "/Untitled design (1).png", x: "41%", y: "83%", accentHex: "12, 147, 103", themeColor: "bg-wtf-green" },
-  { id: 8, title: "Experience", imgUrl: "/Untitled design (2).png", x: "20%", y: "60%", accentHex: "241, 179, 51", themeColor: "bg-wtf-yellow" },
-  { id: 9, title: "Remember", imgUrl: "/Untitled design (3).png", x: "15%", y: "45%", accentHex: "59, 130, 246", themeColor: "bg-wtf-blue" },
-  { id: 10, title: "Return", imgUrl: "/Untitled design (4).png", x: "28%", y: "34%", accentHex: "103, 88, 165", themeColor: "bg-wtf-purple" },
+  {
+    id: 1,
+    title: "Discover",
+    imgUrl: "/Untitled design.png",
+    x: "50%",
+    y: "22%",
+    accentHex: "229, 91, 60",
+    themeColor: "bg-wtf-orange",
+  },
+  {
+    id: 2,
+    title: "Explore",
+    imgUrl: "/Untitled design (1).png",
+    x: "66%",
+    y: "26%",
+    accentHex: "12, 147, 103",
+    themeColor: "bg-wtf-green",
+  },
+  {
+    id: 3,
+    title: "Interact",
+    imgUrl: "/Untitled design (2).png",
+    x: "79%",
+    y: "34%",
+    accentHex: "241, 179, 51",
+    themeColor: "bg-wtf-yellow",
+  },
+  {
+    id: 4,
+    title: "Connect",
+    imgUrl: "/Untitled design (3).png",
+    x: "81%",
+    y: "50%",
+    accentHex: "59, 130, 246",
+    themeColor: "bg-wtf-blue",
+  },
+  {
+    id: 5,
+    title: "Engage",
+    imgUrl: "/Untitled design (4).png",
+    x: "76%",
+    y: "71%",
+    accentHex: "103, 88, 165",
+    themeColor: "bg-wtf-purple",
+  },
+  {
+    id: 6,
+    title: "Immerse",
+    imgUrl: "/Untitled design.png",
+    x: "58%",
+    y: "81%",
+    accentHex: "229, 91, 60",
+    themeColor: "bg-wtf-orange",
+  },
+  {
+    id: 7,
+    title: "Navigate",
+    imgUrl: "/Untitled design (1).png",
+    x: "41%",
+    y: "83%",
+    accentHex: "12, 147, 103",
+    themeColor: "bg-wtf-green",
+  },
+  {
+    id: 8,
+    title: "Experience",
+    imgUrl: "/Untitled design (2).png",
+    x: "20%",
+    y: "60%",
+    accentHex: "241, 179, 51",
+    themeColor: "bg-wtf-yellow",
+  },
+  {
+    id: 9,
+    title: "Remember",
+    imgUrl: "/Untitled design (3).png",
+    x: "15%",
+    y: "45%",
+    accentHex: "59, 130, 246",
+    themeColor: "bg-wtf-blue",
+  },
+  {
+    id: 10,
+    title: "Return",
+    imgUrl: "/Untitled design (4).png",
+    x: "28%",
+    y: "34%",
+    accentHex: "103, 88, 165",
+    themeColor: "bg-wtf-purple",
+  },
 ];
 
 export default function StringLinePage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentProgress, setCurrentProgress] = useState(0);
 
-  useGSAP(() => {
-    const path = document.querySelector("#network-path") as SVGPathElement | null;
-    const dot = document.querySelector(".moving-dot") as HTMLDivElement | null;
-    const cards = document.querySelectorAll(".im-card");
+  useGSAP(
+    () => {
+      const path = document.querySelector(
+        "#network-path",
+      ) as SVGPathElement | null;
+      const dot = document.querySelector(
+        ".moving-dot",
+      ) as HTMLDivElement | null;
+      const cards = document.querySelectorAll(".im-card");
 
-    if (!path) return;
-    const pathLength = path.getTotalLength();
+      if (!path) return;
+      const pathLength = path.getTotalLength();
 
-    gsap.set(path, {
-      strokeDasharray: pathLength,
-      strokeDashoffset: pathLength,
-    });
+      gsap.set(path, {
+        strokeDasharray: pathLength,
+        strokeDashoffset: pathLength,
+      });
 
-    const cardCenters = Array.from(cards).map((card) => {
-      const htmlCard = card as HTMLElement;
-      const xPct = parseFloat(htmlCard.style.left) / 100;
-      const yPct = parseFloat(htmlCard.style.top) / 100;
-      return {
-        svgX: xPct * 1600,
-        svgY: yPct * 900,
-        card: htmlCard,
-      };
-    });
+      const cardCenters = Array.from(cards).map((card) => {
+        const htmlCard = card as HTMLElement;
+        const xPct = parseFloat(htmlCard.style.left) / 100;
+        const yPct = parseFloat(htmlCard.style.top) / 100;
+        return {
+          svgX: xPct * 1600,
+          svgY: yPct * 900,
+          card: htmlCard,
+        };
+      });
 
-    const SAMPLES = 600;
-    const pathSamples: { t: number; x: number; y: number }[] = [];
-    for (let i = 0; i <= SAMPLES; i++) {
-      const t = (i / SAMPLES) * pathLength;
-      const pt = path.getPointAtLength(t);
-      pathSamples.push({ t: i / SAMPLES, x: pt.x, y: pt.y });
-    }
-
-    const cardProgressMap = cardCenters.map(({ svgX, svgY, card }) => {
-      let closestProgress = 0;
-      let closest = Infinity;
-
-      for (const sample of pathSamples) {
-        const dx = sample.x - svgX;
-        const dy = sample.y - svgY;
-        const dist = dx * dx + dy * dy;
-
-        if (dist < closest) {
-          closest = dist;
-          closestProgress = sample.t;
-        }
+      const SAMPLES = 600;
+      const pathSamples: { t: number; x: number; y: number }[] = [];
+      for (let i = 0; i <= SAMPLES; i++) {
+        const t = (i / SAMPLES) * pathLength;
+        const pt = path.getPointAtLength(t);
+        pathSamples.push({ t: i / SAMPLES, x: pt.x, y: pt.y });
       }
-      return { card, progress: closestProgress };
-    });
 
-    gsap.set(cards, { scale: 0.85 });
+      const cardProgressMap = cardCenters.map(({ svgX, svgY, card }) => {
+        let closestProgress = 0;
+        let closest = Infinity;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=3000",
-        scrub: 1,
-        pin: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          setCurrentProgress(Math.round(progress * 100));
+        for (const sample of pathSamples) {
+          const dx = sample.x - svgX;
+          const dy = sample.y - svgY;
+          const dist = dx * dx + dy * dy;
 
-          const pastelColors = [
-            "#FFE5EC", // soft pink
-            "#E0FFFE", // light cyan
-            "#F3E8FF", // lavender
-            "#ECFDF5", // pale green
-            "#FFFBEB", // pale yellow
-            "#EFF6FF", // soft blue
-            "#FAF5FF", // soft purple
-            "#FFF0F5", // pale rose
-            "#FFE8D6", // pale orange
-            "#F0FDF4", // soft mint
-          ];
-
-          cardProgressMap.forEach(({ card, progress: cardProg }, index) => {
-            const activationWindow = 0.06;
-            const proximity = Math.max(
-              0,
-              1 - Math.abs(progress - cardProg) / activationWindow
-            );
-
-            const scale = progress >= cardProg ? 1.08 : 0.85 + 0.23 * proximity;
-
-            const colorInterpolator = gsap.utils.interpolate("#ffffff", pastelColors[index % pastelColors.length]);
-            const backgroundColor = colorInterpolator(progress >= cardProg ? 1 : proximity);
-
-            gsap.set(card, { scale, backgroundColor });
-          });
+          if (dist < closest) {
+            closest = dist;
+            closestProgress = sample.t;
+          }
         }
-      }
-    });
+        return { card, progress: closestProgress };
+      });
 
-    tl.to(path, {
-      strokeDashoffset: 0,
-      ease: "none",
-    }, 0);
+      gsap.set(cards, { scale: 0.85 });
 
-    tl.to(dot, {
-      motionPath: {
-        path: path,
-        align: path,
-        alignOrigin: [0.5, 0.5]
-      },
-      ease: "none",
-    }, 0);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=3000",
+          scrub: 1,
+          pin: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            setCurrentProgress(Math.round(progress * 100));
 
-  }, { scope: containerRef });
+            const pastelColors = [
+              "#FFE5EC", // soft pink
+              "#E0FFFE", // light cyan
+              "#F3E8FF", // lavender
+              "#ECFDF5", // pale green
+              "#FFFBEB", // pale yellow
+              "#EFF6FF", // soft blue
+              "#FAF5FF", // soft purple
+              "#FFF0F5", // pale rose
+              "#FFE8D6", // pale orange
+              "#F0FDF4", // soft mint
+            ];
+
+            cardProgressMap.forEach(({ card, progress: cardProg }, index) => {
+              const activationWindow = 0.06;
+              const proximity = Math.max(
+                0,
+                1 - Math.abs(progress - cardProg) / activationWindow,
+              );
+
+              const scale =
+                progress >= cardProg ? 1.08 : 0.85 + 0.23 * proximity;
+
+              const colorInterpolator = gsap.utils.interpolate(
+                "#ffffff",
+                pastelColors[index % pastelColors.length],
+              );
+              const backgroundColor = colorInterpolator(
+                progress >= cardProg ? 1 : proximity,
+              );
+
+              gsap.set(card, { scale, backgroundColor });
+            });
+          },
+        },
+      });
+
+      tl.to(
+        path,
+        {
+          strokeDashoffset: 0,
+          ease: "none",
+        },
+        0,
+      );
+
+      tl.to(
+        dot,
+        {
+          motionPath: {
+            path: path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+          },
+          ease: "none",
+        },
+        0,
+      );
+    },
+    { scope: containerRef },
+  );
 
   const { contextSafe } = useGSAP({ scope: containerRef });
 
   // 3D Card tilt on hover
-  const handleCardMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+  const handleCardMouseMove = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
 
-    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
-    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 8;
+      const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+      const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 8;
 
-    gsap.to(card, {
-      rotateX: rotateX,
-      rotateY: rotateY,
-      transformPerspective: 600,
-      ease: "power1.out",
-      duration: 0.3,
-      overwrite: "auto",
-    });
-  });
+      gsap.to(card, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        transformPerspective: 600,
+        ease: "power1.out",
+        duration: 0.3,
+        overwrite: "auto",
+      });
+    },
+  );
 
-  const handleCardMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      ease: "elastic.out(1.1, 0.4)",
-      duration: 0.75,
-      overwrite: "auto",
-    });
-  });
+  const handleCardMouseLeave = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        ease: "elastic.out(1.1, 0.4)",
+        duration: 0.75,
+        overwrite: "auto",
+      });
+    },
+  );
 
   return (
     <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black">
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+        >
+          ← Back
+        </button>
       </div>
 
       <section
@@ -283,15 +390,20 @@ export default function StringLinePage() {
                 className="w-10 h-10 rounded-full border-2 border-[#2a2a2a] relative overflow-hidden flex-shrink-0 z-10"
                 style={{ transform: "translateZ(10px)" }}
               >
-                <img
-                  className="w-full h-full object-cover"
+                <Image
+                  className="object-cover"
                   src={item.imgUrl}
                   alt=""
+                  fill
+                  sizes="40px"
                 />
               </div>
 
               {/* Title / Info */}
-              <div className="flex flex-col relative z-10" style={{ transform: "translateZ(15px)" }}>
+              <div
+                className="flex flex-col relative z-10"
+                style={{ transform: "translateZ(15px)" }}
+              >
                 <h2 className="uppercase text-[11px] font-serif font-black tracking-tight text-[#2a2a2a] leading-none">
                   {item.title}
                 </h2>

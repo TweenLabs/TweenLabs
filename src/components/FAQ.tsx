@@ -10,7 +10,10 @@ export default function FAQ() {
             What is TweenLabs?
           </h3>
           <p className="text-sm font-sans font-medium text-zinc-600 leading-relaxed">
-            TweenLabs is a curated library of high-fidelity, interactive, and portable GSAP components, UI templates, and scroll-triggered animations. Every resource is designed to be easily copy-pasted into your React and Next.js projects.
+            TweenLabs is a curated library of high-fidelity, interactive, and
+            portable GSAP components, UI templates, and scroll-triggered
+            animations. Every resource is designed to be easily copy-pasted into
+            your React and Next.js projects.
           </p>
         </div>
 
@@ -19,7 +22,9 @@ export default function FAQ() {
             Are these GSAP components free?
           </h3>
           <p className="text-sm font-sans font-medium text-zinc-600 leading-relaxed">
-            Yes, all TweenLabs animations and layouts are free and open-source. Simply click &quot;Get Code&quot; on any card, install the required packages, and drop the code directly into your codebase.
+            Yes, all TweenLabs animations and layouts are free and open-source.
+            Simply click &quot;Get Code&quot; on any card, install the required
+            packages, and drop the code directly into your codebase.
           </p>
         </div>
 
@@ -28,7 +33,10 @@ export default function FAQ() {
             What frameworks are supported?
           </h3>
           <p className="text-sm font-sans font-medium text-zinc-650 leading-relaxed">
-            Our components are optimized for **React 19**, **Next.js 16 (App Router)**, **TypeScript**, and **Tailwind CSS**. They utilize standard clean packages like <code>@gsap/react</code> and <code>Lenis</code> smooth scrolling.
+            Our components are optimized for **React 19**, **Next.js 16 (App
+            Router)**, **TypeScript**, and **Tailwind CSS**. They utilize
+            standard clean packages like <code>@gsap/react</code> and{" "}
+            <code>Lenis</code> smooth scrolling.
           </p>
         </div>
 
@@ -37,7 +45,10 @@ export default function FAQ() {
             What kind of GSAP components are included?
           </h3>
           <p className="text-sm font-sans font-medium text-zinc-650 leading-relaxed">
-            TweenLabs houses a wide range of creative mechanics: 3D hover tilt grids, kinetic wave typography, scroll-pinned parallax card decks, pointer drag carousel wheels, elastic fluid cursors, and animated SVG networks.
+            TweenLabs houses a wide range of creative mechanics: 3D hover tilt
+            grids, kinetic wave typography, scroll-pinned parallax card decks,
+            pointer drag carousel wheels, elastic fluid cursors, and animated
+            SVG networks.
           </p>
         </div>
       </div>

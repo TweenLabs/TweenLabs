@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -28,7 +27,8 @@ export default function MorphingAccordionPage() {
       id: 1,
       title: "Creative Design",
       subtitle: "UI & WIREFRAMING",
-      summary: "Translating brand identities into modern, high-fidelity responsive user interfaces.",
+      summary:
+        "Translating brand identities into modern, high-fidelity responsive user interfaces.",
       details: [
         "Figma layouts & design token sync",
         "Neo-Brutalist typography pairings",
@@ -42,7 +42,8 @@ export default function MorphingAccordionPage() {
       id: 2,
       title: "Frontend Architecture",
       subtitle: "NEXT.JS 16 & REACT 19",
-      summary: "Building robust, hydration-safe code bases using standard modern frameworks.",
+      summary:
+        "Building robust, hydration-safe code bases using standard modern frameworks.",
       details: [
         "TypeScript static type validation",
         "React Server Components (RSC) integration",
@@ -56,7 +57,8 @@ export default function MorphingAccordionPage() {
       id: 3,
       title: "Motion Choreography",
       subtitle: "GSAP TIMELINES & TWEENS",
-      summary: "Crafting fluid, natural interactions with premium timing and performance curves.",
+      summary:
+        "Crafting fluid, natural interactions with premium timing and performance curves.",
       details: [
         "useGSAP clean context safe execution",
         "Staggered entrance reveals & bounces",
@@ -70,7 +72,8 @@ export default function MorphingAccordionPage() {
       id: 4,
       title: "Performance Tuning",
       subtitle: "60 FPS OPTIMIZATION",
-      summary: "Optimizing code execution to prevent layout thrashing and rendering lag.",
+      summary:
+        "Optimizing code execution to prevent layout thrashing and rendering lag.",
       details: [
         "CSS Transform (x/y/scale) animation prioritisation",
         "will-change and force3D compositor layers",
@@ -100,7 +103,9 @@ export default function MorphingAccordionPage() {
 
       gsap.to(cardRef.current, {
         borderColor: isExpanding ? activeItem.color : "#2a2a2a",
-        boxShadow: isExpanding ? `8px 8px 0px ${activeItem.color}` : "6px 6px 0px #2a2a2a",
+        boxShadow: isExpanding
+          ? `8px 8px 0px ${activeItem.color}`
+          : "6px 6px 0px #2a2a2a",
         duration: 0.5,
         ease: "power2.out",
       });
@@ -136,7 +141,7 @@ export default function MorphingAccordionPage() {
               ease: "power2.out",
               delay: 0.1,
               overwrite: "auto",
-            }
+            },
           );
         } else {
           gsap.to(el, {
@@ -168,7 +173,9 @@ export default function MorphingAccordionPage() {
           Morphing Accordion
         </h1>
         <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Click any accordion header below. Watch the page background color morph, the card borders transform, and content reveal with staggered transitions.
+          Click any accordion header below. Watch the page background color
+          morph, the card borders transform, and content reveal with staggered
+          transitions.
         </p>
       </header>
 
@@ -201,9 +208,7 @@ export default function MorphingAccordionPage() {
                       {item.title}
                     </h2>
                   </div>
-                  <span
-                    className="w-8 h-8 rounded-full border-2 border-[#2a2a2a] flex items-center justify-center font-mono font-bold text-sm bg-zinc-50 shadow-[2px_2px_0px_#2a2a2a] group-hover:bg-[#2a2a2a] group-hover:text-white transition-colors"
-                  >
+                  <span className="w-8 h-8 rounded-full border-2 border-[#2a2a2a] flex items-center justify-center font-mono font-bold text-sm bg-zinc-50 shadow-[2px_2px_0px_#2a2a2a] group-hover:bg-[#2a2a2a] group-hover:text-white transition-colors">
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
@@ -243,12 +248,15 @@ export default function MorphingAccordionPage() {
       {/* Footer link */}
       <footer className="z-10 mb-8">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
       </footer>
     </div>
   );

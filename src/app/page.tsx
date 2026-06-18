@@ -1,10 +1,10 @@
 "use client";
 
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
 import AnimationCard from "@/components/AnimationCard";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 
 const animations = [
   {
@@ -13,7 +13,8 @@ const animations = [
     route: "/01-gravity-drop",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
-    description: "Staggered letters falling down onto a shelf collider with realistic physics bounce.",
+    description:
+      "Staggered letters falling down onto a shelf collider with realistic physics bounce.",
     tiltClass: "tilt-right",
   },
   {
@@ -22,7 +23,8 @@ const animations = [
     route: "/02-scroll-tags-assembly",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
-    description: "Interactive scroll-triggered tags that fly into a grid board container from all offscreen directions.",
+    description:
+      "Interactive scroll-triggered tags that fly into a grid board container from all offscreen directions.",
     tiltClass: "tilt-left",
   },
   {
@@ -31,7 +33,8 @@ const animations = [
     route: "/03-inward-outward-border-reveal",
     bgColor: "bg-wtf-red",
     textColor: "text-white",
-    description: "Premium horizontal text scroll where letters fly in and out from top/bottom screen borders.",
+    description:
+      "Premium horizontal text scroll where letters fly in and out from top/bottom screen borders.",
     tiltClass: "tilt-right-lg",
   },
   {
@@ -40,7 +43,8 @@ const animations = [
     route: "/04-horizontal-cards-showcase",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
-    description: "Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, enter from the bottom, and exit off the top of the viewport.",
+    description:
+      "Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, enter from the bottom, and exit off the top of the viewport.",
     tiltClass: "tilt-left-lg",
   },
   {
@@ -49,7 +53,8 @@ const animations = [
     route: "/05-page-change-animation",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
-    description: "Premium stacked page-peel scroll animation where color-themed sections slide up and overlap with dynamic skewing.",
+    description:
+      "Premium stacked page-peel scroll animation where color-themed sections slide up and overlap with dynamic skewing.",
     tiltClass: "tilt-right",
   },
   {
@@ -58,7 +63,8 @@ const animations = [
     route: "/06-kinetic-typography",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
-    description: "Interactive kinetic text sandbox showcasing liquid wave, character scramble, and magnetic motion.",
+    description:
+      "Interactive kinetic text sandbox showcasing liquid wave, character scramble, and magnetic motion.",
     tiltClass: "tilt-left",
   },
   {
@@ -67,7 +73,8 @@ const animations = [
     route: "/07-scroll-orbit-gallery",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
-    description: "Premium scroll-driven layout where orbiting abstract cards converge into a sleek horizontal timeline.",
+    description:
+      "Premium scroll-driven layout where orbiting abstract cards converge into a sleek horizontal timeline.",
     tiltClass: "tilt-right",
   },
   {
@@ -76,7 +83,8 @@ const animations = [
     route: "/08-blueprint-scatter",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
-    description: "Premium page-load exploding cards and text scramble animation matching the layout of blueprintapps.io.",
+    description:
+      "Premium page-load exploding cards and text scramble animation matching the layout of blueprintapps.io.",
     tiltClass: "tilt-left",
   },
   {
@@ -85,7 +93,8 @@ const animations = [
     route: "/09-circular-scatter",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
-    description: "Circular loop scatter animation where cards stack one-by-one at screen center, then scatter to the outer edges with hero text centered.",
+    description:
+      "Circular loop scatter animation where cards stack one-by-one at screen center, then scatter to the outer edges with hero text centered.",
     tiltClass: "tilt-right",
   },
   {
@@ -94,7 +103,8 @@ const animations = [
     route: "/10-screen-skill-fit",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
-    description: "Premium candidate profile showcase animation with vertical ScrollTrigger pinning and technology staggers.",
+    description:
+      "Premium candidate profile showcase animation with vertical ScrollTrigger pinning and technology staggers.",
     tiltClass: "tilt-left",
   },
   {
@@ -103,7 +113,8 @@ const animations = [
     route: "/11-magnetic-dock",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
-    description: "Premium floating menu bar where buttons pull dynamically toward the user's cursor.",
+    description:
+      "Premium floating menu bar where buttons pull dynamically toward the user's cursor.",
     tiltClass: "tilt-right",
   },
   {
@@ -112,7 +123,8 @@ const animations = [
     route: "/12-fluid-cursor",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
-    description: "Custom elastic lagging cursor reticle that snaps, morphs, and hugs button boundaries.",
+    description:
+      "Custom elastic lagging cursor reticle that snaps, morphs, and hugs button boundaries.",
     tiltClass: "tilt-left",
   },
   {
@@ -121,7 +133,8 @@ const animations = [
     route: "/13-bento-grid-flip",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
-    description: "Neo-Brutalist bento box card grid with 3D perspective mouse tilt, spring physics recovery, and vector crosshairs.",
+    description:
+      "Neo-Brutalist bento box card grid with 3D perspective mouse tilt, spring physics recovery, and vector crosshairs.",
     tiltClass: "tilt-right-lg",
   },
   {
@@ -130,7 +143,8 @@ const animations = [
     route: "/14-3d-carousel",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
-    description: "Interactive 3D mathematical wheel rotation with pointer drag inertia, keyboard navigation, and GSAP details panel expansion.",
+    description:
+      "Interactive 3D mathematical wheel rotation with pointer drag inertia, keyboard navigation, and GSAP details panel expansion.",
     tiltClass: "tilt-left-lg",
   },
   {
@@ -139,7 +153,8 @@ const animations = [
     route: "/15-morphing-accordion",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
-    description: "Vertical accordion showcase where selection morphs page background color and staggers content.",
+    description:
+      "Vertical accordion showcase where selection morphs page background color and staggers content.",
     tiltClass: "tilt-right",
   },
   {
@@ -148,7 +163,8 @@ const animations = [
     route: "/16-scroll-cards-01",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
-    description: "Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.",
+    description:
+      "Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.",
     tiltClass: "tilt-right",
   },
   {
@@ -157,7 +173,8 @@ const animations = [
     route: "/16b-scroll-cards-classic",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
-    description: "Scroll-pinned classic overlapping cards utilizing y-parallax translations (optimized to stay within DOM viewport).",
+    description:
+      "Scroll-pinned classic overlapping cards utilizing y-parallax translations (optimized to stay within DOM viewport).",
     tiltClass: "tilt-left",
   },
   {
@@ -166,7 +183,8 @@ const animations = [
     route: "/17-showup-cards",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
-    description: "Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.",
+    description:
+      "Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.",
     tiltClass: "tilt-left",
   },
   {
@@ -175,7 +193,8 @@ const animations = [
     route: "/18-string-line",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
-    description: "ScrollTriggered SVG network line drawing tracking node proximity scale offsets.",
+    description:
+      "ScrollTriggered SVG network line drawing tracking node proximity scale offsets.",
     tiltClass: "tilt-right",
   },
 ];
@@ -183,7 +202,6 @@ const animations = [
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center selection:bg-wtf-yellow selection:text-black pt-16">
-      
       {/* Dot Grid Background */}
       <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
 

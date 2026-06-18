@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -56,104 +55,128 @@ const stageData: StageItem[] = [
 export default function ShowUpCardsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const smoothStep = (p: number) => p * p * (3 - 2 * p);
+  useGSAP(
+    () => {
+      const smoothStep = (p: number) => p * p * (3 - 2 * p);
 
-    // Pin the showup card section during viewport scroll
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: ".showup-cards-sec",
-      pinSpacing: false,
-    });
+      // Pin the showup card section during viewport scroll
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: ".showup-cards-sec",
+        pinSpacing: false,
+      });
 
-    // Fall, Scale and Flip Service Cards
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
+      // Fall, Scale and Flip Service Cards
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
 
-        ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
-          const delay = index * 0.5;
-          const cardProgress = gsap.utils.clamp(0, 1, (progress - delay * 0.1) / (0.9 - delay * 0.1));
-          const innerCard = document.querySelector(`${cardId} .flip-card-inner`);
-
-          let y;
-          if (cardProgress < 0.4) {
-            const normalizedProgress = cardProgress / 0.4;
-            y = gsap.utils.interpolate("-100%", "40%", smoothStep(normalizedProgress));
-          } else if (cardProgress < 0.6) {
-            const normalizedProgress = (cardProgress - 0.4) / 0.2;
-            y = gsap.utils.interpolate("40%", "0%", smoothStep(normalizedProgress));
-          } else {
-            y = "0%";
-          }
-
-          let scale;
-          if (cardProgress < 0.4) {
-            const normalizedProgress = cardProgress / 0.4;
-            scale = gsap.utils.interpolate(0.25, 0.75, smoothStep(normalizedProgress));
-          } else if (cardProgress < 0.6) {
-            const normalizedProgress = (cardProgress - 0.4) / 0.2;
-            scale = gsap.utils.interpolate(0.75, 1, smoothStep(normalizedProgress));
-          } else {
-            scale = 1;
-          }
-
-          let opacity;
-          if (cardProgress < 0.2) {
-            const normalizedProgress = cardProgress / 0.2;
-            opacity = smoothStep(normalizedProgress);
-          } else {
-            opacity = 1;
-          }
-
-          let x, rotate, rotationY;
-          if (cardProgress < 0.6) {
-            x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
-            rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
-            rotationY = 0;
-          } else if (cardProgress < 1) {
-            const normalizedProgress = (cardProgress - 0.6) / 0.4;
-            x = gsap.utils.interpolate(
-              index === 0 ? "100%" : index === 1 ? "0%" : "-100%",
-              "0%",
-              smoothStep(normalizedProgress)
-            );
-            rotate = gsap.utils.interpolate(
-              index === 0 ? -5 : index === 1 ? 0 : 5,
+          ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
+            const delay = index * 0.5;
+            const cardProgress = gsap.utils.clamp(
               0,
-              smoothStep(normalizedProgress)
+              1,
+              (progress - delay * 0.1) / (0.9 - delay * 0.1),
             );
-            rotationY = smoothStep(normalizedProgress) * 180;
-          } else {
-            x = "0%";
-            rotate = 0;
-            rotationY = 180;
-          }
+            const innerCard = document.querySelector(
+              `${cardId} .flip-card-inner`,
+            );
 
-          gsap.set(cardId, {
-            opacity: opacity,
-            y: y,
-            x: x,
-            rotate: rotate,
-            scale: scale,
-          });
+            let y;
+            if (cardProgress < 0.4) {
+              const normalizedProgress = cardProgress / 0.4;
+              y = gsap.utils.interpolate(
+                "-100%",
+                "40%",
+                smoothStep(normalizedProgress),
+              );
+            } else if (cardProgress < 0.6) {
+              const normalizedProgress = (cardProgress - 0.4) / 0.2;
+              y = gsap.utils.interpolate(
+                "40%",
+                "0%",
+                smoothStep(normalizedProgress),
+              );
+            } else {
+              y = "0%";
+            }
 
-          if (innerCard) {
-            gsap.set(innerCard, {
-              rotationY: rotationY,
+            let scale;
+            if (cardProgress < 0.4) {
+              const normalizedProgress = cardProgress / 0.4;
+              scale = gsap.utils.interpolate(
+                0.25,
+                0.75,
+                smoothStep(normalizedProgress),
+              );
+            } else if (cardProgress < 0.6) {
+              const normalizedProgress = (cardProgress - 0.4) / 0.2;
+              scale = gsap.utils.interpolate(
+                0.75,
+                1,
+                smoothStep(normalizedProgress),
+              );
+            } else {
+              scale = 1;
+            }
+
+            let opacity;
+            if (cardProgress < 0.2) {
+              const normalizedProgress = cardProgress / 0.2;
+              opacity = smoothStep(normalizedProgress);
+            } else {
+              opacity = 1;
+            }
+
+            let x, rotate, rotationY;
+            if (cardProgress < 0.6) {
+              x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
+              rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
+              rotationY = 0;
+            } else if (cardProgress < 1) {
+              const normalizedProgress = (cardProgress - 0.6) / 0.4;
+              x = gsap.utils.interpolate(
+                index === 0 ? "100%" : index === 1 ? "0%" : "-100%",
+                "0%",
+                smoothStep(normalizedProgress),
+              );
+              rotate = gsap.utils.interpolate(
+                index === 0 ? -5 : index === 1 ? 0 : 5,
+                0,
+                smoothStep(normalizedProgress),
+              );
+              rotationY = smoothStep(normalizedProgress) * 180;
+            } else {
+              x = "0%";
+              rotate = 0;
+              rotationY = 180;
+            }
+
+            gsap.set(cardId, {
+              opacity: opacity,
+              y: y,
+              x: x,
+              rotate: rotate,
+              scale: scale,
             });
-          }
-        });
-      },
-    });
 
-  }, { scope: containerRef });
+            if (innerCard) {
+              gsap.set(innerCard, {
+                rotationY: rotationY,
+              });
+            }
+          });
+        },
+      });
+    },
+    { scope: containerRef },
+  );
 
   const { contextSafe } = useGSAP({ scope: containerRef });
 
@@ -180,19 +203,24 @@ export default function ShowUpCardsPage() {
     });
   });
 
-  const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      ease: "elastic.out(1.1, 0.4)",
-      duration: 0.75,
-      overwrite: "auto",
-    });
-  });
+  const handleMouseLeave = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        ease: "elastic.out(1.1, 0.4)",
+        duration: 0.75,
+        overwrite: "auto",
+      });
+    },
+  );
 
   return (
-    <div className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans" ref={containerRef}>
+    <div
+      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      ref={containerRef}
+    >
       {/* Tactile Grid Backgrounds */}
       <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
       <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
@@ -200,12 +228,15 @@ export default function ShowUpCardsPage() {
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Page Heading readout (absolute right) */}
@@ -221,10 +252,12 @@ export default function ShowUpCardsPage() {
       {/* Interactive Cards Overlay (Pins on scroll) */}
       <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
         <div className="absolute inset-0 dot-grid opacity-15" />
-        
+
         {/* Simple Header Inside Container */}
         <div className="text-center select-none max-w-lg mb-8 pointer-events-none z-10">
-          <span className="font-mono text-[10px] font-bold text-zinc-400 block tracking-widest">[ ASSEMBLY SEQUENCING ]</span>
+          <span className="font-mono text-[10px] font-bold text-zinc-400 block tracking-widest">
+            [ ASSEMBLY SEQUENCING ]
+          </span>
           <h2 className="text-2xl md:text-3xl font-serif font-black uppercase text-[#2a2a2a] leading-none mt-2">
             Scroll to Build Nodes
           </h2>
@@ -246,14 +279,20 @@ export default function ShowUpCardsPage() {
                 transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
               }}
             >
-              <div className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu" style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}>
+              <div
+                className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu"
+                style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}
+              >
                 <div className="flip-card-inner w-full h-full preserve-3d relative">
-                  
                   {/* Front Side Face */}
                   <div className="flip-card-front absolute inset-0 brutalist-card p-4 bg-white text-[#2a2a2a] flex flex-col justify-between backface-hidden cursor-pointer select-none">
                     <div className="flex justify-between items-center">
-                      <span className="font-mono text-[9px] font-bold text-zinc-400">[{stage.phase}]</span>
-                      <span className={`inline-block border border-black px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${stage.accentClass}`}>
+                      <span className="font-mono text-[9px] font-bold text-zinc-400">
+                        [{stage.phase}]
+                      </span>
+                      <span
+                        className={`inline-block border border-black px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${stage.accentClass}`}
+                      >
                         FLIP NODE
                       </span>
                     </div>
@@ -269,16 +308,24 @@ export default function ShowUpCardsPage() {
                     </div>
 
                     <div className="flex justify-between items-center border-t border-zinc-200 pt-2">
-                      <h3 className="font-serif font-black text-xs text-[#2a2a2a]">{stage.title}</h3>
-                      <span className="font-mono text-[10px] text-zinc-400 font-bold">0{stage.id}</span>
+                      <h3 className="font-serif font-black text-xs text-[#2a2a2a]">
+                        {stage.title}
+                      </h3>
+                      <span className="font-mono text-[10px] text-zinc-400 font-bold">
+                        0{stage.id}
+                      </span>
                     </div>
                   </div>
 
                   {/* Back Side Face (Scroll-revealed) */}
                   <div className="flip-card-back absolute inset-0 brutalist-card p-4 bg-white border-3 border-[#2a2a2a] text-[#2a2a2a] flex flex-col justify-between rotate-y-180 backface-hidden cursor-pointer select-none">
                     <div className="w-full flex justify-between font-mono font-bold text-[9px] uppercase border-b-2 border-black pb-2 items-center">
-                      <span className="text-zinc-400">0{stage.id} {"//"} NODE DETAILS</span>
-                      <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${stage.accentClass}`} />
+                      <span className="text-zinc-400">
+                        0{stage.id} {"//"} NODE DETAILS
+                      </span>
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${stage.accentClass}`}
+                      />
                     </div>
 
                     <div className="flex-1 flex flex-col justify-center items-center text-center py-4">
@@ -295,7 +342,6 @@ export default function ShowUpCardsPage() {
                       <span>SECURE // OK</span>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

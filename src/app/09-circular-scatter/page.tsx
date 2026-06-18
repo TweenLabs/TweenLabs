@@ -1,17 +1,25 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 // Custom Text Scramble Component
-function ScrambleText({ text, speed = 25, delay = 0 }: { text: string; speed?: number; delay?: number }) {
+function ScrambleText({
+  text,
+  speed = 25,
+  delay = 0,
+}: {
+  text: string;
+  speed?: number;
+  delay?: number;
+}) {
   const [displayText, setDisplayText] = useState("");
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -139,141 +147,164 @@ export default function CircularScatterPage() {
   const floatingCardsRef = useRef<HTMLDivElement>(null);
   const floatTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  useGSAP(() => {
-    const cards = gsap.utils.toArray<HTMLElement>(".scatter-card");
-    
-    // Compute all coordinates relative to screen center while cards are in their initial CSS positions
-    const cardParams = cards.map((card) => {
-      const rect = card.getBoundingClientRect();
-      const targetCenterX = rect.left + rect.width / 2;
-      const screenCenterX = window.innerWidth / 2;
-      const targetCenterY = rect.top + rect.height / 2;
-      const screenCenterY = window.innerHeight / 2;
-      
-      const X_c = screenCenterX - targetCenterX;
-      const Y_c = screenCenterY - targetCenterY;
-      
-      const R_final = Math.sqrt(X_c * X_c + Y_c * Y_c);
-      const theta_final = Math.atan2(-Y_c, -X_c);
-      
-      return {
-        card,
-        X_c,
-        Y_c,
-        R_final,
-        theta_final
-      };
-    });
+  useGSAP(
+    () => {
+      const cards = gsap.utils.toArray<HTMLElement>(".scatter-card");
 
-    // 1. Initial State: Centered and Stacked
-    cardParams.forEach((param, idx) => {
-      gsap.set(param.card, {
-        x: param.X_c,
-        y: param.Y_c,
-        scale: 0.9,
-        rotation: 0,
-        opacity: 0,
-        zIndex: 10 + idx,
+      // Compute all coordinates relative to screen center while cards are in their initial CSS positions
+      const cardParams = cards.map((card) => {
+        const rect = card.getBoundingClientRect();
+        const targetCenterX = rect.left + rect.width / 2;
+        const screenCenterX = window.innerWidth / 2;
+        const targetCenterY = rect.top + rect.height / 2;
+        const screenCenterY = window.innerHeight / 2;
+
+        const X_c = screenCenterX - targetCenterX;
+        const Y_c = screenCenterY - targetCenterY;
+
+        const R_final = Math.sqrt(X_c * X_c + Y_c * Y_c);
+        const theta_final = Math.atan2(-Y_c, -X_c);
+
+        return {
+          card,
+          X_c,
+          Y_c,
+          R_final,
+          theta_final,
+        };
       });
-    });
 
-    const introTl = gsap.timeline({
-      defaults: { ease: "power4.out" },
-      onComplete: () => {
-        startFloatingIdle();
-      }
-    });
-
-    // Staggered Stack-in at Center:
-    // Cards appear one-by-one in the exact center of the screen
-    talentData.forEach((card, idx) => {
-      introTl.to(`.scatter-card-${idx}`, {
-        opacity: 1,
-        scale: 1.02,
-        rotation: (idx % 2 === 0 ? 4 : -4),
-        duration: 0.38,
-        ease: "back.out(1.2)",
-      }, idx * 0.3);
-    });
-
-    const scatterStart = talentData.length * 0.3 + 0.4;
-
-    // Explode to Circular Layout with Spiral Orbit:
-    // Cards explode outwards following a circular loop/spiral path before stopping
-    cardParams.forEach((param, idx) => {
-      const loops = 0.6; // Elegant 0.6 circular loop before stopping to keep it clean and non-overlapping
-      const animObj = { p: 0 };
-      
-      introTl.to(animObj, {
-        p: 1,
-        duration: 2.8,
-        ease: "power3.out",
-        onUpdate: () => {
-          const t = animObj.p;
-          const R_t = param.R_final * t;
-          // Spiral: starts at theta_final - 2*PI*loops, ends at theta_final
-          const theta_t = param.theta_final - (2 * Math.PI * (1 - t) * loops);
-          
-          const x = param.X_c + R_t * Math.cos(theta_t);
-          const y = param.Y_c + R_t * Math.sin(theta_t);
-          
-          gsap.set(param.card, {
-            x,
-            y,
-            rotation: gsap.utils.interpolate(idx % 2 === 0 ? 4 : -4, talentData[idx].rot, t),
-            scale: gsap.utils.interpolate(1.02, 1, t),
-          });
-        },
-      }, scatterStart); // Start all card expansions simultaneously to prevent intersections and keep the movement clean
-    });
-
-    // Fade/Slide in the Central Hero text at the same time
-    introTl.fromTo(".hero-tagline",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2 },
-      scatterStart
-    )
-    .fromTo(".hero-title-scramble",
-      { opacity: 0 },
-      { opacity: 1, duration: 0.8 },
-      scatterStart + 0.2
-    )
-    .fromTo(".hero-subtitle",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2 },
-      scatterStart + 0.4
-    )
-    .fromTo(".hero-cta-btn",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2 },
-      scatterStart + 0.6
-    );
-
-    // 2. Continuous Floating Idle Loop
-    function startFloatingIdle() {
-      floatTimelineRef.current = gsap.timeline({ repeat: -1 });
-      
+      // 1. Initial State: Centered and Stacked
       cardParams.forEach((param, idx) => {
-        const offset = idx % 2 === 0 ? 1 : -1;
-        gsap.to(param.card, {
-          y: `+=${10 * offset}`,
-          x: `+=${5 * -offset}`,
-          rotation: `+=${1.5 * offset}`,
-          duration: 3.2 + idx * 0.3,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
+        gsap.set(param.card, {
+          x: param.X_c,
+          y: param.Y_c,
+          scale: 0.9,
+          rotation: 0,
+          opacity: 0,
+          zIndex: 10 + idx,
         });
       });
-    }
 
-    return () => {
-      if (floatTimelineRef.current) floatTimelineRef.current.kill();
-    };
-  }, { scope: containerRef });
+      const introTl = gsap.timeline({
+        defaults: { ease: "power4.out" },
+        onComplete: () => {
+          startFloatingIdle();
+        },
+      });
+
+      // Staggered Stack-in at Center:
+      // Cards appear one-by-one in the exact center of the screen
+      talentData.forEach((card, idx) => {
+        introTl.to(
+          `.scatter-card-${idx}`,
+          {
+            opacity: 1,
+            scale: 1.02,
+            rotation: idx % 2 === 0 ? 4 : -4,
+            duration: 0.38,
+            ease: "back.out(1.2)",
+          },
+          idx * 0.3,
+        );
+      });
+
+      const scatterStart = talentData.length * 0.3 + 0.4;
+
+      // Explode to Circular Layout with Spiral Orbit:
+      // Cards explode outwards following a circular loop/spiral path before stopping
+      cardParams.forEach((param, idx) => {
+        const loops = 0.6; // Elegant 0.6 circular loop before stopping to keep it clean and non-overlapping
+        const animObj = { p: 0 };
+
+        introTl.to(
+          animObj,
+          {
+            p: 1,
+            duration: 2.8,
+            ease: "power3.out",
+            onUpdate: () => {
+              const t = animObj.p;
+              const R_t = param.R_final * t;
+              // Spiral: starts at theta_final - 2*PI*loops, ends at theta_final
+              const theta_t = param.theta_final - 2 * Math.PI * (1 - t) * loops;
+
+              const x = param.X_c + R_t * Math.cos(theta_t);
+              const y = param.Y_c + R_t * Math.sin(theta_t);
+
+              gsap.set(param.card, {
+                x,
+                y,
+                rotation: gsap.utils.interpolate(
+                  idx % 2 === 0 ? 4 : -4,
+                  talentData[idx].rot,
+                  t,
+                ),
+                scale: gsap.utils.interpolate(1.02, 1, t),
+              });
+            },
+          },
+          scatterStart,
+        ); // Start all card expansions simultaneously to prevent intersections and keep the movement clean
+      });
+
+      // Fade/Slide in the Central Hero text at the same time
+      introTl
+        .fromTo(
+          ".hero-tagline",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.2 },
+          scatterStart,
+        )
+        .fromTo(
+          ".hero-title-scramble",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.8 },
+          scatterStart + 0.2,
+        )
+        .fromTo(
+          ".hero-subtitle",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.2 },
+          scatterStart + 0.4,
+        )
+        .fromTo(
+          ".hero-cta-btn",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.2 },
+          scatterStart + 0.6,
+        );
+
+      // 2. Continuous Floating Idle Loop
+      function startFloatingIdle() {
+        floatTimelineRef.current = gsap.timeline({ repeat: -1 });
+
+        cardParams.forEach((param, idx) => {
+          const offset = idx % 2 === 0 ? 1 : -1;
+          gsap.to(param.card, {
+            y: `+=${10 * offset}`,
+            x: `+=${5 * -offset}`,
+            rotation: `+=${1.5 * offset}`,
+            duration: 3.2 + idx * 0.3,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+          });
+        });
+      }
+
+      return () => {
+        if (floatTimelineRef.current) floatTimelineRef.current.kill();
+      };
+    },
+    { scope: containerRef },
+  );
 
   // Custom mouse-move/hover functions for cards
-  const handleCardEnter = (e: React.MouseEvent<HTMLDivElement>, color: string) => {
+  const handleCardEnter = (
+    e: React.MouseEvent<HTMLDivElement>,
+    color: string,
+  ) => {
     gsap.to(e.currentTarget, {
       scale: 1.08,
       borderColor: color,
@@ -302,14 +333,21 @@ export default function CircularScatterPage() {
   };
 
   return (
-    <div className="relative h-screen w-screen bg-[#f2ece0] text-[#2a2a2a] overflow-hidden selection:bg-[#f1b333] selection:text-black" ref={containerRef}>
-      
+    <div
+      className="relative h-screen w-screen bg-[#f2ece0] text-[#2a2a2a] overflow-hidden selection:bg-[#f1b333] selection:text-black"
+      ref={containerRef}
+    >
       {/* Premium subtle grid background overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" style={{ opacity: 0.25 }} />
+      <div
+        className="absolute inset-0 dot-grid pointer-events-none z-0"
+        style={{ opacity: 0.25 }}
+      />
 
       {/* 1. Hero Section (Circular Cards Workspace) */}
-      <div ref={heroRef} className="h-screen w-full relative flex flex-col justify-center items-center overflow-hidden">
-        
+      <div
+        ref={heroRef}
+        className="h-screen w-full relative flex flex-col justify-center items-center overflow-hidden"
+      >
         {/* Central Hero Text Area (Bottom Centered) */}
         <div className="absolute bottom-[4vh] md:bottom-[6vh] left-1/2 -translate-x-1/2 z-20 text-center w-full max-w-2xl px-6 pointer-events-none">
           <span className="hero-tagline inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-[#f1b333] font-black bg-[#2a2a2a] text-white px-3 py-1 rounded-full mb-4">
@@ -323,21 +361,28 @@ export default function CircularScatterPage() {
             </span>
           </h1>
           <p className="hero-subtitle font-mono text-[11px] md:text-xs text-[#2a2a2a]/70 max-w-lg mx-auto leading-relaxed mb-8 pointer-events-auto">
-            Engineers who own outcomes — CTO-screened with a ≤ 5% pass rate. Ready to scale your product immediately.
+            Engineers who own outcomes — CTO-screened with a ≤ 5% pass rate.
+            Ready to scale your product immediately.
           </p>
           <div className="hero-cta-btn inline-block pointer-events-auto">
             <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
-        
-      >
-        ← Back
-      </button>
+              onClick={() =>
+                window.history.length > 1
+                  ? window.history.back()
+                  : (window.location.href = "/")
+              }
+              className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+            >
+              ← Back
+            </button>
           </div>
         </div>
- 
+
         {/* Floating cards container */}
-        <div ref={floatingCardsRef} className="absolute inset-0 w-full h-full pointer-events-none z-10">
+        <div
+          ref={floatingCardsRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-10"
+        >
           {talentData.map((card, idx) => (
             <div
               key={card.id}
@@ -378,9 +423,7 @@ export default function CircularScatterPage() {
             </div>
           ))}
         </div>
-
       </div>
-
     </div>
   );
 }

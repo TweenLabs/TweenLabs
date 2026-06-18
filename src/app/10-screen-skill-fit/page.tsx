@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -28,8 +27,15 @@ const candidates = [
     },
     right: {
       companies: ["Studio Shodwe", "SS25"],
-      quote: "Minimal layers, maximum presence. The gray shirt is never just a shirt.",
-      skills: ["Outerwear", "Layering", "Neutral Tones", "Unisex Fit", "Soft Drape"],
+      quote:
+        "Minimal layers, maximum presence. The gray shirt is never just a shirt.",
+      skills: [
+        "Outerwear",
+        "Layering",
+        "Neutral Tones",
+        "Unisex Fit",
+        "Soft Drape",
+      ],
     },
   },
   {
@@ -49,8 +55,15 @@ const candidates = [
     },
     right: {
       companies: ["Menswear", "Portrait"],
-      quote: "The white shirt — unbuttoned, unfiltered. Style that doesn't try.",
-      skills: ["Editorial", "Portraiture", "Street Style", "Minimalism", "Raw Aesthetic"],
+      quote:
+        "The white shirt — unbuttoned, unfiltered. Style that doesn't try.",
+      skills: [
+        "Editorial",
+        "Portraiture",
+        "Street Style",
+        "Minimalism",
+        "Raw Aesthetic",
+      ],
     },
   },
   {
@@ -71,7 +84,13 @@ const candidates = [
     right: {
       companies: ["Studio Shodwe", "FW25"],
       quote: "One colour. One silhouette. Everything you need for the season.",
-      skills: ["Womenswear", "Minimal Drape", "Navy Palette", "Gold Detail", "Statement Cut"],
+      skills: [
+        "Womenswear",
+        "Minimal Drape",
+        "Navy Palette",
+        "Gold Detail",
+        "Statement Cut",
+      ],
     },
   },
   {
@@ -92,7 +111,13 @@ const candidates = [
     right: {
       companies: ["Instagram", "Brand Collabs"],
       quote: "You're not just getting a makeover — you're leveling up.",
-      skills: ["Editorial Makeup", "Skincare", "Content Creation", "Brand Deals", "Reels"],
+      skills: [
+        "Editorial Makeup",
+        "Skincare",
+        "Content Creation",
+        "Brand Deals",
+        "Reels",
+      ],
     },
   },
 ];
@@ -110,7 +135,12 @@ export default function ScreenSkillFitPage() {
     () => {
       // ── All cards + panels start HIDDEN (below screen) ──────────────────
       candidates.forEach((_, i) => {
-        gsap.set(`.sc-card-${i}`, { y: "115%", scale: 0.88, opacity: 0, rotation: i % 2 === 0 ? 3 : -3 });
+        gsap.set(`.sc-card-${i}`, {
+          y: "115%",
+          scale: 0.88,
+          opacity: 0,
+          rotation: i % 2 === 0 ? 3 : -3,
+        });
         gsap.set(`.sc-left-${i}`, { x: -100, opacity: 0 });
         gsap.set(`.sc-right-${i}`, { x: 100, opacity: 0 });
       });
@@ -146,58 +176,80 @@ export default function ScreenSkillFitPage() {
         const rotOut = i % 2 === 0 ? -5 : 5;
 
         // — CARD IN — (unchanged)
-        tl.to(`.sc-card-${i}`,
-          { y: 0, scale: 1, opacity: 1, rotation: rotIn, duration: IN_DUR, ease: "power3.out" },
-          base
+        tl.to(
+          `.sc-card-${i}`,
+          {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            rotation: rotIn,
+            duration: IN_DUR,
+            ease: "power3.out",
+          },
+          base,
         );
 
         // — PANELS IN — appear after card is already visible (not simultaneous)
-        tl.to(`.sc-left-${i}`,
+        tl.to(
+          `.sc-left-${i}`,
           { x: 0, opacity: 1, duration: IN_DUR * 0.9, ease: "power2.out" },
-          base + 0.22          // ← was 0.06 — now panels enter after card is settled
+          base + 0.22, // ← was 0.06 — now panels enter after card is settled
         );
-        tl.to(`.sc-right-${i}`,
+        tl.to(
+          `.sc-right-${i}`,
           { x: 0, opacity: 1, duration: IN_DUR * 0.9, ease: "power2.out" },
-          base + 0.24          // ← slight stagger right after left
+          base + 0.24, // ← slight stagger right after left
         );
 
         if (i < N - 1) {
           // — CARD OUT — (unchanged)
-          tl.to(`.sc-card-${i}`,
-            { y: "-115%", scale: 0.9, opacity: 0, rotation: rotOut, duration: OUT_DUR, ease: "power3.inOut" },
-            base + HOLD_END
+          tl.to(
+            `.sc-card-${i}`,
+            {
+              y: "-115%",
+              scale: 0.9,
+              opacity: 0,
+              rotation: rotOut,
+              duration: OUT_DUR,
+              ease: "power3.inOut",
+            },
+            base + HOLD_END,
           );
 
           // — PANELS OUT — exit fast BEFORE card starts moving
-          tl.to(`.sc-left-${i}`,
+          tl.to(
+            `.sc-left-${i}`,
             { x: -80, opacity: 0, duration: 0.18, ease: "power3.in" },
-            base + HOLD_END - 0.12   // ← exits just before card starts moving
+            base + HOLD_END - 0.12, // ← exits just before card starts moving
           );
-          tl.to(`.sc-right-${i}`,
+          tl.to(
+            `.sc-right-${i}`,
             { x: 80, opacity: 0, duration: 0.18, ease: "power3.in" },
-            base + HOLD_END - 0.10   // ← slight stagger
+            base + HOLD_END - 0.1, // ← slight stagger
           );
         }
       });
-
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
     <div ref={containerRef} className="bg-[#f5f0e8] text-[#1c1714]">
-
       {/* ══ SECTION 1: Intro ══════════════════════════════════════════════ */}
       <div className="h-screen w-full flex flex-col items-center justify-center relative gap-6">
         {/* Back button — same style as all other pages */}
         <div className="fixed left-6 top-6 z-50">
-        <button
-          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
-        >
-          ← Back
-        </button>
-      </div>
+          <button
+            onClick={() =>
+              window.history.length > 1
+                ? window.history.back()
+                : (window.location.href = "/")
+            }
+            className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+          >
+            ← Back
+          </button>
+        </div>
 
         {/* Eyebrow */}
         <span className="font-mono text-[9px] font-bold uppercase tracking-[0.4em] text-[#0c9367] select-none">
@@ -206,18 +258,23 @@ export default function ScreenSkillFitPage() {
 
         {/* Main heading */}
         <h1 className="font-serif font-black text-[clamp(2.6rem,6vw,5.5rem)] text-[#1c1714] leading-[1.0] tracking-tight uppercase text-center select-none">
-          Style.<br />
+          Style.
+          <br />
           <span className="text-[#0c9367]">Scroll to see.</span>
         </h1>
 
         {/* Sub copy */}
         <p className="font-mono text-[11px] text-stone-400 tracking-wide text-center max-w-[300px] leading-relaxed select-none">
-          Fashion editorials · Portrait · Beauty creators.<br />Scroll to meet the cards.
+          Fashion editorials · Portrait · Beauty creators.
+          <br />
+          Scroll to meet the cards.
         </p>
 
         {/* Scroll cue */}
         <div className="flex flex-col items-center gap-2 opacity-40 mt-4 select-none">
-          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-stone-400">Scroll</span>
+          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-stone-400">
+            Scroll
+          </span>
           <div className="w-px h-10 bg-stone-300 rounded-full overflow-hidden relative">
             <div
               className="absolute top-0 left-0 w-full h-1/2 bg-stone-600 rounded-full"
@@ -237,7 +294,6 @@ export default function ScreenSkillFitPage() {
 
       {/* ══ SECTION 2: Pinned animation screen ══════════════════════════════ */}
       <div ref={pinRef} className="h-screen w-full relative">
-
         {/* Noise texture */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
@@ -260,10 +316,12 @@ export default function ScreenSkillFitPage() {
 
         {/* ── Three-column layout ─────────────────────────────────────────── */}
         <div className="absolute inset-0 flex items-center justify-center px-8 md:px-14 gap-8 xl:gap-14">
-
           {/* LEFT PANELS */}
           <div className="flex-1 h-full relative hidden md:flex items-center">
-            <div className="relative w-full" style={{ height: "min(480px, 60vh)" }}>
+            <div
+              className="relative w-full"
+              style={{ height: "min(480px, 60vh)" }}
+            >
               {candidates.map((c, i) => (
                 <div
                   key={c.id}
@@ -272,7 +330,11 @@ export default function ScreenSkillFitPage() {
                   {/* Accent tag */}
                   <span
                     className="self-start font-mono text-[9px] font-black uppercase tracking-[0.22em] px-3 py-1.5 rounded-full border"
-                    style={{ color: c.color, borderColor: `${c.color}50`, backgroundColor: `${c.color}12` }}
+                    style={{
+                      color: c.color,
+                      borderColor: `${c.color}50`,
+                      backgroundColor: `${c.color}12`,
+                    }}
                   >
                     {c.left.tag}
                   </span>
@@ -337,18 +399,25 @@ export default function ScreenSkillFitPage() {
 
                 {/* Card footer */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                  <div className="h-[2px] w-8 rounded-full mb-3" style={{ backgroundColor: c.color }} />
+                  <div
+                    className="h-[2px] w-8 rounded-full mb-3"
+                    style={{ backgroundColor: c.color }}
+                  />
                   <h3 className="font-serif font-black text-[1.15rem] text-white leading-none tracking-tight mb-1">
                     {c.name}
                   </h3>
-                  <p className="font-mono text-[9px] font-bold uppercase tracking-wider" style={{ color: c.color }}>
+                  <p
+                    className="font-mono text-[9px] font-bold uppercase tracking-wider"
+                    style={{ color: c.color }}
+                  >
                     {c.role}
                   </p>
                 </div>
 
                 {/* Index */}
                 <div className="absolute top-4 right-4 z-10 font-mono text-[8px] font-bold text-white/35">
-                  [{String(i + 1).padStart(2, "0")} / {String(N).padStart(2, "0")}]
+                  [{String(i + 1).padStart(2, "0")} /{" "}
+                  {String(N).padStart(2, "0")}]
                 </div>
               </div>
             ))}
@@ -370,7 +439,10 @@ export default function ScreenSkillFitPage() {
 
           {/* RIGHT PANELS */}
           <div className="flex-1 h-full relative hidden md:flex items-center">
-            <div className="relative w-full" style={{ height: "min(480px, 60vh)" }}>
+            <div
+              className="relative w-full"
+              style={{ height: "min(480px, 60vh)" }}
+            >
               {candidates.map((c, i) => (
                 <div
                   key={c.id}
@@ -421,7 +493,10 @@ export default function ScreenSkillFitPage() {
                   {/* CTA */}
                   <button
                     className="self-start font-mono text-[9px] font-black uppercase tracking-wider px-5 py-2.5 rounded-full"
-                    style={{ backgroundColor: c.color, color: c.id === 1 ? "#111" : "#fff" }}
+                    style={{
+                      backgroundColor: c.color,
+                      color: c.id === 1 ? "#111" : "#fff",
+                    }}
                   >
                     View Profile →
                   </button>
@@ -429,7 +504,6 @@ export default function ScreenSkillFitPage() {
               ))}
             </div>
           </div>
-
         </div>
 
         {/* Bottom-center: thin scroll progress bar */}
@@ -439,10 +513,7 @@ export default function ScreenSkillFitPage() {
             style={{ width: "0%", transition: "width 0.3s ease" }}
           />
         </div>
-
       </div>
-
-
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -11,13 +11,21 @@ export default function Footer() {
           {/* Column 1: Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <img src="/logo.svg" alt="TweenLabs Logo" className="h-8 w-8 object-contain" />
+              <Image
+                src="/logo.svg"
+                alt="TweenLabs Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
               <span className="font-serif font-black text-2xl tracking-tight text-[#2a2a2a]">
                 TweenLabs
               </span>
             </div>
             <p className="text-sm font-sans font-medium text-zinc-650 leading-relaxed max-w-sm">
-              A curated catalog of production-ready, interactive GSAP components, scroll triggers, and 3D templates for high-fidelity web experiences.
+              A curated catalog of production-ready, interactive GSAP
+              components, scroll triggers, and 3D templates for high-fidelity
+              web experiences.
             </p>
           </div>
 
@@ -28,9 +36,9 @@ export default function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 text-sm font-sans font-medium">
               <li>
-                <a 
-                  href="https://github.com/GSAP-PLAYGROUND/TweenLabs" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/GSAP-PLAYGROUND/TweenLabs"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-600 hover:text-wtf-orange transition-colors duration-150 flex items-center gap-1.5"
                 >
@@ -38,19 +46,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://gsap.com" 
-                  target="_blank" 
+                <a
+                  href="https://gsap.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-600 hover:text-wtf-orange transition-colors duration-150 flex items-center gap-1.5"
                 >
                   Official GSAP Docs ↗
                 </a>
-              </li>
-              <li>
-                <Link href="/sitemap.xml" className="text-zinc-600 hover:text-wtf-orange transition-colors duration-150">
-                  Sitemap XML
-                </Link>
               </li>
             </ul>
           </div>
@@ -80,10 +83,11 @@ export default function Footer() {
         {/* Sub-footer Section */}
         <div className="border-t-2 border-[#2a2a2a]/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs font-mono text-zinc-500">
-            © {new Date().getFullYear()} TweenLabs. Open-source under MIT License.
+            © {new Date().getFullYear()} TweenLabs. Open-source under MIT
+            License.
           </span>
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="brutalist-btn bg-white hover:bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-md cursor-pointer transition-all"
           >
             Back To Top ↑

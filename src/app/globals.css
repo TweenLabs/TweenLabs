@@ -5,7 +5,7 @@
   --foreground: #2a2a2a;
   --card-bg: #ffffff;
   --border-color: #2a2a2a;
-  
+
   /* Color Palette */
   --wtf-purple: #6758a5;
   --wtf-green: #0c9367;
@@ -13,7 +13,7 @@
   --wtf-orange: #e55b3c;
   --wtf-yellow: #f1b333;
   --wtf-blue: #3b82f6;
-  
+
   --shadow-color: #2a2a2a;
 }
 
@@ -22,41 +22,24 @@
   --color-foreground: var(--foreground);
   --color-card-bg: var(--card-bg);
   --color-border-color: var(--border-color);
-  
+
   --color-wtf-purple: var(--wtf-purple);
   --color-wtf-green: var(--wtf-green);
   --color-wtf-red: var(--wtf-red);
   --color-wtf-orange: var(--wtf-orange);
   --color-wtf-yellow: var(--wtf-yellow);
   --color-wtf-blue: var(--wtf-blue);
-  
+
   --font-sans: var(--font-geist);
   --font-serif: var(--font-fraunces);
   --font-mono: var(--font-space-mono);
 }
 
-html, body {
+html,
+body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-}
-
-/* Lenis Recommended Styles */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis-stopped {
-  overflow: hidden;
 }
 
 /* Custom Scrollbar */
@@ -90,7 +73,9 @@ html.lenis body {
   background: var(--card-bg);
   border: 3px solid var(--border-color);
   box-shadow: 6px 6px 0px var(--shadow-color);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brutalist-card-interactive:hover {
@@ -107,7 +92,9 @@ html.lenis body {
 .brutalist-btn {
   border: 3px solid var(--border-color);
   box-shadow: 4px 4px 0px var(--shadow-color);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .brutalist-btn:hover {

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Fraunces, Space_Mono } from "next/font/google";
-import LenisProvider from "@/provider/LenisProvider";
+import { Fraunces, Geist, Space_Mono } from "next/font/google";
 import "./globals.css";
 
 const geist = Geist({
@@ -25,7 +24,8 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: "TweenLabs | Best GSAP UI Components & React Animation Templates",
-  description: "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
+  description:
+    "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
   keywords: [
     "best GSAP components",
     "GSAP components",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "ScrollTrigger",
     "Web Animations",
     "Neo-Brutalism",
-    "TweenLabs"
+    "TweenLabs",
   ],
   alternates: {
     canonical: "https://tweenlabs.xyz",
@@ -54,7 +54,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "TweenLabs | Best GSAP UI Components & React Animation Templates",
-    description: "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
+    description:
+      "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
     url: "https://tweenlabs.xyz",
     siteName: "TweenLabs",
     locale: "en_US",
@@ -71,7 +72,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TweenLabs | Best GSAP UI Components & React Animation Templates",
-    description: "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
+    description:
+      "Discover TweenLabs: the best GSAP components library for web animations. Copy-paste free, production-ready GSAP UI components, ScrollTrigger widgets, 3D physics widgets, and layout transitions.",
     images: ["https://tweenlabs.xyz/Untitled%20design.png"],
   },
 };
@@ -87,67 +89,69 @@ export default function RootLayout({
       {
         "@type": "WebSite",
         "@id": "https://tweenlabs.xyz/#website",
-        "url": "https://tweenlabs.xyz",
-        "name": "TweenLabs",
-        "description": "The best curated library of premium, high-fidelity GSAP components and animations.",
-        "publisher": {
+        url: "https://tweenlabs.xyz",
+        name: "TweenLabs",
+        description:
+          "The best curated library of premium, high-fidelity GSAP components and animations.",
+        publisher: {
           "@type": "Organization",
-          "name": "TweenLabs"
-        }
+          name: "TweenLabs",
+        },
       },
       {
         "@type": "CollectionPage",
         "@id": "https://tweenlabs.xyz/#collectionpage",
-        "url": "https://tweenlabs.xyz",
-        "name": "Best GSAP UI Components & Animation Templates | TweenLabs",
-        "isPartOf": {
-          "@id": "https://tweenlabs.xyz/#website"
+        url: "https://tweenlabs.xyz",
+        name: "Best GSAP UI Components & Animation Templates | TweenLabs",
+        isPartOf: {
+          "@id": "https://tweenlabs.xyz/#website",
         },
-        "description": "A collection of 19+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, bento grids, and interactive typography.",
-        "about": {
+        description:
+          "A collection of 19+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, bento grids, and interactive typography.",
+        about: {
           "@type": "Thing",
-          "name": "GSAP (GreenSock Animation Platform) Components"
-        }
+          name: "GSAP (GreenSock Animation Platform) Components",
+        },
       },
       {
         "@type": "FAQPage",
         "@id": "https://tweenlabs.xyz/#faq",
-        "mainEntity": [
+        mainEntity: [
           {
             "@type": "Question",
-            "name": "What is TweenLabs?",
-            "acceptedAnswer": {
+            name: "What is TweenLabs?",
+            acceptedAnswer: {
               "@type": "Answer",
-              "text": "TweenLabs is a curated library of high-fidelity, interactive, and portable GSAP components, UI templates, and scroll-triggered animations. Every resource is designed to be easily copy-pasted into your React and Next.js projects."
-            }
+              text: "TweenLabs is a curated library of high-fidelity, interactive, and portable GSAP components, UI templates, and scroll-triggered animations. Every resource is designed to be easily copy-pasted into your React and Next.js projects.",
+            },
           },
           {
             "@type": "Question",
-            "name": "Are these GSAP components free?",
-            "acceptedAnswer": {
+            name: "Are these GSAP components free?",
+            acceptedAnswer: {
               "@type": "Answer",
-              "text": "Yes, all TweenLabs animations and layouts are free and open-source. Simply click 'Get Code' on any card, install the required packages, and drop the code directly into your codebase."
-            }
+              text: "Yes, all TweenLabs animations and layouts are free and open-source. Simply click 'Get Code' on any card, install the required packages, and drop the code directly into your codebase.",
+            },
           },
           {
             "@type": "Question",
-            "name": "What frameworks are supported?",
-            "acceptedAnswer": {
+            name: "What frameworks are supported?",
+            acceptedAnswer: {
               "@type": "Answer",
-              "text": "Our components are optimized for React 19, Next.js 16 (App Router), TypeScript, and Tailwind CSS. They utilize standard clean packages like @gsap/react and Lenis smooth scrolling."
-            }
+              text: "Our components are optimized for React 19, Next.js 16 (App Router), TypeScript, and Tailwind CSS. They utilize standard clean packages like @gsap/react and Lenis smooth scrolling.",
+            },
           },
           {
             "@type": "Question",
-            "name": "What kind of GSAP components are included?",
-            "acceptedAnswer": {
+            name: "What kind of GSAP components are included?",
+            acceptedAnswer: {
               "@type": "Answer",
-              "text": "TweenLabs houses a wide range of creative mechanics: 3D hover tilt grids, kinetic wave typography, scroll-pinned parallax card decks, pointer drag carousel wheels, elastic fluid cursors, and animated SVG networks."
-            }
-          }
-        ]
-      }
-    ]
+              text: "TweenLabs houses a wide range of creative mechanics: 3D hover tilt grids, kinetic wave typography, scroll-pinned parallax card decks, pointer drag carousel wheels, elastic fluid cursors, and animated SVG networks.",
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -163,11 +167,8 @@ export default function RootLayout({
         />
         {/* Fine Grain noise overlay across the entire site */}
         <div className="noise-overlay fixed inset-0 pointer-events-none z-[99] opacity-70" />
-        <LenisProvider>
-          {children}
-        </LenisProvider>
+        {children}
       </body>
     </html>
   );
 }
-

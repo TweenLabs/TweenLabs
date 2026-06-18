@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useRef, useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import { useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -63,32 +62,35 @@ export default function ScrollCardsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
-  useGSAP(() => {
-    const cardEls = gsap.utils.toArray<HTMLElement>(".scroll-card-item");
-    if (cardEls.length === 0) return;
+  useGSAP(
+    () => {
+      const cardEls = gsap.utils.toArray<HTMLElement>(".scroll-card-item");
+      if (cardEls.length === 0) return;
 
-    cardEls.forEach((card, index) => {
-      // Calculate dynamic pin durations so all cards remain pinned until the last card finishes
-      const cardHeight = window.innerHeight * 0.65;
-      const baseDuration = 450;
-      const pinDuration = (cardEls.length - 1 - index) * cardHeight + baseDuration;
+      cardEls.forEach((card, index) => {
+        // Calculate dynamic pin durations so all cards remain pinned until the last card finishes
+        const cardHeight = window.innerHeight * 0.65;
+        const baseDuration = 450;
+        const pinDuration =
+          (cardEls.length - 1 - index) * cardHeight + baseDuration;
 
-      // Pin each card container in place
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top 8%",
-        end: `+=${pinDuration}`,
-        pin: true,
-        pinSpacing: false,
-        onToggle: (self) => {
-          if (self.isActive) {
-            setActiveStep(index);
-          }
-        },
+        // Pin each card container in place
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 8%",
+          end: `+=${pinDuration}`,
+          pin: true,
+          pinSpacing: false,
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveStep(index);
+            }
+          },
+        });
       });
-    });
-
-  }, { scope: containerRef });
+    },
+    { scope: containerRef },
+  );
 
   const { contextSafe } = useGSAP({ scope: containerRef });
 
@@ -132,31 +134,36 @@ export default function ScrollCardsPage() {
   });
 
   // Reset 3D Tilt
-  const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      ease: "elastic.out(1.1, 0.4)",
-      duration: 0.8,
-      overwrite: "auto",
-    });
-
-    const img = card.querySelector(".inner-img-frame img");
-    if (img) {
-      gsap.to(img, {
-        x: 0,
-        y: 0,
-        scale: 1.0,
-        duration: 0.6,
-        ease: "power2.out",
+  const handleMouseLeave = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        ease: "elastic.out(1.1, 0.4)",
+        duration: 0.8,
         overwrite: "auto",
       });
-    }
-  });
+
+      const img = card.querySelector(".inner-img-frame img");
+      if (img) {
+        gsap.to(img, {
+          x: 0,
+          y: 0,
+          scale: 1.0,
+          duration: 0.6,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+    },
+  );
 
   return (
-    <div className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans" ref={containerRef}>
+    <div
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      ref={containerRef}
+    >
       {/* Tactile Grids */}
       <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
       <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
@@ -164,12 +171,15 @@ export default function ScrollCardsPage() {
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Page Heading readout (absolute right) */}
@@ -188,7 +198,9 @@ export default function ScrollCardsPage() {
           {/* Active progress fill line */}
           <div
             className="absolute top-0 left-0 w-full bg-[#2a2a2a] rounded transition-all duration-300"
-            style={{ height: `${(activeStep / (cardsData.length - 1)) * 100}%` }}
+            style={{
+              height: `${(activeStep / (cardsData.length - 1)) * 100}%`,
+            }}
           />
         </div>
         <div className="flex flex-col gap-5 items-center font-mono text-[10px] font-bold">
@@ -196,7 +208,9 @@ export default function ScrollCardsPage() {
             <div
               key={idx}
               className={`w-9 h-9 rounded-full border-2 border-[#2a2a2a] flex items-center justify-center transition-all duration-300 shadow-[2px_2px_0px_#2a2a2a] ${
-                idx === activeStep ? `${card.themeColor} text-white scale-110` : "bg-white text-zinc-400"
+                idx === activeStep
+                  ? `${card.themeColor} text-white scale-110`
+                  : "bg-white text-zinc-400"
               }`}
             >
               0{idx + 1}
@@ -234,8 +248,12 @@ export default function ScrollCardsPage() {
               {/* Step info on left */}
               <div className="flex-1 flex flex-col gap-3 relative z-10">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs opacity-50 uppercase tracking-widest">[ Step 0{index + 1} ]</span>
-                  <span className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${card.themeColor}`}>
+                  <span className="font-mono text-xs opacity-50 uppercase tracking-widest">
+                    [ Step 0{index + 1} ]
+                  </span>
+                  <span
+                    className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${card.themeColor}`}
+                  >
                     ACTIVE
                   </span>
                 </div>
@@ -249,10 +267,16 @@ export default function ScrollCardsPage() {
                 {/* Spec details readout */}
                 <div className="border border-zinc-200 bg-zinc-50 p-2.5 rounded-xl flex items-center justify-between font-mono max-w-[200px] mt-2 shadow-[2px_2px_0px_#2a2a2a]">
                   <div className="flex flex-col">
-                    <span className="text-[7px] text-zinc-400 font-bold">METRIC INDEX</span>
-                    <span className="text-[9px] font-black text-[#2a2a2a]">{card.statLabel || "NODE CHECK // OK"}</span>
+                    <span className="text-[7px] text-zinc-400 font-bold">
+                      METRIC INDEX
+                    </span>
+                    <span className="text-[9px] font-black text-[#2a2a2a]">
+                      {card.statLabel || "NODE CHECK // OK"}
+                    </span>
                   </div>
-                  <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${card.themeColor}`} />
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${card.themeColor}`}
+                  />
                 </div>
               </div>
 

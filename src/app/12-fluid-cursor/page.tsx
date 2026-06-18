@@ -1,73 +1,82 @@
 "use client";
 
-import Link from "next/link";
-import { useRef } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 export default function FluidCursorPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Custom cursor elements
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  
+
   // Mouse state refs
   const mouseCoords = useRef({ x: 0, y: 0 });
   const isHovered = useRef(false);
   const activeTargetRef = useRef<HTMLElement | null>(null);
 
-  const { contextSafe } = useGSAP(() => {
-    if (typeof window === "undefined" || !dotRef.current || !ringRef.current) return;
+  const { contextSafe } = useGSAP(
+    () => {
+      if (typeof window === "undefined" || !dotRef.current || !ringRef.current)
+        return;
 
-    // quickTo helpers for smooth tracking
-    const xToDot = gsap.quickTo(dotRef.current, "x", { duration: 0.08, ease: "power2.out" });
-    const yToDot = gsap.quickTo(dotRef.current, "y", { duration: 0.08, ease: "power2.out" });
+      // quickTo helpers for smooth tracking
+      const xToDot = gsap.quickTo(dotRef.current, "x", {
+        duration: 0.08,
+        ease: "power2.out",
+      });
+      const yToDot = gsap.quickTo(dotRef.current, "y", {
+        duration: 0.08,
+        ease: "power2.out",
+      });
 
-    const updateCursor = (e: MouseEvent) => {
-      mouseCoords.current = { x: e.clientX, y: e.clientY };
+      const updateCursor = (e: MouseEvent) => {
+        mouseCoords.current = { x: e.clientX, y: e.clientY };
 
-      // If we are not currently snapped/hovering on a magnetic target, track the mouse
-      if (!isHovered.current) {
-        xToDot(e.clientX);
-        yToDot(e.clientY);
-        gsap.to(ringRef.current, {
-          x: e.clientX - 16,
-          y: e.clientY - 16,
-          duration: 0.35,
-          ease: "power3.out",
-          overwrite: "auto",
-        });
-      } else if (activeTargetRef.current) {
-        // If we are hovering a target, follow the mouse inside the target with a slight offset
-        const rect = activeTargetRef.current.getBoundingClientRect();
-        
-        // Calculate offsets inside the element to create a magnetic drag effect
-        const elementCenterX = rect.left + rect.width / 2;
-        const elementCenterY = rect.top + rect.height / 2;
-        
-        const deltaX = (e.clientX - elementCenterX) * 0.15;
-        const deltaY = (e.clientY - elementCenterY) * 0.15;
+        // If we are not currently snapped/hovering on a magnetic target, track the mouse
+        if (!isHovered.current) {
+          xToDot(e.clientX);
+          yToDot(e.clientY);
+          gsap.to(ringRef.current, {
+            x: e.clientX - 16,
+            y: e.clientY - 16,
+            duration: 0.35,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        } else if (activeTargetRef.current) {
+          // If we are hovering a target, follow the mouse inside the target with a slight offset
+          const rect = activeTargetRef.current.getBoundingClientRect();
 
-        // Animate the snap border with the drag offset
-        gsap.to(ringRef.current, {
-          x: rect.left + deltaX,
-          y: rect.top + deltaY,
-          duration: 0.2,
-          overwrite: "auto",
-        });
+          // Calculate offsets inside the element to create a magnetic drag effect
+          const elementCenterX = rect.left + rect.width / 2;
+          const elementCenterY = rect.top + rect.height / 2;
 
-        // Small dot tracks mouse closely inside target
-        xToDot(e.clientX);
-        yToDot(e.clientY);
-      }
-    };
+          const deltaX = (e.clientX - elementCenterX) * 0.15;
+          const deltaY = (e.clientY - elementCenterY) * 0.15;
 
-    window.addEventListener("mousemove", updateCursor);
-    return () => window.removeEventListener("mousemove", updateCursor);
-  }, { scope: containerRef });
+          // Animate the snap border with the drag offset
+          gsap.to(ringRef.current, {
+            x: rect.left + deltaX,
+            y: rect.top + deltaY,
+            duration: 0.2,
+            overwrite: "auto",
+          });
+
+          // Small dot tracks mouse closely inside target
+          xToDot(e.clientX);
+          yToDot(e.clientY);
+        }
+      };
+
+      window.addEventListener("mousemove", updateCursor);
+      return () => window.removeEventListener("mousemove", updateCursor);
+    },
+    { scope: containerRef },
+  );
 
   // Handle snapping mouse enter
   const handleTargetEnter = (e: React.MouseEvent<HTMLElement>) => {
@@ -77,7 +86,7 @@ export default function FluidCursorPage() {
 
     const rect = target.getBoundingClientRect();
     const cursorText = target.getAttribute("data-cursor-text") || "";
-    
+
     contextSafe(() => {
       // Smoothly morph the outer ring to enclose the hovered element
       gsap.to(ringRef.current, {
@@ -189,7 +198,9 @@ export default function FluidCursorPage() {
           Fluid Custom Cursor
         </h1>
         <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Move your mouse over the bento cards and buttons below. The custom reticle cursor will smoothly track, morph, and stick onto target card boundaries.
+          Move your mouse over the bento cards and buttons below. The custom
+          reticle cursor will smoothly track, morph, and stick onto target card
+          boundaries.
         </p>
       </header>
 
@@ -203,14 +214,17 @@ export default function FluidCursorPage() {
           className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
-            <span className="font-mono text-[10px] font-bold text-zinc-400">DATA SOURCE A</span>
+            <span className="font-mono text-[10px] font-bold text-zinc-400">
+              DATA SOURCE A
+            </span>
             <span className="w-3.5 h-3.5 rounded-full bg-wtf-orange border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Alpha
           </h2>
           <p className="text-xs text-zinc-600 font-sans font-medium leading-normal">
-            Hover here to capture the outer elastic cursor ring into this bento block.
+            Hover here to capture the outer elastic cursor ring into this bento
+            block.
           </p>
         </div>
 
@@ -222,7 +236,9 @@ export default function FluidCursorPage() {
           className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
-            <span className="font-mono text-[10px] font-bold text-zinc-400">DATA SOURCE B</span>
+            <span className="font-mono text-[10px] font-bold text-zinc-400">
+              DATA SOURCE B
+            </span>
             <span className="w-3.5 h-3.5 rounded-full bg-wtf-green border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
@@ -241,14 +257,17 @@ export default function FluidCursorPage() {
           className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
-            <span className="font-mono text-[10px] font-bold text-zinc-400">DATA SOURCE C</span>
+            <span className="font-mono text-[10px] font-bold text-zinc-400">
+              DATA SOURCE C
+            </span>
             <span className="w-3.5 h-3.5 rounded-full bg-wtf-blue border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Gamma
           </h2>
           <p className="text-xs text-zinc-600 font-sans font-medium leading-normal">
-            A beautiful, lag-free user experience using GSAP&apos;s optimized quickTo.
+            A beautiful, lag-free user experience using GSAP&apos;s optimized
+            quickTo.
           </p>
         </div>
       </main>
@@ -265,16 +284,20 @@ export default function FluidCursorPage() {
         </button>
 
         <div className="cursor-none">
-        <button
-          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-          data-cursor-text="BACK HOME"
+          <button
+            onClick={() =>
+              window.history.length > 1
+                ? window.history.back()
+                : (window.location.href = "/")
+            }
+            data-cursor-text="BACK HOME"
             onMouseEnter={handleTargetEnter}
             onMouseLeave={handleTargetLeave}
             className="brutalist-btn bg-white text-[#2a2a2a] font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
-        >
-          ← Back
-        </button>
-      </div>
+          >
+            ← Back
+          </button>
+        </div>
       </div>
     </div>
   );

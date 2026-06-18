@@ -1,17 +1,25 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 // Custom Text Scramble Component
-function ScrambleText({ text, speed = 25, delay = 0 }: { text: string; speed?: number; delay?: number }) {
+function ScrambleText({
+  text,
+  speed = 25,
+  delay = 0,
+}: {
+  text: string;
+  speed?: number;
+  delay?: number;
+}) {
   const [displayText, setDisplayText] = useState("");
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -147,96 +155,108 @@ export default function BlueprintScatterPage() {
   const floatingCardsRef = useRef<HTMLDivElement>(null);
   const floatTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  useGSAP(() => {
-    // 1. Page Load Intro Animation Sequence
-    const introTl = gsap.timeline({
-      defaults: { ease: "power4.out" }
-    });
-
-    // Fade in hero titles
-    introTl.fromTo(".hero-tagline",
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8 }
-    )
-    .fromTo(".hero-title-scramble",
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5 },
-      "-=0.6"
-    )
-    .fromTo(".hero-subtitle",
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8 },
-      "-=0.5"
-    )
-    .fromTo(".hero-cta-btn",
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8 },
-      "-=0.6"
-    );
-
-    // Exploding / Scattering Cards Animation:
-    // Cards start centered and stacked behind the hero text, then explode outwards.
-    introTl.fromTo(".scatter-card", 
-      {
-        x: (i, target) => {
-          const rect = target.getBoundingClientRect();
-          const targetCenterX = rect.left + rect.width / 2;
-          const screenCenterX = window.innerWidth / 2;
-          return screenCenterX - targetCenterX;
-        },
-        y: (i, target) => {
-          const rect = target.getBoundingClientRect();
-          const targetCenterY = rect.top + rect.height / 2;
-          const screenCenterY = window.innerHeight / 2;
-          return screenCenterY - targetCenterY;
-        },
-        scale: 0.2,
-        rotation: 0,
-        opacity: 0,
-      },
-      {
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotation: (i) => talentData[i].rot,
-        opacity: 1,
-        duration: 1.8,
-        stagger: 0.06,
-        ease: "power4.out",
-        onComplete: () => {
-          // Trigger floating idle loop once scattered
-          startFloatingIdle();
-        }
-      },
-      "-=1.2"
-    );
-
-    // 2. Continuous Floating Idle Loop
-    function startFloatingIdle() {
-      floatTimelineRef.current = gsap.timeline({ repeat: -1 });
-      
-      const cards = gsap.utils.toArray<HTMLElement>(".scatter-card");
-      cards.forEach((card, idx) => {
-        const offset = idx % 2 === 0 ? 1 : -1;
-        gsap.to(card, {
-          y: `+=${10 * offset}`,
-          x: `+=${5 * -offset}`,
-          rotation: `+=${1.5 * offset}`,
-          duration: 3 + idx * 0.4,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-        });
+  useGSAP(
+    () => {
+      // 1. Page Load Intro Animation Sequence
+      const introTl = gsap.timeline({
+        defaults: { ease: "power4.out" },
       });
-    }
 
-    return () => {
-      if (floatTimelineRef.current) floatTimelineRef.current.kill();
-    };
-  }, { scope: containerRef });
+      // Fade in hero titles
+      introTl
+        .fromTo(
+          ".hero-tagline",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+        )
+        .fromTo(
+          ".hero-title-scramble",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5 },
+          "-=0.6",
+        )
+        .fromTo(
+          ".hero-subtitle",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          "-=0.5",
+        )
+        .fromTo(
+          ".hero-cta-btn",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          "-=0.6",
+        );
+
+      // Exploding / Scattering Cards Animation:
+      // Cards start centered and stacked behind the hero text, then explode outwards.
+      introTl.fromTo(
+        ".scatter-card",
+        {
+          x: (i, target) => {
+            const rect = target.getBoundingClientRect();
+            const targetCenterX = rect.left + rect.width / 2;
+            const screenCenterX = window.innerWidth / 2;
+            return screenCenterX - targetCenterX;
+          },
+          y: (i, target) => {
+            const rect = target.getBoundingClientRect();
+            const targetCenterY = rect.top + rect.height / 2;
+            const screenCenterY = window.innerHeight / 2;
+            return screenCenterY - targetCenterY;
+          },
+          scale: 0.2,
+          rotation: 0,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          y: 0,
+          scale: 1,
+          rotation: (i) => talentData[i].rot,
+          opacity: 1,
+          duration: 1.8,
+          stagger: 0.06,
+          ease: "power4.out",
+          onComplete: () => {
+            // Trigger floating idle loop once scattered
+            startFloatingIdle();
+          },
+        },
+        "-=1.2",
+      );
+
+      // 2. Continuous Floating Idle Loop
+      function startFloatingIdle() {
+        floatTimelineRef.current = gsap.timeline({ repeat: -1 });
+
+        const cards = gsap.utils.toArray<HTMLElement>(".scatter-card");
+        cards.forEach((card, idx) => {
+          const offset = idx % 2 === 0 ? 1 : -1;
+          gsap.to(card, {
+            y: `+=${10 * offset}`,
+            x: `+=${5 * -offset}`,
+            rotation: `+=${1.5 * offset}`,
+            duration: 3 + idx * 0.4,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+          });
+        });
+      }
+
+      return () => {
+        if (floatTimelineRef.current) floatTimelineRef.current.kill();
+      };
+    },
+    { scope: containerRef },
+  );
 
   // Custom mouse-move/hover functions for cards
-  const handleCardEnter = (e: React.MouseEvent<HTMLDivElement>, color: string) => {
+  const handleCardEnter = (
+    e: React.MouseEvent<HTMLDivElement>,
+    color: string,
+  ) => {
     // Bring card to front and scale up
     gsap.to(e.currentTarget, {
       scale: 1.08,
@@ -268,16 +288,23 @@ export default function BlueprintScatterPage() {
   };
 
   return (
-    <div className="relative h-screen w-screen bg-[#f2ece0] text-[#2a2a2a] overflow-hidden selection:bg-[#f1b333] selection:text-black" ref={containerRef}>
-      
+    <div
+      className="relative h-screen w-screen bg-[#f2ece0] text-[#2a2a2a] overflow-hidden selection:bg-[#f1b333] selection:text-black"
+      ref={containerRef}
+    >
       {/* Premium subtle grid background overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" style={{ opacity: 0.25 }} />
+      <div
+        className="absolute inset-0 dot-grid pointer-events-none z-0"
+        style={{ opacity: 0.25 }}
+      />
 
       {/* Navbar removed to prevent overlapping with cards */}
 
       {/* 2. Hero Section (Exploding Cards Workspace) */}
-      <div ref={heroRef} className="h-screen w-full relative flex flex-col justify-center items-center overflow-hidden">
-        
+      <div
+        ref={heroRef}
+        className="h-screen w-full relative flex flex-col justify-center items-center overflow-hidden"
+      >
         {/* Central Hero Text Area */}
         <div className="absolute bottom-[4vh] md:bottom-[6vh] left-1/2 -translate-x-1/2 z-20 text-center w-full max-w-2xl px-6 pointer-events-none">
           <span className="hero-tagline inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-[#f1b333] font-black bg-[#2a2a2a] text-white px-3 py-1 rounded-full mb-4">
@@ -291,21 +318,28 @@ export default function BlueprintScatterPage() {
             </span>
           </h1>
           <p className="hero-subtitle font-mono text-[11px] md:text-xs text-[#2a2a2a]/70 max-w-lg mx-auto leading-relaxed mb-8 pointer-events-auto">
-            Engineers who own outcomes — CTO-screened with a ≤ 5% pass rate. Ready to scale your product immediately.
+            Engineers who own outcomes — CTO-screened with a ≤ 5% pass rate.
+            Ready to scale your product immediately.
           </p>
           <div className="hero-cta-btn inline-block pointer-events-auto">
             <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
-        
-      >
-        ← Back
-      </button>
+              onClick={() =>
+                window.history.length > 1
+                  ? window.history.back()
+                  : (window.location.href = "/")
+              }
+              className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+            >
+              ← Back
+            </button>
           </div>
         </div>
 
         {/* Floating cards container */}
-        <div ref={floatingCardsRef} className="absolute inset-0 w-full h-full pointer-events-none z-10">
+        <div
+          ref={floatingCardsRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-10"
+        >
           {talentData.map((card, idx) => (
             <div
               key={card.id}
@@ -347,9 +381,7 @@ export default function BlueprintScatterPage() {
             </div>
           ))}
         </div>
-
       </div>
-
     </div>
   );
 }

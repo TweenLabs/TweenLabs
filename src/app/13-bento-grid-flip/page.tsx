@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
 import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -29,7 +28,8 @@ export default function BentoGridPage() {
       id: 1,
       title: "Core Mechanics",
       subtitle: "STATS MONITOR",
-      description: "Optimized event pipelines running at 60fps. Handles complex coordinate transforms and collision grids dynamically.",
+      description:
+        "Optimized event pipelines running at 60fps. Handles complex coordinate transforms and collision grids dynamically.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
       color: "bg-wtf-orange",
       accentHex: "229, 91, 60", // wtf-orange rgb
@@ -41,7 +41,8 @@ export default function BentoGridPage() {
       id: 2,
       title: "Design System",
       subtitle: "UI TOKENS",
-      description: "Neo-Brutalist utility layers, interactive variables, and asymmetric structural skews.",
+      description:
+        "Neo-Brutalist utility layers, interactive variables, and asymmetric structural skews.",
       gridClass: "col-span-1 row-span-1 md:row-span-2 h-auto md:h-[584px]",
       color: "bg-wtf-green",
       accentHex: "12, 147, 103", // wtf-green rgb
@@ -53,7 +54,8 @@ export default function BentoGridPage() {
       id: 3,
       title: "Velocity Engine",
       subtitle: "SCROLL DETECTOR",
-      description: "Inertia metrics reading delta inputs to drive canvas rendering. Auto-clamps bounds to maximize frames.",
+      description:
+        "Inertia metrics reading delta inputs to drive canvas rendering. Auto-clamps bounds to maximize frames.",
       gridClass: "col-span-1 h-[280px]",
       color: "bg-wtf-yellow",
       accentHex: "241, 179, 51", // wtf-yellow rgb
@@ -65,7 +67,8 @@ export default function BentoGridPage() {
       id: 4,
       title: "Elastic Cursor",
       subtitle: "LAGGING RETICLE",
-      description: "Dual-coordinate pointer smoothing with custom elasticity weights. Morphing boundaries snap to hover nodes.",
+      description:
+        "Dual-coordinate pointer smoothing with custom elasticity weights. Morphing boundaries snap to hover nodes.",
       gridClass: "col-span-1 h-[280px]",
       color: "bg-wtf-purple",
       accentHex: "103, 88, 165", // wtf-purple rgb
@@ -77,7 +80,8 @@ export default function BentoGridPage() {
       id: 5,
       title: "Morphing Accordions",
       subtitle: "STAGGER DETAIL",
-      description: "Color transitions driven by background morph targets. Inner elements unfold using autoAlpha spring tweens.",
+      description:
+        "Color transitions driven by background morph targets. Inner elements unfold using autoAlpha spring tweens.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
       color: "bg-wtf-blue",
       accentHex: "59, 130, 246", // wtf-blue rgb
@@ -140,38 +144,40 @@ export default function BentoGridPage() {
   });
 
   // Reset 3D Tilt on Mouse Leave
-  const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      ease: "elastic.out(1.1, 0.4)",
-      duration: 0.75,
-      overwrite: "auto",
-    });
-
-    const crosshair = card.querySelector(".accents-crosshair");
-    if (crosshair) {
-      gsap.to(crosshair, {
-        rotation: 0,
-        duration: 0.6,
+  const handleMouseLeave = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
         ease: "elastic.out(1.1, 0.4)",
+        duration: 0.75,
         overwrite: "auto",
       });
-    }
 
-    const imgFrame = card.querySelector(".inner-img-container img");
-    if (imgFrame) {
-      gsap.to(imgFrame, {
-        x: 0,
-        y: 0,
-        scale: 1.0,
-        duration: 0.6,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
-    }
-  });
+      const crosshair = card.querySelector(".accents-crosshair");
+      if (crosshair) {
+        gsap.to(crosshair, {
+          rotation: 0,
+          duration: 0.6,
+          ease: "elastic.out(1.1, 0.4)",
+          overwrite: "auto",
+        });
+      }
+
+      const imgFrame = card.querySelector(".inner-img-container img");
+      if (imgFrame) {
+        gsap.to(imgFrame, {
+          x: 0,
+          y: 0,
+          scale: 1.0,
+          duration: 0.6,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
+    },
+  );
 
   return (
     <div
@@ -185,12 +191,15 @@ export default function BentoGridPage() {
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Header Info */}
@@ -202,7 +211,8 @@ export default function BentoGridPage() {
           Bento Grid Tilt
         </h1>
         <p className="max-w-md mx-auto text-zinc-650 text-xs md:text-sm leading-relaxed font-sans font-medium">
-          A clean, professional showcase layout. Hover cards to experience smooth 3D perspective depth, vector snaps, and reactive images.
+          A clean, professional showcase layout. Hover cards to experience
+          smooth 3D perspective depth, vector snaps, and reactive images.
         </p>
       </header>
 
@@ -239,8 +249,19 @@ export default function BentoGridPage() {
                   className="accents-crosshair absolute bottom-4 right-4 text-zinc-300 opacity-20 pointer-events-none group-hover:opacity-60 transition-opacity"
                   style={{ transform: "translateZ(30px)" }}
                 >
-                  <svg className="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <svg
+                    className="w-9 h-9"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      strokeWidth="1.5"
+                      strokeDasharray="3 3"
+                    />
                     <circle cx="12" cy="12" r="5" strokeWidth="1.5" />
                     <path d="M12 2v20M2 12h20" strokeWidth="1.5" />
                   </svg>
@@ -255,7 +276,9 @@ export default function BentoGridPage() {
                           <span className="font-mono text-[9px] font-black text-zinc-400">
                             [{item.subtitle}]
                           </span>
-                          <span className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}>
+                          <span
+                            className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}
+                          >
                             SYS ACTIVE
                           </span>
                         </div>
@@ -270,10 +293,16 @@ export default function BentoGridPage() {
                       {/* Stat box at bottom */}
                       <div className="border-2 border-[#2a2a2a] bg-zinc-50 p-2.5 rounded-xl flex items-center justify-between font-mono max-w-[220px] shadow-[2px_2px_0px_#2a2a2a]">
                         <div className="flex flex-col">
-                          <span className="text-[7px] text-zinc-400 font-bold uppercase">{item.statLabel}</span>
-                          <span className="text-[9px] font-black text-[#2a2a2a]">{item.statValue}</span>
+                          <span className="text-[7px] text-zinc-400 font-bold uppercase">
+                            {item.statLabel}
+                          </span>
+                          <span className="text-[9px] font-black text-[#2a2a2a]">
+                            {item.statValue}
+                          </span>
                         </div>
-                        <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`} />
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`}
+                        />
                       </div>
                     </div>
 
@@ -299,7 +328,9 @@ export default function BentoGridPage() {
                         <span className="font-mono text-[9px] font-black text-zinc-400">
                           [{item.subtitle}]
                         </span>
-                        <span className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}>
+                        <span
+                          className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}
+                        >
                           SYS ACTIVE
                         </span>
                       </div>
@@ -330,10 +361,16 @@ export default function BentoGridPage() {
                       {/* Stat box at bottom */}
                       <div className="border-2 border-[#2a2a2a] bg-zinc-50 p-2.5 rounded-xl flex items-center justify-between font-mono shadow-[2px_2px_0px_#2a2a2a]">
                         <div className="flex flex-col">
-                          <span className="text-[7px] text-zinc-400 font-bold uppercase">{item.statLabel}</span>
-                          <span className="text-[9px] font-black text-[#2a2a2a]">{item.statValue}</span>
+                          <span className="text-[7px] text-zinc-400 font-bold uppercase">
+                            {item.statLabel}
+                          </span>
+                          <span className="text-[9px] font-black text-[#2a2a2a]">
+                            {item.statValue}
+                          </span>
                         </div>
-                        <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`} />
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`}
+                        />
                       </div>
                     </div>
                   </div>
@@ -345,7 +382,9 @@ export default function BentoGridPage() {
                         <span className="font-mono text-[9px] font-black text-zinc-400">
                           [{item.subtitle}]
                         </span>
-                        <span className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}>
+                        <span
+                          className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${item.color}`}
+                        >
                           SYS ACTIVE
                         </span>
                       </div>
@@ -360,10 +399,16 @@ export default function BentoGridPage() {
                     {/* Stat box at bottom */}
                     <div className="border-2 border-[#2a2a2a] bg-zinc-50 p-2.5 rounded-xl flex items-center justify-between font-mono shadow-[2px_2px_0px_#2a2a2a]">
                       <div className="flex flex-col">
-                        <span className="text-[7px] text-zinc-400 font-bold uppercase">{item.statLabel}</span>
-                        <span className="text-[9px] font-black text-[#2a2a2a]">{item.statValue}</span>
+                        <span className="text-[7px] text-zinc-400 font-bold uppercase">
+                          {item.statLabel}
+                        </span>
+                        <span className="text-[9px] font-black text-[#2a2a2a]">
+                          {item.statValue}
+                        </span>
                       </div>
-                      <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`} />
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${item.color}`}
+                      />
                     </div>
                   </div>
                 )}
@@ -376,12 +421,15 @@ export default function BentoGridPage() {
       {/* Footer link */}
       <footer className="z-10 mt-4">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
       </footer>
     </div>
   );

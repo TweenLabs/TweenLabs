@@ -25,21 +25,23 @@ const hoverColorsMap: Record<string, string> = {
 
 export default function AnimationCard({ anim }: AnimationCardProps) {
   return (
-    <div
-      className="brutalist-card brutalist-card-interactive p-6 bg-white flex flex-col justify-between gap-6"
-    >
+    <div className="brutalist-card brutalist-card-interactive p-6 bg-white flex flex-col justify-between gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <span className="font-mono font-bold text-sm text-zinc-500">[{anim.id}]</span>
-          <span className={`inline-flex items-center gap-2 border-2 border-[#2a2a2a] px-3 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1.5px_1.5px_0px_#2a2a2a] ${anim.tiltClass}`}>
+          <span className="font-mono font-bold text-sm text-zinc-500">
+            [{anim.id}]
+          </span>
+          <span
+            className={`inline-flex items-center gap-2 border-2 border-[#2a2a2a] px-3 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1.5px_1.5px_0px_#2a2a2a] ${anim.tiltClass}`}
+          >
             Theme Color
           </span>
         </div>
-        
+
         <h2 className="text-2xl font-sans font-black uppercase tracking-tight text-[#2a2a2a]">
           {anim.name}
         </h2>
-        
+
         <p className="text-sm font-sans font-medium text-zinc-650 leading-relaxed">
           {anim.description}
         </p>
@@ -47,7 +49,9 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
 
       <div className="w-full mt-2 flex gap-3">
         <Link href={anim.route} className="flex-1">
-          <button className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}>
+          <button
+            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}
+          >
             View →
           </button>
         </Link>
@@ -57,7 +61,9 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
           rel="noopener noreferrer"
           className="flex-1"
         >
-          <button className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}>
+          <button
+            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}
+          >
             Get Code
           </button>
         </a>

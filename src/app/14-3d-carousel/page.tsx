@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useRef, useState, useEffect, useCallback } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -120,99 +119,110 @@ export default function ThreeDCarouselPage() {
   };
 
   // Setup loop ticker to smoothly interpolate carousel rotation
-  useGSAP(() => {
-    const updatePositions = () => {
-      const state = dragRef.current;
-      const numCards = items.length;
+  useGSAP(
+    () => {
+      const updatePositions = () => {
+        const state = dragRef.current;
+        const numCards = items.length;
 
-      if (detailIdx === null) {
-        // Normal interactive carousel behavior
-        if (state.isDragging) {
-          state.smoothRotation += (state.rotation - state.smoothRotation) * 0.25;
-        } else {
-          // Add friction momentum if released
-          state.velocity *= 0.92;
-          state.rotation += state.velocity;
-          // Clamp target rotation
-          state.rotation = Math.max(0, Math.min(numCards - 1, state.rotation));
-          state.smoothRotation += (state.rotation - state.smoothRotation) * 0.15;
-        }
-      }
-
-      // Sync active index state (for pagination/indicator highlights)
-      const currentActive = Math.max(0, Math.min(numCards - 1, Math.round(state.smoothRotation)));
-      setActiveIdx(currentActive);
-
-      // Interpolate ambient background color
-      const activeItem = items[currentActive];
-      if (wrapperRef.current && detailIdx === null) {
-        const targetBg = getHexWithOpacity(activeItem.bgColor, 0.12);
-        gsap.to(wrapperRef.current, {
-          backgroundColor: targetBg,
-          duration: 0.5,
-          overwrite: "auto",
-        });
-      }
-
-      // Apply 3D transforms to all cards in the carousel
-      cardsRef.current.forEach((card, index) => {
-        if (!card) return;
-
-        // In detail mode, the active card gets a special animation, and others fade out completely
-        if (detailIdx !== null) {
-          if (index !== detailIdx) {
-            gsap.to(card, {
-              opacity: 0,
-              scale: 0.5,
-              z: -400,
-              x: index < detailIdx ? -600 : 600,
-              rotationY: index < detailIdx ? -60 : 60,
-              pointerEvents: "none",
-              duration: 0.6,
-              overwrite: "auto",
-            });
+        if (detailIdx === null) {
+          // Normal interactive carousel behavior
+          if (state.isDragging) {
+            state.smoothRotation +=
+              (state.rotation - state.smoothRotation) * 0.25;
+          } else {
+            // Add friction momentum if released
+            state.velocity *= 0.92;
+            state.rotation += state.velocity;
+            // Clamp target rotation
+            state.rotation = Math.max(
+              0,
+              Math.min(numCards - 1, state.rotation),
+            );
+            state.smoothRotation +=
+              (state.rotation - state.smoothRotation) * 0.15;
           }
-          return;
         }
 
-        // Standard carousel layout positions
-        const diff = index - state.smoothRotation;
-        
-        // Calculations for coverflow layout
-        const xStep = 260; // Horizontal offset per card
-        const zStep = 180; // Depth push per card
-        const maxRotY = 48; // Maximum Y rotation
-        
-        const x = diff * xStep;
-        const z = -Math.abs(diff) * zStep;
-        const rotY = Math.max(-maxRotY, Math.min(maxRotY, diff * -35));
-        
-        // Custom scale and opacity coefficients
-        const scale = Math.max(0.68, 1 - Math.abs(diff) * 0.08);
-        const opacity = Math.max(0.08, 1 - Math.abs(diff) * 0.38);
-        const isClickable = Math.abs(diff) < 0.8;
+        // Sync active index state (for pagination/indicator highlights)
+        const currentActive = Math.max(
+          0,
+          Math.min(numCards - 1, Math.round(state.smoothRotation)),
+        );
+        setActiveIdx(currentActive);
 
-        gsap.set(card, {
-          x: x,
-          y: 0,
-          z: z,
-          rotationY: rotY,
-          scale: scale,
-          opacity: opacity,
-          zIndex: Math.round(100 - Math.abs(diff) * 10),
-          pointerEvents: isClickable ? "auto" : "none",
+        // Interpolate ambient background color
+        const activeItem = items[currentActive];
+        if (wrapperRef.current && detailIdx === null) {
+          const targetBg = getHexWithOpacity(activeItem.bgColor, 0.12);
+          gsap.to(wrapperRef.current, {
+            backgroundColor: targetBg,
+            duration: 0.5,
+            overwrite: "auto",
+          });
+        }
+
+        // Apply 3D transforms to all cards in the carousel
+        cardsRef.current.forEach((card, index) => {
+          if (!card) return;
+
+          // In detail mode, the active card gets a special animation, and others fade out completely
+          if (detailIdx !== null) {
+            if (index !== detailIdx) {
+              gsap.to(card, {
+                opacity: 0,
+                scale: 0.5,
+                z: -400,
+                x: index < detailIdx ? -600 : 600,
+                rotationY: index < detailIdx ? -60 : 60,
+                pointerEvents: "none",
+                duration: 0.6,
+                overwrite: "auto",
+              });
+            }
+            return;
+          }
+
+          // Standard carousel layout positions
+          const diff = index - state.smoothRotation;
+
+          // Calculations for coverflow layout
+          const xStep = 260; // Horizontal offset per card
+          const zStep = 180; // Depth push per card
+          const maxRotY = 48; // Maximum Y rotation
+
+          const x = diff * xStep;
+          const z = -Math.abs(diff) * zStep;
+          const rotY = Math.max(-maxRotY, Math.min(maxRotY, diff * -35));
+
+          // Custom scale and opacity coefficients
+          const scale = Math.max(0.68, 1 - Math.abs(diff) * 0.08);
+          const opacity = Math.max(0.08, 1 - Math.abs(diff) * 0.38);
+          const isClickable = Math.abs(diff) < 0.8;
+
+          gsap.set(card, {
+            x: x,
+            y: 0,
+            z: z,
+            rotationY: rotY,
+            scale: scale,
+            opacity: opacity,
+            zIndex: Math.round(100 - Math.abs(diff) * 10),
+            pointerEvents: isClickable ? "auto" : "none",
+          });
         });
-      });
-    };
+      };
 
-    gsap.ticker.add(updatePositions);
-    return () => gsap.ticker.remove(updatePositions);
-  }, { scope: wrapperRef, dependencies: [detailIdx] });
+      gsap.ticker.add(updatePositions);
+      return () => gsap.ticker.remove(updatePositions);
+    },
+    { scope: wrapperRef, dependencies: [detailIdx] },
+  );
 
   // Handle Drag / Pointer Events
   const handlePointerDown = (e: React.PointerEvent) => {
     if (detailIdx !== null) return;
-    
+
     const target = e.target as HTMLElement;
     if (target.closest("button") || target.closest("a")) return;
 
@@ -235,7 +245,7 @@ export default function ThreeDCarouselPage() {
 
     const width = wrapperRef.current?.offsetWidth || 1000;
     const deltaX = e.clientX - state.startX;
-    
+
     // Sensitivity: how many cards to slide per full width drag
     const sensitivity = 2.2;
     state.rotation = state.startRotation - (deltaX / width) * sensitivity;
@@ -264,8 +274,11 @@ export default function ThreeDCarouselPage() {
     // Snap to nearest integer index with momentum bias
     const numCards = items.length;
     const momentumOffset = state.velocity * 4;
-    const targetSnap = Math.max(0, Math.min(numCards - 1, Math.round(state.rotation + momentumOffset)));
-    
+    const targetSnap = Math.max(
+      0,
+      Math.min(numCards - 1, Math.round(state.rotation + momentumOffset)),
+    );
+
     // Animate target rotation to exact snapping position
     gsap.to(state, {
       rotation: targetSnap,
@@ -279,14 +292,17 @@ export default function ThreeDCarouselPage() {
   // Handle Wheel Scrolling
   const handleWheel = (e: React.WheelEvent) => {
     if (detailIdx !== null) return;
-    
+
     const state = dragRef.current;
     const numCards = items.length;
 
     // Scroll amount converts to small delta offset
     const delta = e.deltaY * 0.0015;
-    state.rotation = Math.max(0, Math.min(numCards - 1, state.rotation + delta));
-    
+    state.rotation = Math.max(
+      0,
+      Math.min(numCards - 1, state.rotation + delta),
+    );
+
     // Smooth snapping on scroll finish (debounced look)
     gsap.killTweensOf(state);
     gsap.to(state, {
@@ -356,7 +372,7 @@ export default function ThreeDCarouselPage() {
   // Card Mouse Hover 3D Tilt Effect
   const handleCardMouseMove = (e: React.MouseEvent, index: number) => {
     if (detailIdx !== null) return;
-    
+
     const state = dragRef.current;
     // Only apply hover tilt to the active card
     if (index !== Math.round(state.smoothRotation)) return;
@@ -445,18 +461,30 @@ export default function ThreeDCarouselPage() {
       gsap.fromTo(
         detailPanelRef.current,
         { x: "100%", opacity: 0 },
-        { x: "0%", opacity: 1, duration: 0.7, ease: "power3.inOut", overwrite: "auto" }
+        {
+          x: "0%",
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.inOut",
+          overwrite: "auto",
+        },
       );
 
       gsap.fromTo(
         detailPanelRef.current.querySelectorAll(".stagger-in"),
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: "power2.out", delay: 0.3, overwrite: "auto" }
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+          delay: 0.3,
+          overwrite: "auto",
+        },
       );
     }
   };
-
-
 
   return (
     <div
@@ -470,12 +498,15 @@ export default function ThreeDCarouselPage() {
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
         <button
-        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
-        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
-        
-      >
-        ← Back
-      </button>
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Header Info */}
@@ -492,12 +523,18 @@ export default function ThreeDCarouselPage() {
       </div>
 
       {/* Left/Right Button Indicators */}
-      <div className={`absolute bottom-6 left-6 z-30 flex gap-2.5 transition-opacity duration-300 ${detailIdx !== null ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+      <div
+        className={`absolute bottom-6 left-6 z-30 flex gap-2.5 transition-opacity duration-300 ${detailIdx !== null ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      >
         <button
           onClick={() => {
             const state = dragRef.current;
             const prev = Math.max(0, Math.round(state.rotation) - 1);
-            gsap.to(state, { rotation: prev, duration: 0.5, ease: "power2.out" });
+            gsap.to(state, {
+              rotation: prev,
+              duration: 0.5,
+              ease: "power2.out",
+            });
           }}
           className="w-10 h-10 rounded-md border-3 border-[#2a2a2a] bg-white hover:bg-zinc-100 flex items-center justify-center font-bold shadow-[3px_3px_0px_#2a2a2a] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1.5px_1.5px_0px_#2a2a2a] cursor-pointer"
         >
@@ -506,8 +543,15 @@ export default function ThreeDCarouselPage() {
         <button
           onClick={() => {
             const state = dragRef.current;
-            const next = Math.min(items.length - 1, Math.round(state.rotation) + 1);
-            gsap.to(state, { rotation: next, duration: 0.5, ease: "power2.out" });
+            const next = Math.min(
+              items.length - 1,
+              Math.round(state.rotation) + 1,
+            );
+            gsap.to(state, {
+              rotation: next,
+              duration: 0.5,
+              ease: "power2.out",
+            });
           }}
           className="w-10 h-10 rounded-md border-3 border-[#2a2a2a] bg-white hover:bg-zinc-100 flex items-center justify-center font-bold shadow-[3px_3px_0px_#2a2a2a] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1.5px_1.5px_0px_#2a2a2a] cursor-pointer"
         >
@@ -516,14 +560,20 @@ export default function ThreeDCarouselPage() {
       </div>
 
       {/* Pagination Dot/Number Bar */}
-      <div className={`absolute bottom-6 right-6 z-30 flex items-center gap-4 transition-opacity duration-300 ${detailIdx !== null ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+      <div
+        className={`absolute bottom-6 right-6 z-30 flex items-center gap-4 transition-opacity duration-300 ${detailIdx !== null ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      >
         <div className="flex gap-2">
           {items.map((item, idx) => (
             <button
               key={item.id}
               onClick={() => {
                 const state = dragRef.current;
-                gsap.to(state, { rotation: idx, duration: 0.5, ease: "power2.out" });
+                gsap.to(state, {
+                  rotation: idx,
+                  duration: 0.5,
+                  ease: "power2.out",
+                });
               }}
               className={`h-3 rounded-full border-2 border-[#2a2a2a] transition-all duration-300 cursor-pointer ${
                 idx === activeIdx ? "w-8 bg-wtf-yellow" : "w-3 bg-white"
@@ -575,10 +625,17 @@ export default function ThreeDCarouselPage() {
                 }}
               >
                 {/* 3D Content Layers */}
-                <div className="flex flex-col gap-3" style={{ transform: "translateZ(30px)" }}>
+                <div
+                  className="flex flex-col gap-3"
+                  style={{ transform: "translateZ(30px)" }}
+                >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-black text-zinc-400">[NODE {item.num}]</span>
-                    <span className={`border-2 border-[#2a2a2a] px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold text-white uppercase shadow-[1px_1px_0px_#2a2a2a] ${item.accentColor}`}>
+                    <span className="font-mono text-xs font-black text-zinc-400">
+                      [NODE {item.num}]
+                    </span>
+                    <span
+                      className={`border-2 border-[#2a2a2a] px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold text-white uppercase shadow-[1px_1px_0px_#2a2a2a] ${item.accentColor}`}
+                    >
                       {item.category}
                     </span>
                   </div>
@@ -605,11 +662,16 @@ export default function ThreeDCarouselPage() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="flex items-center justify-between mt-2" style={{ transform: "translateZ(20px)" }}>
+                <div
+                  className="flex items-center justify-between mt-2"
+                  style={{ transform: "translateZ(20px)" }}
+                >
                   <span className="font-mono text-[10px] font-bold text-zinc-500">
                     CLICK TO EXPAND
                   </span>
-                  <div className={`w-8 h-8 rounded-full border-2 border-[#2a2a2a] flex items-center justify-center font-bold text-xs shadow-[1.5px_1.5px_0px_#2a2a2a] transition-colors ${item.accentColor} ${item.textColor}`}>
+                  <div
+                    className={`w-8 h-8 rounded-full border-2 border-[#2a2a2a] flex items-center justify-center font-bold text-xs shadow-[1.5px_1.5px_0px_#2a2a2a] transition-colors ${item.accentColor} ${item.textColor}`}
+                  >
                     ↗
                   </div>
                 </div>
@@ -650,7 +712,9 @@ export default function ThreeDCarouselPage() {
             {/* Core Info details */}
             <div className="flex flex-col gap-6 md:gap-8 my-auto">
               <div className="stagger-in flex items-center gap-3">
-                <span className={`border-2 border-[#2a2a2a] px-3.5 py-1 rounded-full text-xs font-mono font-bold text-white uppercase shadow-[2.5px_2.5px_0px_#2a2a2a] ${items[detailIdx].accentColor}`}>
+                <span
+                  className={`border-2 border-[#2a2a2a] px-3.5 py-1 rounded-full text-xs font-mono font-bold text-white uppercase shadow-[2.5px_2.5px_0px_#2a2a2a] ${items[detailIdx].accentColor}`}
+                >
                   {items[detailIdx].category}
                 </span>
                 <span className="font-mono text-sm text-zinc-500 font-semibold">
@@ -669,12 +733,20 @@ export default function ThreeDCarouselPage() {
               {/* Decorative data block specs */}
               <div className="stagger-in grid grid-cols-2 gap-4 mt-4 font-mono">
                 <div className="border-2 border-[#2a2a2a] p-3 rounded-lg bg-zinc-50 shadow-[2px_2px_0px_#2a2a2a]">
-                  <span className="text-[10px] text-zinc-400 block font-bold">SOLVER RATE</span>
-                  <span className="text-sm font-black text-[#2a2a2a]">60.00 Hz // PASS</span>
+                  <span className="text-[10px] text-zinc-400 block font-bold">
+                    SOLVER RATE
+                  </span>
+                  <span className="text-sm font-black text-[#2a2a2a]">
+                    60.00 Hz // PASS
+                  </span>
                 </div>
                 <div className="border-2 border-[#2a2a2a] p-3 rounded-lg bg-zinc-50 shadow-[2px_2px_0px_#2a2a2a]">
-                  <span className="text-[10px] text-zinc-400 block font-bold">LATENCY SYNC</span>
-                  <span className="text-sm font-black text-[#2a2a2a]">0.02 ms // SAFE</span>
+                  <span className="text-[10px] text-zinc-400 block font-bold">
+                    LATENCY SYNC
+                  </span>
+                  <span className="text-sm font-black text-[#2a2a2a]">
+                    0.02 ms // SAFE
+                  </span>
                 </div>
               </div>
             </div>

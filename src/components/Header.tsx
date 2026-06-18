@@ -1,9 +1,18 @@
+import Image from "next/image";
+
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b-3 border-[#2a2a2a] shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#f0eadf]/95 backdrop-blur-md border-b-3 border-[#2a2a2a]">
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <img src="/logo.svg" alt="TweenLabs Logo" className="h-7 w-7 object-contain" />
+          <Image
+            src="/logo.svg"
+            alt="TweenLabs Logo"
+            width={28}
+            height={28}
+            priority
+            className="object-contain"
+          />
           <span className="font-serif font-black text-lg md:text-xl tracking-tight text-[#2a2a2a]">
             TweenLabs
           </span>

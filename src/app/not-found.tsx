@@ -14,7 +14,7 @@ export default function NotFound() {
         </div>
 
         {/* Large Brutalist numbers */}
-        <h1 
+        <h1
           className="text-8xl md:text-9xl font-serif font-black tracking-tight text-[#2a2a2a] leading-none"
           style={{ textShadow: "4px 4px 0px #c53b3a" }}
         >
@@ -27,7 +27,8 @@ export default function NotFound() {
             Lost in TweenLabs ?
           </h2>
           <p className="text-sm font-sans font-medium text-zinc-600 leading-relaxed">
-            The page you are looking for doesn&apos;t exist, has been moved, or is still rendering in our timeline.
+            The page you are looking for doesn&apos;t exist, has been moved, or
+            is still rendering in our timeline.
           </p>
         </div>
 
