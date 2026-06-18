@@ -32,7 +32,7 @@ const networkData: NetworkItem[] = [
   { id: 10, title: "Return", imgUrl: "/Untitled design (4).png", x: "28%", y: "34%", accentHex: "103, 88, 165", themeColor: "bg-wtf-purple" },
 ];
 
-export const StringSection = () => {
+export default function StringLinePage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentProgress, setCurrentProgress] = useState(0);
 
@@ -182,115 +182,125 @@ export const StringSection = () => {
   });
 
   return (
-    <section
-      ref={containerRef}
-      className="relative h-screen w-full overflow-hidden bg-white border-y-3 border-[#2a2a2a] select-none font-sans"
-    >
-
-      {/* Console readout display (Top center/right) */}
-      <div className="absolute top-6 right-6 z-30 font-mono text-[9px] md:text-[10px] font-bold text-zinc-500 text-right flex flex-col gap-1">
-        <span>[ SYSTEM: TRACKING ]</span>
-        <span>PATH PROGRESS: {currentProgress}%</span>
+    <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black">
+      {/* Floating Back Button */}
+      <div className="fixed top-6 left-6 z-50 pointer-events-auto">
+        <Link href="/">
+          <button className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer">
+            ← Dashboard
+          </button>
+        </Link>
       </div>
 
-      {/* Decorative typography background */}
-      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none select-none">
-        <h1 className="text-4xl md:text-7xl font-serif font-black text-center text-[#2a2a2a]/10 uppercase tracking-tight leading-none">
-          DESIGNED TO FEEL ALIVE
-        </h1>
-      </div>
-
-      <svg
-        id="team-svg"
-        className="absolute inset-0 w-full h-full z-0"
-        viewBox="0 0 1600 900"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
+      <section
+        ref={containerRef}
+        className="relative h-screen w-full overflow-hidden bg-white border-y-3 border-[#2a2a2a] select-none font-sans"
       >
-        <path
-          id="network-path"
-          d="
-            M 800, 198
-            C 950, 190 980, 50 1056, 234
-            C 1120, 350 1200, 100 1264, 306
-            C 1320, 450 1150, 420 1296, 450
-            C 1420, 480 1250, 600 1216, 639
-            C 1180, 680 1280, 820 1216, 639
-            C 1120, 420 850, 750 928, 729
-            C 1000, 710 940, 850 928, 729
-            C 900, 600 750, 700 656, 747
-            C 550, 800 600, 920 656, 747
-            C 720, 580 500, 750 480, 747
-            C 400, 740 380, 850 320, 540
-            C 280, 300 180, 650 240, 405
-            C 280, 200 100, 420 240, 405
-            C 380, 390 320, 500 448, 306
-            C 520, 180 350, 220 448, 306
-            C 520, 380 680, 210 800, 198
-            Z
-          "
-          stroke="#2a2a2a"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+        {/* Console readout display (Top center/right) */}
+        <div className="absolute top-6 right-6 z-30 font-mono text-[9px] md:text-[10px] font-bold text-zinc-500 text-right flex flex-col gap-1">
+          <span>[ SYSTEM: TRACKING ]</span>
+          <span>PATH PROGRESS: {currentProgress}%</span>
+        </div>
 
-      {/* Moving Dot with halo pulses */}
-      <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
-        {/* Pulsing halo ring */}
-        <span className="absolute h-10 w-10 border-2 border-wtf-orange/30 rounded-full animate-ping pointer-events-none" />
-      </div>
+        {/* Decorative typography background */}
+        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none select-none">
+          <h1 className="text-4xl md:text-7xl font-serif font-black text-center text-[#2a2a2a]/10 uppercase tracking-tight leading-none">
+            DESIGNED TO FEEL ALIVE
+          </h1>
+        </div>
 
-      {/* Network Nodes */}
-      {networkData.map((item, i) => {
-        return (
-          <div
-            key={i}
-            onMouseMove={handleCardMouseMove}
-            onMouseLeave={handleCardMouseLeave}
-            className="group im-card absolute flex items-center gap-3 px-4 py-2 rounded-full border-2 border-[#2a2a2a] bg-white shadow-[3px_3px_0px_#2a2a2a] z-20 cursor-pointer select-none"
-            style={{
-              left: item.x,
-              top: item.y,
-              transform: "translate(-50% , -50%)",
-              transformOrigin: "center center",
-              willChange: "transform",
-              transformStyle: "preserve-3d",
-            }}
-          >
-            {/* Spotlight hover effect */}
+        <svg
+          id="team-svg"
+          className="absolute inset-0 w-full h-full z-0"
+          viewBox="0 0 1600 900"
+          preserveAspectRatio="xMidYMid slice"
+          fill="none"
+        >
+          <path
+            id="network-path"
+            d="
+              M 800, 198
+              C 950, 190 980, 50 1056, 234
+              C 1120, 350 1200, 100 1264, 306
+              C 1320, 450 1150, 420 1296, 450
+              C 1420, 480 1250, 600 1216, 639
+              C 1180, 680 1280, 820 1216, 639
+              C 1120, 420 850, 750 928, 729
+              C 1000, 710 940, 850 928, 729
+              C 900, 600 750, 700 656, 747
+              C 550, 800 600, 920 656, 747
+              C 720, 580 500, 750 480, 747
+              C 400, 740 380, 850 320, 540
+              C 280, 300 180, 650 240, 405
+              C 280, 200 100, 420 240, 405
+              C 380, 390 320, 500 448, 306
+              C 520, 180 350, 220 448, 306
+              C 520, 380 680, 210 800, 198
+              Z
+            "
+            stroke="#2a2a2a"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        {/* Moving Dot with halo pulses */}
+        <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
+          {/* Pulsing halo ring */}
+          <span className="absolute h-10 w-10 border-2 border-wtf-orange/30 rounded-full animate-ping pointer-events-none" />
+        </div>
+
+        {/* Network Nodes */}
+        {networkData.map((item, i) => {
+          return (
             <div
-              className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full z-0"
+              key={i}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              className="group im-card absolute flex items-center gap-3 px-4 py-2 rounded-full border-2 border-[#2a2a2a] bg-white shadow-[3px_3px_0px_#2a2a2a] z-20 cursor-pointer select-none"
               style={{
-                background: `radial-gradient(100px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(${item.accentHex}, 0.1), transparent 85%)`,
+                left: item.x,
+                top: item.y,
+                transform: "translate(-50% , -50%)",
+                transformOrigin: "center center",
+                willChange: "transform",
+                transformStyle: "preserve-3d",
               }}
-            />
-
-            {/* Framed Image */}
-            <div
-              className="w-10 h-10 rounded-full border-2 border-[#2a2a2a] relative overflow-hidden flex-shrink-0 z-10"
-              style={{ transform: "translateZ(10px)" }}
             >
-              <img
-                className="w-full h-full object-cover"
-                src={item.imgUrl}
-                alt=""
+              {/* Spotlight hover effect */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full z-0"
+                style={{
+                  background: `radial-gradient(100px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(${item.accentHex}, 0.1), transparent 85%)`,
+                }}
               />
-            </div>
 
-            {/* Title / Info */}
-            <div className="flex flex-col relative z-10" style={{ transform: "translateZ(15px)" }}>
-              <h2 className="uppercase text-[11px] font-serif font-black tracking-tight text-[#2a2a2a] leading-none">
-                {item.title}
-              </h2>
-              <span className="font-mono text-[7px] text-zinc-400 font-bold tracking-wider mt-0.5">
-                [ X: {item.x} | Y: {item.y} ]
-              </span>
+              {/* Framed Image */}
+              <div
+                className="w-10 h-10 rounded-full border-2 border-[#2a2a2a] relative overflow-hidden flex-shrink-0 z-10"
+                style={{ transform: "translateZ(10px)" }}
+              >
+                <img
+                  className="w-full h-full object-cover"
+                  src={item.imgUrl}
+                  alt=""
+                />
+              </div>
+
+              {/* Title / Info */}
+              <div className="flex flex-col relative z-10" style={{ transform: "translateZ(15px)" }}>
+                <h2 className="uppercase text-[11px] font-serif font-black tracking-tight text-[#2a2a2a] leading-none">
+                  {item.title}
+                </h2>
+                <span className="font-mono text-[7px] text-zinc-400 font-bold tracking-wider mt-0.5">
+                  [ X: {item.x} | Y: {item.y} ]
+                </span>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </section>
+          );
+        })}
+      </section>
+    </div>
   );
-};
+}
