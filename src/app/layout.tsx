@@ -25,9 +25,9 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GSAP 3 + Next.js 16 Neo-Brutalist Showcase",
-  description: "A premium, interactive Neo-Brutalist showcase of GSAP animation skills integrated with Next.js 16 & React 19.2.",
-  keywords: ["GSAP", "Next.js 16", "React 19", "Neo-Brutalism", "AllThingsWTF Style"],
+  title: "TweenLabs | Premium GSAP Animation Templates & React Components",
+  description: "Explore TweenLabs: A high-fidelity, interactive Neo-Brutalist sandbox of copy-paste GSAP animation templates, ScrollTrigger pins, 3D physics widgets, and layout transitions.",
+  keywords: ["GSAP", "GSAP Templates", "Next.js 16", "React 19", "ScrollTrigger", "Web Animations", "Neo-Brutalism", "TweenLabs"],
 };
 
 export default function RootLayout({

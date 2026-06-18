@@ -198,11 +198,8 @@ export default function Home() {
           <div className="flex items-center gap-2.5">
             <span className="h-3.5 w-3.5 rounded-full bg-wtf-orange border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a] animate-pulse" />
             <span className="font-serif font-black text-lg md:text-xl tracking-tight text-[#2a2a2a] uppercase">
-              GSAP PLAYGROUND
+              TWEENLABS
             </span>
-          </div>
-          <div className="font-mono text-xs font-bold text-[#2a2a2a] bg-wtf-yellow border-2 border-[#2a2a2a] px-3 py-1 rounded-md shadow-[2px_2px_0px_#2a2a2a]">
-            Active Sandbox
           </div>
         </div>
       </header>
@@ -211,18 +208,18 @@ export default function Home() {
       <section className="relative w-full max-w-7xl px-4 md:px-8 pt-16 pb-8 md:py-20 flex flex-col items-center text-center gap-6 z-10">
         <div className="flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
-            <span>Next.js 16 + React 19 Workspace</span>
+            <span>TweenLabs Animation Hub</span>
           </div>
 
           <h1 className="text-4xl md:text-7xl font-serif font-black tracking-tight text-[#2a2a2a] max-w-4xl leading-[1.05] uppercase">
-            GSAP Animation{" "}
+            TweenLabs: GSAP{" "}
             <span className="block mt-2 text-wtf-orange">
-              Playground 
+              Components
             </span>
           </h1>
 
           <p className="max-w-xl text-zinc-700 text-sm md:text-base leading-relaxed font-sans font-medium">
-            Click on any route card below to launch the respective sandbox.
+            Copy-paste production-ready GSAP components, scroll triggers, and layout transitions. Click on any card below to launch the sandbox.
           </p>
         </div>
       </section>
@@ -272,7 +269,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 text-center md:text-left">
             <span className="font-serif font-black text-lg text-[#2a2a2a] uppercase">
-              GSAP PLAYGROUND
+              TWEENLABS
             </span>
             <span className="text-xs font-mono font-bold text-zinc-550">
               Folder & Route structure matched to 3D Animations sibling templates.
