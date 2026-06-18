@@ -17,7 +17,7 @@ interface CardItem {
   textColor: string;
   accentHex: string;
   themeColor: string; // Tailwind class
-  statLabel: string;
+  statLabel?: string;
 }
 
 const cardsData: CardItem[] = [
@@ -27,9 +27,8 @@ const cardsData: CardItem[] = [
     imgUrl: "/Untitled design.png",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
-    accentHex: "103, 88, 165", // purple
-    themeColor: "bg-wtf-purple",
-    statLabel: "NODE_01 // COMPILE_OK",
+    accentHex: "229, 91, 60", // orange
+    themeColor: "bg-wtf-orange",
   },
   {
     title: "CREATIVE SYSTEM",
@@ -39,7 +38,6 @@ const cardsData: CardItem[] = [
     textColor: "text-[#2a2a2a]",
     accentHex: "12, 147, 103", // green
     themeColor: "bg-wtf-green",
-    statLabel: "NODE_02 // SYSTEM_STABLE",
   },
   {
     title: "MOTION PHYSICS",
@@ -49,7 +47,6 @@ const cardsData: CardItem[] = [
     textColor: "text-[#2a2a2a]",
     accentHex: "241, 179, 51", // yellow
     themeColor: "bg-wtf-yellow",
-    statLabel: "NODE_03 // CORE_ONLINE",
   },
   {
     title: "DEPLOY ENGINE",
@@ -57,13 +54,12 @@ const cardsData: CardItem[] = [
     imgUrl: "/Untitled design (3).png",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
-    accentHex: "229, 91, 60", // orange
-    themeColor: "bg-wtf-orange",
-    statLabel: "NODE_04 // SHIPPED_PROD",
+    accentHex: "103, 88, 165", // purple
+    themeColor: "bg-wtf-purple",
   },
 ];
 
-export default function ScrollCardsClassicPage() {
+export default function ScrollCardsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -73,16 +69,15 @@ export default function ScrollCardsClassicPage() {
 
     cardEls.forEach((card, index) => {
       const cardInner = card.querySelector(".scroll-card-inner");
-
-      // Calculate dynamic pin durations so all cards remain pinned together and unpin at the end
-      const cardHeight = window.innerHeight * 0.65;
+      
+      // Calculate dynamic pin durations so all cards stack and then scroll away together
       const baseDuration = 450;
-      const pinDuration = (cardEls.length - 1 - index) * cardHeight + baseDuration;
+      const pinDuration = (cardEls.length - index) * baseDuration;
 
       // Pin each card container in place
       ScrollTrigger.create({
         trigger: card,
-        start: "top 8%",
+        start: "top 12%",
         end: `+=${pinDuration}`,
         pin: true,
         pinSpacing: false,
@@ -90,21 +85,6 @@ export default function ScrollCardsClassicPage() {
           if (self.isActive) {
             setActiveStep(index);
           }
-        },
-      });
-
-      // Slide inner cards up slightly during scroll to create the stacking overlap.
-      // Maximum offset is -(4 - 1 - index) * 5vh.
-      // Card 1 shifts by -15vh, Card 2 shifts by -10vh, Card 3 shifts by -5vh, Card 4 shifts by 0vh.
-      // Pinned at top 8%, this keeps all cards completely on-screen inside the DOM viewport boundaries.
-      gsap.to(cardInner, {
-        y: `-${(cardEls.length - 1 - index) * 5}vh`,
-        ease: "none",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 8%",
-          end: `+=${pinDuration}`,
-          scrub: true,
         },
       });
     });
@@ -194,10 +174,10 @@ export default function ScrollCardsClassicPage() {
       {/* Page Heading readout (absolute right) */}
       <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-1 select-none text-right">
         <span className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-300 bg-white px-2 py-0.5 rounded">
-          Component 16B
+          Component 16
         </span>
         <h1 className="font-serif font-black text-lg uppercase text-[#2a2a2a]">
-          Classic Parallax Stack
+          Stacking Cards
         </h1>
       </div>
 
@@ -229,7 +209,7 @@ export default function ScrollCardsClassicPage() {
         {cardsData.map((card, index) => (
           <div
             key={index}
-            className="scroll-card-item relative w-full h-[65vh] flex justify-center items-center px-4 md:px-8"
+            className="scroll-card-item relative w-full h-[82vh] flex justify-center items-center px-4 md:px-8"
             id={`card-${index + 1}`}
           >
             <div
@@ -237,7 +217,6 @@ export default function ScrollCardsClassicPage() {
               onMouseLeave={handleMouseLeave}
               className={`scroll-card-inner brutalist-card w-full max-w-4xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center select-none cursor-pointer rounded-2xl will-change-transform relative overflow-hidden ${card.bgColor} ${card.textColor}`}
               style={{
-                top: `${index * 44}px`,
                 transformStyle: "preserve-3d",
                 transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
               }}
@@ -253,9 +232,9 @@ export default function ScrollCardsClassicPage() {
               {/* Step info on left */}
               <div className="flex-1 flex flex-col gap-3 relative z-10">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] opacity-70 uppercase tracking-widest">[ Step 0{index + 1} ]</span>
-                  <span className={`inline-block border border-black px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${card.themeColor}`}>
-                    ACTIVE NODE
+                  <span className="font-mono text-xs opacity-50 uppercase tracking-widest">[ Step 0{index + 1} ]</span>
+                  <span className={`inline-block border border-[#2a2a2a] px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${card.themeColor}`}>
+                    ACTIVE
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-4xl font-serif font-black uppercase tracking-tight leading-none text-[#2a2a2a]">
@@ -266,10 +245,10 @@ export default function ScrollCardsClassicPage() {
                 </p>
 
                 {/* Spec details readout */}
-                <div className="border border-black/10 bg-black/5 p-2.5 rounded-xl flex items-center justify-between font-mono max-w-[200px] mt-2 shadow-[2px_2px_0px_rgba(0,0,0,0.1)]">
+                <div className="border border-zinc-200 bg-zinc-50 p-2.5 rounded-xl flex items-center justify-between font-mono max-w-[200px] mt-2 shadow-[2px_2px_0px_#2a2a2a]">
                   <div className="flex flex-col">
-                    <span className="text-[7px] text-black/50 font-bold">METRIC INDEX</span>
-                    <span className="text-[9px] font-black text-[#2a2a2a]">{card.statLabel}</span>
+                    <span className="text-[7px] text-zinc-400 font-bold">METRIC INDEX</span>
+                    <span className="text-[9px] font-black text-[#2a2a2a]">{card.statLabel || "NODE CHECK // OK"}</span>
                   </div>
                   <span className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${card.themeColor}`} />
                 </div>
@@ -277,7 +256,7 @@ export default function ScrollCardsClassicPage() {
 
               {/* Framed Image on right */}
               <div
-                className="inner-img-frame w-full md:w-80 h-44 md:h-52 relative rounded-xl border-3 border-[#2a2a2a] overflow-hidden shadow-[4px_4px_0px_#2a2a2a] flex-shrink-0 z-10"
+                className="inner-img-frame w-full md:w-80 h-48 md:h-56 relative rounded-xl border-3 border-[#2a2a2a] overflow-hidden shadow-[4px_4px_0px_#2a2a2a] flex-shrink-0 z-10"
                 style={{ transform: "translateZ(15px)" }}
               >
                 <Image
