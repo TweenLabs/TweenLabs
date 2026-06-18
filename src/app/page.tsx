@@ -210,11 +210,10 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
             <span>TweenLabs Animation Hub</span>
           </div>
-
-          <h1 className="text-4xl md:text-7xl font-serif font-black tracking-tight text-[#2a2a2a] max-w-4xl leading-[1.05] uppercase">
-            TweenLabs: GSAP{" "}
-            <span className="block mt-2 text-wtf-orange">
-              Components
+          <h1 className="text-4xl md:text-7xl font-serif font-black tracking-tight text-[#2a2a2a] max-w-4xl leading-[1.05]">
+            TweenLabs
+            <span className="block mt-2 text-wtf-orange uppercase">
+              GSAP Components
             </span>
           </h1>
 
@@ -240,7 +239,7 @@ export default function Home() {
                   </span>
                 </div>
                 
-                <h2 className="text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
+                <h2 className="text-2xl font-sans font-black uppercase tracking-tight text-[#2a2a2a]">
                   {anim.name}
                 </h2>
                 
@@ -273,7 +272,7 @@ export default function Home() {
 
       {/* About & FAQ Section for GEO (Generative Engine Optimization) */}
       <section className="w-full max-w-7xl px-4 md:px-8 py-12 flex flex-col gap-8 z-10 border-t-3 border-[#2a2a2a] mt-8">
-        <h2 className="text-3xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
+        <h2 className="text-3xl font-sans font-black uppercase tracking-tight text-[#2a2a2a]">
           Frequently Asked Questions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

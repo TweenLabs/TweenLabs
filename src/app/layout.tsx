@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Poppins, Fraunces, Space_Mono } from "next/font/google";
+import { Geist, Fraunces, Space_Mono } from "next/font/google";
 import LenisProvider from "@/provider/LenisProvider";
 import "./globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -95,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${fraunces.variable} ${spaceMono.variable} h-full antialiased selection:bg-wtf-yellow selection:text-black`}
+      className={`${geist.variable} ${fraunces.variable} ${spaceMono.variable} h-full antialiased selection:bg-wtf-yellow selection:text-black`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[#f0eadf] text-[#2a2a2a] overflow-x-hidden relative">
         {/* Schema markup for Generative Engine Optimization (GEO) */}
