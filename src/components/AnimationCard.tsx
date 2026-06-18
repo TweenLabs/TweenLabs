@@ -55,18 +55,14 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
             View →
           </button>
         </Link>
-        <a
-          href={`https://github.com/GSAP-PLAYGROUND/TweenLabs/blob/master/src/app${anim.route}/page.tsx`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1"
-        >
+        <Link href={`/code/${anim.route.slice(1)}`} className="flex-1">
           <button
             className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}
           >
             Get Code
           </button>
-        </a>
+        </Link>
+
       </div>
     </div>
   );
