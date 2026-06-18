@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -36,6 +37,14 @@ export default function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 text-sm font-sans font-medium">
               <li>
+                <Link
+                  href="/about"
+                  className="text-zinc-650 hover:text-wtf-orange transition-colors duration-150 flex items-center gap-1.5"
+                >
+                  About TweenLabs
+                </Link>
+              </li>
+              <li>
                 <a
                   href="https://github.com/GSAP-PLAYGROUND/TweenLabs"
                   target="_blank"
@@ -53,6 +62,14 @@ export default function Footer() {
                   className="text-zinc-600 hover:text-wtf-orange transition-colors duration-150 flex items-center gap-1.5"
                 >
                   Official GSAP Docs ↗
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/llms.txt"
+                  className="text-zinc-600 hover:text-wtf-orange transition-colors duration-150 flex items-center gap-1.5"
+                >
+                  AI Specs (llms.txt)
                 </a>
               </li>
             </ul>

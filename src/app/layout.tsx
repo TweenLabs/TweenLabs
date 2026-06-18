@@ -89,6 +89,15 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": "https://tweenlabs.xyz/#organization",
+        name: "TweenLabs",
+        url: "https://tweenlabs.xyz",
+        logo: "https://tweenlabs.xyz/logo.svg",
+        sameAs: ["https://github.com/GSAP-PLAYGROUND/TweenLabs"],
+        description: "A premium open-source collection of GSAP components and templates for high-fidelity web experiences."
+      },
+      {
         "@type": "WebSite",
         "@id": "https://tweenlabs.xyz/#website",
         url: "https://tweenlabs.xyz",
@@ -96,8 +105,7 @@ export default function RootLayout({
         description:
           "The best curated library of premium, high-fidelity GSAP components and animations.",
         publisher: {
-          "@type": "Organization",
-          name: "TweenLabs",
+          "@id": "https://tweenlabs.xyz/#organization",
         },
       },
       {
@@ -109,7 +117,7 @@ export default function RootLayout({
           "@id": "https://tweenlabs.xyz/#website",
         },
         description:
-          "A collection of 19+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, bento grids, and interactive typography.",
+          "A collection of 18+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, bento grids, and interactive typography.",
         about: {
           "@type": "Thing",
           name: "GSAP (GreenSock Animation Platform) Components",
@@ -149,6 +157,22 @@ export default function RootLayout({
             acceptedAnswer: {
               "@type": "Answer",
               text: "TweenLabs houses a wide range of creative mechanics: 3D hover tilt grids, kinetic wave typography, scroll-pinned parallax card decks, pointer drag carousel wheels, elastic fluid cursors, and animated SVG networks.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How to optimize GSAP for Next.js App Router?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "To optimize GSAP in Next.js App Router, run all timeline configurations inside client-side components using the useGSAP hook. Use CSS initial values for layout properties to prevent Layout Shifts (CLS), and wrap animations in media checks to respect user preferences.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How to prevent GSAP memory leaks in React?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Always clean up your animation contexts when React components unmount. Using the official @gsap/react useGSAP helper hook automatically performs context reversion and cleanup when the component unmounts, preventing memory leaks and orphaned timelines.",
             },
           },
         ],

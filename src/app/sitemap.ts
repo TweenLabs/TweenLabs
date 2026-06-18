@@ -1,33 +1,40 @@
 import type { MetadataRoute } from "next";
+import { animations } from "@/data/animations";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://tweenlabs.xyz";
-  const routes = [
-    "",
-    "/01-gravity-drop",
-    "/02-scroll-tags-assembly",
-    "/03-inward-outward-border-reveal",
-    "/04-horizontal-cards-showcase",
-    "/05-page-change-animation",
-    "/06-kinetic-typography",
-    "/07-scroll-orbit-gallery",
-    "/08-blueprint-scatter",
-    "/09-circular-scatter",
-    "/10-screen-skill-fit",
-    "/11-magnetic-dock",
-    "/12-fluid-cursor",
-    "/13-bento-grid-flip",
-    "/14-3d-carousel",
-    "/15-morphing-accordion",
-    "/16-scroll-cards-01",
-    "/17-showup-cards",
-    "/18-string-line",
+
+  // Static routes
+  const staticRoutes = [
+    {
+      url: `${baseUrl}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
   ];
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
+  // Dynamic component demo routes (e.g. /01-gravity-drop)
+  const demoRoutes = animations.map((anim) => ({
+    url: `${baseUrl}${anim.route}`,
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: route === "" ? 1.0 : 0.8,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
   }));
+
+  // Dynamic component source code routes (e.g. /code/01-gravity-drop)
+  const codeRoutes = animations.map((anim) => ({
+    url: `${baseUrl}/code/${anim.route.slice(1)}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...demoRoutes, ...codeRoutes];
 }

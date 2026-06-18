@@ -1,0 +1,111 @@
+# TweenLabs
+> A curated, premium open-source library of high-fidelity GSAP animation components and templates. Built for modern React 19 and Next.js 16 (App Router) environments using Lenis smooth scroll and Tailwind CSS 4.
+
+## Technical Stack
+- **Next.js 16 (App Router)**: Uses React Server Components (RSC) by default, client components designated with `"use client"`.
+- **GSAP 3.15 & @gsap/react**: Standard for high-performance timeline-based web animations.
+- **React 19**: Modern components with full type safety.
+- **Lenis 1.3**: Smooth scrolling integrated with the GSAP ticker.
+- **Tailwind CSS 4**: Modern utility-first styling.
+- **TypeScript**: Pure static typing, zero `any` usage.
+
+## Development & Animation Guidelines
+When writing or customizing GSAP code:
+1. **useGSAP Hook**: Always use the `@gsap/react` `useGSAP` hook for safe animation context cleanup and scope definition.
+2. **Animation Cleanup**: Never call standard `gsap.to` or `gsap.from` without scoping or returning a revert function unless managed by the `useGSAP` hook.
+3. **Performance First**: Animate GPU-friendly properties (`x`, `y`, `scale`, `rotation`, `opacity`) instead of layout properties (`width`, `height`, `top`, `left`).
+4. **Accessibility**: Always respect accessibility settings (such as checking `prefers-reduced-motion` or using ARIA tags).
+
+## GSAP Component Directory
+
+Here is the full index of high-fidelity animation components available to copy-paste.
+
+- **Gravity Drop**
+  - **Route**: [/01-gravity-drop](https://tweenlabs.xyz/01-gravity-drop)
+  - **Code Guide**: [/code/01-gravity-drop](https://tweenlabs.xyz/code/01-gravity-drop)
+  - **Description**: Staggered letters falling down onto a shelf collider with realistic physics bounce using custom staggers.
+
+- **Scroll Tags**
+  - **Route**: [/02-scroll-tags-assembly](https://tweenlabs.xyz/02-scroll-tags-assembly)
+  - **Code Guide**: [/code/02-scroll-tags-assembly](https://tweenlabs.xyz/code/02-scroll-tags-assembly)
+  - **Description**: Interactive scroll-triggered tags that fly into a grid board container from all offscreen directions.
+
+- **Border Reveal**
+  - **Route**: [/03-inward-outward-border-reveal](https://tweenlabs.xyz/03-inward-outward-border-reveal)
+  - **Code Guide**: [/code/03-inward-outward-border-reveal](https://tweenlabs.xyz/code/03-inward-outward-border-reveal)
+  - **Description**: Premium horizontal text scroll where letters fly in and out from top/bottom screen borders.
+
+- **Horizontal Cards**
+  - **Route**: [/04-horizontal-cards-showcase](https://tweenlabs.xyz/04-horizontal-cards-showcase)
+  - **Code Guide**: [/code/04-horizontal-cards-showcase](https://tweenlabs.xyz/code/04-horizontal-cards-showcase)
+  - **Description**: Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, and exit.
+
+- **Page Transition**
+  - **Route**: [/05-page-change-animation](https://tweenlabs.xyz/05-page-change-animation)
+  - **Code Guide**: [/code/05-page-change-animation](https://tweenlabs.xyz/code/05-page-change-animation)
+  - **Description**: Premium stacked page-peel scroll animation where color-themed sections slide up and overlap.
+
+- **Kinetic Text**
+  - **Route**: [/06-kinetic-typography](https://tweenlabs.xyz/06-kinetic-typography)
+  - **Code Guide**: [/code/06-kinetic-typography](https://tweenlabs.xyz/code/06-kinetic-typography)
+  - **Description**: Interactive kinetic text sandbox showcasing liquid wave, character scramble, and magnetic motion.
+
+- **Orbit Gallery**
+  - **Route**: [/07-scroll-orbit-gallery](https://tweenlabs.xyz/07-scroll-orbit-gallery)
+  - **Code Guide**: [/code/07-scroll-orbit-gallery](https://tweenlabs.xyz/code/07-scroll-orbit-gallery)
+  - **Description**: Premium scroll-driven layout where orbiting abstract cards converge into a sleek horizontal timeline.
+
+- **Blueprint**
+  - **Route**: [/08-blueprint-scatter](https://tweenlabs.xyz/08-blueprint-scatter)
+  - **Code Guide**: [/code/08-blueprint-scatter](https://tweenlabs.xyz/code/08-blueprint-scatter)
+  - **Description**: Exploding cards and text scramble page-load animations mirroring modern blueprint schemas.
+
+- **Circular Scatter**
+  - **Route**: [/09-circular-scatter](https://tweenlabs.xyz/09-circular-scatter)
+  - **Code Guide**: [/code/09-circular-scatter](https://tweenlabs.xyz/code/09-circular-scatter)
+  - **Description**: Circular loop scatter animation where cards stack at center, then scatter to outer bounds.
+
+- **Skill Fit**
+  - **Route**: [/10-screen-skill-fit](https://tweenlabs.xyz/10-screen-skill-fit)
+  - **Code Guide**: [/code/10-screen-skill-fit](https://tweenlabs.xyz/code/10-screen-skill-fit)
+  - **Description**: Candidate profile showcase with vertical ScrollTrigger pinning and staggered technology chips.
+
+- **Magnetic Dock**
+  - **Route**: [/11-magnetic-dock](https://tweenlabs.xyz/11-magnetic-dock)
+  - **Code Guide**: [/code/11-magnetic-dock](https://tweenlabs.xyz/code/11-magnetic-dock)
+  - **Description**: Premium floating dock menu bar where buttons pull dynamically toward the user's cursor.
+
+- **Fluid Cursor**
+  - **Route**: [/12-fluid-cursor](https://tweenlabs.xyz/12-fluid-cursor)
+  - **Code Guide**: [/code/12-fluid-cursor](https://tweenlabs.xyz/code/12-fluid-cursor)
+  - **Description**: Custom elastic lagging cursor reticle that snaps, morphs, and hugs container boundaries.
+
+- **Bento Grid**
+  - **Route**: [/13-bento-grid-flip](https://tweenlabs.xyz/13-bento-grid-flip)
+  - **Code Guide**: [/code/13-bento-grid-flip](https://tweenlabs.xyz/code/13-bento-grid-flip)
+  - **Description**: Neo-Brutalist bento grid containing perspective mouse tilt, spring physics recovery, and crosshairs.
+
+- **3D Carousel**
+  - **Route**: [/14-3d-carousel](https://tweenlabs.xyz/14-3d-carousel)
+  - **Code Guide**: [/code/14-3d-carousel](https://tweenlabs.xyz/code/14-3d-carousel)
+  - **Description**: Interactive 3D mathematical wheel rotation with drag inertia, key controls, and sliding info cards.
+
+- **Accordion**
+  - **Route**: [/15-morphing-accordion](https://tweenlabs.xyz/15-morphing-accordion)
+  - **Code Guide**: [/code/15-morphing-accordion](https://tweenlabs.xyz/code/15-morphing-accordion)
+  - **Description**: Vertical accordion showcase where selection morphs page background color and staggers content.
+
+- **Scroll Cards**
+  - **Route**: [/16-scroll-cards-01](https://tweenlabs.xyz/16-scroll-cards-01)
+  - **Code Guide**: [/code/16-scroll-cards-01](https://tweenlabs.xyz/code/16-scroll-cards-01)
+  - **Description**: Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.
+
+- **Flip Cards**
+  - **Route**: [/17-showup-cards](https://tweenlabs.xyz/17-showup-cards)
+  - **Code Guide**: [/code/17-showup-cards](https://tweenlabs.xyz/code/17-showup-cards)
+  - **Description**: Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.
+
+- **String Line**
+  - **Route**: [/18-string-line](https://tweenlabs.xyz/18-string-line)
+  - **Code Guide**: [/code/18-string-line](https://tweenlabs.xyz/code/18-string-line)
+  - **Description**: ScrollTriggered SVG network line drawing tracking node proximity scale offsets.

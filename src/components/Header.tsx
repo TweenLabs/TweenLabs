@@ -61,6 +61,18 @@ export default function Header() {
             </Link>
           )}
 
+          <Link
+            href="/about"
+            className={`brutalist-btn font-mono font-bold text-xs py-1.5 px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 ${
+              pathname === "/about"
+                ? "bg-wtf-orange text-white"
+                : "bg-white hover:bg-wtf-orange hover:text-white text-[#2a2a2a]"
+            }`}
+            aria-label="Read about TweenLabs and our engineering practices"
+          >
+            About
+          </Link>
+
           <a
             href="https://github.com/GSAP-PLAYGROUND/TweenLabs"
             target="_blank"

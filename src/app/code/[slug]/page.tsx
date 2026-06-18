@@ -129,16 +129,117 @@ export default async function CodePage({ params }: PageProps) {
     }
   }
 
+  const softwareSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": `https://tweenlabs.xyz/code/${slug}/#software`,
+    "name": `TweenLabs ${anim.name} Component Source Code`,
+    "description": anim.description,
+    "programmingLanguage": {
+      "@type": "ComputerLanguage",
+      "name": "TypeScript",
+      "alternateName": "TS"
+    },
+    "codeRepository": "https://github.com/GSAP-PLAYGROUND/TweenLabs",
+    "runtimePlatform": "Next.js 16, React 19, GSAP 3.15, Tailwind CSS 4",
+    "codeSampleType": "snippet",
+    "text": standaloneCode || pageCode,
+    "author": {
+      "@type": "Organization",
+      "name": "TweenLabs",
+      "url": "https://tweenlabs.xyz"
+    }
+  };
+
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `https://tweenlabs.xyz/code/${slug}/#howto`,
+    "name": `How to integrate the GSAP ${anim.name} Component in Next.js`,
+    "description": `Step-by-step developer tutorial showing how to install dependencies and run the copy-paste ${anim.name} animation component.`,
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Install Dependencies",
+        "text": "Install standard GreenSock dependencies by running 'npm install gsap @gsap/react' in your project root.",
+        "url": `https://tweenlabs.xyz/code/${slug}#step-1`
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Save Component File",
+        "text": `Create a new file src/components/${slug.replace(/^\d+-/, "").split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join("")}.tsx and paste the Standalone Component Code.`,
+        "url": `https://tweenlabs.xyz/code/${slug}#step-2`
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Import and Render",
+        "text": "Import the component into any Page or Layout and render it.",
+        "url": `https://tweenlabs.xyz/code/${slug}#step-3`
+      }
+    ],
+    "totalTime": "PT5M",
+    "tool": [
+      {
+        "@type": "HowToTool",
+        "name": "React 19 & Next.js 16"
+      },
+      {
+        "@type": "HowToTool",
+        "name": "GSAP (GreenSock Animation Platform) 3.15"
+      }
+    ]
+  };
+
+  const breadcrumbsSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `https://tweenlabs.xyz/code/${slug}/#breadcrumbs`,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "TweenLabs Home",
+        "item": "https://tweenlabs.xyz"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": anim.name,
+        "item": `https://tweenlabs.xyz/${slug}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": `${anim.name} Source Code`,
+        "item": `https://tweenlabs.xyz/code/${slug}`
+      }
+    ]
+  };
+
   return (
-    <CodePageClient
-      slug={slug}
-      name={anim.name}
-      description={anim.description}
-      pageCode={pageCode}
-      standaloneCode={standaloneCode}
-      coreGsapCode={coreGsapCode}
-      setupGuide={setupGuide}
-      customization={customization}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsSchema) }}
+      />
+      <CodePageClient
+        slug={slug}
+        name={anim.name}
+        description={anim.description}
+        pageCode={pageCode}
+        standaloneCode={standaloneCode}
+        coreGsapCode={coreGsapCode}
+        setupGuide={setupGuide}
+        customization={customization}
+      />
+    </>
   );
 }
