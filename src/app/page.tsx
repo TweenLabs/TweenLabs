@@ -148,6 +148,15 @@ const animations = [
     tiltClass: "tilt-right",
   },
   {
+    id: "16b",
+    name: "Classic Parallax Stack",
+    route: "/16b-scroll-cards-classic",
+    bgColor: "bg-wtf-orange",
+    textColor: "text-white",
+    description: "Scroll-pinned classic overlapping cards utilizing y-parallax translations (optimized to stay within DOM viewport).",
+    tiltClass: "tilt-left",
+  },
+  {
     id: "17",
     name: "Showup Flip Cards",
     route: "/17-showup-cards",

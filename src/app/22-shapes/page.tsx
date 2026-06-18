@@ -6,6 +6,21 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import Image from "next/image";
 
+interface ShapeConfig {
+  id: number;
+  className: string;
+  accentHex: string;
+}
+
+const shapesData: ShapeConfig[] = [
+  { id: 1, className: "w-[10%] aspect-[0.5/1] bg-[#ff9f43] rounded-l-full", accentHex: "255, 159, 67" },
+  { id: 2, className: "w-[10%] aspect-[0.5/1] bg-[#fed330] rounded-l-full", accentHex: "254, 211, 48" },
+  { id: 3, className: "w-[20%] aspect-square rounded-full bg-[#ff7675] overflow-hidden relative border-2 border-black", accentHex: "255, 118, 117" }, // image 6
+  { id: 4, className: "w-[20%] aspect-square bg-[#0984e3] rounded-t-full rounded-bl-full rounded-br-none", accentHex: "9, 132, 227" },
+  { id: 5, className: "w-[20%] aspect-square rounded-full bg-[#ffeaa7] overflow-hidden relative border-2 border-black", accentHex: "255, 234, 167" }, // image 7
+  { id: 6, className: "w-[20%] aspect-square bg-[#ffb8b8] rounded-tr-full", accentHex: "255, 184, 184" },
+];
+
 export default function ShapesPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLHeadingElement>(null);
@@ -21,7 +36,7 @@ export default function ShapesPage() {
     const counter = { value: 0 };
 
     // Initial state of main content to prevent flash
-    gsap.set(".shapes-main-title", { opacity: 0, y: 50 });
+    gsap.set(".shapes-main-title-word", { opacity: 0, y: 40 });
     gsap.set(".shapes-main-shape", { opacity: 0 });
 
     // Radii presets for changing shapes randomly
@@ -53,9 +68,9 @@ export default function ShapesPage() {
     };
 
     // Start morphing for the 3 loader shapes
-    morph(shape1Ref.current, 0.8);
+    morph(shape1Ref.current, 0.85);
     morph(shape2Ref.current, 1.0);
-    morph(shape3Ref.current, 1.2);
+    morph(shape3Ref.current, 1.15);
 
     // Timeline for counter and loader exit
     const tl = gsap.timeline();
@@ -67,6 +82,10 @@ export default function ShapesPage() {
       onUpdate: () => {
         if (counterRef.current) {
           counterRef.current.textContent = String(Math.floor(counter.value));
+        }
+        const progressBar = document.getElementById("loader-shapes-bar");
+        if (progressBar) {
+          progressBar.style.width = `${counter.value}%`;
         }
       },
       onComplete: () => {
@@ -259,7 +278,7 @@ export default function ShapesPage() {
                   .to(shape, {
                     x: 0,
                     y: 0,
-                    duration: 1.5,
+                    duration: 1.4,
                     ease: "power2.out",
                   })
                   .to(
@@ -267,7 +286,7 @@ export default function ShapesPage() {
                     {
                       scale: 1,
                       borderRadius: targetRadius,
-                      duration: 1.4,
+                      duration: 1.3,
                       ease: "elastic.out(1, 0.6)",
                       clearProps: "transform,borderRadius,backgroundColor",
                     },
@@ -289,15 +308,15 @@ export default function ShapesPage() {
               });
             }
 
-            // Title reveal
+            // Word-by-word stagger title reveal
             gsap.fromTo(
-              ".shapes-main-title",
-              { x: -150, opacity: 0 },
+              ".shapes-main-title-word",
+              { y: 50, opacity: 0 },
               {
-                x: 0,
+                y: 0,
                 opacity: 1,
-                duration: 1.5,
-                stagger: 0.15,
+                duration: 1.2,
+                stagger: 0.08,
                 ease: "power4.out",
               }
             );
@@ -315,14 +334,56 @@ export default function ShapesPage() {
     });
   }, { scope: containerRef });
 
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
+  // 3D Card tilt on settled shapes
+  const handleCardMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+
+    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 8;
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 600,
+      ease: "power1.out",
+      duration: 0.3,
+      overwrite: "auto",
+    });
+  });
+
+  const handleCardMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      ease: "elastic.out(1.1, 0.4)",
+      duration: 0.75,
+      overwrite: "auto",
+    });
+  });
+
+  const titleString = "THE CAREER AGENT THAT GETS YOU HIRED";
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full min-h-screen bg-[#f3f8fc] flex flex-col justify-center items-center py-12 px-4 selection:bg-wtf-yellow selection:text-black overflow-hidden"
+      className="relative w-full min-h-screen bg-[#f0eadf] flex flex-col justify-center items-center py-12 px-4 selection:bg-wtf-yellow selection:text-black overflow-hidden font-sans"
     >
-      {/* Floating Dashboard Back button (only shown when loader is done to avoid preloader visual clutter) */}
+      {/* Background grid details */}
+      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
+      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+
+      {/* Floating Dashboard Back button */}
       {isLoaderGone && (
-        <div className="fixed top-4 left-4 z-50 pointer-events-auto">
+        <div className="fixed top-6 left-6 z-50 pointer-events-auto">
           <Link href="/">
             <button className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer">
               ← Dashboard
@@ -331,18 +392,36 @@ export default function ShapesPage() {
         </div>
       )}
 
+      {/* Page Heading readout */}
+      {isLoaderGone && (
+        <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-1 select-none text-right">
+          <span className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-300 bg-white px-2 py-0.5 rounded">
+            Component 22
+          </span>
+          <h1 className="font-serif font-black text-lg uppercase text-[#2a2a2a]">
+            Shapes Fusion
+          </h1>
+        </div>
+      )}
+
       {/* Black Loading Overlay */}
       <div
         ref={loaderRef}
-        className="fixed inset-0 bg-[#0a0a0a] z-40 flex flex-col justify-between p-8 md:p-16 select-none"
+        className="fixed inset-0 bg-[#0c0c0e] z-40 flex flex-col justify-between p-8 md:p-16 select-none"
       >
-        <div className="flex justify-between items-center w-full font-mono text-[10px] tracking-widest text-[#555] uppercase font-bold">
-          <span>Shapes Loading</span>
-          <span>GSAP Shapes Fusion</span>
+        <div className="flex justify-between items-center w-full font-mono text-[10px] tracking-widest text-zinc-500 uppercase font-bold">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-wtf-yellow animate-ping" />
+            <span>SHAPES FUSION // LOADING ENGINE</span>
+          </div>
+          <span>SYSTEM ACTIVE</span>
         </div>
 
         {/* Morphing shapes area */}
         <div className="relative flex-1 w-full flex items-center justify-center">
+          {/* Laser scanning sweep */}
+          <div className="absolute left-[10vw] right-[10vw] h-[1px] bg-sky-500 opacity-40 animate-pulse pointer-events-none" />
+
           <div className="flex items-center gap-8 justify-center w-full max-w-lg">
             {/* Shape 1 */}
             <div
@@ -369,77 +448,87 @@ export default function ShapesPage() {
           </div>
         </div>
 
-        {/* Counter */}
-        <div className="flex justify-between items-end w-full">
-          <div className="loader-text-el text-[9px] font-mono text-[#444] max-w-xs leading-relaxed uppercase">
-            Please wait while the shapes align. The page will load automatically.
+        {/* Status Indicators & Counter */}
+        <div className="flex justify-between items-end w-full relative z-10">
+          <div className="loader-text-el text-[8px] md:text-[9px] font-mono text-zinc-500 max-w-xs leading-relaxed uppercase flex flex-col gap-1">
+            <span>[ SYSTEM STATE: CALIBRATING ]</span>
+            <span>[ TARGET: LOGO_FUSION ]</span>
+            <span>Aligning vector radii. Page opens automatically.</span>
           </div>
           <div className="loader-text-el flex items-baseline font-bold tracking-tighter text-white font-serif">
             <h1 ref={counterRef} className="text-7xl md:text-9xl leading-none">0</h1>
             <span className="text-xl md:text-2xl text-sky-500 font-bold ml-2">%</span>
           </div>
         </div>
+
+        {/* Bottom progress bar */}
+        <div className="absolute bottom-0 left-0 h-2 bg-sky-500 transition-all duration-100 ease-out" id="loader-shapes-bar" style={{ width: "0%" }} />
       </div>
 
       {/* Main Page Content (Revealed after Loader) */}
-      <div className="w-full max-w-4xl text-left mb-16 px-4 z-10">
-        <span className="shapes-main-title text-xs font-semibold uppercase tracking-wider text-wtf-blue block mb-3 font-mono">
+      <div className="w-full max-w-4xl text-left mb-12 px-4 z-10 select-none">
+        <span className="shapes-main-title-word text-xs font-semibold uppercase tracking-wider text-wtf-blue block mb-3 font-mono">
           E-learning platform
         </span>
-        <h1 className="shapes-main-title text-4xl md:text-7xl font-serif font-black text-black leading-tight tracking-tight uppercase">
-          The Career Agent <br />
-          That Gets You Hired
+        <h1 className="text-4xl md:text-7xl font-serif font-black text-[#2a2a2a] leading-tight tracking-tight uppercase flex flex-wrap gap-x-4">
+          {titleString.split(" ").map((word, idx) => (
+            <span key={idx} className="inline-block overflow-hidden pb-2">
+              <span className="shapes-main-title-word inline-block transform will-change-transform font-serif font-black uppercase">
+                {word}
+              </span>
+            </span>
+          ))}
         </h1>
       </div>
 
-      {/* Shapes Container */}
+      {/* Shapes Grid Container */}
       <div
         ref={shapesContainerRef}
-        className="w-full max-w-4xl flex items-end justify-center gap-1.5 sm:gap-3 md:gap-4 px-2 z-10"
+        className="w-full max-w-4xl flex items-end justify-center gap-1.5 sm:gap-3 md:gap-4 px-2 z-10 pointer-events-auto"
       >
-        {/* Shape 1 */}
-        <div className="shapes-main-shape w-[10%] aspect-[0.5/1] bg-[#ff9f43] rounded-l-full shadow-sm border border-black/10" />
+        {shapesData.map((shape) => {
+          const isImageA = shape.id === 3;
+          const isImageB = shape.id === 5;
 
-        {/* Shape 2 */}
-        <div className="shapes-main-shape w-[10%] aspect-[0.5/1] bg-[#fed330] rounded-l-full shadow-sm border border-black/10" />
-
-        {/* Shape 3 with Local Girl Image */}
-        <div className="shapes-main-shape w-[20%] aspect-square rounded-full bg-[#ff7675] overflow-hidden relative shadow-md border-2 border-black">
-          <Image
-            src="/Untitled design (6).png"
-            alt="User Graphic A"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        {/* Shape 4 */}
-        <div className="shapes-main-shape w-[20%] aspect-square bg-[#0984e3] rounded-t-full rounded-bl-full rounded-br-none shadow-md border border-black/10" />
-
-        {/* Shape 5 with Local Boy Image */}
-        <div className="shapes-main-shape w-[20%] aspect-square rounded-full bg-[#ffeaa7] overflow-hidden relative shadow-md border-2 border-black">
-          <Image
-            src="/Untitled design (7).png"
-            alt="User Graphic B"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        {/* Shape 6 */}
-        <div className="shapes-main-shape w-[20%] aspect-square bg-[#ffb8b8] rounded-tr-full shadow-sm border border-black/10" />
+          return (
+            <div
+              key={shape.id}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              className={`shapes-main-shape group hover:shadow-[8px_8px_0px_#2a2a2a] transition-shadow duration-200 cursor-pointer ${shape.className}`}
+              style={{
+                transformStyle: "preserve-3d",
+                transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+              }}
+            >
+              <div
+                className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl z-10"
+                style={{
+                  background: `radial-gradient(100px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(${shape.accentHex}, 0.1), transparent 85%)`,
+                }}
+              />
+              
+              {isImageA ? (
+                <Image
+                  src="/Untitled design (6).png"
+                  alt="User A"
+                  fill
+                  sizes="200px"
+                  className="object-cover pointer-events-none"
+                />
+              ) : isImageB ? (
+                <Image
+                  src="/Untitled design (7).png"
+                  alt="User B"
+                  fill
+                  sizes="200px"
+                  className="object-cover pointer-events-none"
+                />
+              ) : null}
+            </div>
+          );
+        })}
       </div>
-
-      {/* Complete Back Button shown at bottom as well */}
-      {isLoaderGone && (
-        <div className="mt-16 z-20">
-          <Link href="/">
-            <button className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-4 px-8 rounded-xl uppercase tracking-wider cursor-pointer">
-              ← Dashboard
-            </button>
-          </Link>
-        </div>
-      )}
     </div>
   );
 }
