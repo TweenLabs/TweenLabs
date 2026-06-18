@@ -540,7 +540,6 @@ export default function CodePageClient({
   pageCode,
   standaloneCode,
   coreGsapCode,
-  setupGuide,
   customization,
 }: CodePageClientProps) {
   // Determine available tabs

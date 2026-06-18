@@ -207,7 +207,7 @@ export default function AnimationFourPage() {
         {/* Absolute Cards container */}
         <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-full h-[340px] md:h-[380px] lg:h-[420px]">
-            {cardsData.map((card, idx) => (
+            {cardsData.map((card) => (
               <div
                 key={card.id}
                 className={`card-item absolute top-0 ${card.leftPos} w-[85%] md:w-[18vw] h-full transform will-change-transform pointer-events-auto`}
