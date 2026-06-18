@@ -199,11 +199,13 @@ export default function ShowUpCardsPage() {
 
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer">
-            ← Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </div>
 
       {/* Page Heading readout (absolute right) */}

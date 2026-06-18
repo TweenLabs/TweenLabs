@@ -118,11 +118,13 @@ export default function AnimationTwoPage() {
         <p className="max-w-md text-sm font-sans font-medium text-zinc-600">
           All tags have flown into their correct positions in the DOM board.
         </p>
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-8 rounded-lg uppercase tracking-wider cursor-pointer">
-            ← Back to Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-8 rounded-lg uppercase tracking-wider cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </section>
     </div>
   );

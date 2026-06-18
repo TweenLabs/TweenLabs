@@ -171,11 +171,14 @@ export default function AnimationFourPage() {
       <div className="absolute inset-0 dot-grid pointer-events-none z-10" style={{ opacity: 0.05 }} />
 
       {/* Dashboard Back Link */}
-      <Link href="/" className="fixed left-6 top-6 z-50">
-        <button className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]">
-          ← Dashboard
+      <div className="fixed left-6 top-6 z-50">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+        >
+          ← Back
         </button>
-      </Link>
+      </div>
 
       {/* Pinned main content section */}
       <div ref={scrollSectionRef} className="h-screen w-full flex items-center justify-center relative overflow-hidden">

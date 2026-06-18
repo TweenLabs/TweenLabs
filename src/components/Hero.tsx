@@ -14,7 +14,7 @@ export default function Hero() {
         </h1>
 
         <p className="max-w-xl text-zinc-700 text-sm md:text-base leading-relaxed font-sans font-medium">
-          Copy-paste production-ready GSAP components, scroll triggers, and layout transitions. Click on any card below to launch the sandbox.
+          A high-fidelity collection of the best GSAP components, interactive React templates, and ScrollTrigger animations. Free, production-ready, and copy-paste friendly.
         </p>
       </div>
     </section>

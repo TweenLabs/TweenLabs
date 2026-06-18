@@ -88,11 +88,14 @@ export default function AnimationOnePage() {
             >
               ☄️ Trigger Drop
             </button>
-            <Link href="/" className="flex-1 md:flex-none">
-              <button className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer">
-                ← Dashboard
-              </button>
-            </Link>
+            <div className="flex-1 md:flex-none">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
+      </div>
           </div>
         </div>
       </div>

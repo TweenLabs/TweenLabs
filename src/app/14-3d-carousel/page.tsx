@@ -469,11 +469,13 @@ export default function ThreeDCarouselPage() {
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer">
-            ← Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </div>
 
       {/* Header Info */}

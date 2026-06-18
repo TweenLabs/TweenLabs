@@ -184,11 +184,13 @@ export default function BentoGridPage() {
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer">
-            ← Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </div>
 
       {/* Header Info */}
@@ -373,11 +375,13 @@ export default function BentoGridPage() {
 
       {/* Footer link */}
       <footer className="z-10 mt-4">
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer">
-            ← Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </footer>
     </div>
   );

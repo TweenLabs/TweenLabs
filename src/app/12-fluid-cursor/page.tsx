@@ -264,16 +264,17 @@ export default function FluidCursorPage() {
           ⚡ Action Portal
         </button>
 
-        <Link href="/" className="cursor-none">
-          <button
-            data-cursor-text="BACK HOME"
+        <div className="cursor-none">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          data-cursor-text="BACK HOME"
             onMouseEnter={handleTargetEnter}
             onMouseLeave={handleTargetLeave}
             className="brutalist-btn bg-white text-[#2a2a2a] font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
-          >
-            ← Dashboard
-          </button>
-        </Link>
+        >
+          ← Back
+        </button>
+      </div>
       </div>
     </div>
   );

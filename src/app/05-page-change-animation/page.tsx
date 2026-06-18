@@ -173,11 +173,14 @@ export default function AnimationFivePage() {
       <div className="noise-overlay fixed inset-0 pointer-events-none z-[49] opacity-40" />
 
       {/* Dashboard Back Link */}
-      <Link href="/" className="fixed left-6 top-6 z-50">
-        <button className="brutalist-btn bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]">
-          ← Dashboard
+      <div className="fixed left-6 top-6 z-50">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="brutalist-btn bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+        >
+          ← Back
         </button>
-      </Link>
+      </div>
 
       {/* Floating Navigator */}
       <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-4">

@@ -330,11 +330,14 @@ export default function KineticTypographyPage() {
                 ⚡ Re-Trigger
               </button>
               
-              <Link href="/" className="flex-1">
-                <button className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer">
-                  ← Home
-                </button>
-              </Link>
+              <div className="flex-1">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
+        >
+          ← Back
+        </button>
+      </div>
             </div>
           </div>
 

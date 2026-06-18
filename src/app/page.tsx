@@ -182,7 +182,7 @@ const animations = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center selection:bg-wtf-yellow selection:text-black">
+    <div className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center selection:bg-wtf-yellow selection:text-black pt-16">
       
       {/* Dot Grid Background */}
       <div className="absolute inset-0 dot-grid pointer-events-none z-0" />

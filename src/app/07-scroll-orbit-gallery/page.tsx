@@ -129,11 +129,14 @@ export default function ScrollOrbitGallery() {
       <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
 
       {/* Dashboard Back Link */}
-      <Link href="/" className="fixed left-6 top-6 z-50">
-        <button className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]">
-          ← Dashboard
+      <div className="fixed left-6 top-6 z-50">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+        >
+          ← Back
         </button>
-      </Link>
+      </div>
 
       {/* Scroll Indicator HUD */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 font-mono text-xs uppercase tracking-widest text-[#2a2a2a]/60 animate-bounce pointer-events-none flex flex-col items-center gap-1">

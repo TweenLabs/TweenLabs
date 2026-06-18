@@ -217,11 +217,13 @@ export default function MagneticDockPage() {
         </div>
 
         {/* Back Link */}
-        <Link href="/">
-          <button className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer">
-            ← Dashboard
-          </button>
-        </Link>
+        <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+        
+      >
+        ← Back
+      </button>
       </footer>
     </div>
   );

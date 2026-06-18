@@ -32,11 +32,14 @@ export default function NotFound() {
         </div>
 
         {/* Back to Dashboard Button */}
-        <Link href="/" className="w-full mt-2">
-          <button className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer">
-            ← Back to Dashboard
-          </button>
-        </Link>
+        <div className="w-full mt-2">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+        >
+          ← Back
+        </button>
+      </div>
       </div>
     </div>
   );

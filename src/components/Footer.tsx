@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Column 1: Brand Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <span className="h-3.5 w-3.5 rounded-full bg-wtf-orange border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a] animate-pulse" />
+              <img src="/logo.svg" alt="TweenLabs Logo" className="h-8 w-8 object-contain" />
               <span className="font-serif font-black text-2xl tracking-tight text-[#2a2a2a]">
                 TweenLabs
               </span>

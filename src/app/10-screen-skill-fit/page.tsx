@@ -190,11 +190,14 @@ export default function ScreenSkillFitPage() {
       {/* ══ SECTION 1: Intro ══════════════════════════════════════════════ */}
       <div className="h-screen w-full flex flex-col items-center justify-center relative gap-6">
         {/* Back button — same style as all other pages */}
-        <Link href="/" className="fixed left-6 top-6 z-50">
-          <button className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]">
-            ← Dashboard
-          </button>
-        </Link>
+        <div className="fixed left-6 top-6 z-50">
+        <button
+          onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+        >
+          ← Back
+        </button>
+      </div>
 
         {/* Eyebrow */}
         <span className="font-mono text-[9px] font-bold uppercase tracking-[0.4em] text-[#0c9367] select-none">

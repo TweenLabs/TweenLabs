@@ -294,11 +294,13 @@ export default function BlueprintScatterPage() {
             Engineers who own outcomes — CTO-screened with a ≤ 5% pass rate. Ready to scale your product immediately.
           </p>
           <div className="hero-cta-btn inline-block pointer-events-auto">
-            <Link href="/">
-              <button className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5">
-                Back to Dashboard
-              </button>
-            </Link>
+            <button
+        onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}
+        className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+        
+      >
+        ← Back
+      </button>
           </div>
         </div>
 
