@@ -27,7 +27,7 @@ export default function NotFound() {
             Lost in TweenLabs ?
           </h2>
           <p className="text-sm font-sans font-medium text-zinc-600 leading-relaxed">
-            The page you are looking for doesn't exist, has been moved, or is still rendering in our timeline.
+            The page you are looking for doesn&apos;t exist, has been moved, or is still rendering in our timeline.
           </p>
         </div>
 

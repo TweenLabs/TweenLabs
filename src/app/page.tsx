@@ -256,7 +256,7 @@ export default function Home() {
                   </button>
                 </Link>
                 <a
-                  href={`https://github.com/ritesh-sinha29/gsap-playground/blob/main/src/app${anim.route}/page.tsx`}
+                  href={`https://github.com/tweenlabs/gsap-playground/blob/master/src/app${anim.route}/page.tsx`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1"
