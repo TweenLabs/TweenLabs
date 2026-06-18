@@ -41,6 +41,19 @@ export const metadata: Metadata = {
     "Neo-Brutalism",
     "TweenLabs"
   ],
+  openGraph: {
+    title: "TweenLabs | Premium GSAP Animation Templates & React Components",
+    description: "Explore TweenLabs: A high-fidelity, interactive Neo-Brutalist library of copy-paste GSAP UI components, animation templates, ScrollTrigger pins, 3D physics widgets, and layout transitions.",
+    url: "https://tweenlabs.xyz",
+    siteName: "TweenLabs",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TweenLabs | Premium GSAP Animation Templates & React Components",
+    description: "Explore TweenLabs: A high-fidelity, interactive Neo-Brutalist library of copy-paste GSAP UI components, animation templates, ScrollTrigger pins, 3D physics widgets, and layout transitions.",
+  },
 };
 
 export default function RootLayout({
@@ -53,8 +66,8 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://tweenlabs.dev/#website",
-        "url": "https://tweenlabs.dev",
+        "@id": "https://tweenlabs.xyz/#website",
+        "url": "https://tweenlabs.xyz",
         "name": "TweenLabs",
         "description": "A curated library of premium, high-fidelity GSAP components and animations.",
         "publisher": {
@@ -64,11 +77,11 @@ export default function RootLayout({
       },
       {
         "@type": "CollectionPage",
-        "@id": "https://tweenlabs.dev/#collectionpage",
-        "url": "https://tweenlabs.dev",
+        "@id": "https://tweenlabs.xyz/#collectionpage",
+        "url": "https://tweenlabs.xyz",
         "name": "GSAP UI Components & Animation Templates | TweenLabs",
         "isPartOf": {
-          "@id": "https://tweenlabs.dev/#website"
+          "@id": "https://tweenlabs.xyz/#website"
         },
         "description": "A collection of 19+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, bento grids, and interactive typography.",
         "about": {

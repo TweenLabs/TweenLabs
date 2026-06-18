@@ -1,11 +1,11 @@
-# 🌌 GSAP Animation Playground
+# 🌌 TweenLabs | GSAP Animation Playground
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 [![Next.js Version](https://img.shields.io/badge/Next.js-16.2.7-black?logo=nextdotjs)](https://nextjs.org/)
 [![React Version](https://img.shields.io/badge/React-19.0.0-blue?logo=react)](https://react.dev/)
 
-A high-fidelity, interactive Neo-Brutalist animation playground built on **Next.js 16 (App Router)**, **React 19**, and **Tailwind CSS v4**. This repository houses premium, production-ready GSAP scroll triggers, magnetic mechanics, 3D physics widgets, and layout transitions.
+**TweenLabs** is a high-fidelity, interactive Neo-Brutalist animation playground built on **Next.js 16 (App Router)**, **React 19**, and **Tailwind CSS v4**. This repository houses premium, production-ready GSAP scroll triggers, magnetic mechanics, 3D physics widgets, and layout transitions.
 
 ---
 

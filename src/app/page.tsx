@@ -197,8 +197,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <span className="h-3.5 w-3.5 rounded-full bg-wtf-orange border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a] animate-pulse" />
-            <span className="font-serif font-black text-lg md:text-xl tracking-tight text-[#2a2a2a] uppercase">
-              TWEENLABS
+            <span className="font-serif font-black text-lg md:text-xl tracking-tight text-[#2a2a2a]">
+              TweenLabs
             </span>
           </div>
         </div>
@@ -255,9 +255,16 @@ export default function Home() {
                     View →
                   </button>
                 </Link>
-                <button className={`flex-1 brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}>
-                  Get Code
-                </button>
+                <a
+                  href={`https://github.com/ritesh-sinha29/gsap-playground/blob/main/src/app${anim.route}/page.tsx`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <button className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}>
+                    Get Code
+                  </button>
+                </a>
               </div>
             </div>
           ))}
@@ -284,7 +291,7 @@ export default function Home() {
               Are these GSAP components free?
             </h3>
             <p className="text-sm font-sans font-medium text-zinc-600 leading-relaxed">
-              Yes, all TweenLabs animations and layouts are free and open-source. Simply click "Get Code" on any card, install the required packages, and drop the code directly into your codebase.
+              Yes, all TweenLabs animations and layouts are free and open-source. Simply click &quot;Get Code&quot; on any card, install the required packages, and drop the code directly into your codebase.
             </p>
           </div>
 
@@ -312,8 +319,8 @@ export default function Home() {
       <footer className="w-full border-t-3 border-[#2a2a2a] bg-[#f8f5ee] py-12 px-4 md:px-8 mt-auto relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-1 text-center md:text-left">
-            <span className="font-serif font-black text-lg text-[#2a2a2a] uppercase">
-              TWEENLABS
+            <span className="font-serif font-black text-lg text-[#2a2a2a]">
+              TweenLabs
             </span>
             <span className="text-xs font-mono font-bold text-zinc-550">
               Folder & Route structure matched to 3D Animations sibling templates.

@@ -1,6 +1,6 @@
-# Contributing to GSAP Animation Playground
+# Contributing to TweenLabs
 
-Thank you for your interest in contributing to the GSAP Animation Playground! We welcome animations, optimizations, bug fixes, and general improvements to this sandbox repository. 
+Thank you for your interest in contributing to TweenLabs! We welcome animations, optimizations, bug fixes, and general improvements to this sandbox repository. 
 
 By contributing, you help make this playground a premium, production-ready resource for the entire front-end community.
 
