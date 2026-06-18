@@ -20,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/14-3d-carousel",
     "/15-morphing-accordion",
     "/16-scroll-cards-01",
-    "/16b-scroll-cards-classic",
     "/17-showup-cards",
     "/18-string-line",
   ];

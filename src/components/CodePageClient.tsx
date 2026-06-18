@@ -46,8 +46,6 @@ const componentNamesMap: Record<string, string> = {
   "morphing-accordion": "Accordion",
   "16-scroll-cards-01": "ScrollCards",
   "scroll-cards-01": "ScrollCards",
-  "16b-scroll-cards-classic": "ParallaxCards",
-  "scroll-cards-classic": "ParallaxCards",
   "17-showup-cards": "FlipCards",
   "showup-cards": "FlipCards",
   "18-string-line": "StringLine",

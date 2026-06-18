@@ -152,3 +152,9 @@ body {
 .scroll-viewport {
   transform-style: preserve-3d;
 }
+
+/* Push floating back buttons on component pages down so they do not overlap with the relative Header */
+.demo-page-container .fixed:has(button.brutalist-btn) {
+  top: 5rem !important; /* 80px */
+}
+

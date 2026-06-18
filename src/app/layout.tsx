@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Geist, Space_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import PageWrapper from "@/components/PageWrapper";
 
 
 const geist = Geist({
@@ -170,9 +169,7 @@ export default function RootLayout({
         />
         {/* Fine Grain noise overlay across the entire site */}
         <div className="noise-overlay fixed inset-0 pointer-events-none z-[99] opacity-70" />
-        <Header />
-        <main className="flex-1 pt-24 flex flex-col w-full relative z-10">{children}</main>
-        <Footer />
+        <PageWrapper>{children}</PageWrapper>
       </body>
     </html>
   );

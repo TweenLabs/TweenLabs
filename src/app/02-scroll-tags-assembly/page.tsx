@@ -123,6 +123,20 @@ export default function AnimationTwoPage() {
     >
       <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
 
+      {/* Floating Back Button */}
+      <div className="fixed left-6 top-6 z-50 pointer-events-auto">
+        <button
+          onClick={() =>
+            window.history.length > 1
+              ? window.history.back()
+              : (window.location.href = "/")
+          }
+          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+        >
+          ← Back
+        </button>
+      </div>
+
       {/* Intro section */}
       <section className="h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4 z-10 relative">
         <div className="inline-flex items-center gap-2 bg-wtf-green border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
@@ -165,25 +179,6 @@ export default function AnimationTwoPage() {
         </div>
       </section>
 
-      {/* Outro section */}
-      <section className="h-[80vh] flex flex-col items-center justify-center text-center px-4 gap-6 z-10 relative">
-        <h2 className="text-4xl font-serif font-black uppercase">
-          Assembly Complete
-        </h2>
-        <p className="max-w-md text-sm font-sans font-medium text-zinc-600">
-          All tags have flown into their correct positions in the DOM board.
-        </p>
-        <button
-          onClick={() =>
-            window.history.length > 1
-              ? window.history.back()
-              : (window.location.href = "/")
-          }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-8 rounded-lg uppercase tracking-wider cursor-pointer"
-        >
-          ← Back
-        </button>
-      </section>
     </div>
   );
 }

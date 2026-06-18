@@ -169,16 +169,7 @@ export const animations: AnimationItem[] = [
       "Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.",
     tiltClass: "tilt-right",
   },
-  {
-    id: "16b",
-    name: "Parallax Cards",
-    route: "/16b-scroll-cards-classic",
-    bgColor: "bg-wtf-orange",
-    textColor: "text-white",
-    description:
-      "Scroll-pinned classic overlapping cards utilizing y-parallax translations (optimized to stay within DOM viewport).",
-    tiltClass: "tilt-left",
-  },
+
   {
     id: "17",
     name: "Flip Cards",
