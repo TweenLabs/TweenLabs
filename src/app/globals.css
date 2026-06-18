@@ -134,11 +134,11 @@ body {
 
 /* Scrollbar none utility */
 .scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 .scrollbar-none::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 /* Panel 3D animation optimization */
