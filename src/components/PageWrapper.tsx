@@ -45,65 +45,77 @@ export default function PageWrapper({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (!isDemoPage) {
-      // Restore root window scrolling
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.height = "";
-      document.body.style.overflow = "";
-      document.body.style.height = "";
-      return;
-    }
-
-    // ——— BELOW RUNS ONLY ON DEMO PAGES ———
-
-    // Reset window scroll position to top before locking to prevent cut-off header
-    window.scrollTo(0, 0);
-
-    // Lock root window scrolling
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.height = "100%";
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100%";
-
-    if (!scrollerRef.current) return;
-
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initialize Lenis smooth scroll on our custom scroller container
-    const lenis = new Lenis({
-      wrapper: scrollerRef.current,
-      content: scrollerRef.current,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-    });
+    if (isDemoPage) {
+      // ——— DEMO PAGES: custom scroller container ———
 
-    // Synchronize Lenis scroll position with GSAP ScrollTrigger
-    const handleScroll = () => {
-      ScrollTrigger.update();
-    };
-    lenis.on("scroll", handleScroll);
+      // Reset window scroll position to top before locking to prevent cut-off header
+      window.scrollTo(0, 0);
 
-    // Run Lenis tick within GSAP's central requestAnimationFrame ticker
-    const gsapTick = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(gsapTick);
-    gsap.ticker.lagSmoothing(0);
+      // Lock root window scrolling
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.height = "100%";
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
 
-    return () => {
-      // Restore root window scrolling
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.height = "";
-      document.body.style.overflow = "";
-      document.body.style.height = "";
+      if (!scrollerRef.current) return;
 
-      // Destroy Lenis
-      lenis.destroy();
-      gsap.ticker.remove(gsapTick);
-    };
+      // Initialize Lenis smooth scroll on our custom scroller container
+      const lenis = new Lenis({
+        wrapper: scrollerRef.current,
+        content: scrollerRef.current,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+      });
+
+      // Synchronize Lenis scroll position with GSAP ScrollTrigger
+      const handleScroll = () => {
+        ScrollTrigger.update();
+      };
+      lenis.on("scroll", handleScroll);
+
+      // Run Lenis tick within GSAP's central requestAnimationFrame ticker
+      const gsapTick = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(gsapTick);
+      gsap.ticker.lagSmoothing(0);
+
+      return () => {
+        // Restore root window scrolling
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.height = "";
+        document.body.style.overflow = "";
+        document.body.style.height = "";
+
+        // Destroy Lenis
+        lenis.destroy();
+        gsap.ticker.remove(gsapTick);
+      };
+    } else {
+      // ——— NON-DEMO PAGES (homepage, etc): smooth scroll on window ———
+
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
+        smoothWheel: true,
+      });
+
+      const gsapTick = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(gsapTick);
+      gsap.ticker.lagSmoothing(0);
+
+      return () => {
+        lenis.destroy();
+        gsap.ticker.remove(gsapTick);
+      };
+    }
   }, [isDemoPage]);
 
   return (

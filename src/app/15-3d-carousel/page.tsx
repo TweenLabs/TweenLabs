@@ -331,7 +331,7 @@ export default function ThreeDCarouselPage() {
     const numCards = items.length;
 
     // Scroll amount converts to small delta offset
-    const delta = e.deltaY * 0.0015;
+    const delta = e.deltaY * 0.006;
     state.rotation = Math.max(
       0,
       Math.min(numCards - 1, state.rotation + delta),
