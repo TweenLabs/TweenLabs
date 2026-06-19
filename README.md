@@ -267,8 +267,6 @@ New to GSAP? These resources pair perfectly with this repo:
 
 ## 🌟 Contributors
 
-Thanks to everyone building this together. ❤️
-
 <!-- Add contributor grid here once you have 5+ contributors -->
 
 ---
