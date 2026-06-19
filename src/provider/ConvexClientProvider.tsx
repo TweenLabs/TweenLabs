@@ -8,7 +8,9 @@ import { AuthModalProvider } from "./AuthModalProvider";
 import { SessionProvider } from "./SessionProvider";
 import type { SessionData } from "./SessionProvider";
 
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+const convex = new ConvexReactClient(
+  process.env.NEXT_PUBLIC_CONVEX_URL || "https://placeholder.convex.cloud"
+);
 
 export function ConvexClientProvider({
   children,
