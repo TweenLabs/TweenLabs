@@ -550,7 +550,7 @@ function renderMarkdown(md: string) {
         elements.push(
           <ol
             key={`ol-${key}`}
-            className="list-decimal pl-6 my-3 space-y-2 font-sans font-medium text-zinc-700"
+            className="list-decimal pl-4 md:pl-6 my-2 md:my-3 space-y-1.5 md:space-y-2 font-sans font-medium text-zinc-700 text-xs md:text-sm"
           >
             {currentList}
           </ol>,
@@ -559,7 +559,7 @@ function renderMarkdown(md: string) {
         elements.push(
           <ul
             key={`ul-${key}`}
-            className="list-disc pl-6 my-3 space-y-2 font-sans font-medium text-zinc-700"
+            className="list-disc pl-4 md:pl-6 my-2 md:my-3 space-y-1.5 md:space-y-2 font-sans font-medium text-zinc-700 text-xs md:text-sm"
           >
             {currentList}
           </ul>,
@@ -614,14 +614,14 @@ function renderMarkdown(md: string) {
         elements.push(
           <div
             key={`alert-${key}`}
-            className={`my-4 p-4 border-3 ${borderColor} ${bgColor} ${textColor} rounded-xl shadow-[3px_3px_0px_#2a2a2a] flex gap-3`}
+            className={`my-3 md:my-4 p-3 md:p-4 border-2 md:border-3 ${borderColor} ${bgColor} ${textColor} rounded-lg md:rounded-xl shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] flex gap-2.5 md:gap-3`}
           >
-            <span className="text-lg select-none">{icon}</span>
-            <div className="flex-1">
-              <div className="font-mono font-black text-xs uppercase tracking-wider mb-1">
+            <span className="text-base md:text-lg select-none">{icon}</span>
+            <div className="flex-1 min-w-0">
+              <div className="font-mono font-black text-[10px] md:text-xs uppercase tracking-wider mb-0.5 md:mb-1">
                 {title}
               </div>
-              <div className="font-sans font-medium text-sm leading-relaxed">
+              <div className="font-sans font-medium text-xs md:text-sm leading-relaxed">
                 {alertBodyLines.map((l, idx) => (
                   <p key={idx} className={idx > 0 ? "mt-2" : ""}>
                     {parseInlineMarkdown(l)}
@@ -635,7 +635,7 @@ function renderMarkdown(md: string) {
         elements.push(
           <blockquote
             key={`quote-${key}`}
-            className="my-4 border-l-4 border-zinc-400 pl-4 py-1.5 italic text-zinc-650 bg-zinc-50/50 rounded-r font-sans font-medium text-sm leading-relaxed"
+            className="my-3 md:my-4 border-l-3 md:border-l-4 border-zinc-400 pl-3 md:pl-4 py-1 md:py-1.5 italic text-zinc-650 bg-zinc-50/50 rounded-r font-sans font-medium text-xs md:text-sm leading-relaxed"
           >
             {contentLines.map((l, idx) => (
               <p key={idx} className={idx > 0 ? "mt-1.5" : ""}>
@@ -660,7 +660,7 @@ function renderMarkdown(md: string) {
     );
     html = html.replace(
       /`([^`]+)`/g,
-      '<code class="bg-zinc-100 border border-zinc-350 px-1.5 py-0.5 rounded font-mono text-xs font-bold text-wtf-orange">$1</code>',
+      '<code class="bg-zinc-100 border border-zinc-350 px-1 md:px-1.5 py-0.5 rounded font-mono text-[10px] md:text-xs font-bold text-wtf-orange">$1</code>',
     );
 
     return <span dangerouslySetInnerHTML={{ __html: html }} />;
@@ -687,7 +687,7 @@ function renderMarkdown(md: string) {
       elements.push(
         <h3
           key={`h2-${i}`}
-          className="text-xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-8 mb-4 border-b border-zinc-200 pb-2"
+          className="text-lg md:text-xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-6 md:mt-8 mb-3 md:mb-4 border-b border-zinc-200 pb-2"
         >
           {parseInlineMarkdown(val)}
         </h3>,
@@ -698,7 +698,7 @@ function renderMarkdown(md: string) {
       elements.push(
         <h4
           key={`h3-${i}`}
-          className="text-lg font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-6 mb-3"
+          className="text-base md:text-lg font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-4 md:mt-6 mb-2 md:mb-3"
         >
           {parseInlineMarkdown(val)}
         </h4>,
@@ -732,7 +732,7 @@ function renderMarkdown(md: string) {
       elements.push(
         <p
           key={`p-${i}`}
-          className="my-2.5 font-sans font-medium text-zinc-700 leading-relaxed text-sm"
+          className="my-2 md:my-2.5 font-sans font-medium text-zinc-700 leading-relaxed text-xs md:text-sm"
         >
           {parseInlineMarkdown(line)}
         </p>,
@@ -901,9 +901,9 @@ export default function CodePageClient({
       <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
 
       {/* Navigation Breadcrumb / Header */}
-      <header className="w-full max-w-6xl px-4 md:px-8 z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
-        <div className="flex flex-col gap-2.5">
-          <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-500 uppercase tracking-widest">
+      <header className="w-full max-w-6xl px-4 md:px-8 z-10 flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="flex flex-col gap-1.5 md:gap-2.5">
+          <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs font-mono font-bold text-zinc-500 uppercase tracking-widest">
             <Link href="/" className="hover:text-wtf-orange transition-colors">
               TweenLabs
             </Link>
@@ -917,7 +917,7 @@ export default function CodePageClient({
             <span>/</span>
             <span className="text-wtf-orange font-black">Source Code</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
             {name} Code
           </h1>
         </div>
@@ -937,13 +937,13 @@ export default function CodePageClient({
       </header>
 
       {/* Info Card */}
-      <section className="w-full max-w-6xl px-4 md:px-8 z-10 mb-8">
-        <div className="brutalist-card p-6 bg-white flex flex-col md:flex-row md:items-center justify-between gap-6 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a]">
+      <section className="w-full max-w-6xl px-4 md:px-8 z-10 mb-6 md:mb-8">
+        <div className="brutalist-card p-4 md:p-6 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] md:shadow-[6px_6px_0px_#2a2a2a]">
           <div className="flex-1 flex flex-col gap-3">
             <div className="inline-flex self-start items-center gap-2 border-2 border-[#2a2a2a] px-3.5 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase bg-wtf-orange text-white shadow-[1.5px_1.5px_0px_#2a2a2a] tilt-right">
               Endpoint: /{slug}
             </div>
-            <p className="text-sm font-sans font-medium text-zinc-700 leading-relaxed max-w-3xl">
+            <p className="text-xs md:text-sm font-sans font-medium text-zinc-700 leading-relaxed max-w-3xl">
               {description}
             </p>
           </div>
@@ -961,7 +961,7 @@ export default function CodePageClient({
       {/* Main Content Layout */}
       <main className="w-full max-w-6xl px-4 md:px-8 z-10 flex flex-col gap-8">
         {/* VS Code Style Editor Container */}
-        <div className="brutalist-card bg-[#121212] overflow-hidden flex flex-col border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a]">
+        <div className="brutalist-card bg-[#121212] overflow-hidden flex flex-col border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] md:shadow-[6px_6px_0px_#2a2a2a]">
           {/* Top Bar: macOS circles & Actions */}
           <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-3 md:px-4 py-2.5 md:py-3 flex flex-wrap items-center justify-between gap-2">
             {/* Left: Window Dots & Filename */}
@@ -1104,13 +1104,12 @@ export default function CodePageClient({
         <div
           className={`brutalist-card p-4 md:p-8 bg-white flex flex-col gap-6 md:gap-8 border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] md:shadow-[6px_6px_0px_#2a2a2a] ${blurClass}`}
         >
-          <div className="border-b-3 border-[#2a2a2a] pb-4">
-            <h2 className="text-2xl md:text-3xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
-              ⚙️ Setup & Integration Guide
+          <div className="border-b-3 border-[#2a2a2a] pb-3 md:pb-4">
+            <h2 className="text-xl md:text-3xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
+              ⚙️ Setup & Integration
             </h2>
-            <p className="text-xs font-mono font-bold text-wtf-orange uppercase tracking-wider mt-1.5">
-              How to install, import, and configure this animation in your
-              project
+            <p className="text-[10px] md:text-xs font-mono font-bold text-wtf-orange uppercase tracking-wider mt-1">
+              Install, import & configure
             </p>
           </div>
 
@@ -1130,13 +1129,13 @@ export default function CodePageClient({
                   configures dependencies:
                 </p>
                 <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] w-full max-w-md mt-1">
-                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
+                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-2.5 md:px-4 py-1.5 md:py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
                     <div className="flex gap-2">
                       {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
                         <button
                           key={pm}
                           onClick={() => setPkgManager(pm)}
-                          className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                          className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-all cursor-pointer ${
                             pkgManager === pm
                               ? "bg-wtf-orange text-white"
                               : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
@@ -1184,13 +1183,13 @@ export default function CodePageClient({
                   ).
                 </p>
                 <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] w-full max-w-md mt-1">
-                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
+                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-2.5 md:px-4 py-1.5 md:py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
                     <div className="flex gap-2">
                       {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
                         <button
                           key={pm}
                           onClick={() => setPkgManager(pm)}
-                          className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                          className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-all cursor-pointer ${
                             pkgManager === pm
                               ? "bg-wtf-orange text-white"
                               : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
@@ -1281,7 +1280,7 @@ export default function CodePageClient({
                         text={`import { ScrollTrigger } from "gsap/ScrollTrigger";\ngsap.registerPlugin(useGSAP, ScrollTrigger);`}
                       />
                     </div>
-                    <pre className="p-4 font-mono text-xs text-emerald-400 overflow-x-auto scrollbar-none">
+                    <pre className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 overflow-x-auto scrollbar-none">
                       {`import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(useGSAP, ScrollTrigger);`}
                     </pre>
@@ -1309,7 +1308,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);`}
                       text={`import ${componentName} from "@/components/${componentName}";\n\nexport default function Page() {\n  return (\n    <main className="min-h-screen p-8 bg-[#f5f5f5] flex items-center justify-center">\n      <${componentName} />\n    </main>\n  );\n}`}
                     />
                   </div>
-                  <pre className="p-4 font-mono text-xs text-emerald-400 overflow-x-auto scrollbar-none">
+                  <pre className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 overflow-x-auto scrollbar-none">
                     {`import ${componentName} from "@/components/${componentName}";
 
 export default function Page() {
@@ -1334,7 +1333,7 @@ export default function Page() {
                   <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
                     Customization & Properties
                   </h3>
-                  <div className="prose prose-zinc max-w-none text-zinc-750 font-sans font-medium text-sm">
+                  <div className="prose prose-zinc max-w-none text-zinc-750 font-sans font-medium text-xs md:text-sm">
                     {renderMarkdown(customization)}
                   </div>
                 </div>
