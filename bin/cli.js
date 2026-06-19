@@ -96,7 +96,12 @@ async function main() {
   }
 
   if (args.includes("--version") || args.includes("-v")) {
-    console.log("1.0.0");
+    try {
+      const pkg = require("../package.json");
+      console.log(pkg.version);
+    } catch (_err) {
+      console.log("0.1.1");
+    }
     process.exit(0);
   }
 
