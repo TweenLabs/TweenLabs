@@ -835,6 +835,15 @@ export default function CodePageClient({
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasRefreshed, setHasRefreshed] = useState(false);
 
+  // Notify Lenis smooth scroll to recalculate page height after code expand/collapse
+  useEffect(() => {
+    // Small delay to let the DOM update before Lenis measures
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [isExpanded]);
+
   const activeTab = tabs.find((t) => t.id === activeTabId) || tabs[0];
   const highlighted = highlightCode(activeTab.code, activeTab.file);
 

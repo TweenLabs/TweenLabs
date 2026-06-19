@@ -76,12 +76,10 @@ export default function Header() {
           {currentAnim && (
             <button
               onClick={() => {
-                if (typeof window !== "undefined") {
-                  if (window.history.length > 1) {
-                    window.history.back();
-                  } else {
-                    window.location.href = "/";
-                  }
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.push("/");
                 }
               }}
               className="brutalist-btn bg-white hover:bg-wtf-orange hover:text-white text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-1 px-2.5 md:py-1.5 md:px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150"
