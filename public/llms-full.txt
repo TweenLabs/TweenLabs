@@ -36,7 +36,7 @@ const stageData: StageItem[] = [
     title: "PLAN & SCOPE",
     accentClass: "bg-[#e55b3c]",
     accentHex: "229, 91, 60",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     phase: "PHASE 01",
     desc: "Gathering system requirements, wireframing workflows, and compiling API matrices.",
   },
@@ -46,7 +46,7 @@ const stageData: StageItem[] = [
     title: "STYLING & TOKEN",
     accentClass: "bg-[#0c9367]",
     accentHex: "12, 147, 103",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     phase: "PHASE 02",
     desc: "Specifying layout structures, fine-grain noise textures, and asymmetric skews.",
   },
@@ -56,7 +56,7 @@ const stageData: StageItem[] = [
     title: "DEVELOP & DEPLOY",
     accentClass: "bg-[#3b82f6]",
     accentHex: "59, 130, 246",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     phase: "PHASE 03",
     desc: "Compiling optimized route structures, loading counter staggers, and final page builds.",
   },
@@ -4662,7 +4662,7 @@ function ScrambleText({
 const talentData = [
   {
     id: 0,
-    img: "https://tweenlabs.xyz/showcase-1.png",
+    img: "https://tweenlabs.xyz/showcase-1.webp",
     name: "Sarah Jenkins",
     role: "iOS Tech Lead",
     skills: ["Swift", "UIKit", "Combine", "Architecture"],
@@ -4673,7 +4673,7 @@ const talentData = [
   },
   {
     id: 1,
-    img: "https://tweenlabs.xyz/showcase-2.png",
+    img: "https://tweenlabs.xyz/showcase-2.webp",
     name: "Alex Rivera",
     role: "Android Architect",
     skills: ["Kotlin", "Compose", "Coroutines", "Dagger"],
@@ -4684,7 +4684,7 @@ const talentData = [
   },
   {
     id: 2,
-    img: "https://tweenlabs.xyz/showcase-3.png",
+    img: "https://tweenlabs.xyz/showcase-3.webp",
     name: "Elena Rostova",
     role: "SwiftUI Lead",
     skills: ["SwiftUI", "CoreData", "Combine", "Metal"],
@@ -4695,7 +4695,7 @@ const talentData = [
   },
   {
     id: 3,
-    img: "https://tweenlabs.xyz/showcase-4.png",
+    img: "https://tweenlabs.xyz/showcase-4.webp",
     name: "Marcus Vance",
     role: "Flutter Specialist",
     skills: ["Dart", "Flutter", "BLoC", "Firebase"],
@@ -4706,7 +4706,7 @@ const talentData = [
   },
   {
     id: 4,
-    img: "https://tweenlabs.xyz/showcase-5.png",
+    img: "https://tweenlabs.xyz/showcase-5.webp",
     name: "Siddharth Mehta",
     role: "React Native Lead",
     skills: ["TS", "React Native", "Redux", "JSI"],
@@ -4717,7 +4717,7 @@ const talentData = [
   },
   {
     id: 5,
-    img: "https://tweenlabs.xyz/showcase-6.png",
+    img: "https://tweenlabs.xyz/showcase-6.webp",
     name: "Chloe Dupont",
     role: "KMP Engineer",
     skills: ["Kotlin", "KMP", "Compose", "Ktor"],
@@ -4728,7 +4728,7 @@ const talentData = [
   },
   {
     id: 6,
-    img: "https://tweenlabs.xyz/showcase-7.png",
+    img: "https://tweenlabs.xyz/showcase-7.webp",
     name: "Liam O'Connor",
     role: "iOS UI Specialist",
     skills: ["Swift", "CoreAnimation", "Metal", "UI"],
@@ -4739,7 +4739,7 @@ const talentData = [
   },
   {
     id: 7,
-    img: "https://tweenlabs.xyz/showcase-8.png",
+    img: "https://tweenlabs.xyz/showcase-8.webp",
     name: "Sofia Giraldo",
     role: "Mobile DevOps Lead",
     skills: ["CI/CD", "Fastlane", "Actions", "Docker"],
@@ -5268,7 +5268,7 @@ function ScrambleText({
 const talentData = [
   {
     id: 0,
-    img: "https://tweenlabs.xyz/showcase-1.png",
+    img: "https://tweenlabs.xyz/showcase-1.webp",
     name: "Sarah Jenkins",
     role: "iOS Tech Lead",
     color: "#f1b333", // Gold
@@ -5278,7 +5278,7 @@ const talentData = [
   },
   {
     id: 1,
-    img: "https://tweenlabs.xyz/showcase-2.png",
+    img: "https://tweenlabs.xyz/showcase-2.webp",
     name: "Alex Rivera",
     role: "Android Architect",
     color: "#0c9367", // Green
@@ -5288,7 +5288,7 @@ const talentData = [
   },
   {
     id: 2,
-    img: "https://tweenlabs.xyz/showcase-3.png",
+    img: "https://tweenlabs.xyz/showcase-3.webp",
     name: "Elena Rostova",
     role: "SwiftUI Lead",
     color: "#8b5cf6", // Purple
@@ -5298,7 +5298,7 @@ const talentData = [
   },
   {
     id: 3,
-    img: "https://tweenlabs.xyz/showcase-4.png",
+    img: "https://tweenlabs.xyz/showcase-4.webp",
     name: "Marcus Vance",
     role: "Flutter Specialist",
     color: "#3b82f6", // Blue
@@ -5308,7 +5308,7 @@ const talentData = [
   },
   {
     id: 4,
-    img: "https://tweenlabs.xyz/showcase-5.png",
+    img: "https://tweenlabs.xyz/showcase-5.webp",
     name: "Siddharth Mehta",
     role: "React Native Lead",
     color: "#c53b3a", // Red
@@ -5318,7 +5318,7 @@ const talentData = [
   },
   {
     id: 5,
-    img: "https://tweenlabs.xyz/showcase-6.png",
+    img: "https://tweenlabs.xyz/showcase-6.webp",
     name: "Chloe Dupont",
     role: "KMP Engineer",
     color: "#eab308", // Yellow
@@ -5328,7 +5328,7 @@ const talentData = [
   },
   {
     id: 6,
-    img: "https://tweenlabs.xyz/showcase-7.png",
+    img: "https://tweenlabs.xyz/showcase-7.webp",
     name: "Liam O'Connor",
     role: "iOS UI Specialist",
     color: "#06b6d4", // Cyan
@@ -5338,7 +5338,7 @@ const talentData = [
   },
   {
     id: 7,
-    img: "https://tweenlabs.xyz/showcase-8.png",
+    img: "https://tweenlabs.xyz/showcase-8.webp",
     name: "Sofia Giraldo",
     role: "Mobile DevOps Lead",
     color: "#ec4899", // Pink
@@ -5890,7 +5890,7 @@ const candidates = [
     id: 0,
     name: "Studio Shodwe",
     role: "New Collection · SS25",
-    img: "https://tweenlabs.xyz/showcase-3.png",
+    img: "https://tweenlabs.xyz/showcase-3.webp",
     color: "#0c9367",
     left: {
       tag: "New Collection",
@@ -5918,7 +5918,7 @@ const candidates = [
     id: 1,
     name: "Arjun K.",
     role: "Editorial Portrait · Menswear",
-    img: "https://tweenlabs.xyz/showcase-1.png",
+    img: "https://tweenlabs.xyz/showcase-1.webp",
     color: "#f1b333",
     left: {
       tag: "Editorial",
@@ -5946,7 +5946,7 @@ const candidates = [
     id: 2,
     name: "Studio Shodwe",
     role: "New Arrival · FW25",
-    img: "https://tweenlabs.xyz/showcase-2.png",
+    img: "https://tweenlabs.xyz/showcase-2.webp",
     color: "#3b82f6",
     left: {
       tag: "New Arrival",
@@ -5973,7 +5973,7 @@ const candidates = [
     id: 3,
     name: "@reallygreatsite",
     role: "Beauty & Wellness Creator",
-    img: "https://tweenlabs.xyz/showcase-5.png",
+    img: "https://tweenlabs.xyz/showcase-5.webp",
     color: "#c53b3a",
     left: {
       tag: "Beauty Creator",
@@ -7834,7 +7834,7 @@ export default function BentoGridPage() {
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
       color: "bg-[#e55b3c]",
       accentHex: "229, 91, 60", // wtf-orange rgb
-      imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+      imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
       statLabel: "RENDER STABILITY",
       statValue: "99.8% // PASS",
     },
@@ -7847,7 +7847,7 @@ export default function BentoGridPage() {
       gridClass: "col-span-1 h-[280px]",
       color: "bg-[#0c9367]",
       accentHex: "12, 147, 103", // wtf-green rgb
-      imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+      imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
       statLabel: "VARIABLE SYNC",
       statValue: "42 TOKENS",
     },
@@ -8303,7 +8303,7 @@ const items: CarouselItem[] = [
     title: "Quantum Compiler",
     category: "ENGINEERING",
     desc: "A custom LLVM backend translating abstract syntax trees into parallel topological gates.",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     bgColor: "#e55b3c", // wtf-orange
     accentColor: "bg-[#e55b3c]",
     textColor: "text-white",
@@ -8314,7 +8314,7 @@ const items: CarouselItem[] = [
     title: "Kinetic Geometry",
     category: "GRAPHICS",
     desc: "GPU-accelerated vector fields tracing magnetic flow lines with spring-damper integrations.",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     bgColor: "#0c9367", // wtf-green
     accentColor: "bg-[#0c9367]",
     textColor: "text-white",
@@ -8325,7 +8325,7 @@ const items: CarouselItem[] = [
     title: "Syntactic Shadow",
     category: "AESTHETICS",
     desc: "High-contrast editorial grid structures utilizing strict monospace matrices and ink traps.",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     bgColor: "#6758a5", // wtf-purple
     accentColor: "bg-[#6758a5]",
     textColor: "text-white",
@@ -8336,7 +8336,7 @@ const items: CarouselItem[] = [
     title: "Hydra Protocol",
     category: "NETWORKS",
     desc: "A peer-to-peer ledger using ephemeral cryptographic state rings and consensus maps.",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     bgColor: "#3b82f6", // wtf-blue
     accentColor: "bg-[#3b82f6]",
     textColor: "text-white",
@@ -8347,7 +8347,7 @@ const items: CarouselItem[] = [
     title: "Hyperion Core",
     category: "HARDWARE",
     desc: "FPGA solvers designed for extreme throughput pipelines and multi-threaded register stacks.",
-    imgUrl: "https://tweenlabs.xyz/showcase-5.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-5.webp",
     bgColor: "#c53b3a", // wtf-red
     accentColor: "bg-[#c53b3a]",
     textColor: "text-white",
@@ -8358,7 +8358,7 @@ const items: CarouselItem[] = [
     title: "Helios Shader",
     category: "RAYTRACING",
     desc: "Real-time volumetric path tracers modeling multi-scatter atmospheric absorption.",
-    imgUrl: "https://tweenlabs.xyz/showcase-6.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-6.webp",
     bgColor: "#f1b333", // wtf-yellow
     accentColor: "bg-[#f1b333]",
     textColor: "text-black",
@@ -10209,7 +10209,7 @@ const cardsData: CardItem[] = [
   {
     title: "PLAN & CONCEPT",
     copy: "Aligning architectural frameworks with dynamic visual assets to establish high-fidelity mockups.",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "229, 91, 60", // orange
@@ -10218,7 +10218,7 @@ const cardsData: CardItem[] = [
   {
     title: "CREATIVE SYSTEM",
     copy: "Constructing interactive color tokens, asymmetric border structures, and custom tactile overlays.",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "12, 147, 103", // green
@@ -10227,7 +10227,7 @@ const cardsData: CardItem[] = [
   {
     title: "MOTION PHYSICS",
     copy: "Leveraging spring momentum and coordinate-based tracking to create reactive web experiences.",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "241, 179, 51", // yellow
@@ -10236,7 +10236,7 @@ const cardsData: CardItem[] = [
   {
     title: "DEPLOY ENGINE",
     copy: "Bundling static layouts and hydration-safe route pipelines to execute at 60 frames per second.",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "103, 88, 165", // purple
@@ -10825,7 +10825,7 @@ const networkData: NetworkItem[] = [
   {
     id: 1,
     title: "Discover",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     x: "50%",
     y: "22%",
     accentHex: "229, 91, 60",
@@ -10834,7 +10834,7 @@ const networkData: NetworkItem[] = [
   {
     id: 2,
     title: "Explore",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     x: "66%",
     y: "26%",
     accentHex: "12, 147, 103",
@@ -10843,7 +10843,7 @@ const networkData: NetworkItem[] = [
   {
     id: 3,
     title: "Interact",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     x: "79%",
     y: "34%",
     accentHex: "241, 179, 51",
@@ -10852,7 +10852,7 @@ const networkData: NetworkItem[] = [
   {
     id: 4,
     title: "Connect",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     x: "81%",
     y: "50%",
     accentHex: "59, 130, 246",
@@ -10861,7 +10861,7 @@ const networkData: NetworkItem[] = [
   {
     id: 5,
     title: "Engage",
-    imgUrl: "https://tweenlabs.xyz/showcase-5.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-5.webp",
     x: "76%",
     y: "71%",
     accentHex: "103, 88, 165",
@@ -10870,7 +10870,7 @@ const networkData: NetworkItem[] = [
   {
     id: 6,
     title: "Immerse",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     x: "58%",
     y: "81%",
     accentHex: "229, 91, 60",
@@ -10879,7 +10879,7 @@ const networkData: NetworkItem[] = [
   {
     id: 7,
     title: "Navigate",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     x: "41%",
     y: "83%",
     accentHex: "12, 147, 103",
@@ -10888,7 +10888,7 @@ const networkData: NetworkItem[] = [
   {
     id: 8,
     title: "Experience",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     x: "20%",
     y: "60%",
     accentHex: "241, 179, 51",
@@ -10897,7 +10897,7 @@ const networkData: NetworkItem[] = [
   {
     id: 9,
     title: "Remember",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     x: "15%",
     y: "45%",
     accentHex: "59, 130, 246",
@@ -10906,7 +10906,7 @@ const networkData: NetworkItem[] = [
   {
     id: 10,
     title: "Return",
-    imgUrl: "https://tweenlabs.xyz/showcase-5.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-5.webp",
     x: "28%",
     y: "34%",
     accentHex: "103, 88, 165",

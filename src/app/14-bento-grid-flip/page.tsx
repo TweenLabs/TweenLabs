@@ -164,7 +164,7 @@ export default function BentoGridPage() {
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
       color: "bg-[#e55b3c]",
       accentHex: "229, 91, 60", // wtf-orange rgb
-      imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+      imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
       statLabel: "RENDER STABILITY",
       statValue: "99.8% // PASS",
     },
@@ -177,7 +177,7 @@ export default function BentoGridPage() {
       gridClass: "col-span-1 h-[280px]",
       color: "bg-[#0c9367]",
       accentHex: "12, 147, 103", // wtf-green rgb
-      imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+      imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
       statLabel: "VARIABLE SYNC",
       statValue: "42 TOKENS",
     },

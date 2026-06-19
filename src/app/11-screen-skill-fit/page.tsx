@@ -13,7 +13,7 @@ const candidates = [
     id: 0,
     name: "Studio Shodwe",
     role: "New Collection · SS25",
-    img: "https://tweenlabs.xyz/showcase-3.png",
+    img: "https://tweenlabs.xyz/showcase-3.webp",
     color: "#0c9367",
     left: {
       tag: "New Collection",
@@ -41,7 +41,7 @@ const candidates = [
     id: 1,
     name: "Arjun K.",
     role: "Editorial Portrait · Menswear",
-    img: "https://tweenlabs.xyz/showcase-1.png",
+    img: "https://tweenlabs.xyz/showcase-1.webp",
     color: "#f1b333",
     left: {
       tag: "Editorial",
@@ -69,7 +69,7 @@ const candidates = [
     id: 2,
     name: "Studio Shodwe",
     role: "New Arrival · FW25",
-    img: "https://tweenlabs.xyz/showcase-2.png",
+    img: "https://tweenlabs.xyz/showcase-2.webp",
     color: "#3b82f6",
     left: {
       tag: "New Arrival",
@@ -96,7 +96,7 @@ const candidates = [
     id: 3,
     name: "@reallygreatsite",
     role: "Beauty & Wellness Creator",
-    img: "https://tweenlabs.xyz/showcase-5.png",
+    img: "https://tweenlabs.xyz/showcase-5.webp",
     color: "#c53b3a",
     left: {
       tag: "Beauty Creator",

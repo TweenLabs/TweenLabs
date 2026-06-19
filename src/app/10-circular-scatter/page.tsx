@@ -60,7 +60,7 @@ function ScrambleText({
 const talentData = [
   {
     id: 0,
-    img: "https://tweenlabs.xyz/showcase-1.png",
+    img: "https://tweenlabs.xyz/showcase-1.webp",
     name: "Sarah Jenkins",
     role: "iOS Tech Lead",
     color: "#f1b333", // Gold
@@ -70,7 +70,7 @@ const talentData = [
   },
   {
     id: 1,
-    img: "https://tweenlabs.xyz/showcase-2.png",
+    img: "https://tweenlabs.xyz/showcase-2.webp",
     name: "Alex Rivera",
     role: "Android Architect",
     color: "#0c9367", // Green
@@ -80,7 +80,7 @@ const talentData = [
   },
   {
     id: 2,
-    img: "https://tweenlabs.xyz/showcase-3.png",
+    img: "https://tweenlabs.xyz/showcase-3.webp",
     name: "Elena Rostova",
     role: "SwiftUI Lead",
     color: "#8b5cf6", // Purple
@@ -90,7 +90,7 @@ const talentData = [
   },
   {
     id: 3,
-    img: "https://tweenlabs.xyz/showcase-4.png",
+    img: "https://tweenlabs.xyz/showcase-4.webp",
     name: "Marcus Vance",
     role: "Flutter Specialist",
     color: "#3b82f6", // Blue
@@ -100,7 +100,7 @@ const talentData = [
   },
   {
     id: 4,
-    img: "https://tweenlabs.xyz/showcase-5.png",
+    img: "https://tweenlabs.xyz/showcase-5.webp",
     name: "Siddharth Mehta",
     role: "React Native Lead",
     color: "#c53b3a", // Red
@@ -110,7 +110,7 @@ const talentData = [
   },
   {
     id: 5,
-    img: "https://tweenlabs.xyz/showcase-6.png",
+    img: "https://tweenlabs.xyz/showcase-6.webp",
     name: "Chloe Dupont",
     role: "KMP Engineer",
     color: "#eab308", // Yellow
@@ -120,7 +120,7 @@ const talentData = [
   },
   {
     id: 6,
-    img: "https://tweenlabs.xyz/showcase-7.png",
+    img: "https://tweenlabs.xyz/showcase-7.webp",
     name: "Liam O'Connor",
     role: "iOS UI Specialist",
     color: "#06b6d4", // Cyan
@@ -130,7 +130,7 @@ const talentData = [
   },
   {
     id: 7,
-    img: "https://tweenlabs.xyz/showcase-8.png",
+    img: "https://tweenlabs.xyz/showcase-8.webp",
     name: "Sofia Giraldo",
     role: "Mobile DevOps Lead",
     color: "#ec4899", // Pink

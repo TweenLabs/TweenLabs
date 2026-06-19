@@ -22,7 +22,7 @@ const cardsData: CardItem[] = [
   {
     title: "PLAN & CONCEPT",
     copy: "Aligning architectural frameworks with dynamic visual assets to establish high-fidelity mockups.",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "229, 91, 60", // orange
@@ -31,7 +31,7 @@ const cardsData: CardItem[] = [
   {
     title: "CREATIVE SYSTEM",
     copy: "Constructing interactive color tokens, asymmetric border structures, and custom tactile overlays.",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "12, 147, 103", // green
@@ -40,7 +40,7 @@ const cardsData: CardItem[] = [
   {
     title: "MOTION PHYSICS",
     copy: "Leveraging spring momentum and coordinate-based tracking to create reactive web experiences.",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "241, 179, 51", // yellow
@@ -49,7 +49,7 @@ const cardsData: CardItem[] = [
   {
     title: "DEPLOY ENGINE",
     copy: "Bundling static layouts and hydration-safe route pipelines to execute at 60 frames per second.",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "103, 88, 165", // purple

@@ -25,7 +25,7 @@ const items: CarouselItem[] = [
     title: "Quantum Compiler",
     category: "ENGINEERING",
     desc: "A custom LLVM backend translating abstract syntax trees into parallel topological gates.",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.webp",
     bgColor: "#e55b3c", // wtf-orange
     accentColor: "bg-[#e55b3c]",
     textColor: "text-white",
@@ -36,7 +36,7 @@ const items: CarouselItem[] = [
     title: "Kinetic Geometry",
     category: "GRAPHICS",
     desc: "GPU-accelerated vector fields tracing magnetic flow lines with spring-damper integrations.",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.webp",
     bgColor: "#0c9367", // wtf-green
     accentColor: "bg-[#0c9367]",
     textColor: "text-white",
@@ -47,7 +47,7 @@ const items: CarouselItem[] = [
     title: "Syntactic Shadow",
     category: "AESTHETICS",
     desc: "High-contrast editorial grid structures utilizing strict monospace matrices and ink traps.",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.webp",
     bgColor: "#6758a5", // wtf-purple
     accentColor: "bg-[#6758a5]",
     textColor: "text-white",
@@ -58,7 +58,7 @@ const items: CarouselItem[] = [
     title: "Hydra Protocol",
     category: "NETWORKS",
     desc: "A peer-to-peer ledger using ephemeral cryptographic state rings and consensus maps.",
-    imgUrl: "https://tweenlabs.xyz/showcase-4.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-4.webp",
     bgColor: "#3b82f6", // wtf-blue
     accentColor: "bg-[#3b82f6]",
     textColor: "text-white",
@@ -69,7 +69,7 @@ const items: CarouselItem[] = [
     title: "Hyperion Core",
     category: "HARDWARE",
     desc: "FPGA solvers designed for extreme throughput pipelines and multi-threaded register stacks.",
-    imgUrl: "https://tweenlabs.xyz/showcase-5.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-5.webp",
     bgColor: "#c53b3a", // wtf-red
     accentColor: "bg-[#c53b3a]",
     textColor: "text-white",
@@ -80,7 +80,7 @@ const items: CarouselItem[] = [
     title: "Helios Shader",
     category: "RAYTRACING",
     desc: "Real-time volumetric path tracers modeling multi-scatter atmospheric absorption.",
-    imgUrl: "https://tweenlabs.xyz/showcase-6.png",
+    imgUrl: "https://tweenlabs.xyz/showcase-6.webp",
     bgColor: "#f1b333", // wtf-yellow
     accentColor: "bg-[#f1b333]",
     textColor: "text-black",
