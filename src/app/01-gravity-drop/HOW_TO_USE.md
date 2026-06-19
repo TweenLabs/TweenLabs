@@ -122,7 +122,7 @@ export default function GravityDrop({ initialText = "GRAVITY DROP" }: GravityDro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add gravity-drop
+npx tweenlabs@latest add gravity-drop
 ```
 
 ---

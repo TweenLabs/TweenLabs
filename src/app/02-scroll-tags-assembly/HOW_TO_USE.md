@@ -145,7 +145,7 @@ export default function ScrollTagsAssembly({ tags = defaultTags }: ScrollTagsPro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add scroll-tags-assembly
+npx tweenlabs@latest add scroll-tags-assembly
 ```
 
 ---

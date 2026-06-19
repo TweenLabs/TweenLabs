@@ -217,7 +217,7 @@ export default function MagneticDock({ items = defaultDockData, onSelect }: Magn
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add magnetic-dock
+npx tweenlabs@latest add magnetic-dock
 ```
 
 ---

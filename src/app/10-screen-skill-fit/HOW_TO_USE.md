@@ -109,7 +109,7 @@ mainTl.to(".candidate-card-2", {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add screen-skill-fit
+npx tweenlabs@latest add screen-skill-fit
 ```
 
 ---

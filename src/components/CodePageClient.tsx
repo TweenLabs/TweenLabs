@@ -526,13 +526,13 @@ const getCliCommand = (pm: "npm" | "pnpm" | "yarn" | "bun", slug: string) => {
   const cleanSlug = slug.replace(/^\d+[a-z]?[-_]/, "");
   switch (pm) {
     case "npm":
-      return `npx tweenlabs add ${cleanSlug}`;
+      return `npx tweenlabs@latest add ${cleanSlug}`;
     case "pnpm":
-      return `pnpm dlx tweenlabs add ${cleanSlug}`;
+      return `pnpm dlx tweenlabs@latest add ${cleanSlug}`;
     case "yarn":
-      return `yarn dlx tweenlabs add ${cleanSlug}`;
+      return `yarn dlx tweenlabs@latest add ${cleanSlug}`;
     case "bun":
-      return `bunx tweenlabs add ${cleanSlug}`;
+      return `bunx tweenlabs@latest add ${cleanSlug}`;
   }
 };
 

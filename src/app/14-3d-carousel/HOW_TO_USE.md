@@ -529,7 +529,7 @@ export default function ThreeDCarousel({ items }: ThreeDCarouselProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add 3d-carousel
+npx tweenlabs@latest add 3d-carousel
 ```
 
 ---

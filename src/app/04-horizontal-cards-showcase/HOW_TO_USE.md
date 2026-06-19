@@ -240,7 +240,7 @@ export default function CardsShowcase({ cards = defaultCards }: CardsShowcasePro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add horizontal-cards-showcase
+npx tweenlabs@latest add horizontal-cards-showcase
 ```
 
 ---

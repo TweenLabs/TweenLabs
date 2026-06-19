@@ -190,7 +190,7 @@ export default function BentoTiltCard({
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add bento-grid-flip
+npx tweenlabs@latest add bento-grid-flip
 ```
 
 ---

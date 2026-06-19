@@ -176,17 +176,46 @@ async function main() {
     process.exit(1);
   }
 
-  const componentSlug = cleanArgs[1];
+  let componentSlug = cleanArgs[1];
   if (!componentSlug) {
     console.log(
-      `${colors.red}Error: Please specify a component slug to add.${colors.reset}`,
+      `\n${colors.cyan}🔍 Fetching available components list...${colors.reset}`,
     );
+    const domain =
+      process.env.TWEENLABS_REGISTRY_URL || "https://tweenlabs.xyz";
+    const listUrl = `${domain}/api/registry/list`;
+    let listData;
+    try {
+      listData = await fetchJson(listUrl);
+    } catch (err) {
+      console.error(
+        `\n${colors.red}❌ Failed to fetch components list.${colors.reset}`,
+      );
+      console.error(`${colors.gray}Details: ${err.message}${colors.reset}`);
+      process.exit(1);
+    }
+
     console.log(
-      colors.gray +
-        "Example: npx tweenlabs add 11-magnetic-dock" +
-        colors.reset,
+      `\n${colors.bold}${colors.green}Select a component to install:${colors.reset}\n`,
     );
-    process.exit(1);
+    const components = listData.components;
+    for (let i = 0; i < components.length; i++) {
+      console.log(
+        `  ${colors.bold}[${i + 1}]${colors.reset} ${components[i].name} ${colors.gray}(${components[i].cleanSlug || components[i].slug})${colors.reset}`,
+      );
+    }
+    console.log("");
+
+    const choiceStr = await askQuestion(
+      `👉 Enter the number of the component to add (1-${components.length}): `,
+    );
+    const choice = parseInt(choiceStr, 10);
+    if (Number.isNaN(choice) || choice < 1 || choice > components.length) {
+      console.log(`${colors.red}Invalid choice. Exiting.${colors.reset}`);
+      process.exit(1);
+    }
+    componentSlug =
+      components[choice - 1].cleanSlug || components[choice - 1].slug;
   }
 
   console.log(

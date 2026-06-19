@@ -243,7 +243,7 @@ export default function MorphingAccordion({ items }: MorphingAccordionProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add morphing-accordion
+npx tweenlabs@latest add morphing-accordion
 ```
 
 ---

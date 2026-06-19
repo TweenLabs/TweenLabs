@@ -251,7 +251,7 @@ export default function GravityDrop({ initialText = "GRAVITY DROP" }: GravityDro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add gravity-drop
+npx tweenlabs@latest add gravity-drop
 ```
 
 ---
@@ -647,7 +647,7 @@ export default function ScrollTagsAssembly({ tags = defaultTags }: ScrollTagsPro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add scroll-tags-assembly
+npx tweenlabs@latest add scroll-tags-assembly
 ```
 
 ---
@@ -1103,7 +1103,7 @@ export default function BorderRevealText({ phrase = "HELLO WORLD THIS IS GSAP" }
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add inward-outward-border-reveal
+npx tweenlabs@latest add inward-outward-border-reveal
 ```
 
 ---
@@ -1669,7 +1669,7 @@ export default function CardsShowcase({ cards = defaultCards }: CardsShowcasePro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add horizontal-cards-showcase
+npx tweenlabs@latest add horizontal-cards-showcase
 ```
 
 ---
@@ -2592,7 +2592,7 @@ export default function PageChangeAnimation({ panels = defaultPanels }: PageChan
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add page-change-animation
+npx tweenlabs@latest add page-change-animation
 ```
 
 ---
@@ -3468,7 +3468,7 @@ export default function LiquidText({ text, speed = 1 }: LiquidTextProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add kinetic-typography
+npx tweenlabs@latest add kinetic-typography
 ```
 
 ---
@@ -4368,7 +4368,7 @@ export default function StandaloneOrbitGallery() {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add scroll-orbit-gallery
+npx tweenlabs@latest add scroll-orbit-gallery
 ```
 
 ---
@@ -4993,7 +4993,7 @@ export function ScrambleText({ text, speed = 25, delay = 0 }: { text: string; sp
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add blueprint-scatter
+npx tweenlabs@latest add blueprint-scatter
 ```
 
 ---
@@ -5672,7 +5672,7 @@ export function ScrambleText({ text, speed = 25, delay = 0 }: { text: string; sp
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add circular-scatter
+npx tweenlabs@latest add circular-scatter
 ```
 
 ---
@@ -6367,7 +6367,7 @@ mainTl.to(".candidate-card-2", {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add screen-skill-fit
+npx tweenlabs@latest add screen-skill-fit
 ```
 
 ---
@@ -6959,7 +6959,7 @@ export default function MagneticDock({ items = defaultDockData, onSelect }: Magn
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add magnetic-dock
+npx tweenlabs@latest add magnetic-dock
 ```
 
 ---
@@ -7592,7 +7592,7 @@ export default function FluidCursor({ children }: FluidCursorProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add fluid-cursor
+npx tweenlabs@latest add fluid-cursor
 ```
 
 ---
@@ -8283,7 +8283,7 @@ export default function BentoTiltCard({
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add bento-grid-flip
+npx tweenlabs@latest add bento-grid-flip
 ```
 
 ---
@@ -9651,7 +9651,7 @@ export default function ThreeDCarousel({ items }: ThreeDCarouselProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add 3d-carousel
+npx tweenlabs@latest add 3d-carousel
 ```
 
 ---
@@ -10221,7 +10221,7 @@ export default function MorphingAccordion({ items }: MorphingAccordionProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add morphing-accordion
+npx tweenlabs@latest add morphing-accordion
 ```
 
 ---
@@ -10831,7 +10831,7 @@ export default function StackingCards({ cards }: StackingCardsProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add scroll-cards-01
+npx tweenlabs@latest add scroll-cards-01
 ```
 
 ---
@@ -11539,7 +11539,7 @@ export default function ShowUpCardsSection({ cards }: ShowUpCardsSectionProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add showup-cards
+npx tweenlabs@latest add showup-cards
 ```
 
 ---
@@ -12360,7 +12360,7 @@ export default function StringLineNetwork({ nodes, pathD }: StringLineNetworkPro
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add string-line
+npx tweenlabs@latest add string-line
 ```
 
 ---

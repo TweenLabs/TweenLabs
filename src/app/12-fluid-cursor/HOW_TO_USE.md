@@ -264,7 +264,7 @@ export default function FluidCursor({ children }: FluidCursorProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add fluid-cursor
+npx tweenlabs@latest add fluid-cursor
 ```
 
 ---

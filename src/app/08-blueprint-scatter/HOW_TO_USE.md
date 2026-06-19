@@ -167,7 +167,7 @@ export function ScrambleText({ text, speed = 25, delay = 0 }: { text: string; sp
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add blueprint-scatter
+npx tweenlabs@latest add blueprint-scatter
 ```
 
 ---

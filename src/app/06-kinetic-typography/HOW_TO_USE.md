@@ -443,7 +443,7 @@ export default function LiquidText({ text, speed = 1 }: LiquidTextProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add kinetic-typography
+npx tweenlabs@latest add kinetic-typography
 ```
 
 ---

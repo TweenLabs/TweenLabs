@@ -274,7 +274,7 @@ export default function ShowUpCardsSection({ cards }: ShowUpCardsSectionProps) {
 ### 💻 Option A: Install via CLI (Recommended)
 You can install this component directly into your project via the TweenLabs CLI:
 ```bash
-npx tweenlabs add showup-cards
+npx tweenlabs@latest add showup-cards
 ```
 
 ---
