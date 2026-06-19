@@ -61,6 +61,20 @@ export async function GET(
 ) {
   const { slug } = await params;
 
+  // Handle list of components request
+  if (slug === "list" || slug === "index") {
+    const list = animations.map((anim) => {
+      const folderName = anim.route.slice(1);
+      return {
+        name: anim.name,
+        slug: folderName,
+        cleanSlug: folderName.replace(/^\d+[a-z]?[-_]/, ""),
+        description: anim.description,
+      };
+    });
+    return NextResponse.json({ components: list });
+  }
+
   // Handle bulk components request
   if (slug === "all" || slug === "all-components") {
     const files = [];

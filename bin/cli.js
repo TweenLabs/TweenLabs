@@ -22,10 +22,12 @@ const helpText = `
 ${colors.bold}${colors.cyan}TweenLabs CLI${colors.reset} - Install premium GSAP components directly into your codebase.
 
 ${colors.bold}Usage:${colors.reset}
-  npx tweenlabs add <component-slug>
-  npx tweenlabs add all
+  npx tweenlabs list                  List all available components
+  npx tweenlabs add <component-slug>  Install a specific component
+  npx tweenlabs add all               Install all components
 
 ${colors.bold}Examples:${colors.reset}
+  npx tweenlabs list
   npx tweenlabs add 11-magnetic-dock
   npx tweenlabs add magnetic-dock
   npx tweenlabs add all
@@ -94,8 +96,28 @@ async function main() {
     process.exit(0);
   }
 
+  if (args[0] === "list") {
+    console.log(`\n${colors.cyan}🔍 Fetching available components list...${colors.reset}`);
+    const domain = process.env.TWEENLABS_REGISTRY_URL || "https://tweenlabs.xyz";
+    const url = `${domain}/api/registry/list`;
+    try {
+      const data = await fetchJson(url);
+      console.log(`\n${colors.bold}${colors.green}Available TweenLabs Components:${colors.reset}\n`);
+      for (const comp of data.components) {
+        console.log(`  ${colors.bold}${colors.cyan}* ${comp.name}${colors.reset}`);
+        console.log(`    Slug:       ${comp.slug} (or ${comp.cleanSlug})`);
+        console.log(`    Desc:       ${comp.description}\n`);
+      }
+      process.exit(0);
+    } catch (err) {
+      console.error(`\n${colors.red}❌ Failed to fetch components list.${colors.reset}`);
+      console.error(colors.gray + `Details: ${err.message}` + colors.reset);
+      process.exit(1);
+    }
+  }
+
   if (args[0] !== "add") {
-    console.log(`${colors.red}Error: Unknown command "${args[0]}". Did you mean "add"?${colors.reset}`);
+    console.log(`${colors.red}Error: Unknown command "${args[0]}". Did you mean "add" or "list"?${colors.reset}`);
     console.log(helpText);
     process.exit(1);
   }

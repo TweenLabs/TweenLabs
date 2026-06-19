@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  outputFileTracingIncludes: {
+    "/api/registry/[slug]": ["./src/app/**/*"],
+    "/code/[slug]": ["./src/app/**/*"],
+  },
   async headers() {
     return [
       {
