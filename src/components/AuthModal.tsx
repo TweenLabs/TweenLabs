@@ -13,14 +13,19 @@ export default function AuthModal() {
   const router = useRouter();
 
   const handleBack = useCallback(() => {
-    closeModal(true); // Force-close the modal before navigating
-    if (callbackUrl && callbackUrl.startsWith("/code/")) {
-      const targetUrl = callbackUrl.replace("/code/", "/");
-      router.push(targetUrl);
+    if (isClosable) {
+      // Modal was opened as a popup over the current page — just dismiss it
+      closeModal();
     } else {
-      router.push("/");
+      // User is on a protected route (e.g. /code/...) — navigate away
+      closeModal(true);
+      if (callbackUrl && callbackUrl.startsWith("/code/")) {
+        router.push(callbackUrl.replace("/code/", "/"));
+      } else {
+        router.push("/");
+      }
     }
-  }, [callbackUrl, router, closeModal]);
+  }, [callbackUrl, router, closeModal, isClosable]);
 
   const triggerShake = () => {
     setIsShaking(true);
@@ -73,13 +78,7 @@ export default function AuthModal() {
       {/* Blurred Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-md transition-all duration-300 animate-in fade-in"
-        onClick={() => {
-          if (isClosable) {
-            closeModal();
-          } else {
-            triggerShake();
-          }
-        }}
+        onClick={() => triggerShake()}
       />
 
       {/* Auth Card Modal Container */}

@@ -39,7 +39,7 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
     if (session) {
       router.push(targetUrl);
     } else {
-      openModal(targetUrl, true);
+      openModal(anim.route, true);
     }
   };
 

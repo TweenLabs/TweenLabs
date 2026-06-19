@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { animations } from "@/data/animations";
 import { authClient } from "@/lib/auth-client";
@@ -11,8 +11,18 @@ import { useSession } from "@/provider/SessionProvider";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { session, isPending } = useSession();
   const { openModal } = useAuthModal();
+
+  const handleGetCode = (animRoute: string) => {
+    const codeUrl = `/code/${animRoute.slice(1)}`;
+    if (session) {
+      router.push(codeUrl);
+    } else {
+      openModal(animRoute, true);
+    }
+  };
   const [avatarError, setAvatarError] = useState(false);
   const [lastUserId, setLastUserId] = useState<string | undefined>(undefined);
   const [mounted, setMounted] = useState(false);
@@ -101,13 +111,13 @@ export default function Header() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-3">
           {currentAnim && (
-            <Link
-              href={`/code/${currentAnim.route.slice(1)}`}
+            <button
+              onClick={() => handleGetCode(currentAnim.route)}
               className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-xs py-1.5 px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150"
               aria-label={`Get source code for ${currentAnim.name}`}
             >
               Get Code
-            </Link>
+            </button>
           )}
 
           {codeAnim && (
@@ -217,13 +227,16 @@ export default function Header() {
           >
         <div className="flex flex-col gap-3 p-5">
           {currentAnim && (
-            <Link
-              href={`/code/${currentAnim.route.slice(1)}`}
-              className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-[11px] py-2.5 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 text-center"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleGetCode(currentAnim.route);
+              }}
+              className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-[11px] py-2.5 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 text-center w-full"
               aria-label={`Get source code for ${currentAnim.name}`}
             >
               Get Code
-            </Link>
+            </button>
           )}
 
           {codeAnim && (
