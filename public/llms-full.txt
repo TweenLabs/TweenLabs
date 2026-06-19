@@ -3,9 +3,710 @@
 
 ---
 
-# Component: Gravity Drop (01)
-URL: https://tweenlabs.xyz/01-gravity-drop
-Source Code URL: https://tweenlabs.xyz/code/01-gravity-drop
+# Component: Flip Cards (01)
+URL: https://tweenlabs.xyz/01-showup-cards
+Source Code URL: https://tweenlabs.xyz/code/01-showup-cards
+
+## Full Sandbox Page Code
+```tsx
+"use client";
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+interface StageItem {
+  id: number;
+  num: string;
+  title: string;
+  accentClass: string;
+  accentHex: string;
+  imgUrl: string;
+  phase: string;
+  desc: string;
+}
+
+const stageData: StageItem[] = [
+  {
+    id: 1,
+    num: "01",
+    title: "PLAN & SCOPE",
+    accentClass: "bg-[#e55b3c]",
+    accentHex: "229, 91, 60",
+    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
+    phase: "PHASE 01",
+    desc: "Gathering system requirements, wireframing workflows, and compiling API matrices.",
+  },
+  {
+    id: 2,
+    num: "02",
+    title: "STYLING & TOKEN",
+    accentClass: "bg-[#0c9367]",
+    accentHex: "12, 147, 103",
+    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
+    phase: "PHASE 02",
+    desc: "Specifying layout structures, fine-grain noise textures, and asymmetric skews.",
+  },
+  {
+    id: 3,
+    num: "03",
+    title: "DEVELOP & DEPLOY",
+    accentClass: "bg-[#3b82f6]",
+    accentHex: "59, 130, 246",
+    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
+    phase: "PHASE 03",
+    desc: "Compiling optimized route structures, loading counter staggers, and final page builds.",
+  },
+];
+
+export default function ShowUpCardsPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const scroller =
+        containerRef.current?.closest("#main-scroller") || undefined;
+      const smoothStep = (p: number) => p * p * (3 - 2 * p);
+
+      // Pin the showup card section during viewport scroll
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        scroller: scroller,
+        start: "top top",
+        end: "bottom bottom",
+        pin: ".showup-cards-sec",
+        pinSpacing: false,
+      });
+
+      // Fall, Scale and Flip Service Cards
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        scroller: scroller,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+
+          ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
+            const delay = index * 0.5;
+            const cardProgress = gsap.utils.clamp(
+              0,
+              1,
+              (progress - delay * 0.1) / (0.9 - delay * 0.1),
+            );
+            const innerCard = document.querySelector(
+              `${cardId} .flip-card-inner`,
+            );
+
+            let y;
+            if (cardProgress < 0.4) {
+              const normalizedProgress = cardProgress / 0.4;
+              y = gsap.utils.interpolate(
+                "-100%",
+                "40%",
+                smoothStep(normalizedProgress),
+              );
+            } else if (cardProgress < 0.6) {
+              const normalizedProgress = (cardProgress - 0.4) / 0.2;
+              y = gsap.utils.interpolate(
+                "40%",
+                "0%",
+                smoothStep(normalizedProgress),
+              );
+            } else {
+              y = "0%";
+            }
+
+            let scale;
+            if (cardProgress < 0.4) {
+              const normalizedProgress = cardProgress / 0.4;
+              scale = gsap.utils.interpolate(
+                0.25,
+                0.75,
+                smoothStep(normalizedProgress),
+              );
+            } else if (cardProgress < 0.6) {
+              const normalizedProgress = (cardProgress - 0.4) / 0.2;
+              scale = gsap.utils.interpolate(
+                0.75,
+                1,
+                smoothStep(normalizedProgress),
+              );
+            } else {
+              scale = 1;
+            }
+
+            let opacity;
+            if (cardProgress < 0.2) {
+              const normalizedProgress = cardProgress / 0.2;
+              opacity = smoothStep(normalizedProgress);
+            } else {
+              opacity = 1;
+            }
+
+            let x, rotate, rotationY;
+            if (cardProgress < 0.6) {
+              x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
+              rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
+              rotationY = 0;
+            } else if (cardProgress < 1) {
+              const normalizedProgress = (cardProgress - 0.6) / 0.4;
+              x = gsap.utils.interpolate(
+                index === 0 ? "100%" : index === 1 ? "0%" : "-100%",
+                "0%",
+                smoothStep(normalizedProgress),
+              );
+              rotate = gsap.utils.interpolate(
+                index === 0 ? -5 : index === 1 ? 0 : 5,
+                0,
+                smoothStep(normalizedProgress),
+              );
+              rotationY = smoothStep(normalizedProgress) * 180;
+            } else {
+              x = "0%";
+              rotate = 0;
+              rotationY = 180;
+            }
+
+            gsap.set(cardId, {
+              opacity: opacity,
+              y: y,
+              x: x,
+              rotate: rotate,
+              scale: scale,
+            });
+
+            if (innerCard) {
+              gsap.set(innerCard, {
+                rotationY: rotationY,
+              });
+            }
+          });
+        },
+      });
+    },
+    { scope: containerRef },
+  );
+
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
+  // Mouse tilt on cards when pointer hovers
+  const handleMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+
+    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 6;
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 1000,
+      ease: "power1.out",
+      duration: 0.35,
+      overwrite: "auto",
+    });
+  });
+
+  const handleMouseLeave = contextSafe(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        ease: "elastic.out(1.1, 0.4)",
+        duration: 0.75,
+        overwrite: "auto",
+      });
+    },
+  );
+
+  return (
+    <div
+      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
+      ref={containerRef}
+    >
+      {/* Tactile Grid Backgrounds */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{
+          backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+        }}
+      />
+
+      {/* Interactive Cards Overlay (Pins on scroll) */}
+      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{
+            backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
+        />
+
+        <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4 pointer-events-auto">
+          {stageData.map((stage) => (
+            <div
+              key={stage.id}
+              className="card w-48 aspect-[5/7] md:w-56 opacity-0 flex-1 relative transform-gpu"
+              id={`card-${stage.id}`}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                transformStyle: "preserve-3d",
+                transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+              }}
+            >
+              <div
+                className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu"
+                style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}
+              >
+                <div
+                  className="flip-card-inner w-full h-full relative"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {/* Front Side Face */}
+                  <div
+                    className="flip-card-front absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                    }}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-mono text-[9px] font-bold text-zinc-400">
+                        [{stage.phase}]
+                      </span>
+                      <span
+                        className={`inline-block border border-black px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${stage.accentClass}`}
+                      >
+                        FLIP NODE
+                      </span>
+                    </div>
+
+                    <div className="inner-img-frame w-full h-[140px] md:h-[180px] border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2 shadow-[2px_2px_0px_#2a2a2a]">
+                      <img
+                        src={stage.imgUrl}
+                        alt={stage.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <div className="flex justify-between items-center border-t border-zinc-200 pt-2">
+                      <h3 className="font-serif font-black text-xs text-[#2a2a2a]">
+                        {stage.title}
+                      </h3>
+                      <span className="font-mono text-[10px] text-zinc-400 font-bold">
+                        0{stage.id}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Back Side Face (Scroll-revealed) */}
+                  <div
+                    className="flip-card-back absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white border-3 text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{
+                      transform: "rotateY(180deg)",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                    }}
+                  >
+                    <div className="w-full flex justify-between font-mono font-bold text-[9px] uppercase border-b-2 border-black pb-2 items-center">
+                      <span className="text-zinc-400">
+                        0{stage.id} {"//"} NODE DETAILS
+                      </span>
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${stage.accentClass}`}
+                      />
+                    </div>
+
+                    <div className="inner-img-frame w-full h-[140px] md:h-[180px] border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2 shadow-[2px_2px_0px_#2a2a2a]">
+                      <img
+                        src={stage.imgUrl}
+                        alt={stage.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <div className="flex-1 flex items-center justify-center py-2">
+                      <p className="text-[10px] md:text-[11px] font-sans font-bold text-zinc-650 leading-snug text-center">
+                        {stage.desc}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between items-center border-t border-zinc-200 pt-2 font-mono text-[8px] text-zinc-400 font-black">
+                      <span>STATUS: ONLINE</span>
+                      <span>SECURE // OK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+```
+
+## Documentation & Integration Instructions
+# How to Use: Showup Cards Reveal
+
+This guide demonstrates how to copy and use the **Showup Cards** assembly and flip interaction.
+
+### Core GSAP Animation Code
+```javascript
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const smoothStep = (p) => p * p * (3 - 2 * p);
+
+// Pin section in viewport
+ScrollTrigger.create({
+  trigger: containerRef.current,
+  start: "top top",
+  end: "bottom bottom",
+  pin: ".showup-cards-sec",
+  pinSpacing: false,
+});
+
+// Animate vertical fall, fanning offset, and 180° backface flip on scroll scrub
+ScrollTrigger.create({
+  trigger: containerRef.current,
+  start: "top top",
+  end: "bottom bottom",
+  scrub: 1,
+  onUpdate: (self) => {
+    const progress = self.progress;
+
+    ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
+      const delay = index * 0.5;
+      const cardProgress = gsap.utils.clamp(0, 1, (progress - delay * 0.1) / (0.9 - delay * 0.1));
+      const innerCard = document.querySelector(`${cardId} .flip-card-inner`);
+
+      // 1. Fall & bounce curve (Y offset interpolation)
+      let y;
+      if (cardProgress < 0.4) {
+        y = gsap.utils.interpolate("-100%", "40%", smoothStep(cardProgress / 0.4));
+      } else if (cardProgress < 0.6) {
+        y = gsap.utils.interpolate("40%", "0%", smoothStep((cardProgress - 0.4) / 0.2));
+      } else {
+        y = "0%";
+      }
+
+      // 2. Scale reveal mapping
+      let scale = cardProgress < 0.4 
+        ? gsap.utils.interpolate(0.25, 0.75, smoothStep(cardProgress / 0.4)) 
+        : cardProgress < 0.6 
+        ? gsap.utils.interpolate(0.75, 1, smoothStep((cardProgress - 0.4) / 0.2)) 
+        : 1;
+
+      // 3. Opacity fade
+      let opacity = cardProgress < 0.2 ? smoothStep(cardProgress / 0.2) : 1;
+
+      // 4. Horizontal fanning spread and 180 degree flip rotation
+      let x, rotate, rotationY;
+      if (cardProgress < 0.6) {
+        x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
+        rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
+        rotationY = 0;
+      } else if (cardProgress < 1) {
+        const norm = (cardProgress - 0.6) / 0.4;
+        x = gsap.utils.interpolate(index === 0 ? "100%" : index === 1 ? "0%" : "-100%", "0%", smoothStep(norm));
+        rotate = gsap.utils.interpolate(index === 0 ? -5 : index === 1 ? 0 : 5, 0, smoothStep(norm));
+        rotationY = smoothStep(norm) * 180;
+      } else {
+        x = "0%";
+        rotate = 0;
+        rotationY = 180;
+      }
+
+      gsap.set(cardId, { opacity, y, x, rotate, scale });
+      if (innerCard) {
+        gsap.set(innerCard, { rotationY });
+      }
+    });
+  },
+});
+```
+
+### Standalone Component Code
+```tsx
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+export interface ShowUpCardItem {
+  id: number;
+  phase: string;
+  title: string;
+  desc: string;
+  imgUrl: string;
+  accentClass: string; // Tailwind bg class: e.g. "bg-[#e55b3c]"
+}
+
+interface ShowUpCardsSectionProps {
+  cards: ShowUpCardItem[];
+}
+
+export default function ShowUpCardsSection({ cards }: ShowUpCardsSectionProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const smoothStep = (p: number) => p * p * (3 - 2 * p);
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: ".showup-cards-sec",
+        pinSpacing: false,
+      });
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+
+          cards.forEach((card, index) => {
+            const cardId = `#card-node-${card.id}`;
+            const delay = index * 0.5;
+            const cardProgress = gsap.utils.clamp(0, 1, (progress - delay * 0.1) / (0.9 - delay * 0.1));
+            const innerCard = document.querySelector(`${cardId} .flip-card-inner`);
+
+            let y;
+            if (cardProgress < 0.4) {
+              y = gsap.utils.interpolate("-100%", "40%", smoothStep(cardProgress / 0.4));
+            } else if (cardProgress < 0.6) {
+              y = gsap.utils.interpolate("40%", "0%", smoothStep((cardProgress - 0.4) / 0.2));
+            } else {
+              y = "0%";
+            }
+
+            let scale = cardProgress < 0.4
+              ? gsap.utils.interpolate(0.25, 0.75, smoothStep(cardProgress / 0.4))
+              : cardProgress < 0.6
+              ? gsap.utils.interpolate(0.75, 1, smoothStep((cardProgress - 0.4) / 0.2))
+              : 1;
+
+            let opacity = cardProgress < 0.2 ? smoothStep(cardProgress / 0.2) : 1;
+
+            let x, rotate, rotationY;
+            if (cardProgress < 0.6) {
+              x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
+              rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
+              rotationY = 0;
+            } else if (cardProgress < 1) {
+              const norm = (cardProgress - 0.6) / 0.4;
+              x = gsap.utils.interpolate(index === 0 ? "100%" : index === 1 ? "0%" : "-100%", "0%", smoothStep(norm));
+              rotate = gsap.utils.interpolate(index === 0 ? -5 : index === 1 ? 0 : 5, 0, smoothStep(norm));
+              rotationY = smoothStep(norm) * 180;
+            } else {
+              x = "0%";
+              rotate = 0;
+              rotationY = 180;
+            }
+
+            gsap.set(cardId, { opacity, y, x, rotate, scale });
+            if (innerCard) {
+              gsap.set(innerCard, { rotationY });
+            }
+          });
+        },
+      });
+    },
+    { scope: containerRef, dependencies: [cards] }
+  );
+
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
+  const handleCardMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotY = (x / rect.width - 0.5) * 12;
+    const rotX = (y / rect.height - 0.5) * -12;
+
+    gsap.to(card, {
+      rotateX: rotX,
+      rotateY: rotY,
+      transformPerspective: 1000,
+      ease: "power2.out",
+      duration: 0.35,
+      overwrite: "auto",
+    });
+  });
+
+  const handleCardMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      ease: "elastic.out(1.1, 0.4)",
+      duration: 0.75,
+      overwrite: "auto",
+    });
+  });
+
+  return (
+    <div ref={containerRef} className="relative min-h-[280vh] w-full">
+      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
+        <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4">
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              className="card w-48 aspect-[5/7] md:w-56 opacity-0 flex-1 relative transform-gpu"
+              id={`card-node-${card.id}`}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              style={{
+                transformStyle: "preserve-3d",
+                transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+              }}
+            >
+              <div className="flip-card-inner w-full h-full relative" style={{ transformStyle: "preserve-3d" }}>
+                {/* Card Front Side */}
+                <div
+                  className="absolute inset-0 border-3 border-[#2a2a2a] bg-white p-4 flex flex-col justify-between rounded-xl shadow-[4px_4px_0px_#2a2a2a] cursor-pointer"
+                  style={{ backfaceVisibility: "hidden" }}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-[9px] font-bold text-zinc-400">[{card.phase}]</span>
+                  </div>
+                  <div className="w-full h-36 border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2">
+                    <img src={card.imgUrl} alt={card.title} className="object-cover w-full h-full" />
+                  </div>
+                  <div className="border-t border-zinc-200 pt-2 flex justify-between items-center">
+                    <h3 className="font-serif font-black text-xs text-[#2a2a2a]">{card.title}</h3>
+                    <span className="font-mono text-[10px] font-bold text-zinc-400">0{card.id}</span>
+                  </div>
+                </div>
+
+                {/* Card Back Side */}
+                <div
+                  className="absolute inset-0 border-3 border-[#2a2a2a] bg-white p-4 flex flex-col justify-between rounded-xl shadow-[4px_4px_0px_#2a2a2a] cursor-pointer"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <div className="w-full flex justify-between font-mono font-bold text-[9px] border-b-2 border-black pb-2 items-center">
+                    <span className="text-zinc-400">NODE SPECS</span>
+                    <span className={`h-2 w-2 rounded-full border border-black animate-pulse ${card.accentClass}`} />
+                  </div>
+                  <div className="flex-1 flex flex-col justify-center items-center text-center py-4">
+                    <p className="text-[11px] font-sans font-semibold text-zinc-650 leading-relaxed">{card.desc}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+```
+
+## Setup & Integration Guide
+
+### 💻 Option A: Install via CLI (Recommended)
+You can install this component directly into your project via the TweenLabs CLI:
+```bash
+npx tweenlabs@latest add showup-cards
+```
+
+---
+
+### 🛠️ Option B: Manual Installation
+
+Follow these beginner-friendly, step-by-step instructions to integrate the component into your project.
+
+### ⚡ Step 1: Install Dependencies
+Open your project terminal and install the required GreenSock libraries:
+```bash
+npm install gsap @gsap/react
+```
+
+### 📁 Step 2: Save the Component File
+1. Create a new component file inside your React/Next.js folder structure, for example:
+   `file:///your-project/src/components/ShowUpCardsSection.tsx`
+2. Copy the **Standalone Component Code** shown in the code tabs above.
+3. Paste it directly into the new file.
+
+### 🚀 Step 3: Import and Render
+Import the component and render it inside any page layout:
+```tsx
+import ShowUpCardsSection from "@/components/ShowUpCardsSection.tsx";
+
+export default function Page() {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-[#f0eadf] p-8">
+      <ShowUpCardsSection />
+    </main>
+  );
+}
+```
+
+### ⚠️ Plugin Registration Notice
+Since this component uses GSAP plugins (ScrollTrigger), they must be imported and registered at the top of your component file:
+```tsx
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+```
+
+---
+
+## 🛠️ Customization & Component Properties (Props)
+
+You can pass the following settings to configure the layout and animation details:
+
+- `cards` (Array): List of cards that fall, scatter horizontally, and flip 180° on scroll scrub.
+
+### 🎨 Neo-Brutalist Theme Tokens
+To match TweenLabs' signature premium editorial styling:
+- **Canvas Backdrop**: `bg-[#f0eadf]` (warm sand color)
+- **High-contrast Borders**: `border-3 border-[#2a2a2a]` (solid charcoal outline)
+- **Drop Shadow Blocks**: `shadow-[6px_6px_0px_#2a2a2a]` (tactile offsets)
+
+
+
+---
+
+# Component: Gravity Drop (02)
+URL: https://tweenlabs.xyz/02-gravity-drop
+Source Code URL: https://tweenlabs.xyz/code/02-gravity-drop
 
 ## Full Sandbox Page Code
 ```tsx
@@ -71,7 +772,7 @@ export default function AnimationOnePage() {
         onClick={handleReplay}
         className="relative min-h-[160px] flex items-center justify-center pb-4 cursor-pointer select-none z-10"
       >
-        <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-3">
+        <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-[0.35em]">
           {text.split(" ").map((word, wordIdx) => (
             <span key={wordIdx} className="inline-block whitespace-nowrap">
               {word.split("").map((char, charIdx) => (
@@ -173,7 +874,7 @@ export default function GravityDrop({ initialText = "GRAVITY DROP" }: GravityDro
     >
       {/* Shelf container where text lands */}
       <div className="relative min-h-[160px] flex items-center justify-center border-b-4 border-[#2a2a2a] pb-4 bg-zinc-50 rounded-lg">
-        <h1 className="text-5xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-2">
+        <h1 className="text-5xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-[0.35em]">
           {textInput.split(" ").map((word, wordIdx) => (
             <span key={wordIdx} className="inline-block whitespace-nowrap">
               {word.split("").map((char, charIdx) => (
@@ -270,9 +971,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Scroll Tags (02)
-URL: https://tweenlabs.xyz/02-scroll-tags-assembly
-Source Code URL: https://tweenlabs.xyz/code/02-scroll-tags-assembly
+# Component: Scroll Tags (03)
+URL: https://tweenlabs.xyz/03-scroll-tags-assembly
+Source Code URL: https://tweenlabs.xyz/code/03-scroll-tags-assembly
 
 ## Full Sandbox Page Code
 ```tsx
@@ -654,9 +1355,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Border Reveal (03)
-URL: https://tweenlabs.xyz/03-inward-outward-border-reveal
-Source Code URL: https://tweenlabs.xyz/code/03-inward-outward-border-reveal
+# Component: Border Reveal (04)
+URL: https://tweenlabs.xyz/04-inward-outward-border-reveal
+Source Code URL: https://tweenlabs.xyz/code/04-inward-outward-border-reveal
 
 ## Full Sandbox Page Code
 ```tsx
@@ -1101,9 +1802,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Horizontal Cards (04)
-URL: https://tweenlabs.xyz/04-horizontal-cards-showcase
-Source Code URL: https://tweenlabs.xyz/code/04-horizontal-cards-showcase
+# Component: Horizontal Cards (05)
+URL: https://tweenlabs.xyz/05-horizontal-cards-showcase
+Source Code URL: https://tweenlabs.xyz/code/05-horizontal-cards-showcase
 
 ## Full Sandbox Page Code
 ```tsx
@@ -1658,9 +2359,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Page Transition (05)
-URL: https://tweenlabs.xyz/05-page-change-animation
-Source Code URL: https://tweenlabs.xyz/code/05-page-change-animation
+# Component: Page Transition (06)
+URL: https://tweenlabs.xyz/06-page-change-animation
+Source Code URL: https://tweenlabs.xyz/code/06-page-change-animation
 
 ## Full Sandbox Page Code
 ```tsx
@@ -2331,9 +3032,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Kinetic Text (06)
-URL: https://tweenlabs.xyz/06-kinetic-typography
-Source Code URL: https://tweenlabs.xyz/code/06-kinetic-typography
+# Component: Kinetic Text (07)
+URL: https://tweenlabs.xyz/07-kinetic-typography
+Source Code URL: https://tweenlabs.xyz/code/07-kinetic-typography
 
 ## Full Sandbox Page Code
 ```tsx
@@ -2986,9 +3687,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Orbit Gallery (07)
-URL: https://tweenlabs.xyz/07-scroll-orbit-gallery
-Source Code URL: https://tweenlabs.xyz/code/07-scroll-orbit-gallery
+# Component: Orbit Gallery (08)
+URL: https://tweenlabs.xyz/08-scroll-orbit-gallery
+Source Code URL: https://tweenlabs.xyz/code/08-scroll-orbit-gallery
 
 ## Full Sandbox Page Code
 ```tsx
@@ -3869,9 +4570,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Blueprint (08)
-URL: https://tweenlabs.xyz/08-blueprint-scatter
-Source Code URL: https://tweenlabs.xyz/code/08-blueprint-scatter
+# Component: Blueprint (09)
+URL: https://tweenlabs.xyz/09-blueprint-scatter
+Source Code URL: https://tweenlabs.xyz/code/09-blueprint-scatter
 
 ## Full Sandbox Page Code
 ```tsx
@@ -4472,9 +5173,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Circular Scatter (09)
-URL: https://tweenlabs.xyz/09-circular-scatter
-Source Code URL: https://tweenlabs.xyz/code/09-circular-scatter
+# Component: Circular Scatter (10)
+URL: https://tweenlabs.xyz/10-circular-scatter
+Source Code URL: https://tweenlabs.xyz/code/10-circular-scatter
 
 ## Full Sandbox Page Code
 ```tsx
@@ -5138,9 +5839,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Skill Fit (10)
-URL: https://tweenlabs.xyz/10-screen-skill-fit
-Source Code URL: https://tweenlabs.xyz/code/10-screen-skill-fit
+# Component: Skill Fit (11)
+URL: https://tweenlabs.xyz/11-screen-skill-fit
+Source Code URL: https://tweenlabs.xyz/code/11-screen-skill-fit
 
 ## Full Sandbox Page Code
 ```tsx
@@ -5770,9 +6471,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Magnetic Dock (11)
-URL: https://tweenlabs.xyz/11-magnetic-dock
-Source Code URL: https://tweenlabs.xyz/code/11-magnetic-dock
+# Component: Magnetic Dock (12)
+URL: https://tweenlabs.xyz/12-magnetic-dock
+Source Code URL: https://tweenlabs.xyz/code/12-magnetic-dock
 
 ## Full Sandbox Page Code
 ```tsx
@@ -6316,9 +7017,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Fluid Cursor (12)
-URL: https://tweenlabs.xyz/12-fluid-cursor
-Source Code URL: https://tweenlabs.xyz/code/12-fluid-cursor
+# Component: Fluid Cursor (13)
+URL: https://tweenlabs.xyz/13-fluid-cursor
+Source Code URL: https://tweenlabs.xyz/code/13-fluid-cursor
 
 ## Full Sandbox Page Code
 ```tsx
@@ -6924,9 +7625,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Bento Grid (13)
-URL: https://tweenlabs.xyz/13-bento-grid-flip
-Source Code URL: https://tweenlabs.xyz/code/13-bento-grid-flip
+# Component: Bento Grid (14)
+URL: https://tweenlabs.xyz/14-bento-grid-flip
+Source Code URL: https://tweenlabs.xyz/code/14-bento-grid-flip
 
 ## Full Sandbox Page Code
 ```tsx
@@ -7595,9 +8296,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: 3D Carousel (14)
-URL: https://tweenlabs.xyz/14-3d-carousel
-Source Code URL: https://tweenlabs.xyz/code/14-3d-carousel
+# Component: 3D Carousel (15)
+URL: https://tweenlabs.xyz/15-3d-carousel
+Source Code URL: https://tweenlabs.xyz/code/15-3d-carousel
 
 ## Full Sandbox Page Code
 ```tsx
@@ -8951,9 +9652,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Accordion (15)
-URL: https://tweenlabs.xyz/15-morphing-accordion
-Source Code URL: https://tweenlabs.xyz/code/15-morphing-accordion
+# Component: Accordion (16)
+URL: https://tweenlabs.xyz/16-morphing-accordion
+Source Code URL: https://tweenlabs.xyz/code/16-morphing-accordion
 
 ## Full Sandbox Page Code
 ```tsx
@@ -9498,9 +10199,9 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-# Component: Scroll Cards (16)
-URL: https://tweenlabs.xyz/16-scroll-cards-01
-Source Code URL: https://tweenlabs.xyz/code/16-scroll-cards-01
+# Component: Scroll Cards (17)
+URL: https://tweenlabs.xyz/17-scroll-cards-01
+Source Code URL: https://tweenlabs.xyz/code/17-scroll-cards-01
 
 ## Full Sandbox Page Code
 ```tsx
@@ -10100,707 +10801,6 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 You can pass the following settings to configure the layout and animation details:
 
 - `cards` (Array): List of cards with step data, copy, images, and color themes.
-
-### 🎨 Neo-Brutalist Theme Tokens
-To match TweenLabs' signature premium editorial styling:
-- **Canvas Backdrop**: `bg-[#f0eadf]` (warm sand color)
-- **High-contrast Borders**: `border-3 border-[#2a2a2a]` (solid charcoal outline)
-- **Drop Shadow Blocks**: `shadow-[6px_6px_0px_#2a2a2a]` (tactile offsets)
-
-
-
----
-
-# Component: Flip Cards (17)
-URL: https://tweenlabs.xyz/17-showup-cards
-Source Code URL: https://tweenlabs.xyz/code/17-showup-cards
-
-## Full Sandbox Page Code
-```tsx
-"use client";
-
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-interface StageItem {
-  id: number;
-  num: string;
-  title: string;
-  accentClass: string;
-  accentHex: string;
-  imgUrl: string;
-  phase: string;
-  desc: string;
-}
-
-const stageData: StageItem[] = [
-  {
-    id: 1,
-    num: "01",
-    title: "PLAN & SCOPE",
-    accentClass: "bg-[#e55b3c]",
-    accentHex: "229, 91, 60",
-    imgUrl: "https://tweenlabs.xyz/showcase-1.png",
-    phase: "PHASE 01",
-    desc: "Gathering system requirements, wireframing workflows, and compiling API matrices.",
-  },
-  {
-    id: 2,
-    num: "02",
-    title: "STYLING & TOKEN",
-    accentClass: "bg-[#0c9367]",
-    accentHex: "12, 147, 103",
-    imgUrl: "https://tweenlabs.xyz/showcase-2.png",
-    phase: "PHASE 02",
-    desc: "Specifying layout structures, fine-grain noise textures, and asymmetric skews.",
-  },
-  {
-    id: 3,
-    num: "03",
-    title: "DEVELOP & DEPLOY",
-    accentClass: "bg-[#3b82f6]",
-    accentHex: "59, 130, 246",
-    imgUrl: "https://tweenlabs.xyz/showcase-3.png",
-    phase: "PHASE 03",
-    desc: "Compiling optimized route structures, loading counter staggers, and final page builds.",
-  },
-];
-
-export default function ShowUpCardsPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const scroller =
-        containerRef.current?.closest("#main-scroller") || undefined;
-      const smoothStep = (p: number) => p * p * (3 - 2 * p);
-
-      // Pin the showup card section during viewport scroll
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        scroller: scroller,
-        start: "top top",
-        end: "bottom bottom",
-        pin: ".showup-cards-sec",
-        pinSpacing: false,
-      });
-
-      // Fall, Scale and Flip Service Cards
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        scroller: scroller,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-
-          ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
-            const delay = index * 0.5;
-            const cardProgress = gsap.utils.clamp(
-              0,
-              1,
-              (progress - delay * 0.1) / (0.9 - delay * 0.1),
-            );
-            const innerCard = document.querySelector(
-              `${cardId} .flip-card-inner`,
-            );
-
-            let y;
-            if (cardProgress < 0.4) {
-              const normalizedProgress = cardProgress / 0.4;
-              y = gsap.utils.interpolate(
-                "-100%",
-                "40%",
-                smoothStep(normalizedProgress),
-              );
-            } else if (cardProgress < 0.6) {
-              const normalizedProgress = (cardProgress - 0.4) / 0.2;
-              y = gsap.utils.interpolate(
-                "40%",
-                "0%",
-                smoothStep(normalizedProgress),
-              );
-            } else {
-              y = "0%";
-            }
-
-            let scale;
-            if (cardProgress < 0.4) {
-              const normalizedProgress = cardProgress / 0.4;
-              scale = gsap.utils.interpolate(
-                0.25,
-                0.75,
-                smoothStep(normalizedProgress),
-              );
-            } else if (cardProgress < 0.6) {
-              const normalizedProgress = (cardProgress - 0.4) / 0.2;
-              scale = gsap.utils.interpolate(
-                0.75,
-                1,
-                smoothStep(normalizedProgress),
-              );
-            } else {
-              scale = 1;
-            }
-
-            let opacity;
-            if (cardProgress < 0.2) {
-              const normalizedProgress = cardProgress / 0.2;
-              opacity = smoothStep(normalizedProgress);
-            } else {
-              opacity = 1;
-            }
-
-            let x, rotate, rotationY;
-            if (cardProgress < 0.6) {
-              x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
-              rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
-              rotationY = 0;
-            } else if (cardProgress < 1) {
-              const normalizedProgress = (cardProgress - 0.6) / 0.4;
-              x = gsap.utils.interpolate(
-                index === 0 ? "100%" : index === 1 ? "0%" : "-100%",
-                "0%",
-                smoothStep(normalizedProgress),
-              );
-              rotate = gsap.utils.interpolate(
-                index === 0 ? -5 : index === 1 ? 0 : 5,
-                0,
-                smoothStep(normalizedProgress),
-              );
-              rotationY = smoothStep(normalizedProgress) * 180;
-            } else {
-              x = "0%";
-              rotate = 0;
-              rotationY = 180;
-            }
-
-            gsap.set(cardId, {
-              opacity: opacity,
-              y: y,
-              x: x,
-              rotate: rotate,
-              scale: scale,
-            });
-
-            if (innerCard) {
-              gsap.set(innerCard, {
-                rotationY: rotationY,
-              });
-            }
-          });
-        },
-      });
-    },
-    { scope: containerRef },
-  );
-
-  const { contextSafe } = useGSAP({ scope: containerRef });
-
-  // Mouse tilt on cards when pointer hovers
-  const handleMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-
-    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
-    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 6;
-
-    gsap.to(card, {
-      rotateX: rotateX,
-      rotateY: rotateY,
-      transformPerspective: 1000,
-      ease: "power1.out",
-      duration: 0.35,
-      overwrite: "auto",
-    });
-  });
-
-  const handleMouseLeave = contextSafe(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const card = e.currentTarget;
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        ease: "elastic.out(1.1, 0.4)",
-        duration: 0.75,
-        overwrite: "auto",
-      });
-    },
-  );
-
-  return (
-    <div
-      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
-      ref={containerRef}
-    >
-      {/* Tactile Grid Backgrounds */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-15"
-        style={{
-          backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-      <div
-        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      {/* Interactive Cards Overlay (Pins on scroll) */}
-      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-          }}
-        />
-
-        <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4 pointer-events-auto">
-          {stageData.map((stage) => (
-            <div
-              key={stage.id}
-              className="card w-48 aspect-[5/7] md:w-56 opacity-0 flex-1 relative transform-gpu"
-              id={`card-${stage.id}`}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                transformStyle: "preserve-3d",
-                transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
-              }}
-            >
-              <div
-                className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu"
-                style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}
-              >
-                <div
-                  className="flip-card-inner w-full h-full relative"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* Front Side Face */}
-                  <div
-                    className="flip-card-front absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
-                    style={{
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                    }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono text-[9px] font-bold text-zinc-400">
-                        [{stage.phase}]
-                      </span>
-                      <span
-                        className={`inline-block border border-black px-2 py-0.5 rounded-full text-[8px] font-mono font-bold text-white uppercase ${stage.accentClass}`}
-                      >
-                        FLIP NODE
-                      </span>
-                    </div>
-
-                    <div className="inner-img-frame w-full h-[140px] md:h-[180px] border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2 shadow-[2px_2px_0px_#2a2a2a]">
-                      <img
-                        src={stage.imgUrl}
-                        alt={stage.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-
-                    <div className="flex justify-between items-center border-t border-zinc-200 pt-2">
-                      <h3 className="font-serif font-black text-xs text-[#2a2a2a]">
-                        {stage.title}
-                      </h3>
-                      <span className="font-mono text-[10px] text-zinc-400 font-bold">
-                        0{stage.id}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Back Side Face (Scroll-revealed) */}
-                  <div
-                    className="flip-card-back absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white border-3 text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
-                    style={{
-                      transform: "rotateY(180deg)",
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                    }}
-                  >
-                    <div className="w-full flex justify-between font-mono font-bold text-[9px] uppercase border-b-2 border-black pb-2 items-center">
-                      <span className="text-zinc-400">
-                        0{stage.id} {"//"} NODE DETAILS
-                      </span>
-                      <span
-                        className={`h-2.5 w-2.5 rounded-full border border-black animate-pulse ${stage.accentClass}`}
-                      />
-                    </div>
-
-                    <div className="inner-img-frame w-full h-[140px] md:h-[180px] border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2 shadow-[2px_2px_0px_#2a2a2a]">
-                      <img
-                        src={stage.imgUrl}
-                        alt={stage.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-
-                    <div className="flex-1 flex items-center justify-center py-2">
-                      <p className="text-[10px] md:text-[11px] font-sans font-bold text-zinc-650 leading-snug text-center">
-                        {stage.desc}
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between items-center border-t border-zinc-200 pt-2 font-mono text-[8px] text-zinc-400 font-black">
-                      <span>STATUS: ONLINE</span>
-                      <span>SECURE // OK</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
-}
-```
-
-## Documentation & Integration Instructions
-# How to Use: Showup Cards Reveal
-
-This guide demonstrates how to copy and use the **Showup Cards** assembly and flip interaction.
-
-### Core GSAP Animation Code
-```javascript
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const smoothStep = (p) => p * p * (3 - 2 * p);
-
-// Pin section in viewport
-ScrollTrigger.create({
-  trigger: containerRef.current,
-  start: "top top",
-  end: "bottom bottom",
-  pin: ".showup-cards-sec",
-  pinSpacing: false,
-});
-
-// Animate vertical fall, fanning offset, and 180° backface flip on scroll scrub
-ScrollTrigger.create({
-  trigger: containerRef.current,
-  start: "top top",
-  end: "bottom bottom",
-  scrub: 1,
-  onUpdate: (self) => {
-    const progress = self.progress;
-
-    ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
-      const delay = index * 0.5;
-      const cardProgress = gsap.utils.clamp(0, 1, (progress - delay * 0.1) / (0.9 - delay * 0.1));
-      const innerCard = document.querySelector(`${cardId} .flip-card-inner`);
-
-      // 1. Fall & bounce curve (Y offset interpolation)
-      let y;
-      if (cardProgress < 0.4) {
-        y = gsap.utils.interpolate("-100%", "40%", smoothStep(cardProgress / 0.4));
-      } else if (cardProgress < 0.6) {
-        y = gsap.utils.interpolate("40%", "0%", smoothStep((cardProgress - 0.4) / 0.2));
-      } else {
-        y = "0%";
-      }
-
-      // 2. Scale reveal mapping
-      let scale = cardProgress < 0.4 
-        ? gsap.utils.interpolate(0.25, 0.75, smoothStep(cardProgress / 0.4)) 
-        : cardProgress < 0.6 
-        ? gsap.utils.interpolate(0.75, 1, smoothStep((cardProgress - 0.4) / 0.2)) 
-        : 1;
-
-      // 3. Opacity fade
-      let opacity = cardProgress < 0.2 ? smoothStep(cardProgress / 0.2) : 1;
-
-      // 4. Horizontal fanning spread and 180 degree flip rotation
-      let x, rotate, rotationY;
-      if (cardProgress < 0.6) {
-        x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
-        rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
-        rotationY = 0;
-      } else if (cardProgress < 1) {
-        const norm = (cardProgress - 0.6) / 0.4;
-        x = gsap.utils.interpolate(index === 0 ? "100%" : index === 1 ? "0%" : "-100%", "0%", smoothStep(norm));
-        rotate = gsap.utils.interpolate(index === 0 ? -5 : index === 1 ? 0 : 5, 0, smoothStep(norm));
-        rotationY = smoothStep(norm) * 180;
-      } else {
-        x = "0%";
-        rotate = 0;
-        rotationY = 180;
-      }
-
-      gsap.set(cardId, { opacity, y, x, rotate, scale });
-      if (innerCard) {
-        gsap.set(innerCard, { rotationY });
-      }
-    });
-  },
-});
-```
-
-### Standalone Component Code
-```tsx
-"use client";
-
-import React, { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-export interface ShowUpCardItem {
-  id: number;
-  phase: string;
-  title: string;
-  desc: string;
-  imgUrl: string;
-  accentClass: string; // Tailwind bg class: e.g. "bg-[#e55b3c]"
-}
-
-interface ShowUpCardsSectionProps {
-  cards: ShowUpCardItem[];
-}
-
-export default function ShowUpCardsSection({ cards }: ShowUpCardsSectionProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const smoothStep = (p: number) => p * p * (3 - 2 * p);
-
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: ".showup-cards-sec",
-        pinSpacing: false,
-      });
-
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-
-          cards.forEach((card, index) => {
-            const cardId = `#card-node-${card.id}`;
-            const delay = index * 0.5;
-            const cardProgress = gsap.utils.clamp(0, 1, (progress - delay * 0.1) / (0.9 - delay * 0.1));
-            const innerCard = document.querySelector(`${cardId} .flip-card-inner`);
-
-            let y;
-            if (cardProgress < 0.4) {
-              y = gsap.utils.interpolate("-100%", "40%", smoothStep(cardProgress / 0.4));
-            } else if (cardProgress < 0.6) {
-              y = gsap.utils.interpolate("40%", "0%", smoothStep((cardProgress - 0.4) / 0.2));
-            } else {
-              y = "0%";
-            }
-
-            let scale = cardProgress < 0.4
-              ? gsap.utils.interpolate(0.25, 0.75, smoothStep(cardProgress / 0.4))
-              : cardProgress < 0.6
-              ? gsap.utils.interpolate(0.75, 1, smoothStep((cardProgress - 0.4) / 0.2))
-              : 1;
-
-            let opacity = cardProgress < 0.2 ? smoothStep(cardProgress / 0.2) : 1;
-
-            let x, rotate, rotationY;
-            if (cardProgress < 0.6) {
-              x = index === 0 ? "100%" : index === 1 ? "0%" : "-100%";
-              rotate = index === 0 ? -5 : index === 1 ? 0 : 5;
-              rotationY = 0;
-            } else if (cardProgress < 1) {
-              const norm = (cardProgress - 0.6) / 0.4;
-              x = gsap.utils.interpolate(index === 0 ? "100%" : index === 1 ? "0%" : "-100%", "0%", smoothStep(norm));
-              rotate = gsap.utils.interpolate(index === 0 ? -5 : index === 1 ? 0 : 5, 0, smoothStep(norm));
-              rotationY = smoothStep(norm) * 180;
-            } else {
-              x = "0%";
-              rotate = 0;
-              rotationY = 180;
-            }
-
-            gsap.set(cardId, { opacity, y, x, rotate, scale });
-            if (innerCard) {
-              gsap.set(innerCard, { rotationY });
-            }
-          });
-        },
-      });
-    },
-    { scope: containerRef, dependencies: [cards] }
-  );
-
-  const { contextSafe } = useGSAP({ scope: containerRef });
-
-  const handleCardMouseMove = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const rotY = (x / rect.width - 0.5) * 12;
-    const rotX = (y / rect.height - 0.5) * -12;
-
-    gsap.to(card, {
-      rotateX: rotX,
-      rotateY: rotY,
-      transformPerspective: 1000,
-      ease: "power2.out",
-      duration: 0.35,
-      overwrite: "auto",
-    });
-  });
-
-  const handleCardMouseLeave = contextSafe((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      ease: "elastic.out(1.1, 0.4)",
-      duration: 0.75,
-      overwrite: "auto",
-    });
-  });
-
-  return (
-    <div ref={containerRef} className="relative min-h-[280vh] w-full">
-      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
-        <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4">
-          {cards.map((card) => (
-            <div
-              key={card.id}
-              className="card w-48 aspect-[5/7] md:w-56 opacity-0 flex-1 relative transform-gpu"
-              id={`card-node-${card.id}`}
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
-              style={{
-                transformStyle: "preserve-3d",
-                transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
-              }}
-            >
-              <div className="flip-card-inner w-full h-full relative" style={{ transformStyle: "preserve-3d" }}>
-                {/* Card Front Side */}
-                <div
-                  className="absolute inset-0 border-3 border-[#2a2a2a] bg-white p-4 flex flex-col justify-between rounded-xl shadow-[4px_4px_0px_#2a2a2a] cursor-pointer"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">[{card.phase}]</span>
-                  </div>
-                  <div className="w-full h-36 border-2 border-[#2a2a2a] relative overflow-hidden rounded-lg bg-zinc-50 my-2">
-                    <img src={card.imgUrl} alt={card.title} className="object-cover w-full h-full" />
-                  </div>
-                  <div className="border-t border-zinc-200 pt-2 flex justify-between items-center">
-                    <h3 className="font-serif font-black text-xs text-[#2a2a2a]">{card.title}</h3>
-                    <span className="font-mono text-[10px] font-bold text-zinc-400">0{card.id}</span>
-                  </div>
-                </div>
-
-                {/* Card Back Side */}
-                <div
-                  className="absolute inset-0 border-3 border-[#2a2a2a] bg-white p-4 flex flex-col justify-between rounded-xl shadow-[4px_4px_0px_#2a2a2a] cursor-pointer"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                >
-                  <div className="w-full flex justify-between font-mono font-bold text-[9px] border-b-2 border-black pb-2 items-center">
-                    <span className="text-zinc-400">NODE SPECS</span>
-                    <span className={`h-2 w-2 rounded-full border border-black animate-pulse ${card.accentClass}`} />
-                  </div>
-                  <div className="flex-1 flex flex-col justify-center items-center text-center py-4">
-                    <p className="text-[11px] font-sans font-semibold text-zinc-650 leading-relaxed">{card.desc}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
-}
-```
-
-## Setup & Integration Guide
-
-### 💻 Option A: Install via CLI (Recommended)
-You can install this component directly into your project via the TweenLabs CLI:
-```bash
-npx tweenlabs@latest add showup-cards
-```
-
----
-
-### 🛠️ Option B: Manual Installation
-
-Follow these beginner-friendly, step-by-step instructions to integrate the component into your project.
-
-### ⚡ Step 1: Install Dependencies
-Open your project terminal and install the required GreenSock libraries:
-```bash
-npm install gsap @gsap/react
-```
-
-### 📁 Step 2: Save the Component File
-1. Create a new component file inside your React/Next.js folder structure, for example:
-   `file:///your-project/src/components/ShowUpCardsSection.tsx`
-2. Copy the **Standalone Component Code** shown in the code tabs above.
-3. Paste it directly into the new file.
-
-### 🚀 Step 3: Import and Render
-Import the component and render it inside any page layout:
-```tsx
-import ShowUpCardsSection from "@/components/ShowUpCardsSection.tsx";
-
-export default function Page() {
-  return (
-    <main className="min-h-screen flex items-center justify-center bg-[#f0eadf] p-8">
-      <ShowUpCardsSection />
-    </main>
-  );
-}
-```
-
-### ⚠️ Plugin Registration Notice
-Since this component uses GSAP plugins (ScrollTrigger), they must be imported and registered at the top of your component file:
-```tsx
-import { ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-```
-
----
-
-## 🛠️ Customization & Component Properties (Props)
-
-You can pass the following settings to configure the layout and animation details:
-
-- `cards` (Array): List of cards that fall, scatter horizontally, and flip 180° on scroll scrub.
 
 ### 🎨 Neo-Brutalist Theme Tokens
 To match TweenLabs' signature premium editorial styling:

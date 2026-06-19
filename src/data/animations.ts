@@ -11,8 +11,18 @@ export interface AnimationItem {
 export const animations: AnimationItem[] = [
   {
     id: "01",
+    name: "Flip Cards",
+    route: "/01-showup-cards",
+    bgColor: "bg-wtf-green",
+    textColor: "text-white",
+    description:
+      "Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.",
+    tiltClass: "tilt-left",
+  },
+  {
+    id: "02",
     name: "Gravity Drop",
-    route: "/01-gravity-drop",
+    route: "/02-gravity-drop",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -20,9 +30,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "02",
+    id: "03",
     name: "Scroll Tags",
-    route: "/02-scroll-tags-assembly",
+    route: "/03-scroll-tags-assembly",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -30,9 +40,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
   },
   {
-    id: "03",
+    id: "04",
     name: "Border Reveal",
-    route: "/03-inward-outward-border-reveal",
+    route: "/04-inward-outward-border-reveal",
     bgColor: "bg-wtf-red",
     textColor: "text-white",
     description:
@@ -40,9 +50,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right-lg",
   },
   {
-    id: "04",
+    id: "05",
     name: "Horizontal Cards",
-    route: "/04-horizontal-cards-showcase",
+    route: "/05-horizontal-cards-showcase",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -50,9 +60,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left-lg",
   },
   {
-    id: "05",
+    id: "06",
     name: "Page Transition",
-    route: "/05-page-change-animation",
+    route: "/06-page-change-animation",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
     description:
@@ -60,9 +70,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "06",
+    id: "07",
     name: "Kinetic Text",
-    route: "/06-kinetic-typography",
+    route: "/07-kinetic-typography",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -70,9 +80,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
   },
   {
-    id: "07",
+    id: "08",
     name: "Orbit Gallery",
-    route: "/07-scroll-orbit-gallery",
+    route: "/08-scroll-orbit-gallery",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -80,9 +90,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "08",
+    id: "09",
     name: "Blueprint",
-    route: "/08-blueprint-scatter",
+    route: "/09-blueprint-scatter",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -90,9 +100,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
   },
   {
-    id: "09",
+    id: "10",
     name: "Circular Scatter",
-    route: "/09-circular-scatter",
+    route: "/10-circular-scatter",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -100,9 +110,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "10",
+    id: "11",
     name: "Skill Fit",
-    route: "/10-screen-skill-fit",
+    route: "/11-screen-skill-fit",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -110,9 +120,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
   },
   {
-    id: "11",
+    id: "12",
     name: "Magnetic Dock",
-    route: "/11-magnetic-dock",
+    route: "/12-magnetic-dock",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -120,9 +130,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "12",
+    id: "13",
     name: "Fluid Cursor",
-    route: "/12-fluid-cursor",
+    route: "/13-fluid-cursor",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -130,9 +140,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
   },
   {
-    id: "13",
+    id: "14",
     name: "Bento Grid",
-    route: "/13-bento-grid-flip",
+    route: "/14-bento-grid-flip",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -140,9 +150,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right-lg",
   },
   {
-    id: "14",
+    id: "15",
     name: "3D Carousel",
-    route: "/14-3d-carousel",
+    route: "/15-3d-carousel",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
     description:
@@ -150,9 +160,9 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left-lg",
   },
   {
-    id: "15",
+    id: "16",
     name: "Accordion",
-    route: "/15-morphing-accordion",
+    route: "/16-morphing-accordion",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -160,25 +170,14 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
   },
   {
-    id: "16",
+    id: "17",
     name: "Scroll Cards",
-    route: "/16-scroll-cards-01",
+    route: "/17-scroll-cards-01",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
       "Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.",
     tiltClass: "tilt-right",
-  },
-
-  {
-    id: "17",
-    name: "Flip Cards",
-    route: "/17-showup-cards",
-    bgColor: "bg-wtf-green",
-    textColor: "text-white",
-    description:
-      "Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.",
-    tiltClass: "tilt-left",
   },
   {
     id: "18",

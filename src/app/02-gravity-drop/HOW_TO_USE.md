@@ -78,7 +78,7 @@ export default function GravityDrop({ initialText = "GRAVITY DROP" }: GravityDro
     >
       {/* Shelf container where text lands */}
       <div className="relative min-h-[160px] flex items-center justify-center border-b-4 border-[#2a2a2a] pb-4 bg-zinc-50 rounded-lg">
-        <h1 className="text-5xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-2">
+        <h1 className="text-5xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-[0.35em]">
           {textInput.split(" ").map((word, wordIdx) => (
             <span key={wordIdx} className="inline-block whitespace-nowrap">
               {word.split("").map((char, charIdx) => (
