@@ -15,6 +15,7 @@ Examples of behavior that contributes to a positive environment for our communit
 *   Giving and gracefully accepting constructive feedback
 *   Accepting responsibility and apologizing to those affected by our mistakes, and learning from the experience
 *   Focusing on what is best for the overall community, not just for ourselves
+*   **Ensuring code contributions are highly portable and self-contained**, making them as easy as possible for others to reuse, download, and integrate without friction.
 
 Examples of unacceptable behavior include:
 

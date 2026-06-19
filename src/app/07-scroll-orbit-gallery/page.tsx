@@ -266,11 +266,14 @@ export default function ScrollOrbitGallery() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f2ece0] text-[#2a2a2a] overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f2ece0] text-[#2a2a2a] overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Dot Grid Background Overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Dashboard Back Link */}
       <div className="fixed left-6 top-6 z-50">
@@ -280,7 +283,7 @@ export default function ScrollOrbitGallery() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -289,7 +292,7 @@ export default function ScrollOrbitGallery() {
       {/* Scroll Indicator HUD */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 font-mono text-xs uppercase tracking-widest text-[#2a2a2a]/60 animate-bounce pointer-events-none flex flex-col items-center gap-1">
         <span>Scroll Down to Assemble</span>
-        <span className="text-wtf-orange font-bold text-sm">↓</span>
+        <span className="text-[#e55b3c] font-bold text-sm">↓</span>
       </div>
 
       {/* Main Pinned Work Area */}

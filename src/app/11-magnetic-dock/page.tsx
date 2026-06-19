@@ -22,7 +22,7 @@ export default function MagneticDockPage() {
     {
       id: "home",
       label: "HOME",
-      color: "bg-wtf-orange text-white",
+      color: "bg-[#e55b3c] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -43,7 +43,7 @@ export default function MagneticDockPage() {
     {
       id: "projects",
       label: "PROJECTS",
-      color: "bg-wtf-green text-white",
+      color: "bg-[#0c9367] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -64,7 +64,7 @@ export default function MagneticDockPage() {
     {
       id: "about",
       label: "ABOUT",
-      color: "bg-wtf-yellow text-black",
+      color: "bg-[#f1b333] text-black",
       icon: (
         <svg
           className="w-6 h-6"
@@ -85,7 +85,7 @@ export default function MagneticDockPage() {
     {
       id: "services",
       label: "SERVICES",
-      color: "bg-wtf-purple text-white",
+      color: "bg-[#6758a5] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -112,7 +112,7 @@ export default function MagneticDockPage() {
     {
       id: "contact",
       label: "CONTACT",
-      color: "bg-wtf-blue text-white",
+      color: "bg-[#3b82f6] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -219,14 +219,17 @@ export default function MagneticDockPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-wtf-yellow selection:text-black overflow-hidden"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-orange border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 11</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -241,7 +244,7 @@ export default function MagneticDockPage() {
 
       {/* Active Section Display */}
       <main className="z-10 flex-1 flex items-center justify-center w-full max-w-xl my-12">
-        <div className="w-full brutalist-card p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
+        <div className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
           <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
             [ Active Destination ]
           </span>
@@ -268,7 +271,7 @@ export default function MagneticDockPage() {
             >
               {/* Tooltip */}
               <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] tilt-left">
+                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
                   {item.label}
                 </div>
               </div>
@@ -294,7 +297,7 @@ export default function MagneticDockPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>

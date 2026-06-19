@@ -45,14 +45,17 @@ export default function AnimationOnePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
-      <div className="z-10 w-full max-w-2xl brutalist-card p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
+      <div className="z-10 w-full max-w-2xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
         {/* Header tag */}
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-orange border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Gravity Drop Sandbox</span>
         </div>
 
@@ -67,7 +70,7 @@ export default function AnimationOnePage() {
                 {word.split("").map((char, charIdx) => (
                   <span
                     key={charIdx}
-                    className="falling-letter inline-block transform origin-bottom font-black text-wtf-orange will-change-transform"
+                    className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
                     style={{ textShadow: "2px 2px 0px #2a2a2a" }}
                   >
                     {char}
@@ -91,7 +94,7 @@ export default function AnimationOnePage() {
           <div className="flex gap-3 w-full md:w-auto">
             <button
               onClick={handleReplay}
-              className="flex-1 md:flex-none brutalist-btn bg-wtf-orange text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+              className="flex-1 md:flex-none border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#e55b3c] text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
             >
               ☄️ Trigger Drop
             </button>
@@ -102,7 +105,7 @@ export default function AnimationOnePage() {
                     ? window.history.back()
                     : (window.location.href = "/")
                 }
-                className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+                className="w-full border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
               >
                 ← Back
               </button>

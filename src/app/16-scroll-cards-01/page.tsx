@@ -27,7 +27,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "229, 91, 60", // orange
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     title: "CREATIVE SYSTEM",
@@ -36,7 +36,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "12, 147, 103", // green
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     title: "MOTION PHYSICS",
@@ -45,7 +45,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "241, 179, 51", // yellow
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     title: "DEPLOY ENGINE",
@@ -54,7 +54,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "103, 88, 165", // purple
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
 ];
 
@@ -164,12 +164,18 @@ export default function ScrollCardsPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Tactile Grids */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
@@ -179,7 +185,7 @@ export default function ScrollCardsPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -233,7 +239,7 @@ export default function ScrollCardsPage() {
             <div
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className={`scroll-card-inner brutalist-card w-full max-w-4xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center select-none cursor-pointer rounded-2xl will-change-transform relative overflow-hidden ${card.bgColor} ${card.textColor}`}
+              className={`scroll-card-inner border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] w-full max-w-4xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center select-none cursor-pointer rounded-2xl will-change-transform relative overflow-hidden ${card.bgColor} ${card.textColor}`}
               style={{
                 top: `${index * 44}px`,
                 transformStyle: "preserve-3d",

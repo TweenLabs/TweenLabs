@@ -10,42 +10,42 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const tagsData = [
   {
     text: "CREATIVE",
-    color: "bg-wtf-orange text-white",
+    color: "bg-[#e55b3c] text-white",
     xStart: -400,
     yStart: -200,
     rotate: -15,
   },
   {
     text: "DEVELOPER",
-    color: "bg-wtf-green text-white",
+    color: "bg-[#0c9367] text-white",
     xStart: 400,
     yStart: 250,
     rotate: 12,
   },
   {
     text: "GSAP 3",
-    color: "bg-wtf-yellow text-black",
+    color: "bg-[#f1b333] text-black",
     xStart: -300,
     yStart: 300,
     rotate: -8,
   },
   {
     text: "NEXT.JS 16",
-    color: "bg-wtf-purple text-white",
+    color: "bg-[#6758a5] text-white",
     xStart: 500,
     yStart: -150,
     rotate: 15,
   },
   {
     text: "REACT 19",
-    color: "bg-wtf-blue text-white",
+    color: "bg-[#3b82f6] text-white",
     xStart: -500,
     yStart: 100,
     rotate: 5,
   },
   {
     text: "BRUTALIST",
-    color: "bg-wtf-red text-white",
+    color: "bg-[#c53b3a] text-white",
     xStart: 300,
     yStart: -300,
     rotate: -12,
@@ -121,10 +121,13 @@ export default function AnimationTwoPage() {
 
   return (
     <div
-      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black"
+      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Floating Back Button */}
       <div className="fixed left-6 top-6 z-50 pointer-events-auto">
@@ -134,7 +137,7 @@ export default function AnimationTwoPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -142,7 +145,7 @@ export default function AnimationTwoPage() {
 
       {/* Intro section */}
       <section className="h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4 z-10 relative">
-        <div className="inline-flex items-center gap-2 bg-wtf-green border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Scroll Tags Assembly Sandbox</span>
         </div>
         <h1 className="text-4xl md:text-6xl font-serif font-black uppercase max-w-2xl leading-[1.1]">
@@ -158,7 +161,10 @@ export default function AnimationTwoPage() {
         ref={scrollSectionRef}
         className="h-[calc(100vh-64px)] w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
       >
-        <div className="absolute inset-0 dot-grid opacity-5 pointer-events-none" />
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-5"
+          style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+        />
 
         <div className="z-10 w-full max-w-4xl px-4 flex flex-col gap-8 items-center">
           <div className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-widest">

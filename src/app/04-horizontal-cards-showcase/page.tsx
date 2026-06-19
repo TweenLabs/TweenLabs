@@ -12,7 +12,7 @@ const cardsData = [
     id: "MOTION",
     title: "FLUID TIMELINES",
     borderColor: "#0c9367", // green
-    btnBg: "bg-wtf-green text-white hover:bg-[#0a8059]",
+    btnBg: "bg-[#0c9367] text-white hover:bg-[#0a8059]",
     rotateStart: 6,
     leftPos: "left-[7.5%] md:left-[10vw]",
     tag: "[MOTION-01]",
@@ -22,7 +22,7 @@ const cardsData = [
     id: "NEO",
     title: "NEO BRUTALISM",
     borderColor: "#c53b3a", // red
-    btnBg: "bg-wtf-red text-white hover:bg-[#aa3231]",
+    btnBg: "bg-[#c53b3a] text-white hover:bg-[#aa3231]",
     rotateStart: -4,
     leftPos: "left-[7.5%] md:left-[30vw]",
     tag: "[STYLE-02]",
@@ -32,7 +32,7 @@ const cardsData = [
     id: "SCROLL",
     title: "SCROLL TRIGGERS",
     borderColor: "#3b82f6", // blue
-    btnBg: "bg-wtf-blue text-white hover:bg-[#2563eb]",
+    btnBg: "bg-[#3b82f6] text-white hover:bg-[#2563eb]",
     rotateStart: 5,
     leftPos: "left-[7.5%] md:left-[50vw]",
     tag: "[SCROLL-03]",
@@ -42,7 +42,7 @@ const cardsData = [
     id: "PHYSICS",
     title: "PHYSICS COLLIDERS",
     borderColor: "#f1b333", // yellow
-    btnBg: "bg-wtf-yellow text-black hover:bg-[#d99f26]",
+    btnBg: "bg-[#f1b333] text-black hover:bg-[#d99f26]",
     rotateStart: -6,
     leftPos: "left-[7.5%] md:left-[70vw]",
     tag: "[PHYSICS-04]",
@@ -177,13 +177,17 @@ export default function AnimationFourPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Dot Grid Background Overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-10"
-        style={{ opacity: 0.05 }}
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          opacity: 0.05,
+          backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
 
       {/* Dashboard Back Link */}
@@ -194,7 +198,7 @@ export default function AnimationFourPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -231,7 +235,7 @@ export default function AnimationFourPage() {
                       {card.title}
                     </h3>
                     <button
-                      className={`brutalist-btn ${card.btnBg} px-6 py-2.5 rounded-full font-mono text-xs font-bold uppercase border-2 border-black shadow-[3px_3px_0px_#000] cursor-pointer`}
+                      className={`${card.btnBg} border-2 border-black shadow-[3px_3px_0px_#000] hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] transition-all duration-100 ease-in-out px-6 py-2.5 rounded-full font-mono text-xs font-bold uppercase cursor-pointer`}
                     >
                       Learn More
                     </button>
@@ -240,7 +244,7 @@ export default function AnimationFourPage() {
                   {/* Card Bottom Right details */}
                   <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                     <span>{card.tag}</span>
-                    <span className="font-bold text-zinc-650 tracking-wider">
+                    <span className="font-bold text-zinc-600 tracking-wider">
                       {card.footerText}
                     </span>
                   </div>

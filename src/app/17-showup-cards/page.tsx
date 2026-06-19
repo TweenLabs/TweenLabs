@@ -24,7 +24,7 @@ const stageData: StageItem[] = [
     id: 1,
     num: "01",
     title: "PLAN & SCOPE",
-    accentClass: "bg-wtf-orange",
+    accentClass: "bg-[#e55b3c]",
     accentHex: "229, 91, 60",
     imgUrl: "/Untitled design.png",
     phase: "PHASE 01",
@@ -34,7 +34,7 @@ const stageData: StageItem[] = [
     id: 2,
     num: "02",
     title: "STYLING & TOKEN",
-    accentClass: "bg-wtf-green",
+    accentClass: "bg-[#0c9367]",
     accentHex: "12, 147, 103",
     imgUrl: "/Untitled design (1).png",
     phase: "PHASE 02",
@@ -44,7 +44,7 @@ const stageData: StageItem[] = [
     id: 3,
     num: "03",
     title: "DEVELOP & DEPLOY",
-    accentClass: "bg-wtf-blue",
+    accentClass: "bg-[#3b82f6]",
     accentHex: "59, 130, 246",
     imgUrl: "/Untitled design (2).png",
     phase: "PHASE 03",
@@ -88,7 +88,7 @@ export default function ShowUpCardsPage() {
               (progress - delay * 0.1) / (0.9 - delay * 0.1),
             );
             const innerCard = document.querySelector(
-              `${cardId} .flip-card-inner`,
+              `${cardId} .flip-card-inner`
             );
 
             let y;
@@ -221,12 +221,18 @@ export default function ShowUpCardsPage() {
 
   return (
     <div
-      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Tactile Grid Backgrounds */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
@@ -236,7 +242,7 @@ export default function ShowUpCardsPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -254,7 +260,10 @@ export default function ShowUpCardsPage() {
 
       {/* Interactive Cards Overlay (Pins on scroll) */}
       <section className="showup-cards-sec relative w-full h-[calc(100vh-64px)] flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-15" />
+        <div 
+          className="absolute inset-0 opacity-15"
+          style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+        />
 
         {/* Simple Header Inside Container */}
         <div className="text-center select-none max-w-lg mb-8 pointer-events-none z-10">
@@ -264,7 +273,7 @@ export default function ShowUpCardsPage() {
           <h2 className="text-2xl md:text-3xl font-serif font-black uppercase text-[#2a2a2a] leading-none mt-2">
             Scroll to Build Nodes
           </h2>
-          <p className="font-mono text-[9px] text-zinc-450 mt-1 uppercase tracking-wider">
+          <p className="font-mono text-[9px] text-zinc-500 mt-1 uppercase tracking-wider">
             [ Cards will fall, assemble, and flip 180° ]
           </p>
         </div>
@@ -286,9 +295,15 @@ export default function ShowUpCardsPage() {
                 className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu"
                 style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}
               >
-                <div className="flip-card-inner w-full h-full preserve-3d relative">
+                <div 
+                  className="flip-card-inner w-full h-full relative"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
                   {/* Front Side Face */}
-                  <div className="flip-card-front absolute inset-0 brutalist-card p-4 bg-white text-[#2a2a2a] flex flex-col justify-between backface-hidden cursor-pointer select-none">
+                  <div 
+                    className="flip-card-front absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                  >
                     <div className="flex justify-between items-center">
                       <span className="font-mono text-[9px] font-bold text-zinc-400">
                         [{stage.phase}]
@@ -321,7 +336,14 @@ export default function ShowUpCardsPage() {
                   </div>
 
                   {/* Back Side Face (Scroll-revealed) */}
-                  <div className="flip-card-back absolute inset-0 brutalist-card p-4 bg-white border-3 border-[#2a2a2a] text-[#2a2a2a] flex flex-col justify-between rotate-y-180 backface-hidden cursor-pointer select-none">
+                  <div 
+                    className="flip-card-back absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white border-3 text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{
+                      transform: "rotateY(180deg)",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden"
+                    }}
+                  >
                     <div className="w-full flex justify-between font-mono font-bold text-[9px] uppercase border-b-2 border-black pb-2 items-center">
                       <span className="text-zinc-400">
                         0{stage.id} {"//"} NODE DETAILS

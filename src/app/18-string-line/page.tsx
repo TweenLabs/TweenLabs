@@ -27,7 +27,7 @@ const networkData: NetworkItem[] = [
     x: "50%",
     y: "22%",
     accentHex: "229, 91, 60",
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const networkData: NetworkItem[] = [
     x: "66%",
     y: "26%",
     accentHex: "12, 147, 103",
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const networkData: NetworkItem[] = [
     x: "79%",
     y: "34%",
     accentHex: "241, 179, 51",
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const networkData: NetworkItem[] = [
     x: "81%",
     y: "50%",
     accentHex: "59, 130, 246",
-    themeColor: "bg-wtf-blue",
+    themeColor: "bg-[#3b82f6]",
   },
   {
     id: 5,
@@ -63,7 +63,7 @@ const networkData: NetworkItem[] = [
     x: "76%",
     y: "71%",
     accentHex: "103, 88, 165",
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
   {
     id: 6,
@@ -72,7 +72,7 @@ const networkData: NetworkItem[] = [
     x: "58%",
     y: "81%",
     accentHex: "229, 91, 60",
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     id: 7,
@@ -81,7 +81,7 @@ const networkData: NetworkItem[] = [
     x: "41%",
     y: "83%",
     accentHex: "12, 147, 103",
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     id: 8,
@@ -90,7 +90,7 @@ const networkData: NetworkItem[] = [
     x: "20%",
     y: "60%",
     accentHex: "241, 179, 51",
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     id: 9,
@@ -99,7 +99,7 @@ const networkData: NetworkItem[] = [
     x: "15%",
     y: "45%",
     accentHex: "59, 130, 246",
-    themeColor: "bg-wtf-blue",
+    themeColor: "bg-[#3b82f6]",
   },
   {
     id: 10,
@@ -108,7 +108,7 @@ const networkData: NetworkItem[] = [
     x: "28%",
     y: "34%",
     accentHex: "103, 88, 165",
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
 ];
 
@@ -289,7 +289,7 @@ export default function StringLinePage() {
   );
 
   return (
-    <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black">
+    <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black">
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
         <button
@@ -298,7 +298,7 @@ export default function StringLinePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -358,9 +358,9 @@ export default function StringLinePage() {
         </svg>
 
         {/* Moving Dot with halo pulses */}
-        <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
+        <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-[#e55b3c] border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
           {/* Pulsing halo ring */}
-          <span className="absolute h-10 w-10 border-2 border-wtf-orange/30 rounded-full animate-ping pointer-events-none" />
+          <span className="absolute h-10 w-10 border-2 border-[#e55b3c]/30 rounded-full animate-ping pointer-events-none" />
         </div>
 
         {/* Network Nodes */}

@@ -15,7 +15,7 @@ interface CarouselItem {
   desc: string;
   imgUrl: string;
   bgColor: string; // Hex color for background transitions
-  accentColor: string; // Tailwind class
+  accentColor: string; // Hex/Tailwind replacement
   textColor: string;
 }
 
@@ -28,7 +28,7 @@ const items: CarouselItem[] = [
     desc: "A custom LLVM backend translating abstract syntax trees into parallel topological gates.",
     imgUrl: "/Untitled design.png",
     bgColor: "#e55b3c", // wtf-orange
-    accentColor: "bg-wtf-orange",
+    accentColor: "bg-[#e55b3c]",
     textColor: "text-white",
   },
   {
@@ -39,7 +39,7 @@ const items: CarouselItem[] = [
     desc: "GPU-accelerated vector fields tracing magnetic flow lines with spring-damper integrations.",
     imgUrl: "/Untitled design (1).png",
     bgColor: "#0c9367", // wtf-green
-    accentColor: "bg-wtf-green",
+    accentColor: "bg-[#0c9367]",
     textColor: "text-white",
   },
   {
@@ -50,7 +50,7 @@ const items: CarouselItem[] = [
     desc: "High-contrast editorial grid structures utilizing strict monospace matrices and ink traps.",
     imgUrl: "/Untitled design (2).png",
     bgColor: "#6758a5", // wtf-purple
-    accentColor: "bg-wtf-purple",
+    accentColor: "bg-[#6758a5]",
     textColor: "text-white",
   },
   {
@@ -61,7 +61,7 @@ const items: CarouselItem[] = [
     desc: "A peer-to-peer ledger using ephemeral cryptographic state rings and consensus maps.",
     imgUrl: "/Untitled design (3).png",
     bgColor: "#3b82f6", // wtf-blue
-    accentColor: "bg-wtf-blue",
+    accentColor: "bg-[#3b82f6]",
     textColor: "text-white",
   },
   {
@@ -72,7 +72,7 @@ const items: CarouselItem[] = [
     desc: "FPGA solvers designed for extreme throughput pipelines and multi-threaded register stacks.",
     imgUrl: "/Untitled design (4).png",
     bgColor: "#c53b3a", // wtf-red
-    accentColor: "bg-wtf-red",
+    accentColor: "bg-[#c53b3a]",
     textColor: "text-white",
   },
   {
@@ -83,7 +83,7 @@ const items: CarouselItem[] = [
     desc: "Real-time volumetric path tracers modeling multi-scatter atmospheric absorption.",
     imgUrl: "/Untitled design (5).png",
     bgColor: "#f1b333", // wtf-yellow
-    accentColor: "bg-wtf-yellow",
+    accentColor: "bg-[#f1b333]",
     textColor: "text-black",
   },
 ];
@@ -490,10 +490,13 @@ export default function ThreeDCarouselPage() {
     <div
       ref={wrapperRef}
       onWheel={handleWheel}
-      className="relative w-full h-screen overflow-hidden bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black font-sans transition-colors duration-500"
+      className="relative w-full h-screen overflow-hidden bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black font-sans transition-colors duration-500"
     >
       {/* Dynamic tactile noise overlay */}
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
@@ -503,7 +506,7 @@ export default function ThreeDCarouselPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -576,7 +579,7 @@ export default function ThreeDCarouselPage() {
                 });
               }}
               className={`h-3 rounded-full border-2 border-[#2a2a2a] transition-all duration-300 cursor-pointer ${
-                idx === activeIdx ? "w-8 bg-wtf-yellow" : "w-3 bg-white"
+                idx === activeIdx ? "w-8 bg-[#f1b333]" : "w-3 bg-white"
               }`}
             />
           ))}
@@ -606,7 +609,7 @@ export default function ThreeDCarouselPage() {
                 cardsRef.current[idx] = el;
               }}
               onClick={() => openDetail(idx)}
-              className="absolute w-[290px] h-[390px] md:w-[340px] md:h-[450px] flex items-center justify-center will-animate-both"
+              className="absolute w-[290px] h-[390px] md:w-[340px] md:h-[450px] flex items-center justify-center will-change-transform"
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Card Face container */}
@@ -616,8 +619,8 @@ export default function ThreeDCarouselPage() {
                 }}
                 onMouseMove={(e) => handleCardMouseMove(e, idx)}
                 onMouseLeave={() => handleCardMouseLeave(idx)}
-                className={`w-full h-full brutalist-card p-4 bg-white flex flex-col justify-between cursor-pointer rounded-xl select-none relative overflow-hidden group ${
-                  isActive ? "border-wtf-yellow" : "border-[#2a2a2a]"
+                className={`w-full h-full p-4 bg-white flex flex-col justify-between cursor-pointer rounded-xl select-none relative overflow-hidden group border-3 ${
+                  isActive ? "border-[#f1b333] shadow-[12px_12px_0px_#2a2a2a]" : "border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a]"
                 }`}
                 style={{
                   transformStyle: "preserve-3d",
@@ -679,7 +682,7 @@ export default function ThreeDCarouselPage() {
                 {/* Ambient glow accent (only active) */}
                 {isActive && (
                   <div
-                    className="absolute inset-0 border-3 border-wtf-yellow opacity-40 animate-pulse pointer-events-none rounded-xl"
+                    className="absolute inset-0 border-3 border-[#f1b333] opacity-40 animate-pulse pointer-events-none rounded-xl"
                     style={{ transform: "translateZ(-1px)" }}
                   />
                 )}
@@ -703,7 +706,7 @@ export default function ThreeDCarouselPage() {
               </span>
               <button
                 onClick={closeDetail}
-                className="brutalist-btn bg-wtf-red text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm hover:bg-red-700 cursor-pointer shadow-[3px_3px_0px_#2a2a2a]"
+                className="border-3 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#2a2a2a] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#c53b3a] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm cursor-pointer"
               >
                 ✕
               </button>
@@ -754,13 +757,13 @@ export default function ThreeDCarouselPage() {
             {/* Footer buttons / actions inside panel */}
             <div className="stagger-in flex flex-col md:flex-row gap-4 mt-auto">
               <button
-                className={`brutalist-btn flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider cursor-pointer text-center ${items[detailIdx].accentColor} ${items[detailIdx].textColor}`}
+                className={`border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider cursor-pointer text-center ${items[detailIdx].accentColor} ${items[detailIdx].textColor}`}
               >
                 Execute Pipeline
               </button>
               <button
                 onClick={closeDetail}
-                className="brutalist-btn flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider bg-white hover:bg-zinc-100 text-[#2a2a2a] cursor-pointer"
+                className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider bg-white hover:bg-zinc-100 text-[#2a2a2a] cursor-pointer"
               >
                 Close Spec
               </button>

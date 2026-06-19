@@ -56,14 +56,17 @@ export default function AnimationOnePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
-      <div className="z-10 w-full max-w-2xl brutalist-card p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
+      <div className="z-10 w-full max-w-2xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
         {/* Header tag */}
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-orange border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Gravity Drop Sandbox</span>
         </div>
 
@@ -78,7 +81,7 @@ export default function AnimationOnePage() {
                 {word.split("").map((char, charIdx) => (
                   <span
                     key={charIdx}
-                    className="falling-letter inline-block transform origin-bottom font-black text-wtf-orange will-change-transform"
+                    className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
                     style={{ textShadow: "2px 2px 0px #2a2a2a" }}
                   >
                     {char}
@@ -102,7 +105,7 @@ export default function AnimationOnePage() {
           <div className="flex gap-3 w-full md:w-auto">
             <button
               onClick={handleReplay}
-              className="flex-1 md:flex-none brutalist-btn bg-wtf-orange text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+              className="flex-1 md:flex-none border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#e55b3c] text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
             >
               ☄️ Trigger Drop
             </button>
@@ -113,7 +116,7 @@ export default function AnimationOnePage() {
                     ? window.history.back()
                     : (window.location.href = "/")
                 }
-                className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+                className="w-full border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
               >
                 ← Back
               </button>
@@ -322,42 +325,42 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const tagsData = [
   {
     text: "CREATIVE",
-    color: "bg-wtf-orange text-white",
+    color: "bg-[#e55b3c] text-white",
     xStart: -400,
     yStart: -200,
     rotate: -15,
   },
   {
     text: "DEVELOPER",
-    color: "bg-wtf-green text-white",
+    color: "bg-[#0c9367] text-white",
     xStart: 400,
     yStart: 250,
     rotate: 12,
   },
   {
     text: "GSAP 3",
-    color: "bg-wtf-yellow text-black",
+    color: "bg-[#f1b333] text-black",
     xStart: -300,
     yStart: 300,
     rotate: -8,
   },
   {
     text: "NEXT.JS 16",
-    color: "bg-wtf-purple text-white",
+    color: "bg-[#6758a5] text-white",
     xStart: 500,
     yStart: -150,
     rotate: 15,
   },
   {
     text: "REACT 19",
-    color: "bg-wtf-blue text-white",
+    color: "bg-[#3b82f6] text-white",
     xStart: -500,
     yStart: 100,
     rotate: 5,
   },
   {
     text: "BRUTALIST",
-    color: "bg-wtf-red text-white",
+    color: "bg-[#c53b3a] text-white",
     xStart: 300,
     yStart: -300,
     rotate: -12,
@@ -433,10 +436,13 @@ export default function AnimationTwoPage() {
 
   return (
     <div
-      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black"
+      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Floating Back Button */}
       <div className="fixed left-6 top-6 z-50 pointer-events-auto">
@@ -446,7 +452,7 @@ export default function AnimationTwoPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -454,7 +460,7 @@ export default function AnimationTwoPage() {
 
       {/* Intro section */}
       <section className="h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4 z-10 relative">
-        <div className="inline-flex items-center gap-2 bg-wtf-green border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Scroll Tags Assembly Sandbox</span>
         </div>
         <h1 className="text-4xl md:text-6xl font-serif font-black uppercase max-w-2xl leading-[1.1]">
@@ -470,7 +476,10 @@ export default function AnimationTwoPage() {
         ref={scrollSectionRef}
         className="h-[calc(100vh-64px)] w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
       >
-        <div className="absolute inset-0 dot-grid opacity-5 pointer-events-none" />
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-5"
+          style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+        />
 
         <div className="z-10 w-full max-w-4xl px-4 flex flex-col gap-8 items-center">
           <div className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-widest">
@@ -847,10 +856,10 @@ export default function AnimationThreePage() {
           return (
             <span
               key={idx}
-              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw] text-white"
+              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw]"
               style={{
                 textShadow: "4px 4px 0px #121212",
-                color: isOrange ? "var(--color-wtf-orange)" : "white",
+                color: isOrange ? "#e55b3c" : "white",
               }}
             >
               {char}
@@ -863,13 +872,17 @@ export default function AnimationThreePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Subtle Dot Grid Background Overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-10"
-        style={{ opacity: 0.05 }}
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          opacity: 0.05,
+          backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
 
       {/* Dashboard Back Link */}
@@ -880,7 +893,7 @@ export default function AnimationThreePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -889,7 +902,7 @@ export default function AnimationThreePage() {
       {/* Scroll Indicator */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 font-mono text-xs uppercase tracking-widest text-white/50 animate-bounce pointer-events-none flex flex-col items-center gap-1">
         <span>Scroll to Explore</span>
-        <span className="text-wtf-orange font-bold text-sm">↓</span>
+        <span className="text-[#e55b3c] font-bold text-sm">↓</span>
       </div>
 
       {/* Main assembly wrapper */}
@@ -1183,7 +1196,7 @@ const cardsData = [
     id: "MOTION",
     title: "FLUID TIMELINES",
     borderColor: "#0c9367", // green
-    btnBg: "bg-wtf-green text-white hover:bg-[#0a8059]",
+    btnBg: "bg-[#0c9367] text-white hover:bg-[#0a8059]",
     rotateStart: 6,
     leftPos: "left-[7.5%] md:left-[10vw]",
     tag: "[MOTION-01]",
@@ -1193,7 +1206,7 @@ const cardsData = [
     id: "NEO",
     title: "NEO BRUTALISM",
     borderColor: "#c53b3a", // red
-    btnBg: "bg-wtf-red text-white hover:bg-[#aa3231]",
+    btnBg: "bg-[#c53b3a] text-white hover:bg-[#aa3231]",
     rotateStart: -4,
     leftPos: "left-[7.5%] md:left-[30vw]",
     tag: "[STYLE-02]",
@@ -1203,7 +1216,7 @@ const cardsData = [
     id: "SCROLL",
     title: "SCROLL TRIGGERS",
     borderColor: "#3b82f6", // blue
-    btnBg: "bg-wtf-blue text-white hover:bg-[#2563eb]",
+    btnBg: "bg-[#3b82f6] text-white hover:bg-[#2563eb]",
     rotateStart: 5,
     leftPos: "left-[7.5%] md:left-[50vw]",
     tag: "[SCROLL-03]",
@@ -1213,7 +1226,7 @@ const cardsData = [
     id: "PHYSICS",
     title: "PHYSICS COLLIDERS",
     borderColor: "#f1b333", // yellow
-    btnBg: "bg-wtf-yellow text-black hover:bg-[#d99f26]",
+    btnBg: "bg-[#f1b333] text-black hover:bg-[#d99f26]",
     rotateStart: -6,
     leftPos: "left-[7.5%] md:left-[70vw]",
     tag: "[PHYSICS-04]",
@@ -1348,13 +1361,17 @@ export default function AnimationFourPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Dot Grid Background Overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-10"
-        style={{ opacity: 0.05 }}
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          opacity: 0.05,
+          backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
 
       {/* Dashboard Back Link */}
@@ -1365,7 +1382,7 @@ export default function AnimationFourPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -1402,7 +1419,7 @@ export default function AnimationFourPage() {
                       {card.title}
                     </h3>
                     <button
-                      className={`brutalist-btn ${card.btnBg} px-6 py-2.5 rounded-full font-mono text-xs font-bold uppercase border-2 border-black shadow-[3px_3px_0px_#000] cursor-pointer`}
+                      className={`${card.btnBg} border-2 border-black shadow-[3px_3px_0px_#000] hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] transition-all duration-100 ease-in-out px-6 py-2.5 rounded-full font-mono text-xs font-bold uppercase cursor-pointer`}
                     >
                       Learn More
                     </button>
@@ -1411,7 +1428,7 @@ export default function AnimationFourPage() {
                   {/* Card Bottom Right details */}
                   <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                     <span>{card.tag}</span>
-                    <span className="font-bold text-zinc-650 tracking-wider">
+                    <span className="font-bold text-zinc-600 tracking-wider">
                       {card.footerText}
                     </span>
                   </div>
@@ -1988,7 +2005,10 @@ export default function AnimationFivePage() {
       ref={containerRef}
     >
       {/* Tactile Noise Overlay */}
-      <div className="noise-overlay fixed inset-0 pointer-events-none z-[49] opacity-40" />
+      <div 
+        className="fixed inset-0 pointer-events-none z-[49] opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Dashboard Back Link */}
       <div className="fixed left-6 top-6 z-50">
@@ -1998,7 +2018,7 @@ export default function AnimationFivePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+          className="border-3 border-black shadow-[3px_3px_0px_#000] transition-all duration-100 ease-in-out hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -2022,7 +2042,7 @@ export default function AnimationFivePage() {
       <div
         ref={scrollSectionRef}
         className="scroll-viewport h-[calc(100vh-64px)] w-full relative overflow-hidden"
-        style={{ perspective: "1400px", perspectiveOrigin: "50% 40%" }}
+        style={{ perspective: "1400px", perspectiveOrigin: "50% 40%", transformStyle: "preserve-3d" }}
       >
         {/* PANEL 0: GREEN SECTION (Pulsars) */}
         <section className="panel-item panel-0 absolute inset-0 bg-[#0c9367] text-white flex flex-col justify-between p-8 md:p-16 z-10 select-none">
@@ -2045,10 +2065,10 @@ export default function AnimationFivePage() {
               as their beams sweep across the Earth.
             </p>
             <div className="flex gap-4 mt-2">
-              <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                 Explore Pulsars
               </button>
-              <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                 View Spectral Data
               </button>
             </div>
@@ -2122,10 +2142,10 @@ export default function AnimationFivePage() {
                 millions of years of gravitational collapse.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Catalog Nebulae
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Hubble Gallery
                 </button>
               </div>
@@ -2159,8 +2179,8 @@ export default function AnimationFivePage() {
                   },
                 ].map((item, i) => (
                   <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
+                     key={i}
+                     className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
                   >
                     <span className="font-mono text-[9px] font-bold text-zinc-400">
                       [{item.tag}]
@@ -2200,10 +2220,10 @@ export default function AnimationFivePage() {
                 warped infinitely at the singularity.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Hawking Radiation
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Simulate Orbit
                 </button>
               </div>
@@ -2278,10 +2298,10 @@ export default function AnimationFivePage() {
                 iron necessary for the formation of planets and life.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Elemental Yields
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Map Remnants
                 </button>
               </div>
@@ -2356,10 +2376,10 @@ export default function AnimationFivePage() {
                 accelerates the expansion of space-time itself.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   WIMP Experiments
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Map Expansion
                 </button>
               </div>
@@ -2843,7 +2863,7 @@ export default function KineticTypographyPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* SVG Liquid Filter Definition */}
@@ -2869,11 +2889,14 @@ export default function KineticTypographyPage() {
         </defs>
       </svg>
 
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
-      <div className="z-10 w-full max-w-4xl brutalist-card p-6 md:p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
+      <div className="z-10 w-full max-w-4xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 md:p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
         {/* Badge header */}
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-left">
+        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] -rotate-2">
           <span>06 • Kinetic Typography</span>
         </div>
 
@@ -2934,7 +2957,7 @@ export default function KineticTypographyPage() {
                 <button
                   key={preset}
                   onClick={() => loadPreset(preset)}
-                  className="font-mono text-[9px] font-bold border border-[#2a2a2a] px-2 py-0.5 rounded bg-zinc-100 hover:bg-wtf-yellow transition-colors cursor-pointer"
+                  className="font-mono text-[9px] font-bold border border-[#2a2a2a] px-2 py-0.5 rounded bg-zinc-100 hover:bg-[#f1b333] transition-colors cursor-pointer"
                 >
                   {preset}
                 </button>
@@ -2961,7 +2984,7 @@ export default function KineticTypographyPage() {
                   onClick={() => setMode(m.id)}
                   className={`font-mono text-[11px] font-bold py-2 px-2.5 border-2 border-[#2a2a2a] rounded-lg transition-all shadow-[2px_2px_0px_#2a2a2a] cursor-pointer ${
                     mode === m.id
-                      ? "bg-wtf-purple text-white shadow-none translate-x-[2px] translate-y-[2px]"
+                      ? "bg-[#6758a5] text-white shadow-none translate-x-[2px] translate-y-[2px]"
                       : "bg-white text-[#2a2a2a] hover:bg-zinc-100"
                   }`}
                 >
@@ -2978,7 +3001,7 @@ export default function KineticTypographyPage() {
                 <label className="font-mono text-xs font-bold text-zinc-500 uppercase">
                   3. Speed Multiplier
                 </label>
-                <span className="font-mono text-xs font-bold bg-zinc-100 border border-zinc-350 px-1.5 rounded">
+                <span className="font-mono text-xs font-bold bg-zinc-100 border border-zinc-300 px-1.5 rounded">
                   {speed.toFixed(1)}x
                 </span>
               </div>
@@ -2989,14 +3012,14 @@ export default function KineticTypographyPage() {
                 step="0.1"
                 value={speed}
                 onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                className="w-full accent-wtf-purple cursor-ew-resize"
+                className="w-full accent-[#6758a5] cursor-ew-resize"
               />
             </div>
 
             <div className="flex gap-2">
               <button
                 onClick={triggerReplay}
-                className="flex-1 brutalist-btn bg-wtf-purple text-white font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
+                className="flex-1 border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#6758a5] text-white font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
               >
                 ⚡ Re-Trigger
               </button>
@@ -3008,7 +3031,7 @@ export default function KineticTypographyPage() {
                       ? window.history.back()
                       : (window.location.href = "/")
                   }
-                  className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
+                  className="w-full border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
                 >
                   ← Back
                 </button>
@@ -3803,11 +3826,14 @@ export default function ScrollOrbitGallery() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f2ece0] text-[#2a2a2a] overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f2ece0] text-[#2a2a2a] overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Dot Grid Background Overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Dashboard Back Link */}
       <div className="fixed left-6 top-6 z-50">
@@ -3817,7 +3843,7 @@ export default function ScrollOrbitGallery() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -3826,7 +3852,7 @@ export default function ScrollOrbitGallery() {
       {/* Scroll Indicator HUD */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 font-mono text-xs uppercase tracking-widest text-[#2a2a2a]/60 animate-bounce pointer-events-none flex flex-col items-center gap-1">
         <span>Scroll Down to Assemble</span>
-        <span className="text-wtf-orange font-bold text-sm">↓</span>
+        <span className="text-[#e55b3c] font-bold text-sm">↓</span>
       </div>
 
       {/* Main Pinned Work Area */}
@@ -4730,11 +4756,12 @@ export default function BlueprintScatterPage() {
     >
       {/* Premium subtle grid background overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-0"
-        style={{ opacity: 0.25 }}
+        className="absolute inset-0 pointer-events-none z-0 opacity-25"
+        style={{
+          backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
-
-      {/* Navbar removed to prevent overlapping with cards */}
 
       {/* 2. Hero Section (Exploding Cards Workspace) */}
       <div
@@ -4764,7 +4791,7 @@ export default function BlueprintScatterPage() {
                   ? window.history.back()
                   : (window.location.href = "/")
               }
-              className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+              className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#f1b333] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#f1b333] bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase cursor-pointer"
             >
               ← Back
             </button>
@@ -5393,8 +5420,11 @@ export default function CircularScatterPage() {
     >
       {/* Premium subtle grid background overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-0"
-        style={{ opacity: 0.25 }}
+        className="absolute inset-0 pointer-events-none z-0 opacity-25"
+        style={{
+          backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
 
       {/* 1. Hero Section (Circular Cards Workspace) */}
@@ -5425,7 +5455,7 @@ export default function CircularScatterPage() {
                   ? window.history.back()
                   : (window.location.href = "/")
               }
-              className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+              className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#f1b333] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#f1b333] bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase cursor-pointer"
             >
               ← Back
             </button>
@@ -5981,7 +6011,7 @@ export default function ScreenSkillFitPage() {
                 ? window.history.back()
                 : (window.location.href = "/")
             }
-            className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a]"
+            className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
           >
             ← Back
           </button>
@@ -6457,7 +6487,7 @@ export default function MagneticDockPage() {
     {
       id: "home",
       label: "HOME",
-      color: "bg-wtf-orange text-white",
+      color: "bg-[#e55b3c] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -6478,7 +6508,7 @@ export default function MagneticDockPage() {
     {
       id: "projects",
       label: "PROJECTS",
-      color: "bg-wtf-green text-white",
+      color: "bg-[#0c9367] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -6499,7 +6529,7 @@ export default function MagneticDockPage() {
     {
       id: "about",
       label: "ABOUT",
-      color: "bg-wtf-yellow text-black",
+      color: "bg-[#f1b333] text-black",
       icon: (
         <svg
           className="w-6 h-6"
@@ -6520,7 +6550,7 @@ export default function MagneticDockPage() {
     {
       id: "services",
       label: "SERVICES",
-      color: "bg-wtf-purple text-white",
+      color: "bg-[#6758a5] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -6547,7 +6577,7 @@ export default function MagneticDockPage() {
     {
       id: "contact",
       label: "CONTACT",
-      color: "bg-wtf-blue text-white",
+      color: "bg-[#3b82f6] text-white",
       icon: (
         <svg
           className="w-6 h-6"
@@ -6654,14 +6684,17 @@ export default function MagneticDockPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-wtf-yellow selection:text-black overflow-hidden"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-orange border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 11</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -6676,7 +6709,7 @@ export default function MagneticDockPage() {
 
       {/* Active Section Display */}
       <main className="z-10 flex-1 flex items-center justify-center w-full max-w-xl my-12">
-        <div className="w-full brutalist-card p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
+        <div className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
           <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
             [ Active Destination ]
           </span>
@@ -6703,7 +6736,7 @@ export default function MagneticDockPage() {
             >
               {/* Tooltip */}
               <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] tilt-left">
+                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
                   {item.label}
                 </div>
               </div>
@@ -6729,7 +6762,7 @@ export default function MagneticDockPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -7192,27 +7225,30 @@ export default function FluidCursorPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-wtf-yellow selection:text-black overflow-hidden cursor-none"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden cursor-none"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Custom Cursor elements (pointer-events-none is CRITICAL) */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-3 h-3 bg-[#2a2a2a] rounded-full pointer-events-none z-9999 transform -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-3 h-3 bg-[#2a2a2a] rounded-full pointer-events-none z-[9999] transform -translate-x-1/2 -translate-y-1/2"
       />
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-8 h-8 border-3 border-[#2a2a2a] rounded-full pointer-events-none z-9998 flex items-center justify-center bg-transparent"
+        className="fixed top-0 left-0 w-8 h-8 border-3 border-[#2a2a2a] rounded-full pointer-events-none z-[9998] flex items-center justify-center bg-transparent"
         style={{ transformOrigin: "top left" }}
       >
-        <span className="cursor-label absolute pointer-events-none font-mono text-[9px] font-black bg-wtf-yellow text-black border-2 border-[#2a2a2a] px-2 py-0.5 rounded shadow-[1.5px_1.5px_0px_#2a2a2a] uppercase opacity-0 scale-70 tracking-widest whitespace-nowrap z-50 select-none" />
+        <span className="cursor-label absolute pointer-events-none font-mono text-[9px] font-black bg-[#f1b333] text-black border-2 border-[#2a2a2a] px-2 py-0.5 rounded shadow-[1.5px_1.5px_0px_#2a2a2a] uppercase opacity-0 scale-75 tracking-widest whitespace-nowrap z-50 select-none" />
       </div>
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8 pointer-events-auto">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 12</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -7232,13 +7268,13 @@ export default function FluidCursorPage() {
           data-cursor-text="EXPLORE A"
           onMouseEnter={handleTargetEnter}
           onMouseLeave={handleTargetLeave}
-          className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
+          className="border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
             <span className="font-mono text-[10px] font-bold text-zinc-400">
               DATA SOURCE A
             </span>
-            <span className="w-3.5 h-3.5 rounded-full bg-wtf-orange border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
+            <span className="w-3.5 h-3.5 rounded-full bg-[#e55b3c] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Alpha
@@ -7254,13 +7290,13 @@ export default function FluidCursorPage() {
           data-cursor-text="LAUNCH B"
           onMouseEnter={handleTargetEnter}
           onMouseLeave={handleTargetLeave}
-          className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
+          className="border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
             <span className="font-mono text-[10px] font-bold text-zinc-400">
               DATA SOURCE B
             </span>
-            <span className="w-3.5 h-3.5 rounded-full bg-wtf-green border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
+            <span className="w-3.5 h-3.5 rounded-full bg-[#0c9367] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Beta
@@ -7275,13 +7311,13 @@ export default function FluidCursorPage() {
           data-cursor-text="VIEW CODE"
           onMouseEnter={handleTargetEnter}
           onMouseLeave={handleTargetLeave}
-          className="brutalist-card p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
+          className="border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 bg-white flex flex-col gap-4 justify-between h-48 cursor-none transition-transform"
         >
           <div className="flex justify-between items-start">
             <span className="font-mono text-[10px] font-bold text-zinc-400">
               DATA SOURCE C
             </span>
-            <span className="w-3.5 h-3.5 rounded-full bg-wtf-blue border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
+            <span className="w-3.5 h-3.5 rounded-full bg-[#3b82f6] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
           <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Gamma
@@ -7299,7 +7335,7 @@ export default function FluidCursorPage() {
           data-cursor-text="CONFIRM COMMAND"
           onMouseEnter={handleTargetEnter}
           onMouseLeave={handleTargetLeave}
-          className="brutalist-btn bg-wtf-yellow text-black font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
         >
           ⚡ Action Portal
         </button>
@@ -7314,7 +7350,7 @@ export default function FluidCursorPage() {
             data-cursor-text="BACK HOME"
             onMouseEnter={handleTargetEnter}
             onMouseLeave={handleTargetLeave}
-            className="brutalist-btn bg-white text-[#2a2a2a] font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
+            className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-[#2a2a2a] font-mono font-bold text-sm py-4 px-8 rounded-xl cursor-none"
           >
             ← Back
           </button>
@@ -7685,7 +7721,7 @@ export default function BentoGridPage() {
       description:
         "Optimized event pipelines running at 60fps. Handles complex coordinate transforms and collision grids dynamically.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
-      color: "bg-wtf-orange",
+      color: "bg-[#e55b3c]",
       accentHex: "229, 91, 60", // wtf-orange rgb
       imgUrl: "/Untitled design.png",
       statLabel: "RENDER STABILITY",
@@ -7698,7 +7734,7 @@ export default function BentoGridPage() {
       description:
         "Neo-Brutalist utility layers, interactive variables, and asymmetric structural skews.",
       gridClass: "col-span-1 row-span-1 md:row-span-2 h-auto md:h-[584px]",
-      color: "bg-wtf-green",
+      color: "bg-[#0c9367]",
       accentHex: "12, 147, 103", // wtf-green rgb
       imgUrl: "/Untitled design (1).png",
       statLabel: "VARIABLE SYNC",
@@ -7711,7 +7747,7 @@ export default function BentoGridPage() {
       description:
         "Inertia metrics reading delta inputs to drive canvas rendering. Auto-clamps bounds to maximize frames.",
       gridClass: "col-span-1 h-[280px]",
-      color: "bg-wtf-yellow",
+      color: "bg-[#f1b333]",
       accentHex: "241, 179, 51", // wtf-yellow rgb
       imgUrl: "/Untitled design (2).png",
       statLabel: "INTERPOLATION RATE",
@@ -7724,7 +7760,7 @@ export default function BentoGridPage() {
       description:
         "Dual-coordinate pointer smoothing with custom elasticity weights. Morphing boundaries snap to hover nodes.",
       gridClass: "col-span-1 h-[280px]",
-      color: "bg-wtf-purple",
+      color: "bg-[#6758a5]",
       accentHex: "103, 88, 165", // wtf-purple rgb
       imgUrl: "/Untitled design (3).png",
       statLabel: "SPRING STIFFNESS",
@@ -7737,7 +7773,7 @@ export default function BentoGridPage() {
       description:
         "Color transitions driven by background morph targets. Inner elements unfold using autoAlpha spring tweens.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
-      color: "bg-wtf-blue",
+      color: "bg-[#3b82f6]",
       accentHex: "59, 130, 246", // wtf-blue rgb
       imgUrl: "/Untitled design (4).png",
       statLabel: "TRANSITION DELAY",
@@ -7835,12 +7871,18 @@ export default function BentoGridPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-6 md:p-12 selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-6 md:p-12 selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Background Dot Grid */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
@@ -7850,7 +7892,7 @@ export default function BentoGridPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -7858,7 +7900,7 @@ export default function BentoGridPage() {
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-3xl text-center flex flex-col gap-3 mt-12 md:mt-6 select-none">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-green border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 13</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -7882,7 +7924,7 @@ export default function BentoGridPage() {
                 key={item.id}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className={`group brutalist-card p-6 bg-white flex flex-col justify-between overflow-hidden relative select-none cursor-pointer rounded-2xl border-3 border-[#2a2a2a] shadow-[5px_5px_0px_#2a2a2a] hover:shadow-[10px_10px_0px_#2a2a2a] transition-shadow duration-200 ${
+                className={`group p-6 bg-white flex flex-col justify-between overflow-hidden relative select-none cursor-pointer rounded-2xl border-3 border-[#2a2a2a] shadow-[5px_5px_0px_#2a2a2a] hover:shadow-[10px_10px_0px_#2a2a2a] transition-shadow duration-200 ${
                   item.gridClass
                 }`}
                 style={{
@@ -7939,7 +7981,7 @@ export default function BentoGridPage() {
                         <h2 className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
                           {item.title}
                         </h2>
-                        <p className="font-sans font-medium text-zinc-650 text-[11px] md:text-xs leading-relaxed mt-1">
+                        <p className="font-sans font-medium text-zinc-600 text-[11px] md:text-xs leading-relaxed mt-1">
                           {item.description}
                         </p>
                       </div>
@@ -8008,7 +8050,7 @@ export default function BentoGridPage() {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                      <p className="font-sans font-medium text-zinc-650 text-xs leading-relaxed">
+                      <p className="font-sans font-medium text-zinc-600 text-xs leading-relaxed">
                         {item.description}
                       </p>
 
@@ -8080,7 +8122,7 @@ export default function BentoGridPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -8361,7 +8403,7 @@ interface CarouselItem {
   desc: string;
   imgUrl: string;
   bgColor: string; // Hex color for background transitions
-  accentColor: string; // Tailwind class
+  accentColor: string; // Hex/Tailwind replacement
   textColor: string;
 }
 
@@ -8374,7 +8416,7 @@ const items: CarouselItem[] = [
     desc: "A custom LLVM backend translating abstract syntax trees into parallel topological gates.",
     imgUrl: "/Untitled design.png",
     bgColor: "#e55b3c", // wtf-orange
-    accentColor: "bg-wtf-orange",
+    accentColor: "bg-[#e55b3c]",
     textColor: "text-white",
   },
   {
@@ -8385,7 +8427,7 @@ const items: CarouselItem[] = [
     desc: "GPU-accelerated vector fields tracing magnetic flow lines with spring-damper integrations.",
     imgUrl: "/Untitled design (1).png",
     bgColor: "#0c9367", // wtf-green
-    accentColor: "bg-wtf-green",
+    accentColor: "bg-[#0c9367]",
     textColor: "text-white",
   },
   {
@@ -8396,7 +8438,7 @@ const items: CarouselItem[] = [
     desc: "High-contrast editorial grid structures utilizing strict monospace matrices and ink traps.",
     imgUrl: "/Untitled design (2).png",
     bgColor: "#6758a5", // wtf-purple
-    accentColor: "bg-wtf-purple",
+    accentColor: "bg-[#6758a5]",
     textColor: "text-white",
   },
   {
@@ -8407,7 +8449,7 @@ const items: CarouselItem[] = [
     desc: "A peer-to-peer ledger using ephemeral cryptographic state rings and consensus maps.",
     imgUrl: "/Untitled design (3).png",
     bgColor: "#3b82f6", // wtf-blue
-    accentColor: "bg-wtf-blue",
+    accentColor: "bg-[#3b82f6]",
     textColor: "text-white",
   },
   {
@@ -8418,7 +8460,7 @@ const items: CarouselItem[] = [
     desc: "FPGA solvers designed for extreme throughput pipelines and multi-threaded register stacks.",
     imgUrl: "/Untitled design (4).png",
     bgColor: "#c53b3a", // wtf-red
-    accentColor: "bg-wtf-red",
+    accentColor: "bg-[#c53b3a]",
     textColor: "text-white",
   },
   {
@@ -8429,7 +8471,7 @@ const items: CarouselItem[] = [
     desc: "Real-time volumetric path tracers modeling multi-scatter atmospheric absorption.",
     imgUrl: "/Untitled design (5).png",
     bgColor: "#f1b333", // wtf-yellow
-    accentColor: "bg-wtf-yellow",
+    accentColor: "bg-[#f1b333]",
     textColor: "text-black",
   },
 ];
@@ -8836,10 +8878,13 @@ export default function ThreeDCarouselPage() {
     <div
       ref={wrapperRef}
       onWheel={handleWheel}
-      className="relative w-full h-screen overflow-hidden bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black font-sans transition-colors duration-500"
+      className="relative w-full h-screen overflow-hidden bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black font-sans transition-colors duration-500"
     >
       {/* Dynamic tactile noise overlay */}
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
@@ -8849,7 +8894,7 @@ export default function ThreeDCarouselPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -8922,7 +8967,7 @@ export default function ThreeDCarouselPage() {
                 });
               }}
               className={`h-3 rounded-full border-2 border-[#2a2a2a] transition-all duration-300 cursor-pointer ${
-                idx === activeIdx ? "w-8 bg-wtf-yellow" : "w-3 bg-white"
+                idx === activeIdx ? "w-8 bg-[#f1b333]" : "w-3 bg-white"
               }`}
             />
           ))}
@@ -8952,7 +8997,7 @@ export default function ThreeDCarouselPage() {
                 cardsRef.current[idx] = el;
               }}
               onClick={() => openDetail(idx)}
-              className="absolute w-[290px] h-[390px] md:w-[340px] md:h-[450px] flex items-center justify-center will-animate-both"
+              className="absolute w-[290px] h-[390px] md:w-[340px] md:h-[450px] flex items-center justify-center will-change-transform"
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Card Face container */}
@@ -8962,8 +9007,8 @@ export default function ThreeDCarouselPage() {
                 }}
                 onMouseMove={(e) => handleCardMouseMove(e, idx)}
                 onMouseLeave={() => handleCardMouseLeave(idx)}
-                className={`w-full h-full brutalist-card p-4 bg-white flex flex-col justify-between cursor-pointer rounded-xl select-none relative overflow-hidden group ${
-                  isActive ? "border-wtf-yellow" : "border-[#2a2a2a]"
+                className={`w-full h-full p-4 bg-white flex flex-col justify-between cursor-pointer rounded-xl select-none relative overflow-hidden group border-3 ${
+                  isActive ? "border-[#f1b333] shadow-[12px_12px_0px_#2a2a2a]" : "border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a]"
                 }`}
                 style={{
                   transformStyle: "preserve-3d",
@@ -9025,7 +9070,7 @@ export default function ThreeDCarouselPage() {
                 {/* Ambient glow accent (only active) */}
                 {isActive && (
                   <div
-                    className="absolute inset-0 border-3 border-wtf-yellow opacity-40 animate-pulse pointer-events-none rounded-xl"
+                    className="absolute inset-0 border-3 border-[#f1b333] opacity-40 animate-pulse pointer-events-none rounded-xl"
                     style={{ transform: "translateZ(-1px)" }}
                   />
                 )}
@@ -9049,7 +9094,7 @@ export default function ThreeDCarouselPage() {
               </span>
               <button
                 onClick={closeDetail}
-                className="brutalist-btn bg-wtf-red text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm hover:bg-red-700 cursor-pointer shadow-[3px_3px_0px_#2a2a2a]"
+                className="border-3 border-[#2a2a2a] shadow-[3px_3px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#2a2a2a] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#c53b3a] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm cursor-pointer"
               >
                 ✕
               </button>
@@ -9100,13 +9145,13 @@ export default function ThreeDCarouselPage() {
             {/* Footer buttons / actions inside panel */}
             <div className="stagger-in flex flex-col md:flex-row gap-4 mt-auto">
               <button
-                className={`brutalist-btn flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider cursor-pointer text-center ${items[detailIdx].accentColor} ${items[detailIdx].textColor}`}
+                className={`border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider cursor-pointer text-center ${items[detailIdx].accentColor} ${items[detailIdx].textColor}`}
               >
                 Execute Pipeline
               </button>
               <button
                 onClick={closeDetail}
-                className="brutalist-btn flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider bg-white hover:bg-zinc-100 text-[#2a2a2a] cursor-pointer"
+                className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] flex-1 py-4 px-6 rounded-xl font-mono font-bold text-sm uppercase tracking-wider bg-white hover:bg-zinc-100 text-[#2a2a2a] cursor-pointer"
               >
                 Close Spec
               </button>
@@ -9871,14 +9916,17 @@ export default function MorphingAccordionPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-wtf-yellow selection:text-black overflow-hidden transition-colors duration-500"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 15</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -9895,7 +9943,7 @@ export default function MorphingAccordionPage() {
       <main className="z-10 w-full max-w-2xl my-12">
         <div
           ref={cardRef}
-          className="w-full brutalist-card p-6 md:p-8 bg-white flex flex-col gap-4 transition-all duration-500"
+          className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 md:p-8 bg-white flex flex-col gap-4 transition-all duration-500"
         >
           {accordionItems.map((item, index) => {
             const isOpen = activeIndex === index;
@@ -9914,7 +9962,7 @@ export default function MorphingAccordionPage() {
                       [{item.subtitle}]
                     </span>
                     <h2
-                      className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 group-hover:text-wtf-orange"
+                      className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 hover:text-[#e55b3c]"
                       style={{ color: isOpen ? item.color : "" }}
                     >
                       {item.title}
@@ -9932,7 +9980,7 @@ export default function MorphingAccordionPage() {
                   }}
                   className="h-0 opacity-0 overflow-hidden flex flex-col gap-4"
                 >
-                  <p className="text-sm font-sans font-semibold text-zinc-650 leading-relaxed max-w-xl">
+                  <p className="text-sm font-sans font-semibold text-zinc-600 leading-relaxed max-w-xl">
                     {item.summary}
                   </p>
 
@@ -9940,7 +9988,7 @@ export default function MorphingAccordionPage() {
                     {item.details.map((detail, dIdx) => (
                       <div
                         key={dIdx}
-                        className="accordion-detail-item flex items-center gap-2.5 font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-350 p-2.5 rounded-lg shadow-sm"
+                        className="accordion-detail-item flex items-center gap-2.5 font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-300 p-2.5 rounded-lg shadow-sm"
                       >
                         <span
                           className="w-2 h-2 rounded-full border border-black"
@@ -9965,7 +10013,7 @@ export default function MorphingAccordionPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -10309,7 +10357,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "229, 91, 60", // orange
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     title: "CREATIVE SYSTEM",
@@ -10318,7 +10366,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "12, 147, 103", // green
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     title: "MOTION PHYSICS",
@@ -10327,7 +10375,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "241, 179, 51", // yellow
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     title: "DEPLOY ENGINE",
@@ -10336,7 +10384,7 @@ const cardsData: CardItem[] = [
     bgColor: "bg-white",
     textColor: "text-[#2a2a2a]",
     accentHex: "103, 88, 165", // purple
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
 ];
 
@@ -10446,12 +10494,18 @@ export default function ScrollCardsPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Tactile Grids */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
@@ -10461,7 +10515,7 @@ export default function ScrollCardsPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -10515,7 +10569,7 @@ export default function ScrollCardsPage() {
             <div
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className={`scroll-card-inner brutalist-card w-full max-w-4xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center select-none cursor-pointer rounded-2xl will-change-transform relative overflow-hidden ${card.bgColor} ${card.textColor}`}
+              className={`scroll-card-inner border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] w-full max-w-4xl p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center select-none cursor-pointer rounded-2xl will-change-transform relative overflow-hidden ${card.bgColor} ${card.textColor}`}
               style={{
                 top: `${index * 44}px`,
                 transformStyle: "preserve-3d",
@@ -10923,7 +10977,7 @@ const stageData: StageItem[] = [
     id: 1,
     num: "01",
     title: "PLAN & SCOPE",
-    accentClass: "bg-wtf-orange",
+    accentClass: "bg-[#e55b3c]",
     accentHex: "229, 91, 60",
     imgUrl: "/Untitled design.png",
     phase: "PHASE 01",
@@ -10933,7 +10987,7 @@ const stageData: StageItem[] = [
     id: 2,
     num: "02",
     title: "STYLING & TOKEN",
-    accentClass: "bg-wtf-green",
+    accentClass: "bg-[#0c9367]",
     accentHex: "12, 147, 103",
     imgUrl: "/Untitled design (1).png",
     phase: "PHASE 02",
@@ -10943,7 +10997,7 @@ const stageData: StageItem[] = [
     id: 3,
     num: "03",
     title: "DEVELOP & DEPLOY",
-    accentClass: "bg-wtf-blue",
+    accentClass: "bg-[#3b82f6]",
     accentHex: "59, 130, 246",
     imgUrl: "/Untitled design (2).png",
     phase: "PHASE 03",
@@ -10987,7 +11041,7 @@ export default function ShowUpCardsPage() {
               (progress - delay * 0.1) / (0.9 - delay * 0.1),
             );
             const innerCard = document.querySelector(
-              `${cardId} .flip-card-inner`,
+              `${cardId} .flip-card-inner`
             );
 
             let y;
@@ -11120,12 +11174,18 @@ export default function ShowUpCardsPage() {
 
   return (
     <div
-      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-[280vh] bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Tactile Grid Backgrounds */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
@@ -11135,7 +11195,7 @@ export default function ShowUpCardsPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -11153,7 +11213,10 @@ export default function ShowUpCardsPage() {
 
       {/* Interactive Cards Overlay (Pins on scroll) */}
       <section className="showup-cards-sec relative w-full h-[calc(100vh-64px)] flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-15" />
+        <div 
+          className="absolute inset-0 opacity-15"
+          style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+        />
 
         {/* Simple Header Inside Container */}
         <div className="text-center select-none max-w-lg mb-8 pointer-events-none z-10">
@@ -11163,7 +11226,7 @@ export default function ShowUpCardsPage() {
           <h2 className="text-2xl md:text-3xl font-serif font-black uppercase text-[#2a2a2a] leading-none mt-2">
             Scroll to Build Nodes
           </h2>
-          <p className="font-mono text-[9px] text-zinc-450 mt-1 uppercase tracking-wider">
+          <p className="font-mono text-[9px] text-zinc-500 mt-1 uppercase tracking-wider">
             [ Cards will fall, assemble, and flip 180° ]
           </p>
         </div>
@@ -11185,9 +11248,15 @@ export default function ShowUpCardsPage() {
                 className="card-wrapper w-full h-full animate-[floating_2.5s_infinite_ease-in-out] transform-gpu"
                 style={{ animationDelay: `${(stage.id - 1) * 0.25}s` }}
               >
-                <div className="flip-card-inner w-full h-full preserve-3d relative">
+                <div 
+                  className="flip-card-inner w-full h-full relative"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
                   {/* Front Side Face */}
-                  <div className="flip-card-front absolute inset-0 brutalist-card p-4 bg-white text-[#2a2a2a] flex flex-col justify-between backface-hidden cursor-pointer select-none">
+                  <div 
+                    className="flip-card-front absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                  >
                     <div className="flex justify-between items-center">
                       <span className="font-mono text-[9px] font-bold text-zinc-400">
                         [{stage.phase}]
@@ -11220,7 +11289,14 @@ export default function ShowUpCardsPage() {
                   </div>
 
                   {/* Back Side Face (Scroll-revealed) */}
-                  <div className="flip-card-back absolute inset-0 brutalist-card p-4 bg-white border-3 border-[#2a2a2a] text-[#2a2a2a] flex flex-col justify-between rotate-y-180 backface-hidden cursor-pointer select-none">
+                  <div 
+                    className="flip-card-back absolute inset-0 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-4 bg-white border-3 text-[#2a2a2a] flex flex-col justify-between cursor-pointer select-none"
+                    style={{
+                      transform: "rotateY(180deg)",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden"
+                    }}
+                  >
                     <div className="w-full flex justify-between font-mono font-bold text-[9px] uppercase border-b-2 border-black pb-2 items-center">
                       <span className="text-zinc-400">
                         0{stage.id} {"//"} NODE DETAILS
@@ -11634,7 +11710,7 @@ const networkData: NetworkItem[] = [
     x: "50%",
     y: "22%",
     accentHex: "229, 91, 60",
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     id: 2,
@@ -11643,7 +11719,7 @@ const networkData: NetworkItem[] = [
     x: "66%",
     y: "26%",
     accentHex: "12, 147, 103",
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     id: 3,
@@ -11652,7 +11728,7 @@ const networkData: NetworkItem[] = [
     x: "79%",
     y: "34%",
     accentHex: "241, 179, 51",
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     id: 4,
@@ -11661,7 +11737,7 @@ const networkData: NetworkItem[] = [
     x: "81%",
     y: "50%",
     accentHex: "59, 130, 246",
-    themeColor: "bg-wtf-blue",
+    themeColor: "bg-[#3b82f6]",
   },
   {
     id: 5,
@@ -11670,7 +11746,7 @@ const networkData: NetworkItem[] = [
     x: "76%",
     y: "71%",
     accentHex: "103, 88, 165",
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
   {
     id: 6,
@@ -11679,7 +11755,7 @@ const networkData: NetworkItem[] = [
     x: "58%",
     y: "81%",
     accentHex: "229, 91, 60",
-    themeColor: "bg-wtf-orange",
+    themeColor: "bg-[#e55b3c]",
   },
   {
     id: 7,
@@ -11688,7 +11764,7 @@ const networkData: NetworkItem[] = [
     x: "41%",
     y: "83%",
     accentHex: "12, 147, 103",
-    themeColor: "bg-wtf-green",
+    themeColor: "bg-[#0c9367]",
   },
   {
     id: 8,
@@ -11697,7 +11773,7 @@ const networkData: NetworkItem[] = [
     x: "20%",
     y: "60%",
     accentHex: "241, 179, 51",
-    themeColor: "bg-wtf-yellow",
+    themeColor: "bg-[#f1b333]",
   },
   {
     id: 9,
@@ -11706,7 +11782,7 @@ const networkData: NetworkItem[] = [
     x: "15%",
     y: "45%",
     accentHex: "59, 130, 246",
-    themeColor: "bg-wtf-blue",
+    themeColor: "bg-[#3b82f6]",
   },
   {
     id: 10,
@@ -11715,7 +11791,7 @@ const networkData: NetworkItem[] = [
     x: "28%",
     y: "34%",
     accentHex: "103, 88, 165",
-    themeColor: "bg-wtf-purple",
+    themeColor: "bg-[#6758a5]",
   },
 ];
 
@@ -11896,7 +11972,7 @@ export default function StringLinePage() {
   );
 
   return (
-    <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-wtf-yellow selection:text-black">
+    <div className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black">
       {/* Floating Back Button */}
       <div className="fixed top-6 left-6 z-50 pointer-events-auto">
         <button
@@ -11905,7 +11981,7 @@ export default function StringLinePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase cursor-pointer"
         >
           ← Back
         </button>
@@ -11965,9 +12041,9 @@ export default function StringLinePage() {
         </svg>
 
         {/* Moving Dot with halo pulses */}
-        <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
+        <div className="moving-dot absolute top-0 left-0 w-6 h-6 rounded-full bg-[#e55b3c] border-2 border-[#2a2a2a] z-10 shadow-[2px_2px_0px_#2a2a2a] flex items-center justify-center">
           {/* Pulsing halo ring */}
-          <span className="absolute h-10 w-10 border-2 border-wtf-orange/30 rounded-full animate-ping pointer-events-none" />
+          <span className="absolute h-10 w-10 border-2 border-[#e55b3c]/30 rounded-full animate-ping pointer-events-none" />
         </div>
 
         {/* Network Nodes */}

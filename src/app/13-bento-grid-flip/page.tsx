@@ -31,7 +31,7 @@ export default function BentoGridPage() {
       description:
         "Optimized event pipelines running at 60fps. Handles complex coordinate transforms and collision grids dynamically.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
-      color: "bg-wtf-orange",
+      color: "bg-[#e55b3c]",
       accentHex: "229, 91, 60", // wtf-orange rgb
       imgUrl: "/Untitled design.png",
       statLabel: "RENDER STABILITY",
@@ -44,7 +44,7 @@ export default function BentoGridPage() {
       description:
         "Neo-Brutalist utility layers, interactive variables, and asymmetric structural skews.",
       gridClass: "col-span-1 row-span-1 md:row-span-2 h-auto md:h-[584px]",
-      color: "bg-wtf-green",
+      color: "bg-[#0c9367]",
       accentHex: "12, 147, 103", // wtf-green rgb
       imgUrl: "/Untitled design (1).png",
       statLabel: "VARIABLE SYNC",
@@ -57,7 +57,7 @@ export default function BentoGridPage() {
       description:
         "Inertia metrics reading delta inputs to drive canvas rendering. Auto-clamps bounds to maximize frames.",
       gridClass: "col-span-1 h-[280px]",
-      color: "bg-wtf-yellow",
+      color: "bg-[#f1b333]",
       accentHex: "241, 179, 51", // wtf-yellow rgb
       imgUrl: "/Untitled design (2).png",
       statLabel: "INTERPOLATION RATE",
@@ -70,7 +70,7 @@ export default function BentoGridPage() {
       description:
         "Dual-coordinate pointer smoothing with custom elasticity weights. Morphing boundaries snap to hover nodes.",
       gridClass: "col-span-1 h-[280px]",
-      color: "bg-wtf-purple",
+      color: "bg-[#6758a5]",
       accentHex: "103, 88, 165", // wtf-purple rgb
       imgUrl: "/Untitled design (3).png",
       statLabel: "SPRING STIFFNESS",
@@ -83,7 +83,7 @@ export default function BentoGridPage() {
       description:
         "Color transitions driven by background morph targets. Inner elements unfold using autoAlpha spring tweens.",
       gridClass: "col-span-1 md:col-span-2 h-[280px]",
-      color: "bg-wtf-blue",
+      color: "bg-[#3b82f6]",
       accentHex: "59, 130, 246", // wtf-blue rgb
       imgUrl: "/Untitled design (4).png",
       statLabel: "TRANSITION DELAY",
@@ -181,12 +181,18 @@ export default function BentoGridPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-6 md:p-12 selection:bg-wtf-yellow selection:text-black overflow-x-hidden font-sans"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-6 md:p-12 selection:bg-[#f1b333] selection:text-black overflow-x-hidden font-sans"
       ref={containerRef}
     >
       {/* Background Dot Grid */}
-      <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none z-0" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none z-10" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
+      <div 
+        className="fixed inset-0 pointer-events-none z-10 opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Floating Dashboard Back Button */}
       <div className="fixed top-6 left-6 z-50">
@@ -196,7 +202,7 @@ export default function BentoGridPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-xs font-mono font-bold py-2.5 px-4 rounded-md uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>
@@ -204,7 +210,7 @@ export default function BentoGridPage() {
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-3xl text-center flex flex-col gap-3 mt-12 md:mt-6 select-none">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-green border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 13</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -228,7 +234,7 @@ export default function BentoGridPage() {
                 key={item.id}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className={`group brutalist-card p-6 bg-white flex flex-col justify-between overflow-hidden relative select-none cursor-pointer rounded-2xl border-3 border-[#2a2a2a] shadow-[5px_5px_0px_#2a2a2a] hover:shadow-[10px_10px_0px_#2a2a2a] transition-shadow duration-200 ${
+                className={`group p-6 bg-white flex flex-col justify-between overflow-hidden relative select-none cursor-pointer rounded-2xl border-3 border-[#2a2a2a] shadow-[5px_5px_0px_#2a2a2a] hover:shadow-[10px_10px_0px_#2a2a2a] transition-shadow duration-200 ${
                   item.gridClass
                 }`}
                 style={{
@@ -285,7 +291,7 @@ export default function BentoGridPage() {
                         <h2 className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
                           {item.title}
                         </h2>
-                        <p className="font-sans font-medium text-zinc-650 text-[11px] md:text-xs leading-relaxed mt-1">
+                        <p className="font-sans font-medium text-zinc-600 text-[11px] md:text-xs leading-relaxed mt-1">
                           {item.description}
                         </p>
                       </div>
@@ -354,7 +360,7 @@ export default function BentoGridPage() {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                      <p className="font-sans font-medium text-zinc-650 text-xs leading-relaxed">
+                      <p className="font-sans font-medium text-zinc-600 text-xs leading-relaxed">
                         {item.description}
                       </p>
 
@@ -426,7 +432,7 @@ export default function BentoGridPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3.5 px-6 rounded-xl uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>

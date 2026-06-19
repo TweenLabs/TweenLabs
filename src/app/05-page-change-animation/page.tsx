@@ -251,7 +251,10 @@ export default function AnimationFivePage() {
       ref={containerRef}
     >
       {/* Tactile Noise Overlay */}
-      <div className="noise-overlay fixed inset-0 pointer-events-none z-[49] opacity-40" />
+      <div 
+        className="fixed inset-0 pointer-events-none z-[49] opacity-[0.035]"
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }}
+      />
 
       {/* Dashboard Back Link */}
       <div className="fixed left-6 top-6 z-50">
@@ -261,7 +264,7 @@ export default function AnimationFivePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000]"
+          className="border-3 border-black shadow-[3px_3px_0px_#000] transition-all duration-100 ease-in-out hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] bg-[#f8f5ee] text-[#2a2a2a] px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -285,7 +288,7 @@ export default function AnimationFivePage() {
       <div
         ref={scrollSectionRef}
         className="scroll-viewport h-[calc(100vh-64px)] w-full relative overflow-hidden"
-        style={{ perspective: "1400px", perspectiveOrigin: "50% 40%" }}
+        style={{ perspective: "1400px", perspectiveOrigin: "50% 40%", transformStyle: "preserve-3d" }}
       >
         {/* PANEL 0: GREEN SECTION (Pulsars) */}
         <section className="panel-item panel-0 absolute inset-0 bg-[#0c9367] text-white flex flex-col justify-between p-8 md:p-16 z-10 select-none">
@@ -308,10 +311,10 @@ export default function AnimationFivePage() {
               as their beams sweep across the Earth.
             </p>
             <div className="flex gap-4 mt-2">
-              <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                 Explore Pulsars
               </button>
-              <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                 View Spectral Data
               </button>
             </div>
@@ -385,10 +388,10 @@ export default function AnimationFivePage() {
                 millions of years of gravitational collapse.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Catalog Nebulae
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Hubble Gallery
                 </button>
               </div>
@@ -422,8 +425,8 @@ export default function AnimationFivePage() {
                   },
                 ].map((item, i) => (
                   <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
+                     key={i}
+                     className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
                   >
                     <span className="font-mono text-[9px] font-bold text-zinc-400">
                       [{item.tag}]
@@ -463,10 +466,10 @@ export default function AnimationFivePage() {
                 warped infinitely at the singularity.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Hawking Radiation
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Simulate Orbit
                 </button>
               </div>
@@ -541,10 +544,10 @@ export default function AnimationFivePage() {
                 iron necessary for the formation of planets and life.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Elemental Yields
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Map Remnants
                 </button>
               </div>
@@ -619,10 +622,10 @@ export default function AnimationFivePage() {
                 accelerates the expansion of space-time itself.
               </p>
               <div className="flex gap-4 mt-2">
-                <button className="brutalist-btn bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   WIMP Experiments
                 </button>
-                <button className="brutalist-btn bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
+                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
                   Map Expansion
                 </button>
               </div>

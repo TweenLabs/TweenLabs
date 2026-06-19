@@ -159,14 +159,17 @@ export default function MorphingAccordionPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-wtf-yellow selection:text-black overflow-hidden transition-colors duration-500"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
       ref={containerRef}
     >
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
       {/* Header Info */}
       <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-right">
+        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 15</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
@@ -183,7 +186,7 @@ export default function MorphingAccordionPage() {
       <main className="z-10 w-full max-w-2xl my-12">
         <div
           ref={cardRef}
-          className="w-full brutalist-card p-6 md:p-8 bg-white flex flex-col gap-4 transition-all duration-500"
+          className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 md:p-8 bg-white flex flex-col gap-4 transition-all duration-500"
         >
           {accordionItems.map((item, index) => {
             const isOpen = activeIndex === index;
@@ -202,7 +205,7 @@ export default function MorphingAccordionPage() {
                       [{item.subtitle}]
                     </span>
                     <h2
-                      className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 group-hover:text-wtf-orange"
+                      className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 hover:text-[#e55b3c]"
                       style={{ color: isOpen ? item.color : "" }}
                     >
                       {item.title}
@@ -220,7 +223,7 @@ export default function MorphingAccordionPage() {
                   }}
                   className="h-0 opacity-0 overflow-hidden flex flex-col gap-4"
                 >
-                  <p className="text-sm font-sans font-semibold text-zinc-650 leading-relaxed max-w-xl">
+                  <p className="text-sm font-sans font-semibold text-zinc-600 leading-relaxed max-w-xl">
                     {item.summary}
                   </p>
 
@@ -228,7 +231,7 @@ export default function MorphingAccordionPage() {
                     {item.details.map((detail, dIdx) => (
                       <div
                         key={dIdx}
-                        className="accordion-detail-item flex items-center gap-2.5 font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-350 p-2.5 rounded-lg shadow-sm"
+                        className="accordion-detail-item flex items-center gap-2.5 font-mono text-xs text-zinc-700 bg-zinc-50 border border-zinc-300 p-2.5 rounded-lg shadow-sm"
                       >
                         <span
                           className="w-2 h-2 rounded-full border border-black"
@@ -253,7 +256,7 @@ export default function MorphingAccordionPage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
         >
           ← Back
         </button>

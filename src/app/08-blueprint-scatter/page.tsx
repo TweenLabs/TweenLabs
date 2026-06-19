@@ -294,11 +294,12 @@ export default function BlueprintScatterPage() {
     >
       {/* Premium subtle grid background overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-0"
-        style={{ opacity: 0.25 }}
+        className="absolute inset-0 pointer-events-none z-0 opacity-25"
+        style={{
+          backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
-
-      {/* Navbar removed to prevent overlapping with cards */}
 
       {/* 2. Hero Section (Exploding Cards Workspace) */}
       <div
@@ -328,7 +329,7 @@ export default function BlueprintScatterPage() {
                   ? window.history.back()
                   : (window.location.href = "/")
               }
-              className="brutalist-btn bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase border-2 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] cursor-pointer transition-transform duration-150 active:translate-y-0.5"
+              className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#f1b333] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#f1b333] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#f1b333] bg-[#2a2a2a] text-white hover:bg-black px-8 py-3.5 rounded-full font-mono text-[11px] font-bold uppercase cursor-pointer"
             >
               ← Back
             </button>

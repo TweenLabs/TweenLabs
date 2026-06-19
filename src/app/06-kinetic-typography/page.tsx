@@ -190,7 +190,7 @@ export default function KineticTypographyPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* SVG Liquid Filter Definition */}
@@ -216,11 +216,14 @@ export default function KineticTypographyPage() {
         </defs>
       </svg>
 
-      <div className="absolute inset-0 dot-grid pointer-events-none z-0" />
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 opacity-15"
+        style={{ backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)", backgroundSize: "24px 24px" }}
+      />
 
-      <div className="z-10 w-full max-w-4xl brutalist-card p-6 md:p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
+      <div className="z-10 w-full max-w-4xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 md:p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
         {/* Badge header */}
-        <div className="inline-flex self-center items-center gap-2 bg-wtf-purple border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] tilt-left">
+        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] -rotate-2">
           <span>06 • Kinetic Typography</span>
         </div>
 
@@ -281,7 +284,7 @@ export default function KineticTypographyPage() {
                 <button
                   key={preset}
                   onClick={() => loadPreset(preset)}
-                  className="font-mono text-[9px] font-bold border border-[#2a2a2a] px-2 py-0.5 rounded bg-zinc-100 hover:bg-wtf-yellow transition-colors cursor-pointer"
+                  className="font-mono text-[9px] font-bold border border-[#2a2a2a] px-2 py-0.5 rounded bg-zinc-100 hover:bg-[#f1b333] transition-colors cursor-pointer"
                 >
                   {preset}
                 </button>
@@ -308,7 +311,7 @@ export default function KineticTypographyPage() {
                   onClick={() => setMode(m.id)}
                   className={`font-mono text-[11px] font-bold py-2 px-2.5 border-2 border-[#2a2a2a] rounded-lg transition-all shadow-[2px_2px_0px_#2a2a2a] cursor-pointer ${
                     mode === m.id
-                      ? "bg-wtf-purple text-white shadow-none translate-x-[2px] translate-y-[2px]"
+                      ? "bg-[#6758a5] text-white shadow-none translate-x-[2px] translate-y-[2px]"
                       : "bg-white text-[#2a2a2a] hover:bg-zinc-100"
                   }`}
                 >
@@ -325,7 +328,7 @@ export default function KineticTypographyPage() {
                 <label className="font-mono text-xs font-bold text-zinc-500 uppercase">
                   3. Speed Multiplier
                 </label>
-                <span className="font-mono text-xs font-bold bg-zinc-100 border border-zinc-350 px-1.5 rounded">
+                <span className="font-mono text-xs font-bold bg-zinc-100 border border-zinc-300 px-1.5 rounded">
                   {speed.toFixed(1)}x
                 </span>
               </div>
@@ -336,14 +339,14 @@ export default function KineticTypographyPage() {
                 step="0.1"
                 value={speed}
                 onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                className="w-full accent-wtf-purple cursor-ew-resize"
+                className="w-full accent-[#6758a5] cursor-ew-resize"
               />
             </div>
 
             <div className="flex gap-2">
               <button
                 onClick={triggerReplay}
-                className="flex-1 brutalist-btn bg-wtf-purple text-white font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
+                className="flex-1 border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#6758a5] text-white font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
               >
                 ⚡ Re-Trigger
               </button>
@@ -355,7 +358,7 @@ export default function KineticTypographyPage() {
                       ? window.history.back()
                       : (window.location.href = "/")
                   }
-                  className="w-full brutalist-btn bg-wtf-yellow text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
+                  className="w-full border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-[#2a2a2a] font-mono font-bold text-xs py-2 px-4 rounded-lg uppercase cursor-pointer"
                 >
                   ← Back
                 </button>

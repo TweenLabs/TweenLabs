@@ -35,9 +35,10 @@ To maintain the high-fidelity standard of this repository, all contributions mus
 ### 1. Single-File Portability (Strict)
 Every new animation route/component **must be entirely self-contained** within its own directory and single `page.tsx` file under `/src/app/` (e.g. `/src/app/19-your-creative-animation/page.tsx`).
 *   **No local helper imports**: Do not import helper files from other route directories.
-*   **Zero local CSS/CSS modules**: All styles must be styled inline using Tailwind utility classes or custom tailwind.config features, or standard global CSS classes if they are in `globals.css`.
+*   **Zero external stylesheet dependencies**: Do not rely on custom classes declared in `/src/app/globals.css` (like `.dot-grid`, `.brutalist-btn`, `.tilt-right`). Any custom styling, micro-animations, or utility CSS must be declared inline or via standard Tailwind utility classes.
+*   **Zero tailwind.config overrides**: Do not use custom theme colors (like `bg-wtf-orange`, `wtf-yellow`) or custom theme values (like specific borders/shadows) that require changes to the user's `tailwind.config.ts`. Instead, use exact hex color values directly (e.g. `bg-[#e55b3c]`, `selection:bg-[#f1b333]`, `shadow-[4px_4px_0px_#2a2a2a]`).
 *   **Self-Contained Sub-components**: If your animation uses sub-components (like a card item or button widget), define them inside the *same* `page.tsx` file.
-*   **Asset Management**: If you require images/icons, place them in `/public/` and reference them using absolute URLs (e.g., `/my-asset.svg`).
+*   **Asset Management**: If you require images/icons, place them in `/public/` and reference them using absolute URLs (e.g., `/my-asset.svg`), or use inline SVGs as a backup.
 
 ### 2. GSAP Implementation Standards
 *   Use the `@gsap/react` hook (`useGSAP`) rather than raw `useEffect` blocks to manage animation lifecycles.
@@ -47,7 +48,7 @@ Every new animation route/component **must be entirely self-contained** within i
 
 ### 3. Design Aesthetics
 *   We target a clean, modern **Neo-Brutalist** or high-fidelity **glassmorphic** look.
-*   Use custom curated colors matching the playground design system (e.g., `bg-wtf-orange`, `bg-wtf-green`, `bg-wtf-yellow`, `bg-wtf-purple`, `bg-wtf-blue`).
+*   Use standard hex values representing our sandbox color palette (e.g., Orange: `#e55b3c`, Green: `#0c9367`, Yellow: `#f1b333`, Purple: `#6758a5`, Blue: `#3b82f6`).
 *   Incorporate thick dark borders (`border-3 border-[#2a2a2a]`), offset drop shadows (`shadow-[4px_4px_0px_#2a2a2a]`), and monospace font accents where appropriate.
 
 ---

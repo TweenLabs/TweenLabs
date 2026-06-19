@@ -132,10 +132,10 @@ export default function AnimationThreePage() {
           return (
             <span
               key={idx}
-              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw] text-white"
+              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw]"
               style={{
                 textShadow: "4px 4px 0px #121212",
-                color: isOrange ? "var(--color-wtf-orange)" : "white",
+                color: isOrange ? "#e55b3c" : "white",
               }}
             >
               {char}
@@ -148,13 +148,17 @@ export default function AnimationThreePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-wtf-yellow selection:text-black"
+      className="relative min-h-screen bg-[#1e1e1e] text-white overflow-x-hidden selection:bg-[#f1b333] selection:text-black"
       ref={containerRef}
     >
       {/* Subtle Dot Grid Background Overlay */}
       <div
-        className="absolute inset-0 dot-grid pointer-events-none z-10"
-        style={{ opacity: 0.05 }}
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          opacity: 0.05,
+          backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
+        }}
       />
 
       {/* Dashboard Back Link */}
@@ -165,7 +169,7 @@ export default function AnimationThreePage() {
               ? window.history.back()
               : (window.location.href = "/")
           }
-          className="brutalist-btn bg-wtf-yellow text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
+          className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#f1b333] text-black px-4 py-2 text-xs font-mono font-bold uppercase rounded-md cursor-pointer"
         >
           ← Back
         </button>
@@ -174,7 +178,7 @@ export default function AnimationThreePage() {
       {/* Scroll Indicator */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 font-mono text-xs uppercase tracking-widest text-white/50 animate-bounce pointer-events-none flex flex-col items-center gap-1">
         <span>Scroll to Explore</span>
-        <span className="text-wtf-orange font-bold text-sm">↓</span>
+        <span className="text-[#e55b3c] font-bold text-sm">↓</span>
       </div>
 
       {/* Main assembly wrapper */}

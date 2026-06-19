@@ -49,8 +49,15 @@ The GSAP skills are installed locally on the system at:
 - **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-utils\`
 - **Key Guidelines:** Leveraging GSAP utility methods (e.g., `gsap.utils.mapRange()`, `gsap.utils.interpolate()`).
 
+### 9. Component Portability & Reusability
+- **Key Guidelines:** Making sandbox components 100% self-contained and ready to copy-paste or download.
+  - **Zero Global CSS Dependencies:** Do not rely on custom classes declared in `globals.css` (e.g., `.dot-grid`, `.brutalist-btn`, `.tilt-right`). All custom styling, background patterns, or visual elements must be inlined or designed with standard Tailwind utility classes.
+  - **Zero Tailwind Config Dependencies:** Avoid custom theme colors (like `bg-wtf-orange`, `wtf-yellow`) or custom shadow/border definitions. Use exact hex values (e.g., `bg-[#e55b3c]`, `bg-[#f1b333]`, `shadow-[4px_4px_0px_#2a2a2a]`) to ensure the file runs cleanly in projects using standard Tailwind configurations.
+  - **Self-Contained Sub-components:** Define all helper components or utility functions inside the same page/component file.
+  - **Asset Portability:** Use robust fallback elements (like standard inline SVGs or public placeholders) for icons or images so they don't break when downloaded.
+
 ---
 
 ## AI Agent Instruction
 > [!IMPORTANT]
-> **AI Coding Agent:** When writing, editing, or refactoring animations in this project, do not make network requests or guess the rules. Refer directly to the Markdown guidelines located in the local folders above to ensure clean, performant, and standard-compliant GSAP code.
+> **AI Coding Agent:** When writing, editing, or refactoring animations in this project, do not make network requests or guess the rules. Refer directly to the Markdown guidelines located in the local folders above to ensure clean, performant, and standard-compliant GSAP code. All sandbox pages/components must adhere strictly to the **Component Portability & Reusability** guidelines to guarantee single-file compatibility upon download.
