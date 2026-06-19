@@ -240,18 +240,8 @@ export default function ShowUpCardsPage() {
         }}
       />
 
-      {/* Page Heading readout (absolute right) */}
-      <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-1 select-none text-right">
-        <span className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-300 bg-white px-2 py-0.5 rounded">
-          Component 17
-        </span>
-        <h1 className="font-serif font-black text-lg uppercase text-[#2a2a2a]">
-          Showup Cards
-        </h1>
-      </div>
-
       {/* Interactive Cards Overlay (Pins on scroll) */}
-      <section className="showup-cards-sec relative w-full h-[calc(100vh-64px)] flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
+      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
         <div
           className="absolute inset-0 opacity-15"
           style={{
@@ -259,19 +249,6 @@ export default function ShowUpCardsPage() {
             backgroundSize: "24px 24px",
           }}
         />
-
-        {/* Simple Header Inside Container */}
-        <div className="text-center select-none max-w-lg mb-8 pointer-events-none z-10">
-          <span className="font-mono text-[10px] font-bold text-zinc-400 block tracking-widest">
-            [ ASSEMBLY SEQUENCING ]
-          </span>
-          <h2 className="text-2xl md:text-3xl font-serif font-black uppercase text-[#2a2a2a] leading-none mt-2">
-            Scroll to Build Nodes
-          </h2>
-          <p className="font-mono text-[9px] text-zinc-500 mt-1 uppercase tracking-wider">
-            [ Cards will fall, assemble, and flip 180° ]
-          </p>
-        </div>
 
         <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4 pointer-events-auto">
           {stageData.map((stage) => (

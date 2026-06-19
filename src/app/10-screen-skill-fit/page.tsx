@@ -238,51 +238,8 @@ export default function ScreenSkillFitPage() {
 
   return (
     <div ref={containerRef} className="bg-[#f5f0e8] text-[#1c1714]">
-      {/* ══ SECTION 1: Intro ══════════════════════════════════════════════ */}
-      <div className="h-screen w-full flex flex-col items-center justify-center relative gap-6">
-        {/* Eyebrow */}
-        <span className="font-mono text-[9px] font-bold uppercase tracking-[0.4em] text-[#0c9367] select-none">
-          Studio Shodwe · Editorial · Creator
-        </span>
-
-        {/* Main heading */}
-        <h1 className="font-serif font-black text-[clamp(2.6rem,6vw,5.5rem)] text-[#1c1714] leading-[1.0] tracking-tight uppercase text-center select-none">
-          Style.
-          <br />
-          <span className="text-[#0c9367]">Scroll to see.</span>
-        </h1>
-
-        {/* Sub copy */}
-        <p className="font-mono text-[11px] text-stone-400 tracking-wide text-center max-w-[300px] leading-relaxed select-none">
-          Fashion editorials · Portrait · Beauty creators.
-          <br />
-          Scroll to meet the cards.
-        </p>
-
-        {/* Scroll cue */}
-        <div className="flex flex-col items-center gap-2 opacity-40 mt-4 select-none">
-          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-stone-400">
-            Scroll
-          </span>
-          <div className="w-px h-10 bg-stone-300 rounded-full overflow-hidden relative">
-            <div
-              className="absolute top-0 left-0 w-full h-1/2 bg-stone-600 rounded-full"
-              style={{ animation: "scrollPulse 1.8s ease-in-out infinite" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes scrollPulse {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          30%  { opacity: 1; }
-          100% { transform: translateY(220%); opacity: 0; }
-        }
-      `}</style>
-
       {/* ══ SECTION 2: Pinned animation screen ══════════════════════════════ */}
-      <div ref={pinRef} className="h-[calc(100vh-64px)] w-full relative">
+      <div ref={pinRef} className="h-screen w-full relative">
         {/* Noise texture */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
@@ -292,16 +249,6 @@ export default function ScreenSkillFitPage() {
             backgroundSize: "4px 4px",
           }}
         />
-
-        {/* Top status bar */}
-        <div className="absolute top-0 left-0 right-0 z-50 h-12 flex items-center justify-between px-8 border-b border-black/[0.06]">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-stone-400">
-            Studio Shodwe · Editorial
-          </span>
-          <span className="font-mono text-[8px] text-stone-400 uppercase tracking-widest">
-            {N} Looks · Curated
-          </span>
-        </div>
 
         {/* ── Three-column layout ─────────────────────────────────────────── */}
         <div className="absolute inset-0 flex items-center justify-center px-8 md:px-14 gap-8 xl:gap-14">

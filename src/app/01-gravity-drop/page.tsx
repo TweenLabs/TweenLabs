@@ -8,8 +8,8 @@ gsap.registerPlugin(useGSAP);
 
 export default function AnimationOnePage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [textInput, setTextInput] = useState("GRAVITY DROP");
   const [triggerKey, setTriggerKey] = useState(0);
+  const text = "GRAVITY DROP";
 
   useGSAP(
     () => {
@@ -45,7 +45,7 @@ export default function AnimationOnePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
       <div
@@ -56,51 +56,25 @@ export default function AnimationOnePage() {
         }}
       />
 
-      <div className="z-10 w-full max-w-2xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
-        {/* Header tag */}
-        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Gravity Drop Sandbox</span>
-        </div>
-
-        {/* Shelf container where text lands */}
-        <div className="relative min-h-[160px] flex items-center justify-center border-b-4 border-[#2a2a2a] pb-4 bg-zinc-50 rounded-lg shadow-inner">
-          <div className="absolute top-2 left-2 font-mono text-[9px] text-zinc-400">
-            SHELF COLLIDER
-          </div>
-          <h1 className="text-5xl md:text-7xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-2">
-            {textInput.split(" ").map((word, wordIdx) => (
-              <span key={wordIdx} className="inline-block whitespace-nowrap">
-                {word.split("").map((char, charIdx) => (
-                  <span
-                    key={charIdx}
-                    className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
-                    style={{ textShadow: "2px 2px 0px #2a2a2a" }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </span>
-            ))}
-          </h1>
-        </div>
-
-        {/* User Controls */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <input
-            type="text"
-            maxLength={20}
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value.toUpperCase())}
-            placeholder="TYPE TEXT HERE"
-            className="w-full md:w-64 border-3 border-[#2a2a2a] px-4 py-2.5 font-mono font-bold rounded-lg focus:outline-none focus:bg-yellow-50 placeholder-zinc-400 shadow-[3px_3px_0px_#2a2a2a]"
-          />
-          <button
-            onClick={handleReplay}
-            className="w-full md:w-auto border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#e55b3c] text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
-          >
-            ☄️ Trigger Drop
-          </button>
-        </div>
+      <div
+        onClick={handleReplay}
+        className="relative min-h-[160px] flex items-center justify-center pb-4 cursor-pointer select-none z-10"
+      >
+        <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-3">
+          {text.split(" ").map((word, wordIdx) => (
+            <span key={wordIdx} className="inline-block whitespace-nowrap">
+              {word.split("").map((char, charIdx) => (
+                <span
+                  key={charIdx}
+                  className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
+                  style={{ textShadow: "3px 3px 0px #2a2a2a" }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+          ))}
+        </h1>
       </div>
     </div>
   );

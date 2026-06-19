@@ -171,7 +171,7 @@ export default function FluidCursorPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden cursor-none"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden cursor-none"
       ref={containerRef}
     >
       <div
@@ -194,21 +194,6 @@ export default function FluidCursorPage() {
       >
         <span className="cursor-label absolute pointer-events-none font-mono text-[9px] font-black bg-[#f1b333] text-black border-2 border-[#2a2a2a] px-2 py-0.5 rounded shadow-[1.5px_1.5px_0px_#2a2a2a] uppercase opacity-0 scale-75 tracking-widest whitespace-nowrap z-50 select-none" />
       </div>
-
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8 pointer-events-auto">
-        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 12</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Fluid Custom Cursor
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Move your mouse over the bento cards and buttons below. The custom
-          reticle cursor will smoothly track, morph, and stick onto target card
-          boundaries.
-        </p>
-      </header>
 
       {/* Grid of Snapping Targets */}
       <main className="z-10 w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 my-12 pointer-events-auto">

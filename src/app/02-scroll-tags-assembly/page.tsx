@@ -77,15 +77,14 @@ export default function AnimationTwoPage() {
       const scroller =
         containerRef.current?.closest("#main-scroller") || undefined;
 
-      // Pin the scroll section and animate the tags entering the DOM
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scrollSectionRef.current,
           scroller: scroller,
-          start: "top top",
-          end: "+=2000",
           pin: true,
           scrub: 1,
+          start: "top top",
+          end: "+=2000",
           anticipatePin: 1,
         },
       });
@@ -95,7 +94,6 @@ export default function AnimationTwoPage() {
         const yStart = Number(tag.getAttribute("data-ys") || 0);
         const rotate = Number(tag.getAttribute("data-rot") || 0);
 
-        // Animate each tag flying into its DOM grid cell from offscreen
         tl.fromTo(
           tag,
           {
@@ -113,7 +111,7 @@ export default function AnimationTwoPage() {
             scale: 1,
             ease: "power2.out",
           },
-          idx * 0.15, // stagger offset in timeline
+          idx * 0.15,
         );
       });
     },
@@ -122,7 +120,7 @@ export default function AnimationTwoPage() {
 
   return (
     <div
-      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black"
+      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black min-h-screen"
       ref={containerRef}
     >
       <div
@@ -133,23 +131,9 @@ export default function AnimationTwoPage() {
         }}
       />
 
-      {/* Intro section */}
-      <section className="h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4 z-10 relative">
-        <div className="inline-flex items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Scroll Tags Assembly Sandbox</span>
-        </div>
-        <h1 className="text-4xl md:text-6xl font-serif font-black uppercase max-w-2xl leading-[1.1]">
-          Scroll Down to Assemble the Tags
-        </h1>
-        <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest animate-bounce mt-4">
-          ↓ Scroll Down ↓
-        </p>
-      </section>
-
-      {/* Assembly ScrollTrigger Section */}
       <section
         ref={scrollSectionRef}
-        className="h-[calc(100vh-64px)] w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
+        className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-5"
@@ -164,7 +148,6 @@ export default function AnimationTwoPage() {
             DOM Board Collider
           </div>
 
-          {/* Target grid container where tags land */}
           <div className="w-full min-h-[300px] border-3 border-[#2a2a2a] rounded-xl bg-zinc-50 p-8 flex flex-wrap gap-4 items-center justify-center shadow-[inset_4px_4px_10px_rgba(0,0,0,0.05)] relative">
             {tagsData.map((tag, i) => (
               <span

@@ -277,7 +277,7 @@ export default function AnimationFivePage() {
       {/* Main Pinned Scroll Section Container — perspective + preserve-3d enables rotateX fall-back */}
       <div
         ref={scrollSectionRef}
-        className="scroll-viewport h-[calc(100vh-64px)] w-full relative overflow-hidden"
+        className="scroll-viewport h-screen w-full relative overflow-hidden"
         style={{
           perspective: "1400px",
           perspectiveOrigin: "50% 40%",
@@ -304,59 +304,11 @@ export default function AnimationFivePage() {
               electromagnetic radiation. Observed as periodic pulses of energy
               as their beams sweep across the Earth.
             </p>
-            <div className="flex gap-4 mt-2">
-              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                Explore Pulsars
-              </button>
-              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                View Spectral Data
-              </button>
-            </div>
           </div>
 
-          <div className="w-full flex flex-col gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-              Recent Discoveries:
-            </span>
-            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-              {[
-                {
-                  ep: "PSR B1919+21",
-                  title: "First Pulsar Discovered",
-                  dur: "1.33 SEC PERIOD",
-                },
-                {
-                  ep: "CRAB NEBULA",
-                  title: "Young Energetic Pulsar",
-                  dur: "33 MSEC PERIOD",
-                },
-                {
-                  ep: "VELA PULSAR",
-                  title: "Gamma-Ray Source",
-                  dur: "89 MSEC PERIOD",
-                },
-                {
-                  ep: "J1748-2446AD",
-                  title: "Fastest Spinning Star",
-                  dur: "716 HZ ROTATION",
-                },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                >
-                  <span className="font-mono text-[9px] font-bold text-zinc-400">
-                    {item.ep}
-                  </span>
-                  <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                    {item.title}
-                  </h3>
-                  <span className="font-mono text-[8px] font-bold text-zinc-500">
-                    {item.dur}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+            <span>SCROLL OR CLICK TO NAVIGATE</span>
+            <span>01 // 05</span>
           </div>
         </section>
 
@@ -381,59 +333,11 @@ export default function AnimationFivePage() {
                 ionized gases where new solar systems and stars are born over
                 millions of years of gravitational collapse.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Catalog Nebulae
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Hubble Gallery
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Nebula Highlights:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "ORION M42",
-                    title: "Brightest Diffuse Nebula",
-                    size: "1,344 LIGHT YRS",
-                  },
-                  {
-                    tag: "EAGLE M16",
-                    title: "Pillars of Creation",
-                    size: "7,000 LIGHT YRS",
-                  },
-                  {
-                    tag: "CARINA NGC 3372",
-                    title: "Massive Hypergiant Star",
-                    size: "8,500 LIGHT YRS",
-                  },
-                  {
-                    tag: "HELIX NGC 7293",
-                    title: "Planetary Cosmic Eye",
-                    size: "650 LIGHT YRS",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.size}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>02 // 05</span>
             </div>
           </div>
         </section>
@@ -459,59 +363,11 @@ export default function AnimationFivePage() {
                 electromagnetic radiation—can escape from them. Space-time is
                 warped infinitely at the singularity.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Hawking Radiation
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Simulate Orbit
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Key Singularities:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "SAGITTARIUS A*",
-                    title: "Milky Way Center Core",
-                    date: "4.1M SOLAR MASS",
-                  },
-                  {
-                    tag: "M87* SINGULARITY",
-                    title: "First Directly Imaged",
-                    date: "6.5B SOLAR MASS",
-                  },
-                  {
-                    tag: "TON 618",
-                    title: "Largest Known Hole",
-                    date: "66B SOLAR MASS",
-                  },
-                  {
-                    tag: "CYGNUS X-1",
-                    title: "Stellar-Mass Black Hole",
-                    date: "21.2 SOLAR MASS",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.date}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>03 // 05</span>
             </div>
           </div>
         </section>
@@ -537,59 +393,11 @@ export default function AnimationFivePage() {
                 surrounding space with heavy elements like gold, platinum, and
                 iron necessary for the formation of planets and life.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Elemental Yields
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Map Remnants
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Supernova Remnants:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    type: "SN 1054",
-                    name: "Crab Nebula Exploded",
-                    grant: "OBSERVED 1054 AD",
-                  },
-                  {
-                    type: "CASSIOPEIA A",
-                    name: "Brightest Radio Source",
-                    grant: "340 YEARS OLD",
-                  },
-                  {
-                    type: "SN 1987A",
-                    name: "Closest Observed Star",
-                    grant: "168K LIGHT YRS",
-                  },
-                  {
-                    type: "KEPLER'S REMNANT",
-                    name: "Last Milky Way Supernova",
-                    grant: "OBSERVED 1604 AD",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-white text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.type}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.name}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.grant}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>04 // 05</span>
             </div>
           </div>
         </section>
@@ -615,59 +423,11 @@ export default function AnimationFivePage() {
                 matter binds galaxies together structurally, while dark energy
                 accelerates the expansion of space-time itself.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  WIMP Experiments
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Map Expansion
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Astrophysics Focus:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "COSMIC WEB",
-                    title: "Dark Matter Filaments",
-                    location: "LARGE-SCALE CORE",
-                  },
-                  {
-                    tag: "BULLET CLUSTER",
-                    title: "Matter-Separation Proof",
-                    location: "EMPIRICAL PROOF",
-                  },
-                  {
-                    tag: "LAMBDA-CDM",
-                    title: "Big Bang Cosmology Model",
-                    location: "STANDARD MODEL",
-                  },
-                  {
-                    tag: "WFIRST MISSION",
-                    title: "Nancy Roman Telescope",
-                    location: "LAUNCHING 2027",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.location}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>05 // 05</span>
             </div>
           </div>
         </section>

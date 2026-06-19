@@ -159,7 +159,7 @@ export default function MorphingAccordionPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
       ref={containerRef}
     >
       <div
@@ -169,21 +169,6 @@ export default function MorphingAccordionPage() {
           backgroundSize: "24px 24px",
         }}
       />
-
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 15</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Morphing Accordion
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Click any accordion header below. Watch the page background color
-          morph, the card borders transform, and content reveal with staggered
-          transitions.
-        </p>
-      </header>
 
       {/* Accordion Container Card */}
       <main className="z-10 w-full max-w-2xl my-12">

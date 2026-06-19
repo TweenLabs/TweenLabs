@@ -19,8 +19,8 @@ gsap.registerPlugin(useGSAP);
 
 export default function AnimationOnePage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [textInput, setTextInput] = useState("GRAVITY DROP");
   const [triggerKey, setTriggerKey] = useState(0);
+  const text = "GRAVITY DROP";
 
   useGSAP(
     () => {
@@ -56,7 +56,7 @@ export default function AnimationOnePage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
       <div
@@ -67,51 +67,25 @@ export default function AnimationOnePage() {
         }}
       />
 
-      <div className="z-10 w-full max-w-2xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
-        {/* Header tag */}
-        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Gravity Drop Sandbox</span>
-        </div>
-
-        {/* Shelf container where text lands */}
-        <div className="relative min-h-[160px] flex items-center justify-center border-b-4 border-[#2a2a2a] pb-4 bg-zinc-50 rounded-lg shadow-inner">
-          <div className="absolute top-2 left-2 font-mono text-[9px] text-zinc-400">
-            SHELF COLLIDER
-          </div>
-          <h1 className="text-5xl md:text-7xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-2">
-            {textInput.split(" ").map((word, wordIdx) => (
-              <span key={wordIdx} className="inline-block whitespace-nowrap">
-                {word.split("").map((char, charIdx) => (
-                  <span
-                    key={charIdx}
-                    className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
-                    style={{ textShadow: "2px 2px 0px #2a2a2a" }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </span>
-            ))}
-          </h1>
-        </div>
-
-        {/* User Controls */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <input
-            type="text"
-            maxLength={20}
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value.toUpperCase())}
-            placeholder="TYPE TEXT HERE"
-            className="w-full md:w-64 border-3 border-[#2a2a2a] px-4 py-2.5 font-mono font-bold rounded-lg focus:outline-none focus:bg-yellow-50 placeholder-zinc-400 shadow-[3px_3px_0px_#2a2a2a]"
-          />
-          <button
-            onClick={handleReplay}
-            className="w-full md:w-auto border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#e55b3c] text-white font-mono font-bold text-sm py-3 px-6 rounded-lg uppercase tracking-wider cursor-pointer"
-          >
-            ☄️ Trigger Drop
-          </button>
-        </div>
+      <div
+        onClick={handleReplay}
+        className="relative min-h-[160px] flex items-center justify-center pb-4 cursor-pointer select-none z-10"
+      >
+        <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-3">
+          {text.split(" ").map((word, wordIdx) => (
+            <span key={wordIdx} className="inline-block whitespace-nowrap">
+              {word.split("").map((char, charIdx) => (
+                <span
+                  key={charIdx}
+                  className="falling-letter inline-block transform origin-bottom font-black text-[#e55b3c] will-change-transform"
+                  style={{ textShadow: "3px 3px 0px #2a2a2a" }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+          ))}
+        </h1>
       </div>
     </div>
   );
@@ -381,15 +355,14 @@ export default function AnimationTwoPage() {
       const scroller =
         containerRef.current?.closest("#main-scroller") || undefined;
 
-      // Pin the scroll section and animate the tags entering the DOM
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scrollSectionRef.current,
           scroller: scroller,
-          start: "top top",
-          end: "+=2000",
           pin: true,
           scrub: 1,
+          start: "top top",
+          end: "+=2000",
           anticipatePin: 1,
         },
       });
@@ -399,7 +372,6 @@ export default function AnimationTwoPage() {
         const yStart = Number(tag.getAttribute("data-ys") || 0);
         const rotate = Number(tag.getAttribute("data-rot") || 0);
 
-        // Animate each tag flying into its DOM grid cell from offscreen
         tl.fromTo(
           tag,
           {
@@ -417,7 +389,7 @@ export default function AnimationTwoPage() {
             scale: 1,
             ease: "power2.out",
           },
-          idx * 0.15, // stagger offset in timeline
+          idx * 0.15,
         );
       });
     },
@@ -426,7 +398,7 @@ export default function AnimationTwoPage() {
 
   return (
     <div
-      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black"
+      className="relative bg-[#f0eadf] text-[#2a2a2a] selection:bg-[#f1b333] selection:text-black min-h-screen"
       ref={containerRef}
     >
       <div
@@ -437,23 +409,9 @@ export default function AnimationTwoPage() {
         }}
       />
 
-      {/* Intro section */}
-      <section className="h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4 z-10 relative">
-        <div className="inline-flex items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Scroll Tags Assembly Sandbox</span>
-        </div>
-        <h1 className="text-4xl md:text-6xl font-serif font-black uppercase max-w-2xl leading-[1.1]">
-          Scroll Down to Assemble the Tags
-        </h1>
-        <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest animate-bounce mt-4">
-          ↓ Scroll Down ↓
-        </p>
-      </section>
-
-      {/* Assembly ScrollTrigger Section */}
       <section
         ref={scrollSectionRef}
-        className="h-[calc(100vh-64px)] w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
+        className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-white border-y-3 border-[#2a2a2a]"
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-5"
@@ -468,7 +426,6 @@ export default function AnimationTwoPage() {
             DOM Board Collider
           </div>
 
-          {/* Target grid container where tags land */}
           <div className="w-full min-h-[300px] border-3 border-[#2a2a2a] rounded-xl bg-zinc-50 p-8 flex flex-wrap gap-4 items-center justify-center shadow-[inset_4px_4px_10px_rgba(0,0,0,0.05)] relative">
             {tagsData.map((tag, i) => (
               <span
@@ -1986,7 +1943,7 @@ export default function AnimationFivePage() {
       {/* Main Pinned Scroll Section Container — perspective + preserve-3d enables rotateX fall-back */}
       <div
         ref={scrollSectionRef}
-        className="scroll-viewport h-[calc(100vh-64px)] w-full relative overflow-hidden"
+        className="scroll-viewport h-screen w-full relative overflow-hidden"
         style={{
           perspective: "1400px",
           perspectiveOrigin: "50% 40%",
@@ -2013,59 +1970,11 @@ export default function AnimationFivePage() {
               electromagnetic radiation. Observed as periodic pulses of energy
               as their beams sweep across the Earth.
             </p>
-            <div className="flex gap-4 mt-2">
-              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                Explore Pulsars
-              </button>
-              <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                View Spectral Data
-              </button>
-            </div>
           </div>
 
-          <div className="w-full flex flex-col gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-              Recent Discoveries:
-            </span>
-            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-              {[
-                {
-                  ep: "PSR B1919+21",
-                  title: "First Pulsar Discovered",
-                  dur: "1.33 SEC PERIOD",
-                },
-                {
-                  ep: "CRAB NEBULA",
-                  title: "Young Energetic Pulsar",
-                  dur: "33 MSEC PERIOD",
-                },
-                {
-                  ep: "VELA PULSAR",
-                  title: "Gamma-Ray Source",
-                  dur: "89 MSEC PERIOD",
-                },
-                {
-                  ep: "J1748-2446AD",
-                  title: "Fastest Spinning Star",
-                  dur: "716 HZ ROTATION",
-                },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                >
-                  <span className="font-mono text-[9px] font-bold text-zinc-400">
-                    {item.ep}
-                  </span>
-                  <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                    {item.title}
-                  </h3>
-                  <span className="font-mono text-[8px] font-bold text-zinc-500">
-                    {item.dur}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+            <span>SCROLL OR CLICK TO NAVIGATE</span>
+            <span>01 // 05</span>
           </div>
         </section>
 
@@ -2090,59 +1999,11 @@ export default function AnimationFivePage() {
                 ionized gases where new solar systems and stars are born over
                 millions of years of gravitational collapse.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Catalog Nebulae
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Hubble Gallery
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Nebula Highlights:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "ORION M42",
-                    title: "Brightest Diffuse Nebula",
-                    size: "1,344 LIGHT YRS",
-                  },
-                  {
-                    tag: "EAGLE M16",
-                    title: "Pillars of Creation",
-                    size: "7,000 LIGHT YRS",
-                  },
-                  {
-                    tag: "CARINA NGC 3372",
-                    title: "Massive Hypergiant Star",
-                    size: "8,500 LIGHT YRS",
-                  },
-                  {
-                    tag: "HELIX NGC 7293",
-                    title: "Planetary Cosmic Eye",
-                    size: "650 LIGHT YRS",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.size}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>02 // 05</span>
             </div>
           </div>
         </section>
@@ -2168,59 +2029,11 @@ export default function AnimationFivePage() {
                 electromagnetic radiation—can escape from them. Space-time is
                 warped infinitely at the singularity.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Hawking Radiation
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Simulate Orbit
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Key Singularities:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "SAGITTARIUS A*",
-                    title: "Milky Way Center Core",
-                    date: "4.1M SOLAR MASS",
-                  },
-                  {
-                    tag: "M87* SINGULARITY",
-                    title: "First Directly Imaged",
-                    date: "6.5B SOLAR MASS",
-                  },
-                  {
-                    tag: "TON 618",
-                    title: "Largest Known Hole",
-                    date: "66B SOLAR MASS",
-                  },
-                  {
-                    tag: "CYGNUS X-1",
-                    title: "Stellar-Mass Black Hole",
-                    date: "21.2 SOLAR MASS",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.date}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>03 // 05</span>
             </div>
           </div>
         </section>
@@ -2246,59 +2059,11 @@ export default function AnimationFivePage() {
                 surrounding space with heavy elements like gold, platinum, and
                 iron necessary for the formation of planets and life.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-[#2a2a2a] px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Elemental Yields
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Map Remnants
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Supernova Remnants:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    type: "SN 1054",
-                    name: "Crab Nebula Exploded",
-                    grant: "OBSERVED 1054 AD",
-                  },
-                  {
-                    type: "CASSIOPEIA A",
-                    name: "Brightest Radio Source",
-                    grant: "340 YEARS OLD",
-                  },
-                  {
-                    type: "SN 1987A",
-                    name: "Closest Observed Star",
-                    grant: "168K LIGHT YRS",
-                  },
-                  {
-                    type: "KEPLER'S REMNANT",
-                    name: "Last Milky Way Supernova",
-                    grant: "OBSERVED 1604 AD",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-white text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.type}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.name}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.grant}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>04 // 05</span>
             </div>
           </div>
         </section>
@@ -2324,59 +2089,11 @@ export default function AnimationFivePage() {
                 matter binds galaxies together structurally, while dark energy
                 accelerates the expansion of space-time itself.
               </p>
-              <div className="flex gap-4 mt-2">
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-white text-black px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  WIMP Experiments
-                </button>
-                <button className="border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-black text-white px-6 py-3 rounded-full font-mono text-xs font-bold uppercase cursor-pointer">
-                  Map Expansion
-                </button>
-              </div>
             </div>
 
-            <div className="w-full flex flex-col gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-wider font-bold opacity-75">
-                Astrophysics Focus:
-              </span>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none w-full">
-                {[
-                  {
-                    tag: "COSMIC WEB",
-                    title: "Dark Matter Filaments",
-                    location: "LARGE-SCALE CORE",
-                  },
-                  {
-                    tag: "BULLET CLUSTER",
-                    title: "Matter-Separation Proof",
-                    location: "EMPIRICAL PROOF",
-                  },
-                  {
-                    tag: "LAMBDA-CDM",
-                    title: "Big Bang Cosmology Model",
-                    location: "STANDARD MODEL",
-                  },
-                  {
-                    tag: "WFIRST MISSION",
-                    title: "Nancy Roman Telescope",
-                    location: "LAUNCHING 2027",
-                  },
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-[#fbfaf7] text-[#2a2a2a] border-3 border-black p-4 rounded-xl flex flex-col justify-between gap-3 shadow-[4px_4px_0px_rgba(0,0,0,0.95)] w-56 h-32 shrink-0"
-                  >
-                    <span className="font-mono text-[9px] font-bold text-zinc-400">
-                      [{item.tag}]
-                    </span>
-                    <h3 className="font-serif font-black text-sm uppercase leading-tight tracking-tight">
-                      {item.title}
-                    </h3>
-                    <span className="font-mono text-[8px] font-bold text-zinc-500">
-                      {item.location}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="w-full flex justify-between font-mono text-[10px] uppercase tracking-wider opacity-75">
+              <span>SCROLL OR CLICK TO NAVIGATE</span>
+              <span>05 // 05</span>
             </div>
           </div>
         </section>
@@ -2624,99 +2341,18 @@ Source Code URL: https://tweenlabs.xyz/code/06-kinetic-typography
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 
 export default function KineticTypographyPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
-  const [textInput, setTextInput] = useState("KINETIC TYPE");
-  const [mode, setMode] = useState<"wave" | "scramble" | "magnetic" | "liquid">(
-    "wave",
-  );
-  const [speed, setSpeed] = useState(1); // multiplier
-  const [triggerKey, setTriggerKey] = useState(0);
+  const text = "KINETIC TYPE";
 
-  // Animations run based on input state and mode changes
-  useGSAP(
-    () => {
-      // 1. Reset all characters to clean state before starting a new animation
-      gsap.set(".kinetic-char", { clearProps: "all" });
-
-      if (mode === "wave") {
-        // Staggered sine wave bounce + rotation
-        gsap.fromTo(
-          ".kinetic-char",
-          {
-            y: 20,
-            rotate: -8,
-            scale: 0.9,
-          },
-          {
-            y: -20,
-            rotate: 8,
-            scale: 1.1,
-            duration: 0.6 / speed,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            stagger: {
-              each: 0.08,
-              from: "start",
-            },
-          },
-        );
-      } else if (mode === "scramble") {
-        // Glitchy letter decoder effect
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*_+=?";
-        const textArray = textInput.split("");
-
-        textArray.forEach((originalChar, index) => {
-          if (originalChar === " ") return;
-          const el = containerRef.current?.querySelector(`.char-${index}`);
-          if (!el) return;
-
-          let scrambleCount = 0;
-          const maxScrambles = 8 + Math.floor(Math.random() * 8) + index;
-          const intervalTime = 40 / speed;
-
-          const interval = setInterval(() => {
-            if (scrambleCount >= maxScrambles) {
-              el.textContent = originalChar;
-              clearInterval(interval);
-            } else {
-              el.textContent = chars[Math.floor(Math.random() * chars.length)];
-              scrambleCount++;
-            }
-          }, intervalTime);
-        });
-      } else if (mode === "liquid") {
-        // SVG Turbulence Distortion Loop
-        const tl = gsap.timeline({ repeat: -1, yoyo: true });
-
-        tl.to("#displacement", {
-          attr: { scale: 45 },
-          duration: 1.8 / speed,
-          ease: "power1.inOut",
-        }).to(
-          "#turbulence",
-          {
-            attr: { baseFrequency: "0.03 0.09" },
-            duration: 1.8 / speed,
-            ease: "power1.inOut",
-          },
-          "<",
-        );
-      }
-    },
-    { scope: containerRef, dependencies: [textInput, mode, speed, triggerKey] },
-  );
-
-  // Mode 3: Magnetic hover behavior runs on mousemove over the container
   useGSAP(
     (context, contextSafe) => {
-      if (mode !== "magnetic" || !contextSafe) return;
+      if (!contextSafe) return;
 
       const chars = textContainerRef.current?.querySelectorAll(".kinetic-char");
       if (!chars || chars.length === 0) return;
@@ -2798,46 +2434,14 @@ export default function KineticTypographyPage() {
         container?.removeEventListener("mouseleave", onMouseLeave);
       };
     },
-    { scope: containerRef, dependencies: [mode, textInput] },
+    { scope: containerRef },
   );
-
-  const triggerReplay = () => {
-    setTriggerKey((prev) => prev + 1);
-  };
-
-  const loadPreset = (phrase: string) => {
-    setTextInput(phrase.toUpperCase());
-    triggerReplay();
-  };
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-4 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
-      {/* SVG Liquid Filter Definition */}
-      <svg className="hidden">
-        <defs>
-          <filter id="liquid-filter">
-            <feTurbulence
-              id="turbulence"
-              type="fractalNoise"
-              baseFrequency="0.01 0.04"
-              numOctaves="2"
-              result="noise"
-            />
-            <feDisplacementMap
-              id="displacement"
-              in="SourceGraphic"
-              in2="noise"
-              scale="0"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
-
       <div
         className="absolute inset-0 pointer-events-none z-0 opacity-15"
         style={{
@@ -2846,136 +2450,29 @@ export default function KineticTypographyPage() {
         }}
       />
 
-      <div className="z-10 w-full max-w-4xl border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-6 md:p-8 bg-white flex flex-col gap-8 text-center relative overflow-hidden">
-        {/* Badge header */}
-        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] -rotate-2">
-          <span>06 • Kinetic Typography</span>
-        </div>
-
-        {/* Display Panel */}
-        <div
-          ref={textContainerRef}
-          className="relative min-h-[260px] flex items-center justify-center border-3 border-[#2a2a2a] bg-zinc-50 rounded-xl shadow-inner overflow-hidden p-6 cursor-crosshair select-none"
-        >
-          <div className="absolute top-3 left-3 font-mono text-[9px] text-zinc-400 tracking-wider">
-            {mode.toUpperCase()} WORKSPACE
-          </div>
-
-          <h1
-            className="text-4xl md:text-7xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-3 gap-y-1 w-full text-center"
-            style={{
-              filter: mode === "liquid" ? "url(#liquid-filter)" : "none",
-            }}
-          >
-            {textInput.split(" ").map((word, wordIdx) => (
-              <span key={wordIdx} className="inline-block whitespace-nowrap">
-                {word.split("").map((char, charIdx) => {
-                  // Global flat index for class reference
-                  const flatIndex =
-                    textInput.split(" ").slice(0, wordIdx).join("").length +
-                    charIdx;
-                  return (
-                    <span
-                      key={charIdx}
-                      className={`kinetic-char char-${flatIndex} inline-block transform origin-center font-black text-[#2a2a2a] will-change-transform`}
-                      style={{ textShadow: "3px 3px 0px #f1b333" }}
-                    >
-                      {char}
-                    </span>
-                  );
-                })}
-              </span>
-            ))}
-          </h1>
-        </div>
-
-        {/* Control Center */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left border-t-3 border-dashed border-zinc-200 pt-6">
-          {/* Section 1: Inputs & Presets */}
-          <div className="flex flex-col gap-3">
-            <label className="font-mono text-xs font-bold text-zinc-500 uppercase">
-              1. Custom Text Input
-            </label>
-            <input
-              type="text"
-              maxLength={22}
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value.toUpperCase())}
-              placeholder="ENTER SENTENCE"
-              className="w-full border-3 border-[#2a2a2a] px-3 py-2 font-mono font-bold rounded-lg focus:outline-none focus:bg-yellow-50 placeholder-zinc-400 shadow-[3px_3px_0px_#2a2a2a]"
-            />
-            <div className="flex flex-wrap gap-2 mt-1">
-              {["AWWWARDS", "KINETIC", "BRUTALISM", "GSAP"].map((preset) => (
-                <button
-                  key={preset}
-                  onClick={() => loadPreset(preset)}
-                  className="font-mono text-[9px] font-bold border border-[#2a2a2a] px-2 py-0.5 rounded bg-zinc-100 hover:bg-[#f1b333] transition-colors cursor-pointer"
-                >
-                  {preset}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Section 2: Mode Selector */}
-          <div className="flex flex-col gap-2.5">
-            <label className="font-mono text-xs font-bold text-zinc-500 uppercase">
-              2. Animation Mode
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {(
-                [
-                  { id: "wave", label: "Wave Cascade" },
-                  { id: "scramble", label: "Cyber Scramble" },
-                  { id: "magnetic", label: "Magnetic Push" },
-                  { id: "liquid", label: "Liquid Warp" },
-                ] as const
-              ).map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setMode(m.id)}
-                  className={`font-mono text-[11px] font-bold py-2 px-2.5 border-2 border-[#2a2a2a] rounded-lg transition-all shadow-[2px_2px_0px_#2a2a2a] cursor-pointer ${
-                    mode === m.id
-                      ? "bg-[#6758a5] text-white shadow-none translate-x-[2px] translate-y-[2px]"
-                      : "bg-white text-[#2a2a2a] hover:bg-zinc-100"
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Section 3: Fine Tuning & Actions */}
-          <div className="flex flex-col gap-3 justify-between">
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <label className="font-mono text-xs font-bold text-zinc-500 uppercase">
-                  3. Speed Multiplier
-                </label>
-                <span className="font-mono text-xs font-bold bg-zinc-100 border border-zinc-300 px-1.5 rounded">
-                  {speed.toFixed(1)}x
-                </span>
-              </div>
-              <input
-                type="range"
-                min="0.5"
-                max="2.5"
-                step="0.1"
-                value={speed}
-                onChange={(e) => setSpeed(parseFloat(e.target.value))}
-                className="w-full accent-[#6758a5] cursor-ew-resize"
-              />
-            </div>
-
-            <button
-              onClick={triggerReplay}
-              className="w-full border-3 border-[#2a2a2a] shadow-[4px_4px_0px_#2a2a2a] transition-all duration-100 ease-in-out hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0px_#2a2a2a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#2a2a2a] bg-[#6758a5] text-white font-mono font-bold text-xs py-2.5 px-4 rounded-lg uppercase cursor-pointer"
-            >
-              ⚡ Re-Trigger
-            </button>
-          </div>
-        </div>
+      <div
+        ref={textContainerRef}
+        className="relative w-full max-w-4xl min-h-[300px] flex items-center justify-center overflow-hidden p-6 cursor-crosshair select-none z-10"
+      >
+        <h1 className="text-4xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-4 gap-y-2 w-full text-center">
+          {text.split(" ").map((word, wordIdx) => (
+            <span key={wordIdx} className="inline-block whitespace-nowrap">
+              {word.split("").map((char, charIdx) => {
+                const flatIndex =
+                  text.split(" ").slice(0, wordIdx).join("").length + charIdx;
+                return (
+                  <span
+                    key={charIdx}
+                    className={`kinetic-char char-${flatIndex} inline-block transform origin-center font-black text-[#2a2a2a] will-change-transform`}
+                    style={{ textShadow: "3px 3px 0px #f1b333" }}
+                  >
+                    {char}
+                  </span>
+                );
+              })}
+            </span>
+          ))}
+        </h1>
       </div>
     </div>
   );
@@ -5887,51 +5384,8 @@ export default function ScreenSkillFitPage() {
 
   return (
     <div ref={containerRef} className="bg-[#f5f0e8] text-[#1c1714]">
-      {/* ══ SECTION 1: Intro ══════════════════════════════════════════════ */}
-      <div className="h-screen w-full flex flex-col items-center justify-center relative gap-6">
-        {/* Eyebrow */}
-        <span className="font-mono text-[9px] font-bold uppercase tracking-[0.4em] text-[#0c9367] select-none">
-          Studio Shodwe · Editorial · Creator
-        </span>
-
-        {/* Main heading */}
-        <h1 className="font-serif font-black text-[clamp(2.6rem,6vw,5.5rem)] text-[#1c1714] leading-[1.0] tracking-tight uppercase text-center select-none">
-          Style.
-          <br />
-          <span className="text-[#0c9367]">Scroll to see.</span>
-        </h1>
-
-        {/* Sub copy */}
-        <p className="font-mono text-[11px] text-stone-400 tracking-wide text-center max-w-[300px] leading-relaxed select-none">
-          Fashion editorials · Portrait · Beauty creators.
-          <br />
-          Scroll to meet the cards.
-        </p>
-
-        {/* Scroll cue */}
-        <div className="flex flex-col items-center gap-2 opacity-40 mt-4 select-none">
-          <span className="font-mono text-[8px] uppercase tracking-[0.35em] text-stone-400">
-            Scroll
-          </span>
-          <div className="w-px h-10 bg-stone-300 rounded-full overflow-hidden relative">
-            <div
-              className="absolute top-0 left-0 w-full h-1/2 bg-stone-600 rounded-full"
-              style={{ animation: "scrollPulse 1.8s ease-in-out infinite" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes scrollPulse {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          30%  { opacity: 1; }
-          100% { transform: translateY(220%); opacity: 0; }
-        }
-      `}</style>
-
       {/* ══ SECTION 2: Pinned animation screen ══════════════════════════════ */}
-      <div ref={pinRef} className="h-[calc(100vh-64px)] w-full relative">
+      <div ref={pinRef} className="h-screen w-full relative">
         {/* Noise texture */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
@@ -5941,16 +5395,6 @@ export default function ScreenSkillFitPage() {
             backgroundSize: "4px 4px",
           }}
         />
-
-        {/* Top status bar */}
-        <div className="absolute top-0 left-0 right-0 z-50 h-12 flex items-center justify-between px-8 border-b border-black/[0.06]">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-widest text-stone-400">
-            Studio Shodwe · Editorial
-          </span>
-          <span className="font-mono text-[8px] text-stone-400 uppercase tracking-widest">
-            {N} Looks · Curated
-          </span>
-        </div>
 
         {/* ── Three-column layout ─────────────────────────────────────────── */}
         <div className="absolute inset-0 flex items-center justify-center px-8 md:px-14 gap-8 xl:gap-14">
@@ -6553,7 +5997,7 @@ export default function MagneticDockPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
       <div
@@ -6564,69 +6008,35 @@ export default function MagneticDockPage() {
         }}
       />
 
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 11</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Interactive Magnetic Dock
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Hover over the bottom dock items to feel the magnetic attraction
-          force. Click any button to trigger a premium squash-and-stretch
-          animation.
-        </p>
-      </header>
-
-      {/* Active Section Display */}
-      <main className="z-10 flex-1 flex items-center justify-center w-full max-w-xl my-12">
-        <div className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
-          <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
-            [ Active Destination ]
-          </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
-            {activeItem ? activeItem : "No Selection"}
-          </h2>
-          <p className="text-xs font-mono bg-zinc-100 border-2 border-[#2a2a2a] px-4 py-1.5 rounded-md shadow-[2px_2px_0px_#2a2a2a]">
-            {activeItem
-              ? `Navigating to active portal: /${activeItem}`
-              : "Hover and click below"}
-          </p>
-        </div>
-      </main>
-
       {/* Dock Area Container */}
-      <footer className="z-10 w-full flex flex-col items-center gap-8 mb-8">
-        <div className="relative border-4 border-[#2a2a2a] bg-white px-6 py-4 rounded-3xl shadow-[8px_8px_0px_#2a2a2a] flex items-center gap-6 md:gap-8 justify-center max-w-full overflow-visible">
-          {dockData.map((item, idx) => (
-            <div
-              key={item.id}
-              className="relative group flex items-center justify-center w-14 h-14 cursor-pointer"
-              onMouseMove={(e) => handleMouseMove(e, idx)}
-              onMouseLeave={() => handleMouseLeave(idx)}
-            >
-              {/* Tooltip */}
-              <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
-                  {item.label}
-                </div>
+      <div className="z-10 relative border-4 border-[#2a2a2a] bg-white px-6 py-4 rounded-3xl shadow-[8px_8px_0px_#2a2a2a] flex items-center gap-6 md:gap-8 justify-center max-w-full overflow-visible">
+        {dockData.map((item, idx) => (
+          <div
+            key={item.id}
+            className="relative group flex items-center justify-center w-14 h-14 cursor-pointer"
+            onMouseMove={(e) => handleMouseMove(e, idx)}
+            onMouseLeave={() => handleMouseLeave(idx)}
+          >
+            {/* Tooltip */}
+            <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+              <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
+                {item.label}
               </div>
-
-              {/* Magnetic Button Element */}
-              <button
-                ref={(el) => {
-                  dockItemsRef.current[idx] = el;
-                }}
-                onClick={() => handleClick(item.id, idx)}
-                className={`w-14 h-14 border-3 border-[#2a2a2a] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#2a2a2a] cursor-pointer will-change-transform ${item.color}`}
-              >
-                {item.icon}
-              </button>
             </div>
-          ))}
-        </div>
-      </footer>
+
+            {/* Magnetic Button Element */}
+            <button
+              ref={(el) => {
+                dockItemsRef.current[idx] = el;
+              }}
+              onClick={() => handleClick(item.id, idx)}
+              className={`w-14 h-14 border-3 border-[#2a2a2a] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#2a2a2a] cursor-pointer will-change-transform ${item.color}`}
+            >
+              {item.icon}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -7085,7 +6495,7 @@ export default function FluidCursorPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden cursor-none"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden cursor-none"
       ref={containerRef}
     >
       <div
@@ -7108,21 +6518,6 @@ export default function FluidCursorPage() {
       >
         <span className="cursor-label absolute pointer-events-none font-mono text-[9px] font-black bg-[#f1b333] text-black border-2 border-[#2a2a2a] px-2 py-0.5 rounded shadow-[1.5px_1.5px_0px_#2a2a2a] uppercase opacity-0 scale-75 tracking-widest whitespace-nowrap z-50 select-none" />
       </div>
-
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8 pointer-events-auto">
-        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 12</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Fluid Custom Cursor
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Move your mouse over the bento cards and buttons below. The custom
-          reticle cursor will smoothly track, morph, and stick onto target card
-          boundaries.
-        </p>
-      </header>
 
       {/* Grid of Snapping Targets */}
       <main className="z-10 w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 my-12 pointer-events-auto">
@@ -9723,7 +9118,7 @@ export default function MorphingAccordionPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden transition-colors duration-500"
       ref={containerRef}
     >
       <div
@@ -9733,21 +9128,6 @@ export default function MorphingAccordionPage() {
           backgroundSize: "24px 24px",
         }}
       />
-
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-[#6758a5] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 15</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Morphing Accordion
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Click any accordion header below. Watch the page background color
-          morph, the card borders transform, and content reveal with staggered
-          transitions.
-        </p>
-      </header>
 
       {/* Accordion Container Card */}
       <main className="z-10 w-full max-w-2xl my-12">
@@ -10979,18 +10359,8 @@ export default function ShowUpCardsPage() {
         }}
       />
 
-      {/* Page Heading readout (absolute right) */}
-      <div className="absolute top-6 right-6 z-30 flex flex-col items-end gap-1 select-none text-right">
-        <span className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-300 bg-white px-2 py-0.5 rounded">
-          Component 17
-        </span>
-        <h1 className="font-serif font-black text-lg uppercase text-[#2a2a2a]">
-          Showup Cards
-        </h1>
-      </div>
-
       {/* Interactive Cards Overlay (Pins on scroll) */}
-      <section className="showup-cards-sec relative w-full h-[calc(100vh-64px)] flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
+      <section className="showup-cards-sec relative w-full h-screen flex flex-col justify-center items-center bg-[#f8f5ee] border-b-3 border-[#2a2a2a] overflow-hidden">
         <div
           className="absolute inset-0 opacity-15"
           style={{
@@ -10998,19 +10368,6 @@ export default function ShowUpCardsPage() {
             backgroundSize: "24px 24px",
           }}
         />
-
-        {/* Simple Header Inside Container */}
-        <div className="text-center select-none max-w-lg mb-8 pointer-events-none z-10">
-          <span className="font-mono text-[10px] font-bold text-zinc-400 block tracking-widest">
-            [ ASSEMBLY SEQUENCING ]
-          </span>
-          <h2 className="text-2xl md:text-3xl font-serif font-black uppercase text-[#2a2a2a] leading-none mt-2">
-            Scroll to Build Nodes
-          </h2>
-          <p className="font-mono text-[9px] text-zinc-500 mt-1 uppercase tracking-wider">
-            [ Cards will fall, assemble, and flip 180° ]
-          </p>
-        </div>
 
         <div className="cards-container w-full max-w-4xl flex items-center justify-center gap-6 md:gap-8 px-4 pointer-events-auto">
           {stageData.map((stage) => (

@@ -219,7 +219,7 @@ export default function MagneticDockPage() {
 
   return (
     <div
-      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex flex-col items-center justify-between p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
+      className="relative min-h-screen bg-[#f0eadf] text-[#2a2a2a] flex items-center justify-center p-8 selection:bg-[#f1b333] selection:text-black overflow-hidden"
       ref={containerRef}
     >
       <div
@@ -230,69 +230,35 @@ export default function MagneticDockPage() {
         }}
       />
 
-      {/* Header Info */}
-      <header className="z-10 w-full max-w-2xl text-center flex flex-col gap-4 mt-8">
-        <div className="inline-flex self-center items-center gap-2 bg-[#e55b3c] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
-          <span>Component 11</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
-          Interactive Magnetic Dock
-        </h1>
-        <p className="max-w-md mx-auto text-zinc-700 text-sm leading-relaxed font-sans font-medium">
-          Hover over the bottom dock items to feel the magnetic attraction
-          force. Click any button to trigger a premium squash-and-stretch
-          animation.
-        </p>
-      </header>
-
-      {/* Active Section Display */}
-      <main className="z-10 flex-1 flex items-center justify-center w-full max-w-xl my-12">
-        <div className="w-full border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] p-12 bg-white flex flex-col gap-6 text-center justify-center items-center min-h-[200px]">
-          <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
-            [ Active Destination ]
-          </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
-            {activeItem ? activeItem : "No Selection"}
-          </h2>
-          <p className="text-xs font-mono bg-zinc-100 border-2 border-[#2a2a2a] px-4 py-1.5 rounded-md shadow-[2px_2px_0px_#2a2a2a]">
-            {activeItem
-              ? `Navigating to active portal: /${activeItem}`
-              : "Hover and click below"}
-          </p>
-        </div>
-      </main>
-
       {/* Dock Area Container */}
-      <footer className="z-10 w-full flex flex-col items-center gap-8 mb-8">
-        <div className="relative border-4 border-[#2a2a2a] bg-white px-6 py-4 rounded-3xl shadow-[8px_8px_0px_#2a2a2a] flex items-center gap-6 md:gap-8 justify-center max-w-full overflow-visible">
-          {dockData.map((item, idx) => (
-            <div
-              key={item.id}
-              className="relative group flex items-center justify-center w-14 h-14 cursor-pointer"
-              onMouseMove={(e) => handleMouseMove(e, idx)}
-              onMouseLeave={() => handleMouseLeave(idx)}
-            >
-              {/* Tooltip */}
-              <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
-                <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
-                  {item.label}
-                </div>
+      <div className="z-10 relative border-4 border-[#2a2a2a] bg-white px-6 py-4 rounded-3xl shadow-[8px_8px_0px_#2a2a2a] flex items-center gap-6 md:gap-8 justify-center max-w-full overflow-visible">
+        {dockData.map((item, idx) => (
+          <div
+            key={item.id}
+            className="relative group flex items-center justify-center w-14 h-14 cursor-pointer"
+            onMouseMove={(e) => handleMouseMove(e, idx)}
+            onMouseLeave={() => handleMouseLeave(idx)}
+          >
+            {/* Tooltip */}
+            <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+              <div className="bg-[#2a2a2a] text-white text-[9px] font-mono font-bold px-3 py-1.5 rounded-md border border-white uppercase tracking-wider whitespace-nowrap shadow-[2px_2px_0px_#f1b333] -rotate-2">
+                {item.label}
               </div>
-
-              {/* Magnetic Button Element */}
-              <button
-                ref={(el) => {
-                  dockItemsRef.current[idx] = el;
-                }}
-                onClick={() => handleClick(item.id, idx)}
-                className={`w-14 h-14 border-3 border-[#2a2a2a] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#2a2a2a] cursor-pointer will-change-transform ${item.color}`}
-              >
-                {item.icon}
-              </button>
             </div>
-          ))}
-        </div>
-      </footer>
+
+            {/* Magnetic Button Element */}
+            <button
+              ref={(el) => {
+                dockItemsRef.current[idx] = el;
+              }}
+              onClick={() => handleClick(item.id, idx)}
+              className={`w-14 h-14 border-3 border-[#2a2a2a] rounded-2xl flex items-center justify-center shadow-[2px_2px_0px_#2a2a2a] cursor-pointer will-change-transform ${item.color}`}
+            >
+              {item.icon}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
