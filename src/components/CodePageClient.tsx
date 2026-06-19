@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 import { useSession } from "@/provider/SessionProvider";
@@ -547,7 +548,9 @@ export default function CodePageClient({
 }: CodePageClientProps) {
   const { session, isPending } = useSession();
   const { openModal, closeModal } = useAuthModal();
+  const router = useRouter();
   const isAuthenticated = !!session;
+  const isPlaceholder = pageCode.includes("Please sign in to view the code.");
 
   useEffect(() => {
     if (!isPending) {
@@ -555,9 +558,12 @@ export default function CodePageClient({
         openModal(`/code/${slug}`, false); // isClosable = false
       } else {
         closeModal();
+        if (isPlaceholder) {
+          router.refresh();
+        }
       }
     }
-  }, [session, isPending, slug, openModal, closeModal]);
+  }, [session, isPending, slug, openModal, closeModal, isPlaceholder, router]);
 
   const blurClass = !isAuthenticated ? "blur-md pointer-events-none select-none" : "";
   // Determine available tabs

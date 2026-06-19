@@ -5,6 +5,8 @@ import { animations } from "@/data/animations";
 import CodePageClient from "@/components/CodePageClient";
 import { isAuthenticated } from "@/lib/auth-server";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
