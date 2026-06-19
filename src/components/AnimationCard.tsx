@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { useAuthModal } from "@/provider/AuthModalProvider";
 
 interface AnimationItem {
   id: string;
@@ -24,6 +27,20 @@ const hoverColorsMap: Record<string, string> = {
 };
 
 export default function AnimationCard({ anim }: AnimationCardProps) {
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
+  const { openModal } = useAuthModal();
+
+  const handleGetCode = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const targetUrl = `/code/${anim.route.slice(1)}`;
+    if (session) {
+      router.push(targetUrl);
+    } else {
+      openModal(targetUrl, true);
+    }
+  };
+
   return (
     <div className="brutalist-card brutalist-card-interactive p-6 bg-white flex flex-col justify-between gap-6">
       <div className="flex flex-col gap-4">
@@ -55,13 +72,12 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
             View →
           </button>
         </Link>
-        <Link href={`/code/${anim.route.slice(1)}`} className="flex-1">
-          <button
-            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}
-          >
-            Get Code
-          </button>
-        </Link>
+        <button
+          onClick={handleGetCode}
+          className={`flex-1 brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-xs py-3 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150`}
+        >
+          Get Code
+        </button>
 
       </div>
     </div>

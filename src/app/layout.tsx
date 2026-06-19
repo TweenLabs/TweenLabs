@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Geist, Space_Mono } from "next/font/google";
 import "./globals.css";
 import PageWrapper from "@/components/PageWrapper";
+import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 
 
 const geist = Geist({
@@ -196,7 +197,9 @@ export default function RootLayout({
         />
         {/* Fine Grain noise overlay across the entire site */}
         <div className="noise-overlay fixed inset-0 pointer-events-none z-[99] opacity-70" />
-        <PageWrapper>{children}</PageWrapper>
+        <ConvexClientProvider>
+          <PageWrapper>{children}</PageWrapper>
+        </ConvexClientProvider>
       </body>
     </html>
   );

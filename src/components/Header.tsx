@@ -3,10 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { animations } from "@/data/animations";
+import { authClient } from "@/lib/auth-client";
+import { useAuthModal } from "@/provider/AuthModalProvider";
 
 export default function Header() {
   const pathname = usePathname();
+  const { data: session, isPending } = authClient.useSession();
+  const { openModal } = useAuthModal();
+  const [avatarError, setAvatarError] = useState(false);
+  const [lastUserId, setLastUserId] = useState<string | undefined>(undefined);
+
+  // Sync state when user session changes
+  if (session?.user.id !== lastUserId) {
+    setLastUserId(session?.user.id);
+    setAvatarError(false);
+  }
 
   // Normalize pathname to handle trailing slashes
   const normalizedPath = pathname ? pathname.replace(/\/$/, "") : "";
@@ -82,6 +95,43 @@ export default function Header() {
           >
             GitHub ↗
           </a>
+
+          {isPending ? (
+            <span className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-wider">
+              Loading...
+            </span>
+          ) : session ? (
+            <div className="flex items-center gap-2.5">
+              {session.user.image && !avatarError ? (
+                <img
+                  src={session.user.image}
+                  alt={session.user.name || "User Avatar"}
+                  onError={() => setAvatarError(true)}
+                  className="w-7 h-7 rounded-full border-2 border-[#2a2a2a] object-cover"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full border-2 border-[#2a2a2a] bg-wtf-purple text-white flex items-center justify-center font-mono font-bold text-[10px]">
+                  {session.user.name?.charAt(0).toUpperCase() || "U"}
+                </div>
+              )}
+              <button
+                onClick={async () => {
+                  await authClient.signOut();
+                  window.location.reload();
+                }}
+                className="brutalist-btn bg-wtf-red hover:bg-[#a82a29] text-white font-mono font-bold text-xs py-1.5 px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => openModal()}
+              className="brutalist-btn bg-wtf-green hover:bg-[#09734f] text-white font-mono font-bold text-xs py-1.5 px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150"
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </div>
     </header>

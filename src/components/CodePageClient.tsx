@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { useAuthModal } from "@/provider/AuthModalProvider";
 
 interface CodePageClientProps {
   slug: string;
@@ -542,6 +544,21 @@ export default function CodePageClient({
   coreGsapCode,
   customization,
 }: CodePageClientProps) {
+  const { data: session, isPending } = authClient.useSession();
+  const { openModal, closeModal } = useAuthModal();
+  const isAuthenticated = !!session;
+
+  useEffect(() => {
+    if (!isPending) {
+      if (!session) {
+        openModal(`/code/${slug}`, false); // isClosable = false
+      } else {
+        closeModal();
+      }
+    }
+  }, [session, isPending, slug, openModal, closeModal]);
+
+  const blurClass = !isAuthenticated ? "blur-md pointer-events-none select-none" : "";
   // Determine available tabs
   const tabs = [];
   tabs.push({ id: "page", label: "Full Sandbox Page", code: pageCode, file: "page.tsx" });
@@ -685,7 +702,7 @@ export default function CodePageClient({
             </div>
 
             {/* Right: Copy & Download actions */}
-            <div className="flex items-center gap-3">
+            <div className={`flex items-center gap-3 ${!isAuthenticated ? "opacity-50 pointer-events-none" : ""}`}>
               <button
                 onClick={handleCopy}
                 className="brutalist-btn bg-white hover:bg-zinc-50 text-[#2a2a2a] font-mono text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer shadow-[2.5px_2.5px_0px_#000] transition-all duration-75 active:translate-y-[1px] active:shadow-[1.5px_1.5px_0px_#000]"
@@ -726,7 +743,7 @@ export default function CodePageClient({
           </div>
 
           {/* Code Body */}
-          <div className={`relative font-mono text-[13px] bg-[#121212] py-5 px-4 flex items-start transition-all duration-300 ${isExpanded ? "" : "max-h-[380px] overflow-hidden"}`}>
+          <div className={`relative font-mono text-[13px] bg-[#121212] py-5 px-4 flex items-start transition-all duration-300 ${isExpanded ? "" : "max-h-[380px] overflow-hidden"} ${blurClass}`}>
             {/* Line Numbers */}
             <pre className="select-none text-right pr-4 border-r border-zinc-800 text-zinc-650 min-w-[3.5rem] whitespace-pre scrollbar-none">
               {activeTab.code.split("\n").map((_, i) => i + 1).join("\n")}
@@ -792,7 +809,7 @@ export default function CodePageClient({
         </div>
 
         {/* Setup Guide Container */}
-        <div className="brutalist-card p-8 bg-white flex flex-col gap-8 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a]">
+        <div className={`brutalist-card p-8 bg-white flex flex-col gap-8 border-3 border-[#2a2a2a] shadow-[6px_6px_0px_#2a2a2a] ${blurClass}`}>
           <div className="border-b-3 border-[#2a2a2a] pb-4">
             <h2 className="text-2xl md:text-3xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
               ⚙️ Setup & Integration Guide
