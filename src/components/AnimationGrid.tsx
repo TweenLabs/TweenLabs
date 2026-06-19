@@ -10,7 +10,12 @@ interface AnimationGridProps {
 }
 
 export default function AnimationGrid({ animations }: AnimationGridProps) {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("grid-show-all") === "true";
+    }
+    return false;
+  });
   const [isMobile, setIsMobile] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -28,6 +33,12 @@ export default function AnimationGrid({ animations }: AnimationGridProps) {
   }, []);
 
   const initialCount = isMobile ? 3 : 6;
+
+  // Persist showAll state across navigations
+  useEffect(() => {
+    sessionStorage.setItem("grid-show-all", showAll.toString());
+  }, [showAll]);
+
   const totalCount = animations.length;
   const visibleCount = showAll ? totalCount : initialCount;
   const progressPercent = (visibleCount / totalCount) * 100;
