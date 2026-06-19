@@ -7,15 +7,15 @@ keywords: TweenLabs, GSAP component library, GSAP Next.js, GSAP animations React
 
 # <img src="https://raw.githubusercontent.com/TweenLabs/TweenLabs/master/public/logo.svg" alt="TweenLabs Logo" width="40" height="40" align="center" /> TweenLabs
 
-
 > The open-source **GSAP animation component library** for Next.js developers — learn, copy, and contribute modern web animation patterns built with **GSAP 3.15**, **Next.js 16**, and **Lenis**.
 
-**[Live Demo](https://tweenlabs.xyz)** • **[Contributing Guide](#contributing)** • **[Roadmap](#roadmap)**  
+**[Live Demo](https://tweenlabs.xyz)** • **[Contributing Guide](#contributing)** • **[Roadmap](#roadmap)**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
 ![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=flat-square)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+![npm](https://img.shields.io/npm/v/tweenlabs?style=flat-square&color=CB3837)
 
 <!-- [Contributors](https://img.shields.io/github/contributors/TweenLabs/TweenLabs?style=flat-square) -->
 
@@ -28,6 +28,114 @@ keywords: TweenLabs, GSAP component library, GSAP Next.js, GSAP animations React
 No paid plugins. No locked content. Just clean, modern animation patterns anyone can learn from and build on.
 
 > 🔍 **Looking for a GSAP component library for Next.js?** You found it.
+
+---
+
+## ⚡ CLI — Install Components Instantly
+
+TweenLabs ships with a **zero-dependency CLI** that lets you pull components directly into your codebase — no copy-paste required.
+
+### Initialize configuration
+
+Run the `init` command to configure your preferred installation path. This creates a `tweenlabs.config.json` file in the root of your project, meaning you won't be prompted for the path when adding components in the future.
+
+```bash
+npx tweenlabs@latest init
+```
+
+By default, it will detect your project setup and suggest `./src/components/tweenlabs` or `./components/tweenlabs`.
+
+### Add a component
+
+```bash
+npx tweenlabs@latest add <component-slug>
+```
+
+This will:
+1. Fetch the component files from the TweenLabs registry
+2. Detect your project layout (supports `src/` and non-`src/` setups)
+3. Automatically resolve the install path to `src/components/tweenlabs/`
+4. Create the directory if it doesn't exist
+5. Detect and install any missing npm dependencies
+
+### Browse & install interactively
+
+Run `add` without a slug to get an interactive picker:
+
+```bash
+npx tweenlabs@latest add
+```
+
+```
+▲  tweenlabs  v0.1.6
+
+Select a component to install:
+
+  [1]  .                   All Components
+  [2]  gravity-drop        Physics-based falling animations with realistic bounce
+  [3]  scroll-assembly     Content reveals synced with scroll position
+  [4]  border-reveal       Inward/outward border animations
+  ...
+
+👉 Enter the number of the component to add (1-8):
+```
+
+### List all available components
+
+```bash
+npx tweenlabs@latest list
+```
+
+### Install all components at once
+
+```bash
+npx tweenlabs@latest add .
+```
+
+---
+
+## 📁 Output Structure
+
+After installation, components land here by default:
+
+```
+your-project/
+└── src/
+    └── components/
+        └── tweenlabs/
+            ├── GravityDrop.tsx
+            ├── BorderReveal.tsx
+            └── ...
+```
+
+> **tweenlabs.config.json:** If a `tweenlabs.config.json` exists in your project's root, the CLI reads the `path` option and installs components there. This takes highest precedence.
+>
+> **shadcn UI users:** If no `tweenlabs.config.json` exists but your project has a `components.json`, TweenLabs reads the `aliases.components` field and installs into the matching directory under a `tweenlabs/` subfolder automatically.
+
+---
+
+## 🚩 CLI Flags
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--yes` | `-y` | Skip all prompts; accept all defaults and auto-install dependencies |
+| `--path <dir>` | `-p` | Override the install directory |
+| `--overwrite` | `-o` | Overwrite existing files without prompting |
+| `--help` | `-h` | Show help |
+| `--version` | `-v` | Show CLI version |
+
+### Examples
+
+```bash
+# Install with a custom path
+npx tweenlabs@latest add gravity-drop --path src/ui/animations
+
+# Install all, skip all prompts, overwrite existing files
+npx tweenlabs@latest add . --yes --overwrite
+
+# Install with pnpm dlx
+pnpm dlx tweenlabs add border-reveal
+```
 
 ---
 
@@ -57,7 +165,9 @@ No paid plugins. No locked content. Just clean, modern animation patterns anyone
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Playground)
+
+Want to run the full TweenLabs playground locally?
 
 ```bash
 # Install pnpm if you don't have it
@@ -123,6 +233,11 @@ git push origin feat/your-animation-name
 
 ## 🗺 Roadmap
 
+- [x] CLI — install components via `npx tweenlabs add`
+- [x] Auto-detect package manager (npm, pnpm, yarn, bun)
+- [x] Auto-install missing dependencies
+- [x] Interactive component picker
+- [x] `components.json` / path resolution
 - [ ] Export as npm package (`@tweenlabs/components`)
 - [ ] Storybook integration for isolated component previews
 - [ ] Unit tests for animation logic

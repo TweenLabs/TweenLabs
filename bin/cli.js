@@ -22,13 +22,14 @@ const helpText = `
 ${colors.bold}${colors.cyan}TweenLabs CLI${colors.reset} - Install premium GSAP components directly into your codebase.
 
 ${colors.bold}Usage:${colors.reset}
+  npx tweenlabs init                  Initialize configuration file
   npx tweenlabs list                  List all available components
   npx tweenlabs add <component-slug>  Install a specific component
 
 ${colors.bold}Options:${colors.reset}
   -y, --yes          Skip all prompts (auto-accept defaults & install dependencies)
   -p, --path <path>  Specify a custom directory to install the component
-  -o, --overwrite    Overwrite existing component files without prompting
+  -o, --overwrite    Overwrite existing component files/configuration without prompting
   -h, --help         Show this help message
   -v, --version      Show version
 `;
@@ -79,6 +80,31 @@ function askQuestion(query) {
   );
 }
 
+// Levenshtein distance helper for spelling suggestions
+function getLevenshteinDistance(a, b) {
+  const tmp = [];
+  let i;
+  let j;
+  const alen = a.length;
+  const blen = b.length;
+  if (alen === 0) return blen;
+  if (blen === 0) return alen;
+  for (i = 0; i <= alen; i++) {
+    tmp[i] = [i];
+  }
+  for (j = 0; j <= blen; j++) {
+    tmp[0][j] = j;
+  }
+  for (i = 1; i <= alen; i++) {
+    for (j = 1; j <= blen; j++) {
+      tmp[i][j] = a.charAt(i - 1) === b.charAt(j - 1)
+        ? tmp[i - 1][j - 1]
+        : Math.min(tmp[i - 1][j - 1] + 1, Math.min(tmp[i][j - 1] + 1, tmp[i - 1][j] + 1));
+    }
+  }
+  return tmp[alen][blen];
+}
+
 // Detect client's package manager
 function detectPackageManager() {
   if (fs.existsSync(path.join(process.cwd(), "pnpm-lock.yaml"))) return "pnpm";
@@ -95,7 +121,7 @@ async function main() {
     process.exit(0);
   }
 
-  let version = "0.1.4";
+  let version = "0.1.6";
   try {
     const pkg = require("../package.json");
     version = pkg.version;
@@ -145,8 +171,62 @@ async function main() {
     process.exit(0);
   }
 
+  if (cleanArgs[0] === "init") {
+    const configPath = path.join(process.cwd(), "tweenlabs.config.json");
+    if (fs.existsSync(configPath) && !isOverwrite && !isYes) {
+      console.log(
+        `${colors.yellow}! tweenlabs.config.json already exists.${colors.reset}`
+      );
+      const overwriteConfirm = await askQuestion(
+        `Overwrite configuration file? (y/n) ${colors.gray}[y]${colors.reset}: `
+      );
+      if (
+        overwriteConfirm &&
+        overwriteConfirm.toLowerCase() !== "y" &&
+        overwriteConfirm.toLowerCase() !== "yes"
+      ) {
+        console.log(`${colors.yellow}! Configuration initialization cancelled.${colors.reset}`);
+        process.exit(0);
+      }
+    }
+
+    let defaultDir = "";
+    if (fs.existsSync(path.join(process.cwd(), "src"))) {
+      defaultDir = "./src/components/tweenlabs";
+    } else {
+      defaultDir = "./components/tweenlabs";
+    }
+
+    let targetPath = defaultDir;
+    if (!isYes) {
+      const inputPath = await askQuestion(
+        `Configure component installation path (${defaultDir}): `
+      );
+      if (inputPath) {
+        targetPath = inputPath;
+      }
+    }
+
+    try {
+      const configData = {
+        path: targetPath,
+      };
+      fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), "utf-8");
+      console.log(
+        `\n${colors.green}✔ Created tweenlabs.config.json with path: ${colors.bold}${targetPath}${colors.reset}\n`
+      );
+      process.exit(0);
+    } catch (err) {
+      console.error(
+        `${colors.red}Error: Failed to create tweenlabs.config.json.${colors.reset}`
+      );
+      console.error(`${colors.gray}Details: ${err.message}${colors.reset}`);
+      process.exit(1);
+    }
+  }
+
   if (cleanArgs[0] === "list") {
-    console.log(`${colors.cyan}🔍 Fetching registry...${colors.reset}`);
+    console.log(`${colors.cyan}Fetching registry...${colors.reset}`);
     const domain =
       process.env.TWEENLABS_REGISTRY_URL || "https://tweenlabs.xyz";
     const url = `${domain}/api/registry/list`;
@@ -170,7 +250,7 @@ async function main() {
       process.exit(0);
     } catch (err) {
       console.error(
-        `${colors.red}❌ Failed to fetch components list.${colors.reset}`,
+        `${colors.red}Error: Failed to fetch components list.${colors.reset}`,
       );
       console.error(`${colors.gray}Details: ${err.message}${colors.reset}`);
       process.exit(1);
@@ -179,7 +259,7 @@ async function main() {
 
   if (cleanArgs[0] !== "add") {
     console.log(
-      `${colors.red}Error: Unknown command "${cleanArgs[0]}". Did you mean "add" or "list"?${colors.reset}`,
+      `${colors.red}Error: Unknown command "${cleanArgs[0]}". Did you mean "add", "list" or "init"?${colors.reset}`,
     );
     console.log(helpText);
     process.exit(1);
@@ -187,7 +267,7 @@ async function main() {
 
   let componentSlug = cleanArgs[1];
   if (!componentSlug) {
-    console.log(`${colors.cyan}🔍 Fetching registry...${colors.reset}`);
+    console.log(`${colors.cyan}Fetching registry...${colors.reset}`);
     const domain =
       process.env.TWEENLABS_REGISTRY_URL || "https://tweenlabs.xyz";
     const listUrl = `${domain}/api/registry/list`;
@@ -196,7 +276,7 @@ async function main() {
       listData = await fetchJson(listUrl);
     } catch (err) {
       console.error(
-        `${colors.red}❌ Failed to fetch components list.${colors.reset}`,
+        `${colors.red}Error: Failed to fetch components list.${colors.reset}`,
       );
       console.error(`${colors.gray}Details: ${err.message}${colors.reset}`);
       process.exit(1);
@@ -232,11 +312,11 @@ async function main() {
     console.log("");
 
     const choiceStr = await askQuestion(
-      `👉 Enter the number of the component to add (1-${components.length + 1}): `,
+      `? Enter the number of the component to add (1-${components.length + 1}): `,
     );
     const choice = parseInt(choiceStr, 10);
     if (Number.isNaN(choice) || choice < 1 || choice > components.length + 1) {
-      console.log(`${colors.red}❌ Invalid choice. Exiting.${colors.reset}`);
+      console.log(`${colors.red}Error: Invalid choice. Exiting.${colors.reset}`);
       process.exit(1);
     }
 
@@ -253,34 +333,49 @@ async function main() {
   if (customPath) {
     targetDir = path.resolve(process.cwd(), customPath);
   } else {
-    // 1. Try to read components.json (shadcn configuration)
-    const componentsJsonPath = path.join(process.cwd(), "components.json");
-    if (fs.existsSync(componentsJsonPath)) {
+    // 1. Try to read tweenlabs.config.json (our config)
+    const tweenlabsConfigPath = path.join(process.cwd(), "tweenlabs.config.json");
+    if (fs.existsSync(tweenlabsConfigPath)) {
       try {
-        const config = JSON.parse(fs.readFileSync(componentsJsonPath, "utf-8"));
-        const compAlias = config.aliases?.components;
-        if (compAlias) {
-          const cleanAlias = compAlias.replace(/^[@~]\//, "");
-          if (
-            fs.existsSync(path.join(process.cwd(), "src")) &&
-            !cleanAlias.startsWith("src/")
-          ) {
-            targetDir = path.join(
-              process.cwd(),
-              "src",
-              cleanAlias,
-              "tweenlabs",
-            );
-          } else {
-            targetDir = path.join(process.cwd(), cleanAlias, "tweenlabs");
-          }
+        const config = JSON.parse(fs.readFileSync(tweenlabsConfigPath, "utf-8"));
+        if (config.path) {
+          targetDir = path.resolve(process.cwd(), config.path);
         }
       } catch (_err) {
         // Ignore JSON parse errors
       }
     }
 
-    // 2. Fallback if targetDir is still not resolved
+    // 2. Try to read components.json (shadcn configuration) if still not resolved
+    if (!targetDir) {
+      const componentsJsonPath = path.join(process.cwd(), "components.json");
+      if (fs.existsSync(componentsJsonPath)) {
+        try {
+          const config = JSON.parse(fs.readFileSync(componentsJsonPath, "utf-8"));
+          const compAlias = config.aliases?.components;
+          if (compAlias) {
+            const cleanAlias = compAlias.replace(/^[@~]\//, "");
+            if (
+              fs.existsSync(path.join(process.cwd(), "src")) &&
+              !cleanAlias.startsWith("src/")
+            ) {
+              targetDir = path.join(
+                process.cwd(),
+                "src",
+                cleanAlias,
+                "tweenlabs",
+              );
+            } else {
+              targetDir = path.join(process.cwd(), cleanAlias, "tweenlabs");
+            }
+          }
+        } catch (_err) {
+          // Ignore JSON parse errors
+        }
+      }
+    }
+
+    // 3. Fallback if targetDir is still not resolved
     if (!targetDir) {
       if (fs.existsSync(path.join(process.cwd(), "src"))) {
         targetDir = path.join(process.cwd(), "src", "components", "tweenlabs");
@@ -291,14 +386,14 @@ async function main() {
   }
 
   console.log(
-    `📁 Target directory: ${colors.bold}${path.relative(process.cwd(), targetDir)}${colors.reset}`,
+    `Target directory: ${colors.bold}${path.relative(process.cwd(), targetDir)}${colors.reset}`,
   );
 
   const domain = process.env.TWEENLABS_REGISTRY_URL || "https://tweenlabs.xyz";
   let slugsToInstall = [];
   if (componentSlug === "." || componentSlug === "all") {
     console.log(
-      `${colors.cyan}🔍 Fetching all components list...${colors.reset}`,
+      `${colors.cyan}Fetching all components list...${colors.reset}`,
     );
     const listUrl = `${domain}/api/registry/list`;
     try {
@@ -306,7 +401,7 @@ async function main() {
       slugsToInstall = listData.components.map((c) => c.cleanSlug || c.slug);
     } catch (err) {
       console.error(
-        `${colors.red}❌ Failed to fetch components list.${colors.reset}`,
+        `${colors.red}Error: Failed to fetch components list.${colors.reset}`,
       );
       console.error(`${colors.gray}Details: ${err.message}${colors.reset}`);
       process.exit(1);
@@ -322,7 +417,7 @@ async function main() {
 
   for (const slug of slugsToInstall) {
     console.log(
-      `${colors.cyan}🔍 Fetching ${colors.bold}${slug}${colors.reset}${colors.cyan} registry data...${colors.reset}`,
+      `${colors.cyan}Fetching ${colors.bold}${slug}${colors.reset}${colors.cyan} registry data...${colors.reset}`,
     );
     const url = `${domain}/api/registry/${slug}`;
     try {
@@ -340,19 +435,49 @@ async function main() {
       }
     } catch (_err) {
       console.error(
-        `${colors.red}❌ Failed to fetch component ${slug}. Skipping.${colors.reset}`,
+        `${colors.red}Error: Failed to fetch component "${slug}". Skipping.${colors.reset}`,
       );
+      // Fetch registry list to suggest closest matches
+      let suggestions = [];
+      try {
+        const listData = await fetchJson(`${domain}/api/registry/list`);
+        const validSlugs = listData.components.map((c) => c.cleanSlug || c.slug);
+        
+        // Find slugs with low Levenshtein distance
+        const matches = validSlugs.map((validSlug) => {
+          return {
+            slug: validSlug,
+            distance: getLevenshteinDistance(slug, validSlug)
+          };
+        });
+        
+        // Sort by distance ascending
+        matches.sort((a, b) => a.distance - b.distance);
+        
+        // Threshold: distance <= 3 or distance <= half of query length
+        suggestions = matches
+          .filter((m) => m.distance <= 3 || m.distance <= Math.round(slug.length / 2))
+          .map((m) => m.slug);
+      } catch (_e) {
+        // If list fetch fails, we just don't show suggestions
+      }
+
+      if (suggestions.length > 0) {
+        console.error(
+          `${colors.yellow}Did you mean: ${suggestions.map(s => `${colors.bold}${s}${colors.reset}`).join(", ")}?${colors.reset}\n`
+        );
+      }
     }
   }
 
   if (filesToWrite.length === 0) {
-    console.log(`${colors.red}❌ No files to install. Exiting.${colors.reset}`);
+    console.log(`${colors.red}Error: No files to install. Exiting.${colors.reset}`);
     process.exit(1);
   }
 
   if (conflicts.length > 0 && !isOverwrite && !isYes) {
     console.log(
-      `\n${colors.yellow}⚠️ The following files already exist:${colors.reset}`,
+      `\n${colors.yellow}! The following files already exist:${colors.reset}`,
     );
     for (const conflict of conflicts) {
       console.log(`  → ${conflict}`);
@@ -365,7 +490,7 @@ async function main() {
       overwriteConfirm.toLowerCase() !== "y" &&
       overwriteConfirm.toLowerCase() !== "yes"
     ) {
-      console.log(`${colors.yellow}⚠ Installation cancelled.${colors.reset}`);
+      console.log(`${colors.yellow}! Installation cancelled.${colors.reset}`);
       process.exit(0);
     }
   }
@@ -376,7 +501,7 @@ async function main() {
   }
 
   // Write component files
-  console.log(`\n${colors.bold}💾 Writing component files...${colors.reset}`);
+  console.log(`\n${colors.bold}Writing component files...${colors.reset}`);
   for (const file of filesToWrite) {
     fs.writeFileSync(file.path, file.content, "utf-8");
     console.log(
@@ -402,7 +527,7 @@ async function main() {
     if (missingDeps.length > 0) {
       const pm = detectPackageManager();
       console.log(
-        `\n${colors.bold}📦 Installing missing dependencies using ${pm}...${colors.reset}`,
+        `\n${colors.bold}Installing missing dependencies using ${pm}...${colors.reset}`,
       );
       for (const dep of missingDeps) {
         console.log(`  → ${dep}`);
@@ -422,7 +547,7 @@ async function main() {
         );
       } catch (_err) {
         console.error(
-          `\n${colors.red}❌ Failed to install dependencies. Please run "${installCmd}" manually.${colors.reset}`,
+          `\n${colors.red}Error: Failed to install dependencies. Please run "${installCmd}" manually.${colors.reset}`,
         );
       }
     } else {
@@ -433,7 +558,7 @@ async function main() {
   }
 
   console.log(
-    `\n${colors.bold}${colors.green}🎉 Done! All requested components installed successfully.${colors.reset}`,
+    `\n${colors.bold}${colors.green}✔ Done! All requested components installed successfully.${colors.reset}`,
   );
   console.log(`You can now import and use them in your project.\n`);
 }

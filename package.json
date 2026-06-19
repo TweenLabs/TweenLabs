@@ -1,6 +1,8 @@
 {
   "name": "tweenlabs",
-  "version": "0.1.5",
+  "version": "0.1.6",
+  "description": "Zero-dependency CLI to install premium GSAP animation components directly into your Next.js or React project.",
+  "keywords": ["gsap", "animation", "nextjs", "react", "components", "cli", "tweenlabs", "scrolltrigger", "lenis"],
   "license": "MIT",
   "repository": {
     "type": "git",
