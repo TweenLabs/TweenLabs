@@ -2,6 +2,7 @@ import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 import { animations } from "@/data/animations";
+import { isAuthenticated } from "@/lib/auth-server";
 
 const componentNamesMap: Record<string, string> = {
   "01-showup-cards": "FlipCards",
@@ -60,6 +61,20 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
+
+  // Simple protection against direct browser/crawler access.
+  // CLI always sends User-Agent: "tweenlabs-cli".
+  // If not CLI, require standard user session.
+  const userAgent = request.headers.get("user-agent") || "";
+  const isCli = userAgent.includes("tweenlabs-cli");
+  const authenticated = await isAuthenticated();
+
+  if (!authenticated && !isCli) {
+    return NextResponse.json(
+      { error: "Unauthorized. Please sign in to view this component's registry code." },
+      { status: 401 },
+    );
+  }
 
   // Handle list of components request
   if (slug === "list" || slug === "index") {

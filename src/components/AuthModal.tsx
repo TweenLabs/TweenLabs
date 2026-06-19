@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 
@@ -8,6 +9,45 @@ export default function AuthModal() {
   const { isOpen, isClosable, callbackUrl, closeModal } = useAuthModal();
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isShaking, setIsShaking] = useState(false);
+  const router = useRouter();
+
+  const handleBack = useCallback(() => {
+    if (callbackUrl && callbackUrl.startsWith("/code/")) {
+      const targetUrl = callbackUrl.replace("/code/", "/");
+      router.push(targetUrl);
+    } else {
+      router.push("/");
+    }
+  }, [callbackUrl, router]);
+
+  const triggerShake = () => {
+    setIsShaking(true);
+    setTimeout(() => setIsShaking(false), 350);
+  };
+
+  // Keyboard navigation & scroll trapping
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (isClosable) {
+          closeModal();
+        } else {
+          handleBack();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, isClosable, closeModal, handleBack]);
 
   if (!isOpen) return null;
 
@@ -33,20 +73,37 @@ export default function AuthModal() {
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-md transition-all duration-300 animate-in fade-in"
         onClick={() => {
-          if (isClosable) closeModal();
+          if (isClosable) {
+            closeModal();
+          } else {
+            triggerShake();
+          }
         }}
       />
 
       {/* Auth Card Modal Container */}
-      <div className="w-full max-w-md brutalist-card bg-white relative z-10 p-8 flex flex-col gap-6 select-none animate-in fade-in zoom-in-95 duration-200">
-        {/* Close Button (if closable) */}
-        {isClosable && (
+      <div
+        className={`w-full max-w-md brutalist-card bg-white relative z-10 p-8 flex flex-col gap-6 select-none animate-in fade-in zoom-in-95 duration-200 ${
+          isShaking ? "animate-brutalist-shake" : ""
+        }`}
+      >
+        {/* Close Button (if closable) / Back Button (if not closable) */}
+        {isClosable ? (
           <button
-            onClick={closeModal}
+            onClick={() => closeModal()}
             className="absolute top-4 right-4 w-8 h-8 rounded-full border-2 border-[#2a2a2a] bg-[#fafaf9] hover:bg-wtf-red hover:text-white transition-colors duration-150 flex items-center justify-center font-mono font-bold text-sm cursor-pointer shadow-[2px_2px_0px_#2a2a2a] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#2a2a2a]"
             aria-label="Close modal"
           >
             ✕
+          </button>
+        ) : (
+          <button
+            onClick={handleBack}
+            className="absolute top-4 right-4 px-3 py-1 rounded border-2 border-[#2a2a2a] bg-[#fafaf9] hover:bg-wtf-yellow transition-colors duration-150 flex items-center gap-1 font-mono font-bold text-xs cursor-pointer shadow-[2px_2px_0px_#2a2a2a] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_#2a2a2a]"
+            aria-label="Go back"
+          >
+            <span>←</span>
+            <span>Back</span>
           </button>
         )}
 

@@ -54,7 +54,7 @@ export function SessionProvider({
       : (clientSession as SessionData | null);
   const isPending = !mounted
     ? false
-    : clientPending && initialSession === undefined;
+    : clientPending && (initialSession === undefined || initialSession === null);
 
   return (
     <SessionContext.Provider

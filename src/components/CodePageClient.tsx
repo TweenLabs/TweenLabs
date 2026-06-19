@@ -843,7 +843,7 @@ export default function CodePageClient({
       if (!session) {
         openModal(`/code/${slug}`, false); // isClosable = false
       } else {
-        closeModal();
+        closeModal(true);
         if (isPlaceholder && !hasRefreshed) {
           setHasRefreshed(true);
           router.refresh();

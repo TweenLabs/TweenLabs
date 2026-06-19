@@ -9,7 +9,7 @@ interface AuthModalContextType {
   isClosable: boolean;
   callbackUrl: string;
   openModal: (callbackUrl?: string, isClosable?: boolean) => void;
-  closeModal: () => void;
+  closeModal: (force?: boolean) => void;
 }
 
 const AuthModalContext = createContext<AuthModalContextType | undefined>(
@@ -27,8 +27,8 @@ export function AuthModalProvider({ children }: { children: React.ReactNode }) {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
-    if (!isClosable) return; // Cannot close if isClosable is false
+  const closeModal = (force = false) => {
+    if (!isClosable && !force) return; // Cannot close if isClosable is false unless forced
     setIsOpen(false);
   };
 

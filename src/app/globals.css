@@ -172,3 +172,14 @@ body {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* Shake animation for feedback */
+@keyframes brutalist-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.animate-brutalist-shake {
+  animation: brutalist-shake 0.35s ease-in-out;
+}
