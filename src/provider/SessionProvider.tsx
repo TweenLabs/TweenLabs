@@ -38,9 +38,8 @@ export function SessionProvider({
 }) {
   const { data: clientSession, isPending: clientPending, error } = authClient.useSession();
   
-  // Derive session and isPending directly from render to avoid useEffect/setState cascades
   const session = !clientPending ? (clientSession as SessionData | null) : initialSession;
-  const isPending = clientPending && (initialSession === null || initialSession === undefined);
+  const isPending = clientPending && initialSession === undefined;
 
   return (
     <SessionContext.Provider value={{ session, isPending, error: error as Error | null }}>

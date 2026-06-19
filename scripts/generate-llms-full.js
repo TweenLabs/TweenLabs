@@ -6,26 +6,20 @@ const projectRoot = path.resolve(__dirname, "..");
 const appDir = path.join(projectRoot, "src", "app");
 const outputFile = path.join(projectRoot, "public", "llms-full.txt");
 
-const components = [
-  { id: "01", slug: "01-gravity-drop", name: "Gravity Drop" },
-  { id: "02", slug: "02-scroll-tags-assembly", name: "Scroll Tags" },
-  { id: "03", slug: "03-inward-outward-border-reveal", name: "Border Reveal" },
-  { id: "04", slug: "04-horizontal-cards-showcase", name: "Horizontal Cards" },
-  { id: "05", slug: "05-page-change-animation", name: "Page Transition" },
-  { id: "06", slug: "06-kinetic-typography", name: "Kinetic Text" },
-  { id: "07", slug: "07-scroll-orbit-gallery", name: "Orbit Gallery" },
-  { id: "08", slug: "08-blueprint-scatter", name: "Blueprint" },
-  { id: "09", slug: "09-circular-scatter", name: "Circular Scatter" },
-  { id: "10", slug: "10-screen-skill-fit", name: "Skill Fit" },
-  { id: "11", slug: "11-magnetic-dock", name: "Magnetic Dock" },
-  { id: "12", slug: "12-fluid-cursor", name: "Fluid Cursor" },
-  { id: "13", slug: "13-bento-grid-flip", name: "Bento Grid" },
-  { id: "14", slug: "14-3d-carousel", name: "3D Carousel" },
-  { id: "15", slug: "15-morphing-accordion", name: "Accordion" },
-  { id: "16", slug: "16-scroll-cards-01", name: "Scroll Cards" },
-  { id: "17", slug: "17-showup-cards", name: "Flip Cards" },
-  { id: "18", slug: "18-string-line", name: "String Line" },
-];
+// Parse components dynamically from src/data/animations.ts to avoid duplicate lists
+const animationsFile = path.join(projectRoot, "src", "data", "animations.ts");
+const animsText = fs.readFileSync(animationsFile, "utf8");
+
+const components = [];
+const objectRegex = /\{\s*id:\s*['"]([^'"]+)['"]\s*,\s*name:\s*['"]([^'"]+)['"]\s*,\s*route:\s*['"]([^'"]+)['"]/g;
+let match;
+while ((match = objectRegex.exec(animsText)) !== null) {
+  const id = match[1];
+  const name = match[2];
+  const route = match[3];
+  const slug = route.substring(1); // Remove leading slash
+  components.push({ id, slug, name });
+}
 
 let content = `# TweenLabs Consolidated AI Code Repository
 > This file contains the complete source code and documentation of all 18 high-fidelity GSAP animation components on TweenLabs. Use this file to understand, import, and generate TweenLabs components.
