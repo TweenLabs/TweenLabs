@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "convex deploy --cmd \"node scripts/generate-llms-full.js && next build\"",
+    "build": "node scripts/generate-llms-full.js && next build",
+    "vercel-build": "convex deploy --cmd \"node scripts/generate-llms-full.js && next build\"",
     "start": "next start",
     "lint": "eslint"
   },
