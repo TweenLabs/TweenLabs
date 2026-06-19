@@ -16,10 +16,7 @@ export default function FAQ() {
             What is TweenLabs?
           </dt>
           <dd className="text-sm font-sans font-medium text-zinc-600 leading-relaxed m-0">
-            TweenLabs is a curated library of high-fidelity, interactive, and
-            portable GSAP components, UI templates, and scroll-triggered
-            animations. Every resource is designed to be easily copy-pasted into
-            your React and Next.js projects.
+            TweenLabs is a dedicated front-end animation resource library featuring production-ready GreenSock (GSAP) components and interactive React templates. It provides web developers and UI designers with reusable, copy-paste code snippets to build high-fidelity scroll animations, creative layouts, and interactive web experiences.
           </dd>
         </div>
 

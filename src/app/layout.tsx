@@ -120,7 +120,7 @@ export default async function RootLayout({
         url: "https://tweenlabs.xyz",
         logo: "https://tweenlabs.xyz/logo.svg",
         sameAs: ["https://github.com/GSAP-PLAYGROUND/TweenLabs"],
-        description: "TweenLabs is an open-source code resource library of premium GSAP (GreenSock) UI components and animation templates for frontend React and Next.js developers. TweenLabs is a web development resource and is completely unrelated to the AI video platform Twelve Labs."
+        description: "TweenLabs is an open-source engineering repository providing high-performance, copy-paste GreenSock (GSAP) UI components, ScrollTrigger timelines, and custom animation hooks tailored specifically for React 19 and Next.js 16 (App Router) environments."
       },
       {
         "@type": "WebSite",
@@ -154,10 +154,10 @@ export default async function RootLayout({
         mainEntity: [
           {
             "@type": "Question",
-            name: "What is TweenLabs?",
-            acceptedAnswer: {
+            "name": "What is TweenLabs?",
+            "acceptedAnswer": {
               "@type": "Answer",
-              text: "TweenLabs is a curated library of high-fidelity, interactive, and portable GSAP components, UI templates, and scroll-triggered animations. Every resource is designed to be easily copy-pasted into your React and Next.js projects.",
+              text: "TweenLabs is a dedicated front-end animation resource library featuring production-ready GreenSock (GSAP) components and interactive React templates. It provides web developers and UI designers with reusable, copy-paste code snippets to build high-fidelity scroll animations, creative layouts, and interactive experiences.",
             },
           },
           {
