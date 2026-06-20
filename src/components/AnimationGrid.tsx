@@ -132,6 +132,14 @@ export default function AnimationGrid({ animations }: AnimationGridProps) {
     }
   }, [showAll, initialCount]);
 
+  // Notify Lenis smooth scroll to recalculate page height after grid expand/collapse
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [showAll]);
+
   // Animate newly revealed cards on expand
   useEffect(() => {
     if (!showAll || !gridRef.current) return;
