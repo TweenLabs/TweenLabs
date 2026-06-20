@@ -1,8 +1,13 @@
+import dynamic from "next/dynamic";
 import AnimationGrid from "@/components/AnimationGrid";
-import FAQ from "@/components/FAQ";
 import Hero from "@/components/Hero";
 
 import { animations } from "@/data/animations";
+
+// Below-the-fold: lazy-load to reduce initial JS bundle
+const FAQ = dynamic(() => import("@/components/FAQ"), {
+  loading: () => null,
+});
 
 export default function Home() {
   return (

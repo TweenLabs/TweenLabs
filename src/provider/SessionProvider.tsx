@@ -47,14 +47,20 @@ export function SessionProvider({
     setMounted(true);
   }, []);
 
-  // During hydration/first render on client, match server exactly
-  const session =
-    !mounted || clientPending
-      ? initialSession
-      : (clientSession as SessionData | null);
-  const isPending = !mounted
-    ? false
-    : clientPending && (initialSession === undefined || initialSession === null);
+  // Trust server-provided session until client explicitly resolves.
+  // This prevents a flash of loading state and avoids downstream
+  // re-renders that trigger duplicate Convex token fetches.
+  const session = React.useMemo(() => {
+    // During SSR / hydration: use server data
+    if (!mounted) return initialSession;
+    // Client has resolved: use client data
+    if (!clientPending) return clientSession as SessionData | null;
+    // Client is still loading: keep showing server data (no flash)
+    return initialSession;
+  }, [mounted, clientPending, clientSession, initialSession]);
+
+  // Only show "pending" if we have NO data at all (no server session, client still loading)
+  const isPending = !mounted ? false : clientPending && !initialSession;
 
   return (
     <SessionContext.Provider

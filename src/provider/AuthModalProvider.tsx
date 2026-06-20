@@ -1,8 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import type React from "react";
 import { createContext, useContext, useState } from "react";
-import AuthModal from "../components/AuthModal";
+
+// Lazy-load: only needed when user clicks Sign In
+const AuthModal = dynamic(() => import("../components/AuthModal"), {
+  loading: () => null,
+});
 
 interface AuthModalContextType {
   isOpen: boolean;
@@ -37,7 +42,7 @@ export function AuthModalProvider({ children }: { children: React.ReactNode }) {
       value={{ isOpen, isClosable, callbackUrl, openModal, closeModal }}
     >
       {children}
-      <AuthModal />
+      {isOpen && <AuthModal />}
     </AuthModalContext.Provider>
   );
 }
