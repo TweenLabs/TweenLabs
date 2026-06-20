@@ -4,26 +4,26 @@ This document serves as a prompt helper/reference for AI coding assistants (like
 
 ## Local Installation Path
 The GSAP skills are installed locally on the system at:
-`C:\Users\Ritesh Sinha\.agents\skills\`
+`C:\Users\rox\.agents\skills\`
 
 ---
 
 ## Available GSAP Skills & Rules
 
 ### 1. Core Animations (`gsap-core`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-core\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-core\`
 - **Key Guidelines:** Basics of tweens, proper easing functions (e.g., `"power2.out"`), and avoiding plain string ease definitions. Ensure staggers are configured efficiently.
 
 ### 2. Timelines (`gsap-timeline`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-timeline\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-timeline\`
 - **Key Guidelines:** Creating nested timelines, sequencing, and using relative labels (`"<"` or `"+=0.5"`) instead of absolute delays.
 
 ### 3. ScrollTrigger (`gsap-scrolltrigger`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-scrolltrigger\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-scrolltrigger\`
 - **Key Guidelines:** Implementing scroll-driven animations, pinning, scroll scrub, toggleActions, and optimizing scroll performance. Ensure correct cleanup of ScrollTrigger instances when components unmount.
 
 ### 4. Next.js & TypeScript Integration (`gsap-react` & `gsap-frameworks`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-react\` & `gsap-frameworks\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-react\` & `gsap-frameworks\`
 - **Key Guidelines:** Integrating GSAP with Next.js and TypeScript correctly:
   - **SSR Safety:** Next.js is SSR-by-default. Any component using GSAP must include the `"use client"` directive at the top.
   - **Use `useGSAP()` Hook:** Always use the `@gsap/react` hook `useGSAP()` for context/scope-safe animations.
@@ -34,19 +34,19 @@ The GSAP skills are installed locally on the system at:
     - Type persistent timelines correctly: `const tl = useRef<gsap.core.Timeline | null>(null);`.
 
 ### 5. Performance Optimization (`gsap-performance`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-performance\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-performance\`
 - **Key Guidelines:** Animating CSS transforms (`x`, `y`, `rotation`, `scale`) instead of layout properties (`top`, `left`, `width`, `height`). Utilizing `autoAlpha` instead of `opacity` for performance and hiding invisible elements.
 
 ### 6. Plugins (`gsap-plugins`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-plugins\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-plugins\`
 - **Key Guidelines:** Configuration and usage of GSAP plugins (e.g., DrawSVG, SplitText, MotionPath).
 
 ### 7. Frameworks & Next.js Specifics (`gsap-frameworks`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-frameworks\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-frameworks\`
 - **Key Guidelines:** Framework integrations. For Next.js, ensure any registry and plugin registration (`gsap.registerPlugin(...)`) only runs on the client-side, and ensure animations target hydration-safe elements.
 
 ### 8. Utilities (`gsap-utils`)
-- **Location:** `C:\Users\Ritesh Sinha\.agents\skills\gsap-utils\`
+- **Location:** `C:\Users\rox\.agents\skills\gsap-utils\`
 - **Key Guidelines:** Leveraging GSAP utility methods (e.g., `gsap.utils.mapRange()`, `gsap.utils.interpolate()`).
 
 ### 9. Component Portability & Reusability
