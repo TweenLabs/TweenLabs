@@ -160,7 +160,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll Down Indicator HUD */}
-      <div className="hero-scroll-indicator absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce pointer-events-none text-zinc-500 font-mono text-[8px] md:text-[9px] tracking-widest uppercase">
+      <div className="hero-scroll-indicator absolute bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit flex flex-col items-center gap-1 animate-bounce pointer-events-none text-zinc-500 font-mono text-[8px] md:text-[9px] tracking-widest uppercase">
         <span>Scroll to Explore</span>
         <span className="text-wtf-orange font-bold text-xs md:text-sm">↓</span>
       </div>
