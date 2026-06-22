@@ -986,7 +986,9 @@ export default function CodePageClient({
   useEffect(() => {
     // Small delay to let the DOM update before Lenis measures
     const timer = setTimeout(() => {
-      const globalWindow = window as unknown as { lenis?: { resize: () => void } };
+      const globalWindow = window as unknown as {
+        lenis?: { resize: () => void };
+      };
       const lenis = globalWindow.lenis;
       if (lenis && typeof lenis.resize === "function") {
         lenis.resize();
