@@ -8,7 +8,11 @@ import type React from "react";
 import { useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { animations } from "@/data/animations";
+import {
+  isShellDemoPage,
+  isShellPlayground,
+  isShellRoute,
+} from "@/lib/shell-routes";
 
 export default function PageWrapper({
   children,
@@ -18,12 +22,9 @@ export default function PageWrapper({
   const pathname = usePathname();
   const scrollerRef = useRef<HTMLElement>(null);
 
-  // Normalize path to match animations route structure
-  const normalizedPath = pathname ? pathname.replace(/\/$/, "") : "";
-
-  // Check if current page is one of the component demo pages
-  const isDemoPage = animations.some((anim) => anim.route === normalizedPath);
-  const isPlayground = normalizedPath === "/playground";
+  const isDemoPage = isShellDemoPage(pathname);
+  const isPlayground = isShellPlayground(pathname);
+  const isShell = isShellRoute(pathname);
 
   // Hide scrollbar on the main homepage
   useEffect(() => {
@@ -48,7 +49,7 @@ export default function PageWrapper({
 
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!isDemoPage) {
+    if (!isDemoPage && !isShell) {
       // Restore root window scrolling (clean up from any previous demo page)
       document.documentElement.style.overflow = "";
       document.documentElement.style.height = "";
@@ -74,6 +75,10 @@ export default function PageWrapper({
       };
     }
 
+    if (!isDemoPage) {
+      return;
+    }
+
     // ——— BELOW RUNS ONLY ON DEMO PAGES ———
 
     // Reset window scroll position to top before locking to prevent cut-off header
@@ -85,12 +90,16 @@ export default function PageWrapper({
     document.body.style.overflow = "hidden";
     document.body.style.height = "100%";
 
-    if (!scrollerRef.current) return;
+    const scrollContainer = isShell
+      ? document.getElementById("main-scroller")
+      : scrollerRef.current;
+
+    if (!scrollContainer) return;
 
     // Initialize Lenis smooth scroll on our custom scroller container
     const lenis = new Lenis({
-      wrapper: scrollerRef.current,
-      content: scrollerRef.current,
+      wrapper: scrollContainer,
+      content: scrollContainer,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
       orientation: "vertical",
@@ -122,25 +131,31 @@ export default function PageWrapper({
       lenis.destroy();
       gsap.ticker.remove(gsapTick);
     };
-  }, [isDemoPage]);
+  }, [isDemoPage, isShell]);
 
   return (
     <>
-      <Header />
+      {!isShell && <Header />}
       <main
         ref={scrollerRef}
-        id={isDemoPage ? "main-scroller" : undefined}
+        id={isDemoPage && !isShell ? "main-scroller" : undefined}
         className={
-          isDemoPage
-            ? "flex-grow w-full relative overflow-y-auto overflow-x-hidden mt-[53px] md:mt-16 demo-page-container"
-            : isPlayground
-              ? "flex-1 flex flex-col w-full relative pt-[59px] md:pt-[67px]"
+          isShell
+            ? isPlayground || isDemoPage
+              ? "flex h-svh w-full flex-col overflow-hidden"
+              : "flex min-h-svh w-full flex-col"
+            : isDemoPage
+              ? "flex-grow w-full relative overflow-y-auto overflow-x-hidden mt-[53px] md:mt-16 demo-page-container"
               : "flex-1 flex flex-col w-full relative pt-[69px] md:pt-24"
         }
-        style={isDemoPage ? { height: "calc(100dvh - 53px)" } : undefined}
+        style={
+          isDemoPage && !isShell
+            ? { height: "calc(100dvh - 53px)" }
+            : undefined
+        }
       >
         {children}
-        {!isDemoPage && <Footer />}
+        {!isDemoPage && !isShell && <Footer />}
       </main>
     </>
   );

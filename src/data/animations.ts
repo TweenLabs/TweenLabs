@@ -14,7 +14,7 @@ export const animations: AnimationItem[] = [
     id: "01",
     name: "Flip Cards",
     componentName: "FlipCards",
-    route: "/animations/FlipCards",
+    route: "/components/FlipCards",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -25,7 +25,7 @@ export const animations: AnimationItem[] = [
     id: "02",
     name: "3D Carousel",
     componentName: "Carousel3D",
-    route: "/animations/Carousel3D",
+    route: "/components/Carousel3D",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
     description:
@@ -36,7 +36,7 @@ export const animations: AnimationItem[] = [
     id: "03",
     name: "Skill Fit",
     componentName: "SkillFit",
-    route: "/animations/SkillFit",
+    route: "/components/SkillFit",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -47,7 +47,7 @@ export const animations: AnimationItem[] = [
     id: "04",
     name: "Page Transition",
     componentName: "PageTransition",
-    route: "/animations/PageTransition",
+    route: "/components/PageTransition",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
     description:
@@ -58,7 +58,7 @@ export const animations: AnimationItem[] = [
     id: "05",
     name: "Horizontal Cards",
     componentName: "HorizontalCards",
-    route: "/animations/HorizontalCards",
+    route: "/components/HorizontalCards",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -69,7 +69,7 @@ export const animations: AnimationItem[] = [
     id: "06",
     name: "Circular Scatter",
     componentName: "CircularScatter",
-    route: "/animations/CircularScatter",
+    route: "/components/CircularScatter",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -80,7 +80,7 @@ export const animations: AnimationItem[] = [
     id: "07",
     name: "Fluid Cursor",
     componentName: "FluidCursor",
-    route: "/animations/FluidCursor",
+    route: "/components/FluidCursor",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -91,7 +91,7 @@ export const animations: AnimationItem[] = [
     id: "08",
     name: "Blueprint",
     componentName: "Blueprint",
-    route: "/animations/Blueprint",
+    route: "/components/Blueprint",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -102,7 +102,7 @@ export const animations: AnimationItem[] = [
     id: "09",
     name: "Scroll Cards",
     componentName: "ScrollCards",
-    route: "/animations/ScrollCards",
+    route: "/components/ScrollCards",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -113,7 +113,7 @@ export const animations: AnimationItem[] = [
     id: "10",
     name: "Scroll Tags",
     componentName: "ScrollTags",
-    route: "/animations/ScrollTags",
+    route: "/components/ScrollTags",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -124,7 +124,7 @@ export const animations: AnimationItem[] = [
     id: "11",
     name: "Orbit Gallery",
     componentName: "OrbitGallery",
-    route: "/animations/OrbitGallery",
+    route: "/components/OrbitGallery",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -135,7 +135,7 @@ export const animations: AnimationItem[] = [
     id: "12",
     name: "Gravity Drop",
     componentName: "GravityDrop",
-    route: "/animations/GravityDrop",
+    route: "/components/GravityDrop",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -146,7 +146,7 @@ export const animations: AnimationItem[] = [
     id: "13",
     name: "String Line",
     componentName: "StringLine",
-    route: "/animations/StringLine",
+    route: "/components/StringLine",
     bgColor: "bg-wtf-yellow",
     textColor: "text-black",
     description:
@@ -157,7 +157,7 @@ export const animations: AnimationItem[] = [
     id: "14",
     name: "Border Reveal",
     componentName: "BorderReveal",
-    route: "/animations/BorderReveal",
+    route: "/components/BorderReveal",
     bgColor: "bg-wtf-red",
     textColor: "text-white",
     description:
@@ -168,7 +168,7 @@ export const animations: AnimationItem[] = [
     id: "15",
     name: "Kinetic Text",
     componentName: "KineticText",
-    route: "/animations/KineticText",
+    route: "/components/KineticText",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -179,7 +179,7 @@ export const animations: AnimationItem[] = [
     id: "16",
     name: "Magnetic Dock",
     componentName: "MagneticDock",
-    route: "/animations/MagneticDock",
+    route: "/components/MagneticDock",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -190,7 +190,7 @@ export const animations: AnimationItem[] = [
     id: "17",
     name: "Bento Grid",
     componentName: "BentoGrid",
-    route: "/animations/BentoGrid",
+    route: "/components/BentoGrid",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -201,7 +201,7 @@ export const animations: AnimationItem[] = [
     id: "18",
     name: "Accordion",
     componentName: "Accordion",
-    route: "/animations/Accordion",
+    route: "/components/Accordion",
     bgColor: "bg-wtf-blue",
     textColor: "text-white",
     description:
@@ -212,7 +212,7 @@ export const animations: AnimationItem[] = [
     id: "19",
     name: "Reveal Text",
     componentName: "RevealText",
-    route: "/animations/RevealText",
+    route: "/components/RevealText",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:
@@ -224,7 +224,7 @@ export const animations: AnimationItem[] = [
     id: "20",
     name: "Tabs Motion",
     componentName: "TabsMotion",
-    route: "/animations/TabsMotion",
+    route: "/components/TabsMotion",
     bgColor: "bg-wtf-green",
     textColor: "text-white",
     description:
@@ -236,7 +236,7 @@ export const animations: AnimationItem[] = [
     id: "21",
     name: "Parallax Hero",
     componentName: "ParallaxHero",
-    route: "/animations/ParallaxHero",
+    route: "/components/ParallaxHero",
     bgColor: "bg-wtf-orange",
     textColor: "text-white",
     description:
@@ -248,7 +248,7 @@ export const animations: AnimationItem[] = [
     id: "22",
     name: "Morphing Text",
     componentName: "MorphingText",
-    route: "/animations/MorphingText",
+    route: "/components/MorphingText",
     bgColor: "bg-wtf-purple",
     textColor: "text-white",
     description:

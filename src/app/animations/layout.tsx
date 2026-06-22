@@ -1,6 +1,6 @@
 import { AppShellLayout } from "@/components/AppShellLayout";
 
-export default function MainLayout({
+export default function AnimationsLayout({
   children,
 }: {
   children: React.ReactNode;
