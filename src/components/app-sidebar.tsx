@@ -7,7 +7,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarGroupContent,
@@ -94,10 +93,14 @@ export function AppSidebar() {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-r-3 border-[#2a2a2a] bg-white text-[#2a2a2a] transition-all duration-200"
+      className="bg-white text-[#2a2a2a] transition-all duration-200 z-40"
     >
       {/* Sidebar Header: Brand Info */}
-      <SidebarHeader className="h-14 md:h-16 flex flex-row items-center px-4 border-b-3 border-[#2a2a2a] justify-between shrink-0 bg-white p-0">
+      <div
+        data-slot="sidebar-header"
+        data-sidebar="header"
+        className="h-[72px] flex flex-row items-center justify-center px-4 md:px-6 border-b-3 border-[#2a2a2a] shrink-0 bg-white"
+      >
         <Link href="/" className="flex items-center gap-2.5 group">
           <Image
             src="/logo.svg"
@@ -110,7 +113,7 @@ export function AppSidebar() {
             TweenLabs
           </span>
         </Link>
-      </SidebarHeader>
+      </div>
 
       {/* Sidebar Navigation items */}
       <SidebarContent className="bg-white py-4">

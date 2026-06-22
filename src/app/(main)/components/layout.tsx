@@ -12,7 +12,7 @@ export default function ComponentsLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="flex flex-col h-svh overflow-hidden bg-white text-[#2a2a2a]">
+      <SidebarInset className="flex flex-col h-svh overflow-hidden bg-white text-[#2a2a2a] border-l-[3px] border-[#2a2a2a]">
         <ComponentsHeader />
         <main
           id="main-scroller"
