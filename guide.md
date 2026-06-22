@@ -531,7 +531,7 @@ After creating the component files, add an entry to `src/data/components.ts`:
   id: "{NN}",                                    // Zero-padded: "19", "20", etc.
   name: "{Display Name}",                        // Human-readable: "Flip Cards"
   componentName: "{ComponentName}",              // PascalCase: "FlipCards" — MUST match folder name
-  route: "/animations/{ComponentName}",          // MUST be /animations/ + componentName
+  route: "/components/{ComponentName}",          // MUST be /components/ + componentName
   bgColor: "bg-wtf-green",                       // Card color on homepage (pick from available)
   textColor: "text-white",                       // Card text color
   description: "{One-line description of animation.}",
@@ -678,7 +678,7 @@ When a user runs `npx tweenlabs add ComponentName`, the CLI:
 ### 14.6 Testing Protocol
 After creating any component:
 1. `npm run build` — must pass with zero errors
-2. Visit `/animations/ComponentName` — verify the animation runs
+2. Visit `/components/ComponentName` — verify the animation runs
 3. Visit `/code/ComponentName` — verify code tabs render (Core, Standalone, Setup)
 4. Hit `/api/registry/ComponentName` — verify JSON response with file content
 5. Test on mobile viewport (Chrome DevTools device mode)

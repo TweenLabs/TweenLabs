@@ -38,12 +38,14 @@ const nextConfig: NextConfig = {
     const redirects: { source: string; destination: string; permanent: boolean }[] = [
       // Redirect bare /animations to homepage
       { source: "/animations", destination: "/", permanent: false },
+      // Redirect old /animations/:name to new /components/:name
+      { source: "/animations/:slug", destination: "/components/:slug", permanent: true },
     ];
     // 301 redirects from old URLs to preserve SEO rankings
     for (const [oldSlug, componentName] of Object.entries(oldToNew)) {
       redirects.push({
         source: `/${oldSlug}`,
-        destination: `/animations/${componentName}`,
+        destination: `/components/${componentName}`,
         permanent: true,
       });
       redirects.push({
