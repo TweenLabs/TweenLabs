@@ -47,20 +47,7 @@ export default function ComponentsHeader() {
         </nav>
       </div>
 
-      {/* Center: Search doc bar placeholder */}
-      <div className="hidden lg:flex items-center flex-1 max-w-sm mx-6">
-        <div className="flex items-center gap-2 w-full bg-[#f8f5ee] border-2 border-[#2a2a2a]/15 rounded-lg px-3 py-1.5 font-mono text-xs text-zinc-400 hover:border-[#2a2a2a]/30 transition-colors cursor-text">
-          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <span className="text-zinc-500 font-bold text-[11px]">Search documentation...</span>
-          <kbd className="ml-auto hidden xl:inline-flex items-center gap-0.5 rounded border border-zinc-300 bg-zinc-100 px-1.5 py-0.5 text-[9px] font-bold text-zinc-500">
-            ⌘K
-          </kbd>
-        </div>
-      </div>
-
-      {/* Right: GitHub status + User menu (GitHub button first) */}
+      {/* Right: Search + GitHub + User menu */}
       <div className="flex items-center gap-3">
         {/* GitHub link button with count 7 */}
         <a

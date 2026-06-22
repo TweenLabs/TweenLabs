@@ -126,8 +126,8 @@ export default function PageWrapper({
     };
   }, [isDemoPage]);
 
-  // /components page has its own layout (custom header + sidebar) — skip PageWrapper entirely
-  if (isComponentsPage) {
+  // /components and /contribution pages have their own layout (custom header + sidebar) — skip PageWrapper entirely
+  if (isComponentsPage || normalizedPath.startsWith("/contribution")) {
     return <>{children}</>;
   }
 

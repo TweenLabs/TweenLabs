@@ -9,15 +9,13 @@ keywords: TweenLabs, GSAP component library, GSAP Next.js, GSAP animations React
 
 > The open-source **GSAP animation component library** for Next.js developers — learn, copy, and contribute modern web animation patterns built with **GSAP 3.15**, **Next.js 16**, and **Lenis**.
 
-**[Live Demo](https://tweenlabs.xyz)** • **[Contributing Guide](#contributing)** • **[Roadmap](#roadmap)**
+**[Live Demo](https://tweenlabs.xyz)** • **[All Components](https://tweenlabs.xyz/components)** • **[Playground](https://tweenlabs.xyz/playground)** • **[Contributing Guide](#contributing)**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
 ![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=flat-square)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 ![npm](https://img.shields.io/npm/v/tweenlabs?style=flat-square&color=CB3837)
-
-<!-- [Contributors](https://img.shields.io/github/contributors/TweenLabs/TweenLabs?style=flat-square) -->
 
 ---
 
@@ -71,13 +69,15 @@ npx tweenlabs@latest add
 
 Select a component to install:
 
-  [1]  .                   All Components
-  [2]  gravity-drop        Physics-based falling animations with realistic bounce
-  [3]  scroll-assembly     Content reveals synced with scroll position
-  [4]  border-reveal       Inward/outward border animations
+  [1]  .                    All Components
+  [2]  flip-cards           Interactive 3D fanning + scroll-pinned card flip
+  [3]  carousel-3d          Mathematical 3D wheel with drag inertia
+  [4]  gravity-drop         Physics-based falling letters with realistic bounce
+  [5]  border-reveal        Horizontal text scroll with fly-in letter borders
+  [6]  morphing-text        SVG threshold filter text morphing animation
   ...
 
-👉 Enter the number of the component to add (1-8):
+👉 Enter the number of the component to add (1-22):
 ```
 
 ### List all available components
@@ -105,6 +105,7 @@ your-project/
         └── tweenlabs/
             ├── GravityDrop.tsx
             ├── BorderReveal.tsx
+            ├── MorphingText.tsx
             └── ...
 ```
 
@@ -139,33 +140,72 @@ pnpm dlx tweenlabs add border-reveal
 
 ---
 
-## ✨ Animation Components
+## ✨ Animation Components (22 total)
 
-| Component | Description | GSAP Features Used |
-|-----------|-------------|-------------------|
-| **Gravity Drop** | Physics-based falling animations with realistic bounce | `gsap.to`, `ease`, stagger |
-| **Scroll-Triggered Assemblies** | Content reveals synced with scroll position | ScrollTrigger |
-| **Border Reveal Effects** | Inward/outward border animations | Timeline, `clipPath` |
-| **Horizontal Card Showcase** | Smooth carousel and card transitions | ScrollTrigger, `x` transforms |
-| **Page Transitions** | Seamless route change animations | Timeline, Next.js router |
-| **Smooth Scrolling** | Native-feel smooth scroll | Lenis + GSAP ticker |
+Browse all at **[tweenlabs.xyz/components](https://tweenlabs.xyz/components)**
 
-> More components added with every contribution. [See full list →](https://tweenlabs.xyz)
+### Text Animations
+
+| Component | Route | Description | GSAP Features |
+|-----------|-------|-------------|---------------|
+| **Kinetic Text** | [`/components/KineticText`](https://tweenlabs.xyz/components/KineticText) | Liquid wave, character scramble, and magnetic motion sandbox | `gsap.to`, SplitText, pointer events |
+| **Parallax Hero** | [`/components/ParallaxHero`](https://tweenlabs.xyz/components/ParallaxHero) | Multi-layer parallax hero with SplitText character scatter entrance | SplitText, ScrollTrigger, parallax |
+| **Reveal Text** | [`/components/RevealText`](https://tweenlabs.xyz/components/RevealText) | Premium line-by-line text reveal with staggered choreography | SplitText, Timeline, stagger |
+| **Morphing Text** | [`/components/MorphingText`](https://tweenlabs.xyz/components/MorphingText) | Smooth auto-cycling text morphing with SVG threshold filter | SVG filter, Timeline, CSS vars |
+
+### Scroll Effects
+
+| Component | Route | Description | GSAP Features |
+|-----------|-------|-------------|---------------|
+| **Scroll Cards** | [`/components/ScrollCards`](https://tweenlabs.xyz/components/ScrollCards) | Vertical scroll-pinned stacked cards with y-transform parallax | ScrollTrigger, pin, stagger |
+| **Scroll Tags** | [`/components/ScrollTags`](https://tweenlabs.xyz/components/ScrollTags) | Tags fly into a grid board from all offscreen directions on scroll | ScrollTrigger, fromTo, stagger |
+| **Horizontal Cards** | [`/components/HorizontalCards`](https://tweenlabs.xyz/components/HorizontalCards) | Neo-Brutalist cards slide, float, and exit with horizontal scroll | ScrollTrigger, x-transform |
+| **Page Transition** | [`/components/PageTransition`](https://tweenlabs.xyz/components/PageTransition) | Stacked color-themed sections peel up with dynamic skewing | ScrollTrigger, skewY, pin |
+| **Border Reveal** | [`/components/BorderReveal`](https://tweenlabs.xyz/components/BorderReveal) | Letters fly in/out from top/bottom borders on horizontal scroll | ScrollTrigger, clipPath |
+
+### Cards & Grids
+
+| Component | Route | Description | GSAP Features |
+|-----------|-------|-------------|---------------|
+| **Flip Cards** | [`/components/FlipCards`](https://tweenlabs.xyz/components/FlipCards) | Interactive fanning cards and scroll-pinned 3D perspective flip | ScrollTrigger, rotateY, stagger |
+| **Bento Grid** | [`/components/BentoGrid`](https://tweenlabs.xyz/components/BentoGrid) | Neo-Brutalist 3D perspective mouse tilt with spring physics | `gsap.quickTo`, pointer events |
+| **3D Carousel** | [`/components/Carousel3D`](https://tweenlabs.xyz/components/Carousel3D) | 3D mathematical wheel rotation with drag inertia and keyboard nav | Timeline, rotateY, inertia |
+| **Circular Scatter** | [`/components/CircularScatter`](https://tweenlabs.xyz/components/CircularScatter) | Cards stack at center then scatter to outer edges with hero text | ScrollTrigger, scatter, stagger |
+| **Orbit Gallery** | [`/components/OrbitGallery`](https://tweenlabs.xyz/components/OrbitGallery) | Orbiting cards converge into a sleek horizontal timeline on scroll | ScrollTrigger, x/y transforms |
+
+### Interactive
+
+| Component | Route | Description | GSAP Features |
+|-----------|-------|-------------|---------------|
+| **Fluid Cursor** | [`/components/FluidCursor`](https://tweenlabs.xyz/components/FluidCursor) | Elastic lagging cursor that snaps and morphs around buttons | `gsap.quickTo`, pointer events |
+| **Magnetic Dock** | [`/components/MagneticDock`](https://tweenlabs.xyz/components/MagneticDock) | Floating menu bar where buttons pull toward cursor dynamically | `gsap.quickTo`, spring physics |
+| **Gravity Drop** | [`/components/GravityDrop`](https://tweenlabs.xyz/components/GravityDrop) | Staggered letters fall onto a shelf with realistic physics bounce | `ease`, bounce, stagger |
+| **String Line** | [`/components/StringLine`](https://tweenlabs.xyz/components/StringLine) | ScrollTriggered SVG network line drawing with node proximity scale | ScrollTrigger, SVG draw, scale |
+| **Tabs Motion** | [`/components/TabsMotion`](https://tweenlabs.xyz/components/TabsMotion) | Animated tab navigation with sliding indicator and directional crossfade | Timeline, clip, crossfade |
+
+### Layout & UI
+
+| Component | Route | Description | GSAP Features |
+|-----------|-------|-------------|---------------|
+| **Blueprint** | [`/components/Blueprint`](https://tweenlabs.xyz/components/Blueprint) | Page-load exploding cards + text scramble matching blueprintapps.io | Timeline, stagger, scramble |
+| **Skill Fit** | [`/components/SkillFit`](https://tweenlabs.xyz/components/SkillFit) | Candidate profile showcase with vertical ScrollTrigger pinning | ScrollTrigger, pin, stagger |
+| **Accordion** | [`/components/Accordion`](https://tweenlabs.xyz/components/Accordion) | Selection morphs page background and staggers content reveal | Timeline, background morph |
 
 ---
 
 ## 🛠 Tech Stack
 
-- **[Next.js 16](https://nextjs.org/)** – React framework with SSR and App Router
+- **[Next.js 16.2.7](https://nextjs.org/)** – React framework with SSR and App Router
 - **[GSAP 3.15](https://gsap.com/)** – Industry-standard JavaScript animation library
-- **[React 19](https://react.dev/)** – Modern component-based UI
+- **[React 19.2.4](https://react.dev/)** – Modern component-based UI
 - **[Lenis 1.3](https://github.com/darkroom-digital/lenis)** – Buttery smooth scroll
 - **[Tailwind CSS 4](https://tailwindcss.com/)** – Utility-first styling
-- **[TypeScript](https://www.typescriptlang.org/)** – Full type safety
+- **[Convex](https://convex.dev/)** – Real-time backend and auth
+- **[TypeScript 5](https://www.typescriptlang.org/)** – Full type safety
 
 ---
 
-## 🚀 Quick Start (Playground)
+## 🚀 Quick Start (Run Locally)
 
 Want to run the full TweenLabs playground locally?
 
@@ -173,14 +213,26 @@ Want to run the full TweenLabs playground locally?
 # Install pnpm if you don't have it
 npm install -g pnpm
 
-# Clone and run
+# Clone the repo
 git clone https://github.com/TweenLabs/TweenLabs.git
 cd TweenLabs
+
+# Install dependencies
 pnpm install
+
+# Start the dev server
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) — pick any animation card and start exploring.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+| URL | Page |
+|-----|------|
+| `http://localhost:3000` | Home / Landing |
+| `http://localhost:3000/components` | All Components gallery |
+| `http://localhost:3000/components/MorphingText` | Individual component view |
+| `http://localhost:3000/playground` | AI-powered animation playground |
+| `http://localhost:3000/code/MorphingText` | Source code viewer (auth required) |
 
 ---
 
@@ -209,10 +261,10 @@ git push origin feat/your-animation-name
 
 ### Adding a New Component
 
-- Follow the folder pattern: `src/app/XX-component-name/`
-- Include a `page.tsx` with your animation
+- Create a folder: `src/app/(main)/components/YourComponent/`
+- Add `page.tsx` with your animation
+- Register it in `src/data/components.ts` with `id`, `name`, `componentName`, `route`, `bgColor`, `textColor`, `description`, and `tiltClass`
 - Add inline comments explaining the GSAP logic
-- Reference `gsapskills.md` for best practices
 
 ### Good First Contributions
 
@@ -238,6 +290,8 @@ git push origin feat/your-animation-name
 - [x] Auto-install missing dependencies
 - [x] Interactive component picker
 - [x] `components.json` / path resolution
+- [x] 22 production-ready GSAP components
+- [x] AI Playground (Beta)
 - [ ] Export as npm package (`@tweenlabs/components`)
 - [ ] Storybook integration for isolated component previews
 - [ ] Unit tests for animation logic
@@ -255,7 +309,7 @@ New to GSAP? These resources pair perfectly with this repo:
 - [GSAP + React Guide](https://gsap.com/resources/React/) — useGSAP hook
 - [ScrollTrigger Docs](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) — scroll animations
 - [Next.js Docs](https://nextjs.org/docs) — framework reference
-- [Lenis Docs](https://lenis.studiofreight.com/) — smooth scroll setup
+- [Lenis Docs](https://github.com/darkroom-digital/lenis) — smooth scroll setup
 
 ---
 
@@ -273,7 +327,7 @@ New to GSAP? These resources pair perfectly with this repo:
 
 **Built in public. Animated with love. Open to all. 🚀**
 
-<!-- 
+<!--
 SEARCH TAGS (do not remove — improves GitHub discoverability):
 tweenlabs, gsap animation library, gsap component library, gsap nextjs, gsap react components,
 open source animation, web animation components, lenis smooth scroll, scrolltrigger examples,

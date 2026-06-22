@@ -1,6 +1,6 @@
 # Contributing to TweenLabs
 
-Thank you for your interest in contributing to TweenLabs! We welcome animations, optimizations, bug fixes, and general improvements to this sandbox repository. 
+Thank you for your interest in contributing to TweenLabs! We welcome animations, optimizations, bug fixes, and general improvements to this repository.
 
 By contributing, you help make this playground a premium, production-ready resource for the entire front-end community.
 
@@ -24,7 +24,7 @@ To get started, follow these instructions to set up the codebase on your local m
    ```bash
    pnpm dev
    ```
-5. **Open Sandbox Dashboard**: Navigate to [http://localhost:3000](http://localhost:3000) in your web browser.
+5. **Open the App**: Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -33,23 +33,46 @@ To get started, follow these instructions to set up the codebase on your local m
 To maintain the high-fidelity standard of this repository, all contributions must adhere to the following principles:
 
 ### 1. Single-File Portability (Strict)
-Every new animation route/component **must be entirely self-contained** within its own directory and single `page.tsx` file under `/src/app/` (e.g. `/src/app/19-your-creative-animation/page.tsx`).
-*   **No local helper imports**: Do not import helper files from other route directories.
-*   **Zero external stylesheet dependencies**: Do not rely on custom classes declared in `/src/app/globals.css` (like `.dot-grid`, `.brutalist-btn`, `.tilt-right`). Any custom styling, micro-animations, or utility CSS must be declared inline or via standard Tailwind utility classes.
-*   **Zero tailwind.config overrides**: Do not use custom theme colors (like `bg-wtf-orange`, `wtf-yellow`) or custom theme values (like specific borders/shadows) that require changes to the user's `tailwind.config.ts`. Instead, use exact hex color values directly (e.g. `bg-[#e55b3c]`, `selection:bg-[#f1b333]`, `shadow-[4px_4px_0px_#2a2a2a]`).
-*   **Self-Contained Sub-components**: If your animation uses sub-components (like a card item or button widget), define them inside the *same* `page.tsx` file.
-*   **Asset Management**: If you require images/icons, place them in `/public/` and reference them using absolute URLs (e.g., `/my-asset.svg`), or use inline SVGs as a backup.
 
-### 2. GSAP Implementation Standards
-*   Use the `@gsap/react` hook (`useGSAP`) rather than raw `useEffect` blocks to manage animation lifecycles.
-*   Always scope animations to a parent element using the `scope` parameter in `useGSAP`.
-*   Clean up event listeners, hover states, and temporary DOM elements on component unmount.
-*   If you define GSAP callbacks that read or write component state or refs, use a standard function structure and wrap inside `contextSafe` internally rather than declaring the hook wrapper directly on render.
+Every new animation **must be entirely self-contained** within its own directory under `src/app/(main)/components/YourComponent/page.tsx`.
 
-### 3. Design Aesthetics
-*   We target a clean, modern **Neo-Brutalist** or high-fidelity **glassmorphic** look.
-*   Use standard hex values representing our sandbox color palette (e.g., Orange: `#e55b3c`, Green: `#0c9367`, Yellow: `#f1b333`, Purple: `#6758a5`, Blue: `#3b82f6`).
-*   Incorporate thick dark borders (`border-3 border-[#2a2a2a]`), offset drop shadows (`shadow-[4px_4px_0px_#2a2a2a]`), and monospace font accents where appropriate.
+- **No local helper imports**: Do not import helper files from other route directories.
+- **Zero external stylesheet dependencies**: Do not rely on custom classes declared in `globals.css` (like `.dot-grid`, `.brutalist-btn`). Any custom styling must be declared inline or via standard Tailwind utility classes.
+- **Zero tailwind.config overrides**: Do not use custom theme colors (like `bg-wtf-orange`) that require changes to `tailwind.config.ts`. Use exact hex values instead (e.g. `bg-[#e55b3c]`).
+- **Self-Contained Sub-components**: If your animation uses sub-components, define them inside the same `page.tsx` file.
+- **Asset Management**: Place images/icons in `/public/` and reference them using absolute paths (e.g. `/my-asset.svg`), or use inline SVGs.
+
+### 2. Registering Your Component
+
+After creating your `page.tsx`, register the component in `src/data/components.ts`:
+
+```ts
+{
+  id: "23",                          // next sequential number
+  name: "Your Animation",            // display name
+  componentName: "YourAnimation",    // PascalCase — matches folder name
+  route: "/components/YourAnimation",
+  bgColor: "bg-wtf-green",           // pick one of the palette colors
+  textColor: "text-white",
+  description: "One sentence describing what this animation does.",
+  tiltClass: "tilt-left",            // tilt-left | tilt-right | tilt-left-lg | tilt-right-lg
+}
+```
+
+**Available palette colors:** `bg-wtf-green`, `bg-wtf-orange`, `bg-wtf-purple`, `bg-wtf-blue`, `bg-wtf-yellow`, `bg-wtf-red`
+
+### 3. GSAP Implementation Standards
+
+- Use the `@gsap/react` hook (`useGSAP`) rather than raw `useEffect` blocks.
+- Always scope animations to a parent element using the `scope` parameter in `useGSAP`.
+- Clean up event listeners, hover states, and temporary DOM elements on unmount.
+- Use `contextSafe` for GSAP callbacks that reference component state or refs.
+
+### 4. Design Aesthetics
+
+- Target a clean, modern **Neo-Brutalist** or high-fidelity look.
+- Use our sandbox color palette: Orange `#e55b3c`, Green `#0c9367`, Yellow `#f1b333`, Purple `#6758a5`, Blue `#3b82f6`.
+- Incorporate thick dark borders (`border-2 border-[#2a2a2a]`), offset drop shadows (`shadow-[4px_4px_0px_#2a2a2a]`), and monospace font accents where appropriate.
 
 ---
 
@@ -57,10 +80,10 @@ Every new animation route/component **must be entirely self-contained** within i
 
 1. **Create a Feature Branch**:
    ```bash
-   git checkout -b feature/your-awesome-animation
+   git checkout -b feat/your-animation-name
    ```
-2. **Implement & Test**: Write your self-contained React page inside `/src/app/`. Make sure your new route is accessible!
-3. **Validate Code Cleanliness (Required)**: Before committing, ensure the linter runs cleanly and the TypeScript compiler compiles without error:
+2. **Implement & Test**: Write your self-contained React page inside `src/app/(main)/components/YourAnimation/page.tsx`. Make sure your new route is accessible at `/components/YourAnimation`.
+3. **Validate Code Cleanliness (Required)**: Before committing, ensure the linter runs cleanly:
    ```bash
    pnpm lint
    pnpm build
@@ -68,11 +91,36 @@ Every new animation route/component **must be entirely self-contained** within i
    *We will not merge PRs that fail CI builds or contain ESLint warnings.*
 4. **Commit Changes**: Use clean, descriptive commit messages:
    ```bash
-   git commit -m "feat: add interactive mouse-inertia coverflow carousel"
+   git commit -m "feat: add [animation name]"
    ```
 5. **Push and Submit**: Push to your fork and submit a Pull Request (PR) to our `master` branch.
 
 ---
 
+## ✅ Good First Contributions
+
+- Add explanatory comments to existing animations
+- Test on mobile/tablet and report issues
+- Create animation variants with different easing curves
+- Improve accessibility (`prefers-reduced-motion`, ARIA roles)
+- Write or improve documentation
+
+---
+
+## 📐 Code Guidelines
+
+- Use CSS transforms (`x`, `y`, `scale`) — never layout properties for animation
+- Always respect `prefers-reduced-motion`
+- TypeScript only — no `any` types
+- Write descriptive commit messages
+- Keep components focused and self-contained
+
+---
+
 ## 🤝 Code of Conduct
-Please review and follow our [Code of Conduct](CODE_OF_CONDUCT.md) in all community interactions.
+
+Be kind, be constructive. We're all here to learn and build something great together. Discriminatory or disrespectful behavior will not be tolerated.
+
+---
+
+**Built in public. Animated with love. Open to all. 🚀**

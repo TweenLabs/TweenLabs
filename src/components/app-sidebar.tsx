@@ -36,10 +36,15 @@ const categories: CategoryGroup[] = [
   {
     label: "Quick Setup",
     items: [
-      { name: "Installation", href: "/components" },
-      { name: "How to Setup", href: "/components" },
-      { name: "Collaborate", href: "https://github.com/TweenLabs/TweenLabs", external: true },
+      { name: "Installation & Setup", href: "/components" },
+      { name: "Contribution", href: "/contribution" },
       { name: "Playground", href: "/playground", badge: "BETA", badgeColor: "bg-[#0c9367] text-white" },
+    ],
+  },
+  {
+    label: "All Components",
+    items: [
+      { name: "Browse All", href: "/components" },
     ],
   },
   {
