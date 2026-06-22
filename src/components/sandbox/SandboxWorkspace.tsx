@@ -43,8 +43,6 @@ export default function App() {
 export default function SandboxWorkspace() {
   const [mounted, setMounted] = useState(false);
   const [code, setCode] = useState<string>(defaultCodeString);
-  const [, setCompileLogs] = useState<string[]>([]);
-  const [, setIsCompiling] = useState(false);
 
   // Preview panel state (hoisted for unified toolbar)
   const [remountKey, setRemountKey] = useState(0);
@@ -62,9 +60,6 @@ export default function SandboxWorkspace() {
     },
   );
 
-  const handleCompileStart = () => setIsCompiling(true);
-  const handleCompileSuccess = (logs: string[]) => { setIsCompiling(false); setCompileLogs(logs); };
-  const handleCompileError = (_err: Error) => setIsCompiling(false);
   const handleReplay = () => setRemountKey((prev) => prev + 1);
 
   if (!mounted) {
@@ -115,9 +110,6 @@ export default function SandboxWorkspace() {
             <PreviewPanel
               code={code}
               onCodeChange={setCode}
-              onCompileStart={handleCompileStart}
-              onCompileSuccess={handleCompileSuccess}
-              onCompileError={handleCompileError}
               remountKey={remountKey}
               showCode={showCode}
               theme={theme}

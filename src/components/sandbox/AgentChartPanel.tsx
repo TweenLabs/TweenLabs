@@ -5,7 +5,6 @@ import {
   Send,
   Bot,
   User,
-  CornerDownLeft,
   Loader2,
   CheckCircle2,
   AlertTriangle,

@@ -43,7 +43,7 @@ export default function PlaygroundToolbar({
       </div>
 
       {/* Divider matching the panel split */}
-      <div className="self-stretch w-[3px] bg-[#2a2a2a]" />
+      <div className="self-stretch w-px bg-zinc-200" />
 
       {/* Right: Preview Controls (70% to match preview panel) */}
       <div className="flex-1 flex items-center justify-between px-4">

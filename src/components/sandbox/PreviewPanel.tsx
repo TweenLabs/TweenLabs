@@ -6,9 +6,9 @@ import LiveRunner from "./LiveRunner";
 interface PreviewPanelProps {
   code: string;
   onCodeChange: (newCode: string) => void;
-  onCompileStart: () => void;
-  onCompileSuccess: (logs: string[]) => void;
-  onCompileError: (err: Error) => void;
+  onCompileStart?: () => void;
+  onCompileSuccess?: (logs: string[]) => void;
+  onCompileError?: (err: Error) => void;
   remountKey: number;
   showCode: boolean;
   theme: "default" | "white" | "dark";

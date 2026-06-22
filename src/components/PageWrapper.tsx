@@ -45,8 +45,18 @@ export default function PageWrapper({
     };
   }, [pathname]);
 
+  // Determine if this route uses its own sidebar layout and should skip PageWrapper entirely
+  const isSidebarLayout =
+    isComponentsPage ||
+    isCodePage ||
+    isPlayground ||
+    normalizedPath.startsWith("/contribution") ||
+    normalizedPath.startsWith("/installation");
+
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // Skip Lenis initialization for routes that have their own layout
+    if (isSidebarLayout) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -140,10 +150,10 @@ export default function PageWrapper({
       lenis.destroy();
       gsap.ticker.remove(gsapTick);
     };
-  }, [isDemoPage]);
+  }, [isDemoPage, isSidebarLayout]);
 
   // /components, /code, /contribution, /installation and /playground pages have their own layout (custom header + sidebar) — skip PageWrapper entirely
-  if (isComponentsPage || isCodePage || isPlayground || normalizedPath.startsWith("/contribution") || normalizedPath.startsWith("/installation")) {
+  if (isSidebarLayout) {
     return <>{children}</>;
   }
 
@@ -156,9 +166,7 @@ export default function PageWrapper({
         className={
           isDemoPage
             ? "flex-grow w-full relative overflow-y-auto overflow-x-hidden mt-[53px] md:mt-16 demo-page-container"
-            : isPlayground
-              ? "flex-1 flex flex-col w-full relative pt-[59px] md:pt-[67px]"
-              : "flex-1 flex flex-col w-full relative pt-[69px] md:pt-24"
+            : "flex-1 flex flex-col w-full relative pt-[69px] md:pt-24"
         }
         style={isDemoPage ? { height: "calc(100dvh - 53px)" } : undefined}
       >

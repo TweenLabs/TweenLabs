@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PlaygroundPage() {
   return (
-    <div className="w-full h-[calc(100svh-75px)] flex flex-col">
+    <div className="w-full h-full flex flex-col">
       <SandboxWorkspace />
     </div>
   );
