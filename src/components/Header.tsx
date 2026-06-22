@@ -122,15 +122,6 @@ export default function Header() {
             </button>
           )}
 
-          {codeAnim && (
-            <Link
-              href={codeAnim.route}
-              className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-xs py-1.5 px-3.5 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150"
-              aria-label={`View live sandbox demo for ${codeAnim.name}`}
-            >
-              View Demo
-            </Link>
-          )}
 
           <a
             href="https://github.com/TweenLabs/TweenLabs"
@@ -241,15 +232,6 @@ export default function Header() {
                 </button>
               )}
 
-              {codeAnim && (
-                <Link
-                  href={codeAnim.route}
-                  className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-[11px] py-2.5 px-4 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 text-center"
-                  aria-label={`View live sandbox demo for ${codeAnim.name}`}
-                >
-                  View Demo
-                </Link>
-              )}
 
               <a
                 href="https://github.com/TweenLabs/TweenLabs"

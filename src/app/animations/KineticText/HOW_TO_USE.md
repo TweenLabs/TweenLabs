@@ -37,7 +37,7 @@ npm install gsap @gsap/react
 
 1. Click the **"Full Component Code"** tab in the code viewer above
 2. Click the **"Copy"** button in the top-right corner
-3. In your project, create a new file: `src/components/KineticText.tsx`
+3. In your project, create a new file: `src/components/tweenlabs/KineticText.tsx`
 4. Paste the copied code into that file
 5. Save the file
 
@@ -48,7 +48,7 @@ Open the page where you want to use this component and add:
 ```tsx
 "use client";
 
-import KineticText from "@/components/KineticText";
+import KineticText from "@/components/tweenlabs/KineticText";
 
 export default function MyPage() {
   return (

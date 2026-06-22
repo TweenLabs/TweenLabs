@@ -451,40 +451,16 @@ const highlightCode = (code: string, fileName: string) => {
   });
 
   return html;
-};
-
-// Custom Markdown renderer
-function renderMarkdown(md: string) {
+};// Custom Markdown renderer
+function renderMarkdown(
+  md: string,
+  slug?: string,
+  pkgManager: "npm" | "pnpm" | "yarn" | "bun" = "npm",
+  setPkgManager?: (pm: "npm" | "pnpm" | "yarn" | "bun") => void
+) {
   if (!md) return null;
 
   const lines = md.split("\n");
-  const filteredLines = [];
-  let skipCodeBlock = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    if (line.trim().startsWith("```")) {
-      skipCodeBlock = !skipCodeBlock;
-      continue;
-    }
-    if (skipCodeBlock) continue;
-
-    if (
-      line.startsWith("# ") ||
-      (line.startsWith("## ") &&
-        (line.toLowerCase().includes("customization") ||
-          line.toLowerCase().includes("properties") ||
-          line.toLowerCase().includes("props"))) ||
-      line.toLowerCase().includes("setup &amp; dependencies") ||
-      line.toLowerCase().includes("setup & dependencies")
-    ) {
-      continue;
-    }
-
-    filteredLines.push(line);
-  }
-
   const elements: React.ReactNode[] = [];
   let currentList: React.ReactNode[] = [];
   let listType: "ordered" | "unordered" | null = null;
@@ -615,8 +591,207 @@ function renderMarkdown(md: string) {
     return <span dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
-  for (let i = 0; i < filteredLines.length; i++) {
-    const line = filteredLines[i];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Check if we are starting a code block
+    if (line.trim().startsWith("```")) {
+      flushList(String(i));
+      flushBlockquote(String(i));
+
+      const lang = line.trim().slice(3).toLowerCase();
+      const codeLines: string[] = [];
+      i++; // Move to next line
+
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+
+      const codeContent = codeLines.join("\n");
+      const isBash = lang === "bash" || lang === "sh" || lang === "cmd" || lang === "shell";
+
+      // Match CLI installation commands
+      if (codeContent.includes("tweenlabs@latest add") && slug) {
+        elements.push(
+          <div key={`code-block-cli-${i}`} className="my-3.5 max-w-xl">
+            <div
+              className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a] md:shadow-[3.5px_3.5px_0px_#2a2a2a] w-full max-w-md"
+            >
+              <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-3 md:px-4 py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400 select-none">
+                <div className="flex gap-2">
+                  {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
+                    <button
+                      key={pm}
+                      onClick={() => setPkgManager && setPkgManager(pm)}
+                      className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-none cursor-pointer ${
+                        pkgManager === pm
+                          ? "bg-wtf-orange text-white"
+                          : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-355"
+                      }`}
+                    >
+                      {pm === "npm" ? "npx" : pm}
+                    </button>
+                  ))}
+                </div>
+                <CopyButton text={getCliCommand(pkgManager, slug)} />
+              </div>
+              <div className="p-3 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 select-all overflow-x-auto leading-relaxed whitespace-pre">
+                {getCliCommand(pkgManager, slug)}
+              </div>
+            </div>
+
+            {/* Disclaimer & Notice banner */}
+            <div className="my-3.5 p-3 md:p-4 border-2 border-[#2a2a2a] bg-amber-50/70 text-amber-900 rounded-lg shadow-[2.5px_2.5px_0px_#2a2a2a] flex gap-2.5 max-w-md">
+              <span className="text-base select-none">⚠️</span>
+              <div className="flex-1 min-w-0">
+                <div className="font-mono font-black text-[10px] md:text-xs uppercase tracking-wider mb-0.5">
+                  CLI Notice & Disclaimer
+                </div>
+                <p className="font-sans font-medium text-[11px] md:text-xs leading-relaxed">
+                  Make sure to run the installation command in your project's root directory. It automatically creates the file under <code className="bg-amber-100/50 px-1 py-0.5 border border-amber-300 rounded font-mono text-[10px] font-bold text-wtf-orange">src/components/tweenlabs/</code> and resolves dependencies automatically. Back up your work if you have conflicting filenames.
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+        continue;
+      }
+
+      // Match core dependencies installation
+      if (codeContent.includes("npm install gsap @gsap/react")) {
+        elements.push(
+          <div
+            key={`code-block-deps-${i}`}
+            className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a] md:shadow-[3.5px_3.5px_0px_#2a2a2a] w-full max-w-md my-3.5"
+          >
+            <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-3 md:px-4 py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400 select-none">
+              <div className="flex gap-2">
+                {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
+                  <button
+                    key={pm}
+                    onClick={() => setPkgManager && setPkgManager(pm)}
+                    className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-none cursor-pointer ${
+                      pkgManager === pm
+                        ? "bg-wtf-orange text-white"
+                        : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-355"
+                    }`}
+                  >
+                    {pm}
+                  </button>
+                ))}
+              </div>
+              <CopyButton text={getInstallCommand(pkgManager)} />
+            </div>
+            <div className="p-3 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 select-all overflow-x-auto leading-relaxed whitespace-pre">
+              {getInstallCommand(pkgManager)}
+            </div>
+          </div>
+        );
+        continue;
+      }
+
+      let highlightedHtml = "";
+      if (isBash) {
+        highlightedHtml = codeContent
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      } else {
+        const fileExt = lang === "tsx" || lang === "jsx" ? "code.tsx" : lang === "css" ? "styles.css" : "code.js";
+        highlightedHtml = highlightCode(codeContent, fileExt);
+      }
+
+      const langLabel = lang.toUpperCase() || "CODE";
+
+      elements.push(
+        <div
+          key={`code-block-${i}`}
+          className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a] md:shadow-[3.5px_3.5px_0px_#2a2a2a] w-full max-w-xl my-3.5"
+        >
+          <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-3 md:px-4 py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
+            <span>{langLabel}</span>
+            <CopyButton text={codeContent} />
+          </div>
+          <pre className="p-3 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 overflow-x-auto scrollbar-none select-text whitespace-pre leading-relaxed">
+            {isBash ? (
+              <code>{highlightedHtml}</code>
+            ) : (
+              <code dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+            )}
+          </pre>
+        </div>
+      );
+      continue;
+    }
+
+    // Table detection
+    if (line.trim().startsWith("|")) {
+      flushList(String(i));
+      flushBlockquote(String(i));
+
+      const tableRows: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith("|")) {
+        tableRows.push(lines[i].trim());
+        i++;
+      }
+      i--; // Offset the loop increment
+
+      if (tableRows.length >= 2) {
+        const headerRow = tableRows[0];
+        const separatorRow = tableRows[1];
+        const bodyRows = tableRows.slice(2);
+
+        if (separatorRow.includes("-")) {
+          const parseRowCells = (rowStr: string) => {
+            const cells = rowStr.replace(/^\||\|$/g, "").split("|");
+            return cells.map(c => c.trim());
+          };
+
+          const headers = parseRowCells(headerRow);
+          const rowsData = bodyRows.map(row => parseRowCells(row));
+
+          elements.push(
+            <div key={`table-wrapper-${i}`} className="overflow-x-auto my-4 border-2 border-[#2a2a2a] rounded-lg shadow-[2.5px_2.5px_0px_#2a2a2a] bg-white">
+              <table className="w-full text-left border-collapse font-sans text-xs md:text-sm">
+                <thead>
+                  <tr className="bg-zinc-50 border-b-2 border-[#2a2a2a]">
+                    {headers.map((h, idx) => (
+                      <th key={idx} className="p-3 font-black text-[#2a2a2a] uppercase font-mono text-[10px] md:text-xs border-r border-[#2a2a2a] last:border-r-0">
+                        {parseInlineMarkdown(h)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rowsData.map((rowData, rIdx) => (
+                    <tr key={rIdx} className="border-b border-zinc-200 last:border-b-0 hover:bg-zinc-50/50 transition-colors">
+                      {rowData.map((cell, cIdx) => (
+                        <td key={cIdx} className="p-3 text-zinc-700 font-medium border-r border-zinc-200 last:border-r-0">
+                          {parseInlineMarkdown(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          continue;
+        }
+      }
+    }
+
+    if (
+      line.startsWith("# ") ||
+      line.toLowerCase().startsWith("## customization") ||
+      line.toLowerCase().startsWith("## properties") ||
+      line.toLowerCase().startsWith("## props") ||
+      line.toLowerCase().includes("setup &amp; dependencies") ||
+      line.toLowerCase().includes("setup & dependencies")
+    ) {
+      continue;
+    }
 
     if (line.trim().startsWith(">")) {
       flushList(String(i));
@@ -630,13 +805,18 @@ function renderMarkdown(md: string) {
       flushBlockquote(String(i));
     }
 
-    if (line.startsWith("## ")) {
+    if (line.startsWith("---")) {
+      flushList(String(i));
+      elements.push(
+        <hr key={`hr-${i}`} className="my-6 border-t-2 border-dashed border-zinc-200" />
+      );
+    } else if (line.startsWith("## ")) {
       flushList(String(i));
       const val = line.slice(3).trim();
       elements.push(
         <h3
           key={`h2-${i}`}
-          className="text-lg md:text-xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-6 md:mt-8 mb-3 md:mb-4 border-b border-zinc-200 pb-2"
+          className="text-lg md:text-xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] mt-6 md:mt-8 mb-3 md:mb-4 border-b-3 border-[#2a2a2a] pb-2"
         >
           {parseInlineMarkdown(val)}
         </h3>,
@@ -727,6 +907,7 @@ export default function CodePageClient({
   pageCode,
   standaloneCode,
   coreGsapCode,
+  setupGuide,
   customization,
 }: CodePageClientProps) {
   const { session, isPending } = useSession();
@@ -874,7 +1055,7 @@ export default function CodePageClient({
         <div className="flex flex-wrap gap-2 md:gap-4">
           <Link href={`/${slug}`}>
             <button className="brutalist-btn bg-wtf-yellow hover:bg-[#e5a420] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2 px-4 md:py-3 md:px-6 rounded-lg uppercase tracking-wider cursor-pointer shadow-[2.5px_2.5px_0px_#2a2a2a] md:shadow-[3.5px_3.5px_0px_#2a2a2a]">
-              ← View Sandbox
+              ← View Demo
             </button>
           </Link>
           <Link href="/">
@@ -1059,238 +1240,111 @@ export default function CodePageClient({
             <h2 className="text-xl md:text-3xl font-serif font-black uppercase tracking-tight text-[#2a2a2a]">
               ⚙️ Setup & Integration
             </h2>
-            <p className="text-[10px] md:text-xs font-mono font-bold text-wtf-orange uppercase tracking-wider mt-1">
-              Install, import & configure
-            </p>
+            <div className="flex flex-wrap items-center gap-2 mt-1">
+              <span className="text-[10px] md:text-xs font-mono font-bold text-wtf-orange uppercase tracking-wider">
+                Install, import & configure
+              </span>
+              <span className="text-[9px] font-mono font-bold bg-wtf-purple text-white px-2 py-0.5 rounded border-2 border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a] uppercase select-none">
+                Fully Customizable Component
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-col gap-6 md:gap-8 font-sans font-medium text-zinc-700 leading-relaxed text-xs md:text-sm">
             {/* CLI Option (Recommended) */}
             <div className="flex gap-3 md:gap-4 items-start pb-6 md:pb-8 border-b-2 border-dashed border-zinc-200">
-              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1 select-none">
                 💻
               </div>
               <div className="flex-1 flex flex-col gap-2 md:gap-3 min-w-0">
                 <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                  Option A: Install via CLI
+                  Option A: Install via CLI (Recommended)
                 </h3>
-                <p>
-                  You can install this component directly into your project via
-                  the TweenLabs CLI. It automatically creates the file and
-                  configures dependencies:
+                <p className="text-xs md:text-sm text-zinc-650">
+                  The fastest and easiest way to add this component. Running the CLI command automatically installs dependencies, creates the component file under <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-purple">src/components/tweenlabs/{slug}.tsx</code>, and configures everything for you automatically.
                 </p>
-                <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] w-full max-w-md mt-1">
-                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-2.5 md:px-4 py-1.5 md:py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
+                
+                {/* Interactive CLI Widget */}
+                <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a] md:shadow-[3.5px_3.5px_0px_#2a2a2a] w-full max-w-md mt-2">
+                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-3 md:px-4 py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400 select-none">
                     <div className="flex gap-2">
                       {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
                         <button
                           key={pm}
                           onClick={() => setPkgManager(pm)}
-                          className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                          className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-none cursor-pointer ${
                             pkgManager === pm
                               ? "bg-wtf-orange text-white"
                               : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
                           }`}
                         >
-                          {pm}
+                          {pm === "npm" ? "npx" : pm}
                         </button>
                       ))}
                     </div>
                     <CopyButton text={getCliCommand(pkgManager, slug)} />
                   </div>
-                  <div className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 select-all overflow-x-auto">
+                  <div className="p-3 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 select-all overflow-x-auto leading-relaxed">
                     {getCliCommand(pkgManager, slug)}
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Manual Option */}
-            <div className="flex flex-col gap-2 -mb-2 mt-1 md:mt-2">
-              <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none">
-                Option B: Manual Installation
-              </h3>
-              <p className="text-xs text-zinc-500 font-medium">
-                Follow these steps to integrate the component into your project
-                manually:
-              </p>
-            </div>
-
-            {/* Step 1: Install Dependencies */}
-            <div className="flex gap-3 md:gap-4 items-start">
-              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-orange border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                1
-              </div>
-              <div className="flex-1 flex flex-col gap-2 md:gap-3 min-w-0">
-                <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                  Install Packages
-                </h3>
-                <p>
-                  First, install GSAP and its official React hook helper library
-                  (
-                  <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-orange">
-                    @gsap/react
-                  </code>
-                  ).
-                </p>
-                <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] w-full max-w-md mt-1">
-                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-2.5 md:px-4 py-1.5 md:py-2 flex items-center justify-between text-[10px] md:text-xs font-mono text-zinc-400">
-                    <div className="flex gap-2">
-                      {(["npm", "pnpm", "yarn", "bun"] as const).map((pm) => (
-                        <button
-                          key={pm}
-                          onClick={() => setPkgManager(pm)}
-                          className={`px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-bold uppercase transition-all cursor-pointer ${
-                            pkgManager === pm
-                              ? "bg-wtf-orange text-white"
-                              : "hover:bg-zinc-800 text-zinc-500 hover:text-zinc-350"
-                          }`}
-                        >
-                          {pm}
-                        </button>
-                      ))}
+                {/* Important notices / disclaimer */}
+                <div className="my-3 p-3 md:p-4 border-2 border-[#2a2a2a] bg-amber-50/70 text-amber-900 rounded-lg shadow-[2px_2px_0px_#2a2a2a] flex gap-2.5">
+                  <span className="text-base select-none">⚠️</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-mono font-black text-[10px] md:text-xs uppercase tracking-wider mb-0.5">
+                      Disclaimer & Notice
                     </div>
-                    <CopyButton text={getInstallCommand(pkgManager)} />
-                  </div>
-                  <div className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 select-all overflow-x-auto">
-                    {getInstallCommand(pkgManager)}
+                    <p className="font-sans font-medium text-xs md:text-sm leading-relaxed">
+                      Make sure to run the installation command in your project's root directory. It automatically updates files and resolves dependencies. Back up your work if you have custom conflicts.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Step 2: Add Required CSS */}
-            {cssCode && (
-              <div className="flex gap-3 md:gap-4 items-start">
-                <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                  2
-                </div>
-                <div className="flex-1 flex flex-col gap-2 md:gap-3 min-w-0">
-                  <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                    Add Required CSS Styles
-                  </h3>
-                  <p>
-                    Copy the styles from the{" "}
-                    <span className="font-bold text-black underline decoration-wtf-purple decoration-2">
-                      Required CSS
-                    </span>{" "}
-                    tab above, or open the{" "}
-                    <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-purple">
-                      styles.css
-                    </code>{" "}
-                    file that was automatically downloaded with your component.
-                    Paste these classes into your global stylesheet (e.g.{" "}
-                    <code className="bg-zinc-100 px-1 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-wtf-purple">
-                      src/app/globals.css
-                    </code>{" "}
-                    or similar).
-                  </p>
-                </div>
+            {/* Manual Option header */}
+            <div className="flex gap-3 md:gap-4 items-start pt-2">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-green border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1 select-none">
+                📂
               </div>
-            )}
-
-            {/* Step 3: Add Component File */}
-            <div className="flex gap-3 md:gap-4 items-start">
-              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-green border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                3
-              </div>
-              <div className="flex-1 flex flex-col gap-2 md:gap-3 min-w-0">
+              <div className="flex-1 flex flex-col gap-2 min-w-0">
                 <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                  Create Component File
+                  Option B: Manual Installation
                 </h3>
-                <p>
-                  Create a new file in your React or Next.js project (e.g.{" "}
-                  <code className="bg-zinc-100 px-1.5 py-0.5 border border-zinc-200 rounded font-mono text-xs font-bold text-[#e55b3c]">
-                    src/components/{componentName}.tsx
-                  </code>
-                  ) and paste the code from the{" "}
-                  <span className="font-bold text-black underline decoration-wtf-green decoration-2">
-                    Standalone React Component
-                  </span>{" "}
-                  tab above. If no standalone tab is available, copy the full
-                  page file code and adjust the routing logic for your needs.
+                <p className="text-xs md:text-sm text-zinc-650">
+                  Follow these step-by-step instructions to manually download, copy, and set up the code inside your project.
                 </p>
               </div>
             </div>
 
-            {/* Step 4: ScrollTrigger (If needed) */}
-            {usesScrollTrigger && (
-              <div className="flex gap-3 md:gap-4 items-start border-l-4 border-wtf-yellow pl-3 md:pl-4 my-2">
-                <div className="flex-1 flex flex-col gap-2">
-                  <h4 className="font-serif font-black uppercase text-xs md:text-sm text-[#2a2a2a] flex items-center gap-2">
-                    ⚠️ ScrollTrigger Plugin Notice
-                  </h4>
-                  <p className="text-xs text-zinc-650 leading-relaxed">
-                    This component uses scroll-triggered timing events. Make
-                    sure to register the plugin as shown inside the code:
-                  </p>
-                  <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[2.5px_2.5px_0px_#2a2a2a] w-full max-w-xl mt-1">
-                    <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-                      <span>GSAP Registration</span>
-                      <CopyButton
-                        text={`import { ScrollTrigger } from "gsap/ScrollTrigger";\ngsap.registerPlugin(useGSAP, ScrollTrigger);`}
-                      />
-                    </div>
-                    <pre className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 overflow-x-auto scrollbar-none">
-                      {`import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(useGSAP, ScrollTrigger);`}
-                    </pre>
-                  </div>
-                </div>
+            {/* Render dynamic setup guide */}
+            {setupGuide && setupGuide.trim() !== "" ? (
+              <div className="pl-0 md:pl-12">
+                {renderMarkdown(setupGuide, slug, pkgManager, setPkgManager)}
               </div>
-            )}
-
-            {/* Step 5: Import & Render */}
-            <div className="flex gap-3 md:gap-4 items-start">
-              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-blue border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                4
-              </div>
-              <div className="flex-1 flex flex-col gap-2 md:gap-3 min-w-0">
-                <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                  Import & Render
-                </h3>
-                <p>
-                  Import and render the component in your page or view layout:
-                </p>
-                <div className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2px_2px_0px_#2a2a2a] md:shadow-[3px_3px_0px_#2a2a2a] w-full max-w-xl mt-1">
-                  <div className="bg-[#181818] border-b-2 border-[#2a2a2a] px-4 py-2 flex items-center justify-between text-xs font-mono text-zinc-400">
-                    <span>App Page</span>
-                    <CopyButton
-                      text={`import ${componentName} from "@/components/${componentName}";\n\nexport default function Page() {\n  return (\n    <main className="min-h-screen p-8 bg-[#f5f5f5] flex items-center justify-center">\n      <${componentName} />\n    </main>\n  );\n}`}
-                    />
-                  </div>
-                  <pre className="p-2.5 md:p-4 font-mono text-[10px] md:text-xs text-emerald-400 overflow-x-auto scrollbar-none">
-                    {`import ${componentName} from "@/components/${componentName}";
-
-export default function Page() {
-  return (
-    <main className="min-h-screen p-8 bg-[#f5f5f5] flex items-center justify-center">
-      <${componentName} />
-    </main>
-  );
-}`}
-                  </pre>
-                </div>
-              </div>
-            </div>
-
-            {/* Custom markdown customization section from HOW_TO_USE.md if present */}
-            {customization && customization.trim() !== "" && (
-              <div className="mt-6 md:mt-8 border-t-2 border-zinc-200 pt-6 md:pt-8 flex gap-3 md:gap-4 items-start">
-                <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
-                  💡
-                </div>
-                <div className="flex-1 flex flex-col gap-3 md:gap-4 min-w-0">
-                  <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
-                    Customization & Properties
-                  </h3>
-                  <div className="prose prose-zinc max-w-none text-zinc-750 font-sans font-medium text-xs md:text-sm">
-                    {renderMarkdown(customization)}
-                  </div>
-                </div>
-              </div>
+            ) : (
+              <p className="text-zinc-550 font-mono text-xs italic pl-0 md:pl-12">No manual setup guide available for this component.</p>
             )}
           </div>
+
+          {/* Custom markdown customization section from HOW_TO_USE.md if present */}
+          {customization && customization.trim() !== "" && (
+            <div className="mt-6 md:mt-8 border-t-2 border-zinc-200 pt-6 md:pt-8 flex gap-3 md:gap-4 items-start">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-wtf-purple border-2 border-[#2a2a2a] text-white font-mono font-bold text-[10px] md:text-xs flex items-center justify-center shadow-[1.5px_1.5px_0px_#2a2a2a] mt-1">
+                💡
+              </div>
+              <div className="flex-1 flex flex-col gap-3 md:gap-4 min-w-0">
+                <h3 className="text-sm md:text-lg font-serif font-black uppercase text-[#2a2a2a] leading-none mt-1">
+                  Customization & Properties
+                </h3>
+                <div className="prose prose-zinc max-w-none text-zinc-750 font-sans font-medium text-xs md:text-sm">
+                  {renderMarkdown(customization, slug, pkgManager, setPkgManager)}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

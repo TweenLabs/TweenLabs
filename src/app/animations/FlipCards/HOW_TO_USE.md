@@ -39,7 +39,7 @@ npm install gsap @gsap/react
 
 1. Click the **"Full Component Code"** tab in the code viewer above
 2. Click the **"Copy"** button in the top-right corner
-3. In your project, create a new file: `src/components/FlipCards.tsx`
+3. In your project, create a new file: `src/components/tweenlabs/FlipCards.tsx`
 4. Paste the copied code into that file
 5. Save the file
 
@@ -50,7 +50,7 @@ Open the page where you want to use this component and add:
 ```tsx
 "use client";
 
-import FlipCards from "@/components/FlipCards";
+import FlipCards from "@/components/tweenlabs/FlipCards";
 
 export default function MyPage() {
   return (

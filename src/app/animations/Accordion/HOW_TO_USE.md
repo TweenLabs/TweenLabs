@@ -39,7 +39,7 @@ npm install gsap @gsap/react
 
 1. Click the **"Full Component Code"** tab in the code viewer above
 2. Click the **"Copy"** button in the top-right corner
-3. In your project, create a new file: `src/components/Accordion.tsx`
+3. In your project, create a new file: `src/components/tweenlabs/Accordion.tsx`
 4. Paste the copied code into that file
 5. Save the file
 
@@ -50,7 +50,7 @@ Open the page where you want to use this component and add:
 ```tsx
 "use client";
 
-import Accordion from "@/components/Accordion";
+import Accordion from "@/components/tweenlabs/Accordion";
 
 export default function MyPage() {
   return (

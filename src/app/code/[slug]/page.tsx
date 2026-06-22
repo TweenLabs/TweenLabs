@@ -77,10 +77,12 @@ function parseHowToUse(markdown: string): ParsedMarkdown {
       setupParts.push(sec.trim());
     } else if (
       headerText.startsWith("quick start") ||
-      headerText.startsWith("manual installation") ||
+      headerText.startsWith("manual installation")
+    ) {
+      // Skip these since they are rendered as Option A and Option B wrappers in CodePageClient
+    } else if (
       headerText.startsWith("step ")
     ) {
-      // New beginner-friendly format — collect all setup parts
       setupParts.push(sec.trim());
     } else if (
       headerText.includes("customization") ||
@@ -90,7 +92,6 @@ function parseHowToUse(markdown: string): ParsedMarkdown {
     ) {
       result.customization = sec.trim();
     } else if (headerText.startsWith("troubleshooting")) {
-      // Append troubleshooting to setup guide
       setupParts.push(sec.trim());
     } else if (headerText.startsWith("how the animation")) {
       // Skip this wrapper — core gsap code is extracted separately
@@ -220,7 +221,7 @@ export default async function CodePage({ params }: PageProps) {
       {
         "@type": "HowToStep",
         name: "Save Component File",
-        text: `Create a new file src/components/${slug}.tsx and paste the Standalone Component Code.`,
+        text: `Create a new file src/components/tweenlabs/${slug}.tsx and paste the Standalone Component Code.`,
         url: `https://tweenlabs.xyz/code/${slug}#step-2`,
       },
       {
