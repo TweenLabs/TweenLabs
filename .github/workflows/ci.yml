@@ -41,13 +41,13 @@ jobs:
       # ── Component Integrity Checks ─────────────────────────
       - name: Verify animation registry matches folders
         run: |
-          FOLDER_COUNT=$(find src/app/animations -mindepth 1 -maxdepth 1 -type d | wc -l)
-          REGISTRY_COUNT=$(grep -c '"componentName"' src/data/animations.ts)
+          FOLDER_COUNT=$(find 'src/app/(main)/components' -mindepth 1 -maxdepth 1 -type d | wc -l)
+          REGISTRY_COUNT=$(grep -c '"componentName"' src/data/components.ts)
           echo "📁 Animation folders: $FOLDER_COUNT"
           echo "📋 Registry entries:  $REGISTRY_COUNT"
           if [ "$FOLDER_COUNT" -ne "$REGISTRY_COUNT" ]; then
             echo "❌ MISMATCH: $FOLDER_COUNT folders vs $REGISTRY_COUNT registry entries"
-            echo "Every animation folder needs a matching entry in src/data/animations.ts"
+            echo "Every animation folder needs a matching entry in src/data/components.ts"
             exit 1
           fi
           echo "✅ Registry is in sync"
@@ -55,7 +55,7 @@ jobs:
       - name: Verify every component has required files
         run: |
           MISSING=0
-          for dir in src/app/animations/*/; do
+          for dir in 'src/app/(main)/components'/*/; do
             NAME=$(basename "$dir")
             for file in page.tsx layout.tsx HOW_TO_USE.md; do
               if [ ! -f "$dir$file" ]; then
@@ -73,7 +73,7 @@ jobs:
       - name: Check components are self-contained (no project imports)
         run: |
           VIOLATIONS=0
-          for file in src/app/animations/*/page.tsx; do
+          for file in 'src/app/(main)/components'/*/page.tsx; do
             if grep -qE "from ['\"]@/" "$file"; then
               echo "❌ $file has project imports (@/...):"
               grep -n "from ['\"]@/" "$file"
@@ -89,7 +89,7 @@ jobs:
       - name: Check no custom Tailwind classes in components
         run: |
           VIOLATIONS=0
-          for file in src/app/animations/*/page.tsx; do
+          for file in 'src/app/(main)/components'/*/page.tsx; do
             if grep -qE "(bg|text|border)-wtf-" "$file"; then
               echo "❌ $file uses custom theme classes (wtf-*):"
               grep -n "(bg|text|border)-wtf-" "$file"
@@ -105,7 +105,7 @@ jobs:
       - name: Check all components start with 'use client'
         run: |
           VIOLATIONS=0
-          for file in src/app/animations/*/page.tsx; do
+          for file in 'src/app/(main)/components'/*/page.tsx; do
             FIRST_LINE=$(head -1 "$file" | tr -d '\r')
             if [ "$FIRST_LINE" != '"use client";' ]; then
               echo "❌ $file does not start with \"use client\"; (found: $FIRST_LINE)"
@@ -131,7 +131,7 @@ jobs:
             sleep 1
           done
           FAILURES=0
-          for dir in src/app/animations/*/; do
+          for dir in 'src/app/(main)/components'/*/; do
             NAME=$(basename "$dir")
             RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000/api/registry/$NAME")
             if [ "$RESPONSE" -ne 200 ]; then
@@ -157,7 +157,7 @@ jobs:
       - name: Check hosted asset URLs are valid
         run: |
           BROKEN=0
-          URLS=$(grep -roh 'https://tweenlabs\.xyz/[^"'"'"' )*]*' src/app/animations/*/page.tsx | sort -u)
+          URLS=$(grep -roh 'https://tweenlabs\.xyz/[^"'"'"' )*]*' 'src/app/(main)/components'/*/page.tsx | sort -u)
           if [ -z "$URLS" ]; then
             echo "ℹ️  No tweenlabs.xyz asset URLs found in components"
             exit 0
@@ -201,10 +201,10 @@ jobs:
             });
             const labels = new Set();
             for (const f of files) {
-              if (f.filename.startsWith('src/app/animations/') && f.status === 'added') {
+              if (f.filename.startsWith('src/app/(main)/components/') && f.status === 'added') {
                 labels.add('new-component');
               }
-              if (f.filename.startsWith('src/app/animations/') && f.status === 'modified') {
+              if (f.filename.startsWith('src/app/(main)/components/') && f.status === 'modified') {
                 labels.add('component-update');
               }
               if (f.filename.endsWith('.md')) {
