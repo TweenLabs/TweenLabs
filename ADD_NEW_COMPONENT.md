@@ -6,10 +6,10 @@ Quick reference guide. Follow these 2 steps every time you add a new animation.
 
 ## Step 1: Create the Folder
 
-Create a new folder inside `src/app/animations/` using PascalCase:
+Create a new folder inside `src/app/(main)/components/` using PascalCase:
 
 ```
-src/app/animations/NewComponent/
+src/app/(main)/components/NewComponent/
 ├── page.tsx
 ├── layout.tsx
 └── HOW_TO_USE.md
@@ -17,7 +17,7 @@ src/app/animations/NewComponent/
 
 The folder name = the component name = the URL slug. That's it.
 
-**URL will be:** `tweenlabs.xyz/animations/NewComponent`
+**URL will be:** `tweenlabs.xyz/components/NewComponent`
 
 ### page.tsx — Your Animation
 
@@ -136,16 +136,16 @@ Describe configurable props.
 
 ---
 
-## Step 2: Add Entry in `animations.ts`
+## Step 2: Add Entry in `components.ts`
 
-Open `src/data/animations.ts` and add to the array:
+Open `src/data/components.ts` and add to the array:
 
 ```ts
 {
-  id: "19",
+  id: "23",
   name: "New Component",                  // Display name on homepage cards
   componentName: "NewComponent",           // Must match folder name exactly
-  route: "/animations/NewComponent",       // /animations/ + componentName
+  route: "/components/NewComponent",       // /components/ + componentName
   bgColor: "bg-wtf-green",                // Card background color
   textColor: "text-white",                // Card text color
   description: "Description of the animation.",
@@ -198,12 +198,12 @@ npm run build
 You should see your new route:
 
 ```
-├ ƒ /animations/NewComponent
+├ ƒ /components/NewComponent
 ```
 
 Then test:
 
-- **Demo page:** `localhost:3000/animations/NewComponent`
+- **Demo page:** `localhost:3000/components/NewComponent`
 - **Code page:** `localhost:3000/code/NewComponent`
 - **API:** `localhost:3000/api/registry/NewComponent`
 
@@ -212,11 +212,11 @@ Then test:
 ## Quick Checklist
 
 ```
-[ ] Created src/app/animations/NewComponent/page.tsx
-[ ] Created src/app/animations/NewComponent/layout.tsx
-[ ] Created src/app/animations/NewComponent/HOW_TO_USE.md
-[ ] Added entry in src/data/animations.ts
+[ ] Created src/app/(main)/components/NewComponent/page.tsx
+[ ] Created src/app/(main)/components/NewComponent/layout.tsx
+[ ] Created src/app/(main)/components/NewComponent/HOW_TO_USE.md
+[ ] Added entry in src/data/components.ts
 [ ] Ran npm run build — no errors
-[ ] Tested /animations/NewComponent in browser
+[ ] Tested /components/NewComponent in browser
 [ ] Tested /code/NewComponent in browser
 ```

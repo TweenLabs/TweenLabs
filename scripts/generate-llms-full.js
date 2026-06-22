@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const projectRoot = path.resolve(__dirname, "..");
-const appDir = path.join(projectRoot, "src", "app");
+const appDir = path.join(projectRoot, "src", "app", "(main)");
 const outputFile = path.join(projectRoot, "public", "llms-full.txt");
 
 // Parse components dynamically from src/data/components.ts to avoid duplicate lists

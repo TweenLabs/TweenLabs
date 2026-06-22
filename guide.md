@@ -45,10 +45,10 @@ Every component MUST be a **single `page.tsx` file** that is 100% self-contained
 
 ## 3. File Structure for Every Component
 
-Each component lives in: `src/app/animations/{ComponentName}/`
+Each component lives in: `src/app/(main)/components/{ComponentName}/`
 
 ```
-src/app/animations/ComponentName/
+src/app/(main)/components/ComponentName/
 ├── page.tsx          ← The animation (SINGLE self-contained file)
 ├── layout.tsx        ← SEO metadata + JSON-LD structured data
 └── HOW_TO_USE.md     ← Setup guide shown on /code/ComponentName page
@@ -56,7 +56,7 @@ src/app/animations/ComponentName/
 
 ### Naming Convention
 - **Folder name** = **PascalCase** component name (e.g., `FlipCards`, `MagneticDock`, `BentoGrid`)
-- The folder name IS the URL slug: `tweenlabs.xyz/animations/ComponentName`
+- The folder name IS the URL slug: `tweenlabs.xyz/components/ComponentName`
 - The folder name IS what the CLI uses: `npx tweenlabs add ComponentName`
 
 ---
@@ -524,7 +524,7 @@ To match TweenLabs' signature premium editorial styling:
 
 ## 9. animations.ts — Registration
 
-After creating the component files, add an entry to `src/data/animations.ts`:
+After creating the component files, add an entry to `src/data/components.ts`:
 
 ```ts
 {
@@ -575,7 +575,7 @@ Read `gsapskills.md` Section 5 (Performance) for full details. Key points:
 
 When a user runs `npx tweenlabs add ComponentName`, the CLI:
 1. Hits `GET /api/registry/ComponentName`
-2. The API reads `src/app/animations/ComponentName/page.tsx` from disk
+2. The API reads `src/app/(main)/components/ComponentName/page.tsx` from disk
 3. Returns `{ name, className, dependencies: ["gsap", "@gsap/react"], files: [{ name: "ComponentName.tsx", content: <file contents> }] }`
 4. CLI writes the file to the user's `src/components/tweenlabs/ComponentName.tsx`
 5. CLI auto-installs missing dependencies (`gsap`, `@gsap/react`)
@@ -590,7 +590,7 @@ When a user runs `npx tweenlabs add ComponentName`, the CLI:
 [ ] 1. Read this guide.md in full
 [ ] 2. Read gsapskills.md for GSAP coding rules
 [ ] 3. Choose a PascalCase name (e.g., "ParallaxHero")
-[ ] 4. Create folder: src/app/animations/ParallaxHero/
+[ ] 4. Create folder: src/app/(main)/components/ParallaxHero/
 [ ] 5. Write page.tsx following Section 4 structure
     [ ] "use client" on line 1
     [ ] Correct import order (useGSAP → gsap → plugins → react)
@@ -611,9 +611,9 @@ When a user runs `npx tweenlabs add ComponentName`, the CLI:
     [ ] Standalone Component Code section (with props)
     [ ] Setup & Integration Guide section
     [ ] Customization & Props section
-[ ] 8. Add entry to src/data/animations.ts (Section 9)
+[ ] 8. Add entry to src/data/components.ts (Section 9)
 [ ] 9. Run `npm run build` — verify no errors
-[ ] 10. Test /animations/ComponentName in browser
+[ ] 10. Test /components/ComponentName in browser
 [ ] 11. Test /code/ComponentName in browser
 [ ] 12. Test /api/registry/ComponentName returns valid JSON
 ```
@@ -693,11 +693,11 @@ After creating any component:
 | `guide.md` | This file — agent instructions |
 | `gsapskills.md` | GSAP coding rules and best practices |
 | `ADD_NEW_COMPONENT.md` | Abbreviated new component checklist |
-| `src/data/animations.ts` | Animation registry (single source of truth) |
-| `src/app/animations/*/page.tsx` | Component source code |
-| `src/app/animations/*/layout.tsx` | SEO metadata |
-| `src/app/animations/*/HOW_TO_USE.md` | Setup guide |
-| `src/app/code/[slug]/page.tsx` | Code page renderer |
+| `src/data/components.ts` | Component registry (single source of truth) |
+| `src/app/(main)/components/*/page.tsx` | Component source code |
+| `src/app/(main)/components/*/layout.tsx` | SEO metadata |
+| `src/app/(main)/components/*/HOW_TO_USE.md` | Setup guide |
+| `src/app/(main)/code/[slug]/page.tsx` | Code page renderer |
 | `src/app/api/registry/[slug]/route.ts` | CLI registry API |
 | `bin/cli.js` | CLI tool source |
 | `next.config.ts` | Redirects and rewrites |

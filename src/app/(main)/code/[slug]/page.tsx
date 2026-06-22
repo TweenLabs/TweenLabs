@@ -139,7 +139,7 @@ export default async function CodePage({ params }: PageProps) {
 
   const authenticated = await isAuthenticated();
 
-  const animationsDir = path.join(process.cwd(), "src", "app", "components");
+  const animationsDir = path.join(process.cwd(), "src", "app", "(main)", "components");
   const pagePath = path.join(animationsDir, anim.componentName, "page.tsx");
   const howToUsePath = path.join(
     animationsDir,
