@@ -140,7 +140,7 @@ export default function ScrollCardsPage() {
                     ACTIVE
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-4xl font-serif font-black uppercase tracking-tight leading-none text-[#2a2a2a]">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-black uppercase tracking-tight leading-none text-[#2a2a2a]">
                   {card.title}
                 </h3>
                 <p className="font-sans font-medium text-xs md:text-sm leading-relaxed text-zinc-650 mt-2">

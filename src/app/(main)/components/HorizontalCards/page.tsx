@@ -14,7 +14,7 @@ const cardsData = [
     borderColor: "#0c9367", // green
     btnBg: "bg-[#0c9367] text-white hover:bg-[#0a8059]",
     rotateStart: 6,
-    leftPos: "left-[7.5%] md:left-[10vw]",
+    leftPos: "left-[7.5%] md:left-[10%]",
     tag: "[MOTION-01]",
     footerText: "TWEENLABS ENGINE",
   },
@@ -24,7 +24,7 @@ const cardsData = [
     borderColor: "#c53b3a", // red
     btnBg: "bg-[#c53b3a] text-white hover:bg-[#aa3231]",
     rotateStart: -4,
-    leftPos: "left-[7.5%] md:left-[30vw]",
+    leftPos: "left-[7.5%] md:left-[30%]",
     tag: "[STYLE-02]",
     footerText: "TWEENLABS DESIGN",
   },
@@ -34,7 +34,7 @@ const cardsData = [
     borderColor: "#3b82f6", // blue
     btnBg: "bg-[#3b82f6] text-white hover:bg-[#2563eb]",
     rotateStart: 5,
-    leftPos: "left-[7.5%] md:left-[50vw]",
+    leftPos: "left-[7.5%] md:left-[50%]",
     tag: "[SCROLL-03]",
     footerText: "TWEENLABS TRIGGERS",
   },
@@ -44,7 +44,7 @@ const cardsData = [
     borderColor: "#f1b333", // yellow
     btnBg: "bg-[#f1b333] text-black hover:bg-[#d99f26]",
     rotateStart: -6,
-    leftPos: "left-[7.5%] md:left-[70vw]",
+    leftPos: "left-[7.5%] md:left-[70%]",
     tag: "[PHYSICS-04]",
     footerText: "TWEENLABS COLLIDER",
   },
@@ -242,7 +242,7 @@ export default function AnimationFourPage() {
             {cardsData.map((card) => (
               <div
                 key={card.id}
-                className={`card-item absolute top-0 ${card.leftPos} w-[85%] md:w-[18vw] h-full transform will-change-transform pointer-events-auto`}
+                className={`card-item absolute top-0 ${card.leftPos} w-[85%] md:w-[20%] h-full transform will-change-transform pointer-events-auto`}
               >
                 <div
                   className="card-inner w-full h-full border-4 bg-[#fbfaf7] rounded-3xl flex flex-col justify-between p-6 md:p-8 shadow-[8px_8px_0px_rgba(0,0,0,0.95)]"
@@ -259,7 +259,7 @@ export default function AnimationFourPage() {
 
                   {/* Card Center Content */}
                   <div className="flex-1 flex flex-col items-center justify-center text-center gap-6">
-                    <h3 className="font-serif font-black text-xl md:text-2xl lg:text-3xl text-[#121212] leading-tight tracking-tight uppercase whitespace-normal px-2">
+                    <h3 className="font-serif font-black text-lg sm:text-xl md:text-2xl text-[#121212] leading-tight tracking-tight uppercase whitespace-normal px-2">
                       {card.title}
                     </h3>
                     <button

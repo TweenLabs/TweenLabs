@@ -128,7 +128,7 @@ export default function KineticTypographyPage() {
         ref={textContainerRef}
         className="relative w-full max-w-4xl min-h-[300px] flex items-center justify-center overflow-hidden p-6 cursor-crosshair select-none z-10"
       >
-        <h1 className="text-4xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-4 gap-y-2 w-full text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-7xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-4 gap-y-2 w-full text-center">
           {text.split(" ").map((word, wordIdx) => (
             <span key={wordIdx} className="inline-block whitespace-nowrap">
               {word.split("").map((char, charIdx) => {

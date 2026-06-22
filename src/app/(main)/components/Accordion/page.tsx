@@ -193,7 +193,7 @@ export default function MorphingAccordionPage() {
                       [{item.subtitle}]
                     </span>
                     <h2
-                      className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 hover:text-[#e55b3c]"
+                      className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase tracking-tight transition-colors duration-200 hover:text-[#e55b3c]"
                       style={{ color: isOpen ? item.color : "" }}
                     >
                       {item.title}

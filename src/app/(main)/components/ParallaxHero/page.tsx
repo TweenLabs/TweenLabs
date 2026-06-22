@@ -95,7 +95,7 @@ export default function ParallaxHeroPage() {
       <section className="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
         {/* Main headline */}
         <div className="parallax-headline-wrap z-20 text-center max-w-4xl will-change-transform">
-          <h1 className="parallax-headline text-5xl md:text-8xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-[0.95]">
+          <h1 className="parallax-headline text-3xl sm:text-5xl md:text-7xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-[0.95]">
             Build Something Beautiful
           </h1>
         </div>

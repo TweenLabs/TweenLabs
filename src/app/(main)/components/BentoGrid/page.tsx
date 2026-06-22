@@ -206,7 +206,7 @@ export default function BentoGridPage() {
         <div className="inline-flex self-center items-center gap-2 bg-[#0c9367] border-2 border-[#2a2a2a] px-4 py-1.5 rounded-full text-[10px] font-mono font-bold text-white uppercase tracking-widest shadow-[3px_3px_0px_#2a2a2a] rotate-2">
           <span>Component 14</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
           Bento Grid Tilt
         </h1>
         <p className="max-w-md mx-auto text-zinc-650 text-xs md:text-sm leading-relaxed font-sans font-medium">
@@ -265,7 +265,7 @@ export default function BentoGridPage() {
                             SYS ACTIVE
                           </span>
                         </div>
-                        <h2 className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
+                        <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
                           {item.title}
                         </h2>
                         <p className="font-sans font-medium text-zinc-650 text-[11px] md:text-xs leading-relaxed mt-1">
@@ -315,7 +315,7 @@ export default function BentoGridPage() {
                           SYS ACTIVE
                         </span>
                       </div>
-                      <h2 className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none">
                         {item.title}
                       </h2>
                       <p className="font-sans font-medium text-zinc-650 text-xs leading-relaxed mt-1">

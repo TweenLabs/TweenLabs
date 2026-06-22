@@ -144,7 +144,10 @@ export function AppSidebar() {
                       <SidebarMenuButton
                         asChild
                         isActive={isActive}
-                        className="hover:bg-[#2a2a2a]/5 active:bg-[#2a2a2a]/10"
+                        className={cn(
+                          "hover:bg-[#2a2a2a]/5 active:bg-[#2a2a2a]/10",
+                          isActive && "bg-[#f5f3ef] border border-[#d4d0c8] rounded-lg"
+                        )}
                       >
                         {item.external ? (
                           <a
@@ -188,7 +191,10 @@ export function AppSidebar() {
                       <SidebarMenuButton
                         asChild
                         isActive={isActive}
-                        className="hover:bg-[#2a2a2a]/5 active:bg-[#2a2a2a]/10"
+                        className={cn(
+                          "hover:bg-[#2a2a2a]/5 active:bg-[#2a2a2a]/10",
+                          isActive && "bg-[#f5f3ef] border border-[#d4d0c8] rounded-lg"
+                        )}
                       >
                         <Link
                           href={anim.route}

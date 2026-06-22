@@ -135,7 +135,7 @@ export default function TabsMotionPage() {
           <span className="font-mono text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-2 block">
             Component 20 · Tabs Motion
           </span>
-          <h1 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none mb-4">
             Tabs Motion
           </h1>
           <p className="max-w-md mx-auto text-xs md:text-sm font-sans font-medium text-zinc-550 leading-relaxed">
@@ -182,7 +182,7 @@ export default function TabsMotionPage() {
               {active.label}
             </span>
 
-            <h2 className="font-serif font-black text-2xl md:text-3xl text-[#1c1714] leading-tight tracking-tight mb-4">
+            <h2 className="font-serif font-black text-xl sm:text-2xl md:text-3xl text-[#1c1714] leading-tight tracking-tight mb-4">
               {active.content.headline}
             </h2>
 

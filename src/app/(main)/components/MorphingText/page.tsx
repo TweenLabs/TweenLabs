@@ -209,7 +209,7 @@ export default function MorphingTextPage() {
             {/* Layer 1 — current word */}
             <span
               ref={text1Ref}
-              className="absolute font-serif font-black text-5xl md:text-8xl lg:text-[9rem] uppercase tracking-tight will-change-transform select-none leading-none"
+              className="absolute font-serif font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-tight will-change-transform select-none leading-none"
               style={{ color: colors[currentIdx] }}
               aria-live="polite"
             >
@@ -219,7 +219,7 @@ export default function MorphingTextPage() {
             {/* Layer 2 — next word */}
             <span
               ref={text2Ref}
-              className="absolute font-serif font-black text-5xl md:text-8xl lg:text-[9rem] uppercase tracking-tight will-change-transform select-none leading-none"
+              className="absolute font-serif font-black text-4xl sm:text-5xl md:text-7xl lg:text-8xl uppercase tracking-tight will-change-transform select-none leading-none"
               style={{
                 color: colors[currentIdx],
                 opacity: 0,

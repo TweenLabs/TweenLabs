@@ -72,7 +72,7 @@ const talentData = [
     role: "iOS Tech Lead",
     skills: ["Swift", "UIKit", "Combine", "Architecture"],
     color: "#f1b333", // Gold
-    left: "6vw",
+    left: "6%",
     top: "14vh",
     rot: -12,
   },
@@ -83,7 +83,7 @@ const talentData = [
     role: "Android Architect",
     skills: ["Kotlin", "Compose", "Coroutines", "Dagger"],
     color: "#0c9367", // Green
-    left: "4vw",
+    left: "4%",
     top: "44vh",
     rot: 8,
   },
@@ -94,7 +94,7 @@ const talentData = [
     role: "SwiftUI Lead",
     skills: ["SwiftUI", "CoreData", "Combine", "Metal"],
     color: "#8b5cf6", // Purple
-    left: "7vw",
+    left: "7%",
     top: "74vh",
     rot: -6,
   },
@@ -104,7 +104,7 @@ const talentData = [
     name: "Marcus Vance",
     role: "Flutter Specialist",
     color: "#3b82f6", // Blue
-    left: "26vw",
+    left: "28%",
     top: "10vh",
     rot: 6,
   },
@@ -115,7 +115,7 @@ const talentData = [
     role: "React Native Lead",
     skills: ["TS", "React Native", "Redux", "JSI"],
     color: "#c53b3a", // Red
-    left: "58vw",
+    left: "56%",
     top: "10vh",
     rot: -8,
   },
@@ -126,7 +126,7 @@ const talentData = [
     role: "KMP Engineer",
     skills: ["Kotlin", "KMP", "Compose", "Ktor"],
     color: "#eab308", // Yellow
-    left: "80vw",
+    left: "78%",
     top: "14vh",
     rot: 10,
   },
@@ -137,7 +137,7 @@ const talentData = [
     role: "iOS UI Specialist",
     skills: ["Swift", "CoreAnimation", "Metal", "UI"],
     color: "#06b6d4", // Cyan
-    left: "83vw",
+    left: "80%",
     top: "44vh",
     rot: -10,
   },
@@ -148,7 +148,7 @@ const talentData = [
     role: "Mobile DevOps Lead",
     skills: ["CI/CD", "Fastlane", "Actions", "Docker"],
     color: "#ec4899", // Pink
-    left: "76vw",
+    left: "74%",
     top: "74vh",
     rot: 12,
   },
@@ -357,7 +357,7 @@ export default function BlueprintScatterPage() {
             <span className="bp-hero-tagline inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-[#f1b333] font-black bg-[#2a2a2a] text-white px-3 py-1 rounded-full mb-4">
               [ Blueprint Physics System ]
             </span>
-            <h1 className="bp-hero-title-scramble font-serif font-black text-4xl md:text-6xl text-[#2a2a2a] leading-[1.05] tracking-tighter uppercase mb-4">
+            <h1 className="bp-hero-title-scramble font-serif font-black text-3xl sm:text-4xl md:text-5xl text-[#2a2a2a] leading-[1.05] tracking-tighter uppercase mb-4">
               <ScrambleText
                 text="Exploding Blueprints"
                 delay={600}
@@ -378,7 +378,7 @@ export default function BlueprintScatterPage() {
             {talentData.map((card, idx) => (
               <div
                 key={card.id}
-                className="bp-scatter-card absolute w-[36vw] md:w-[13.5vw] aspect-[3/4] pointer-events-auto select-none rounded-3xl border-2 border-[#2a2a2a] bg-white p-3 shadow-[4px_4px_0px_#2a2a2a] cursor-pointer transition-shadow duration-200"
+                className="bp-scatter-card absolute w-[40%] md:w-[16%] aspect-[3/4] pointer-events-auto select-none rounded-3xl border-2 border-[#2a2a2a] bg-white p-3 shadow-[4px_4px_0px_#2a2a2a] cursor-pointer transition-shadow duration-200"
                 style={{
                   left: card.left,
                   top: card.top,

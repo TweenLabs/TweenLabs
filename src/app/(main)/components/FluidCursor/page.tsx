@@ -228,7 +228,7 @@ export default function FluidCursorPage() {
             </span>
             <span className="w-3.5 h-3.5 rounded-full bg-[#e55b3c] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
-          <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Alpha
           </h2>
           <p className="text-xs text-zinc-600 font-sans font-medium leading-normal">
@@ -250,7 +250,7 @@ export default function FluidCursorPage() {
             </span>
             <span className="w-3.5 h-3.5 rounded-full bg-[#0c9367] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
-          <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Beta
           </h2>
           <p className="text-xs text-zinc-600 font-sans font-medium leading-normal">
@@ -271,7 +271,7 @@ export default function FluidCursorPage() {
             </span>
             <span className="w-3.5 h-3.5 rounded-full bg-[#3b82f6] border border-[#2a2a2a] shadow-[1px_1px_0px_#2a2a2a]" />
           </div>
-          <h2 className="text-2xl font-serif font-black uppercase text-[#2a2a2a]">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-black uppercase text-[#2a2a2a]">
             Project Gamma
           </h2>
           <p className="text-xs text-zinc-600 font-sans font-medium leading-normal">

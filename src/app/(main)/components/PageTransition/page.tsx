@@ -292,13 +292,13 @@ export default function AnimationFivePage() {
             <span className="font-mono text-[10px] uppercase tracking-wider opacity-75">
               / cosmos-05 / module-01
             </span>
-            <span className="font-serif font-black text-xl tracking-tight">
+            <span className="font-serif font-black text-base sm:text-lg md:text-xl tracking-tight">
               COSMOS
             </span>
           </div>
 
           <div className="flex-1 flex flex-col justify-center items-center text-center gap-6 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
               PULSARS & BEACONS
             </h1>
             <p className="text-sm md:text-base font-sans font-medium max-w-2xl leading-relaxed opacity-90">
@@ -321,13 +321,13 @@ export default function AnimationFivePage() {
               <span className="font-mono text-[10px] uppercase tracking-wider opacity-75">
                 / cosmos-05 / module-02
               </span>
-              <span className="font-serif font-black text-xl tracking-tight">
+              <span className="font-serif font-black text-base sm:text-lg md:text-xl tracking-tight">
                 COSMOS
               </span>
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-center text-center gap-6 max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
                 STELLAR NEBULAE
               </h1>
               <p className="text-sm md:text-base font-sans font-medium max-w-2xl leading-relaxed opacity-90">
@@ -351,13 +351,13 @@ export default function AnimationFivePage() {
               <span className="font-mono text-[10px] uppercase tracking-wider opacity-75">
                 / cosmos-05 / module-03
               </span>
-              <span className="font-serif font-black text-xl tracking-tight">
+              <span className="font-serif font-black text-base sm:text-lg md:text-xl tracking-tight">
                 COSMOS
               </span>
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-center text-center gap-6 max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
                 EVENT HORIZONS
               </h1>
               <p className="text-sm md:text-base font-sans font-medium max-w-2xl leading-relaxed opacity-90">
@@ -381,13 +381,13 @@ export default function AnimationFivePage() {
               <span className="font-mono text-[10px] uppercase tracking-wider opacity-75">
                 / cosmos-05 / module-04
               </span>
-              <span className="font-serif font-black text-xl tracking-tight">
+              <span className="font-serif font-black text-base sm:text-lg md:text-xl tracking-tight">
                 COSMOS
               </span>
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-center text-center gap-6 max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-[#2a2a2a] pb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-[#2a2a2a] pb-3">
                 COSMIC EXPLOSIONS
               </h1>
               <p className="text-sm md:text-base font-sans font-medium max-w-2xl leading-relaxed opacity-90 text-zinc-800">
@@ -411,13 +411,13 @@ export default function AnimationFivePage() {
               <span className="font-mono text-[10px] uppercase tracking-wider opacity-75">
                 / cosmos-05 / module-05
               </span>
-              <span className="font-serif font-black text-xl tracking-tight">
+              <span className="font-serif font-black text-base sm:text-lg md:text-xl tracking-tight">
                 COSMOS
               </span>
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-center text-center gap-6 max-w-4xl mx-auto">
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-black uppercase tracking-tight leading-[1.05] border-b-6 border-white pb-3">
                 THE INVISIBLE WEB
               </h1>
               <p className="text-sm md:text-base font-sans font-medium max-w-2xl leading-relaxed opacity-90">

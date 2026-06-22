@@ -71,7 +71,7 @@ const talentData = [
     name: "Sarah Jenkins",
     role: "iOS Tech Lead",
     color: "#f1b333", // Gold
-    left: "6vw",
+    left: "6%",
     top: "14vh",
     rot: -12,
   },
@@ -81,7 +81,7 @@ const talentData = [
     name: "Alex Rivera",
     role: "Android Architect",
     color: "#0c9367", // Green
-    left: "4vw",
+    left: "4%",
     top: "44vh",
     rot: 8,
   },
@@ -91,7 +91,7 @@ const talentData = [
     name: "Elena Rostova",
     role: "SwiftUI Lead",
     color: "#8b5cf6", // Purple
-    left: "7vw",
+    left: "7%",
     top: "74vh",
     rot: -6,
   },
@@ -101,7 +101,7 @@ const talentData = [
     name: "Marcus Vance",
     role: "Flutter Specialist",
     color: "#3b82f6", // Blue
-    left: "26vw",
+    left: "28%",
     top: "10vh",
     rot: 6,
   },
@@ -111,7 +111,7 @@ const talentData = [
     name: "Siddharth Mehta",
     role: "React Native Lead",
     color: "#c53b3a", // Red
-    left: "58vw",
+    left: "56%",
     top: "10vh",
     rot: -8,
   },
@@ -121,7 +121,7 @@ const talentData = [
     name: "Chloe Dupont",
     role: "KMP Engineer",
     color: "#eab308", // Yellow
-    left: "80vw",
+    left: "78%",
     top: "14vh",
     rot: 10,
   },
@@ -131,7 +131,7 @@ const talentData = [
     name: "Liam O'Connor",
     role: "iOS UI Specialist",
     color: "#06b6d4", // Cyan
-    left: "83vw",
+    left: "80%",
     top: "44vh",
     rot: -10,
   },
@@ -141,7 +141,7 @@ const talentData = [
     name: "Sofia Giraldo",
     role: "Mobile DevOps Lead",
     color: "#ec4899", // Pink
-    left: "76vw",
+    left: "74%",
     top: "74vh",
     rot: 12,
   },
@@ -406,7 +406,7 @@ export default function CircularScatterPage() {
             <span className="cs-hero-tagline inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-[#f1b333] font-black bg-[#2a2a2a] text-white px-3 py-1 rounded-full mb-4">
               [ Circular Orbit Physics ]
             </span>
-            <h1 className="cs-hero-title-scramble font-serif font-black text-4xl md:text-6xl text-[#2a2a2a] leading-[1.05] tracking-tighter uppercase mb-4">
+            <h1 className="cs-hero-title-scramble font-serif font-black text-3xl sm:text-4xl md:text-5xl text-[#2a2a2a] leading-[1.05] tracking-tighter uppercase mb-4">
               <ScrambleText
                 text="Orbital Equilibrium"
                 delay={2800}
@@ -427,7 +427,7 @@ export default function CircularScatterPage() {
             {talentData.map((card, idx) => (
               <div
                 key={card.id}
-                className={`cs-scatter-card cs-scatter-card-${idx} absolute w-[36vw] md:w-[13.5vw] aspect-[3/4] pointer-events-auto select-none rounded-3xl border-2 border-[#2a2a2a] bg-white p-3 shadow-[4px_4px_0px_#2a2a2a] cursor-pointer transition-shadow duration-200`}
+                className={`cs-scatter-card cs-scatter-card-${idx} absolute w-[40%] md:w-[16%] aspect-[3/4] pointer-events-auto select-none rounded-3xl border-2 border-[#2a2a2a] bg-white p-3 shadow-[4px_4px_0px_#2a2a2a] cursor-pointer transition-shadow duration-200`}
                 style={{
                   left: card.left,
                   top: card.top,

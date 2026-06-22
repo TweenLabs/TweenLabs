@@ -514,7 +514,7 @@ export default function ThreeDCarouselPage() {
           <span className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-300 bg-white px-2 py-0.5 rounded">
             Component 14
           </span>
-          <h1 className="font-serif font-black text-lg md:text-xl uppercase tracking-tight text-[#2a2a2a]">
+          <h1 className="font-serif font-black text-base sm:text-lg md:text-xl uppercase tracking-tight text-[#2a2a2a]">
             3D Coverflow Carousel
           </h1>
           <p className="font-mono text-[9px] text-zinc-500 max-w-[200px]">
@@ -587,7 +587,7 @@ export default function ThreeDCarouselPage() {
                       </span>
                     </div>
 
-                    <h2 className="text-xl md:text-2xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none select-none">
+                    <h2 className="text-base sm:text-lg md:text-xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-none select-none">
                       {item.title}
                     </h2>
                   </div>
@@ -634,7 +634,7 @@ export default function ThreeDCarouselPage() {
         {/* Expanded Split Detail View Panel */}
         <div
           ref={detailPanelRef}
-          className="absolute top-0 right-0 w-full md:w-[50vw] h-full bg-white border-l-4 border-[#2a2a2a] z-40 flex flex-col justify-between p-8 md:p-14 shadow-2xl pointer-events-auto transform translate-x-full opacity-0"
+          className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-white border-l-4 border-[#2a2a2a] z-40 flex flex-col justify-between p-6 md:p-10 shadow-2xl pointer-events-auto transform translate-x-full opacity-0"
         >
           {detailIdx !== null && (
             <>
@@ -664,7 +664,7 @@ export default function ThreeDCarouselPage() {
                   </span>
                 </div>
 
-                <h2 className="stagger-in text-4xl md:text-6xl font-serif font-black uppercase text-[#2a2a2a] leading-none tracking-tight">
+                <h2 className="stagger-in text-3xl sm:text-4xl md:text-5xl font-serif font-black uppercase text-[#2a2a2a] leading-none tracking-tight">
                   {items[detailIdx].title}
                 </h2>
 

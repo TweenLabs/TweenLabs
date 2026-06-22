@@ -170,7 +170,7 @@ export default function RevealTextPage() {
 
         {/* Title */}
         <h1
-          className="hero-title text-5xl md:text-8xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-[0.95] text-center max-w-5xl"
+          className="hero-title text-3xl sm:text-5xl md:text-7xl font-serif font-black uppercase tracking-tight text-[#2a2a2a] leading-[0.95] text-center max-w-5xl"
           style={{ perspective: "600px" }}
         >
           Reveal Text
@@ -201,7 +201,7 @@ export default function RevealTextPage() {
             <span className="font-mono text-[9px] font-black uppercase tracking-[0.22em] text-[#e55b3c] mb-2 block">
               [ Reveal Effect 01 · Line by Line ]
             </span>
-            <h2 className="reveal-line-title font-serif font-black text-3xl md:text-5xl text-[#1c1714] leading-[1.1] tracking-tight">
+            <h2 className="reveal-line-title font-serif font-black text-2xl sm:text-3xl md:text-4xl text-[#1c1714] leading-[1.1] tracking-tight">
               Text reveals that feel like they belong to the page — not bolted
               on.
             </h2>
@@ -224,7 +224,7 @@ export default function RevealTextPage() {
             <span className="font-mono text-[9px] font-black uppercase tracking-[0.22em] text-[#6758a5] mb-2 block">
               [ Reveal Effect 03 · Random Character Scatter ]
             </span>
-            <h3 className="reveal-char-closing font-serif font-black text-2xl md:text-4xl text-[#1c1714] leading-tight">
+            <h3 className="reveal-char-closing font-serif font-black text-xl sm:text-2xl md:text-3xl text-[#1c1714] leading-tight">
               Motion with Meaning.
             </h3>
           </div>

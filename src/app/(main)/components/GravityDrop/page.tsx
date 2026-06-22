@@ -79,7 +79,7 @@ export default function AnimationOnePage() {
         onClick={handleReplay}
         className="relative min-h-[160px] flex items-center justify-center pb-4 cursor-pointer select-none z-10"
       >
-        <h1 className="text-5xl md:text-8xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-[0.35em]">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-black tracking-tight flex flex-wrap justify-center gap-x-[0.35em]">
           {text.split(" ").map((word, wordIdx) => (
             <span key={wordIdx} className="inline-block whitespace-nowrap">
               {word.split("").map((char, charIdx) => (

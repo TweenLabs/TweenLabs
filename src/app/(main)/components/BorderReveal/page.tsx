@@ -136,7 +136,7 @@ export default function AnimationThreePage() {
           return (
             <span
               key={idx}
-              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[8vw] md:text-[10vw]"
+              className="reveal-char inline-block transform origin-center will-change-transform font-serif font-black uppercase text-[clamp(3rem,8vw,10rem)]"
               style={{
                 textShadow: "4px 4px 0px #121212",
                 color: isOrange ? "#e55b3c" : "white",

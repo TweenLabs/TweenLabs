@@ -310,7 +310,7 @@ export default function StringLinePage() {
 
         {/* Decorative typography background */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none select-none">
-          <h1 className="text-4xl md:text-7xl font-serif font-black text-center text-[#2a2a2a]/10 uppercase tracking-tight leading-none">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black text-center text-[#2a2a2a]/10 uppercase tracking-tight leading-none">
             DESIGNED TO FEEL ALIVE
           </h1>
         </div>

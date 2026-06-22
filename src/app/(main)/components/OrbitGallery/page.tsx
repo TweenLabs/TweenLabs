@@ -105,7 +105,7 @@ export default function ScrollOrbitGallery() {
       ).to(
         ".playhead-line",
         {
-          left: "95vw",
+          left: "95%",
           duration: 2.0,
           ease: "none", // Linear sweep mapping
         },
@@ -290,12 +290,12 @@ export default function ScrollOrbitGallery() {
         className="h-screen w-full flex items-center justify-center relative overflow-hidden"
       >
         {/* Timeline Track Line (Full Screen width) */}
-        <div className="timeline-track absolute left-[5vw] right-[5vw] h-[2px] bg-[#2a2a2a]/15 opacity-0 origin-left z-10" />
+        <div className="timeline-track absolute left-[5%] right-[5%] h-[2px] bg-[#2a2a2a]/15 opacity-0 origin-left z-10" />
 
         {/* Laser Playhead Line (Full Screen height) */}
         <div
           ref={playheadRef}
-          className="playhead-line absolute top-[5vh] bottom-[5vh] left-[5vw] w-[2px] bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.8)] z-30 origin-top transform -translate-x-1/2"
+          className="playhead-line absolute top-[5vh] bottom-[5vh] left-[5%] w-[2px] bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.8)] z-30 origin-top transform -translate-x-1/2"
         >
           {/* Playhead Nodes */}
           <div className="absolute -top-1 left-1/2 -translate-x-1/2 h-3.5 w-3.5 bg-red-500 border-2 border-white rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,1)]" />
@@ -306,7 +306,7 @@ export default function ScrollOrbitGallery() {
         <div className="timeline-cards-row absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-full h-[280px] md:h-[360px] lg:h-[420px]">
             {/* CARD 0: Golden Ratio Spiral (Gold) */}
-            <div className="orbit-card-0 absolute top-0 left-[4vw] md:left-[6vw] w-[20vw] md:w-[19vw] h-full transform will-change-transform pointer-events-auto">
+            <div className="orbit-card-0 absolute top-0 left-[4%] md:left-[6%] w-[22%] md:w-[20%] h-full transform will-change-transform pointer-events-auto">
               <div className="card-inner-box w-full h-full border-3 border-[#2a2a2a] bg-white rounded-3xl flex flex-col justify-between p-5 md:p-6 shadow-[6px_6px_0px_#2a2a2a] transition-shadow duration-200">
                 <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                   <span>MODULE_A // 01</span>
@@ -358,7 +358,7 @@ export default function ScrollOrbitGallery() {
             </div>
 
             {/* CARD 1: Waveform Matrix (Green) */}
-            <div className="orbit-card-1 absolute top-0 left-[28vw] md:left-[29vw] w-[20vw] md:w-[19vw] h-full transform will-change-transform pointer-events-auto">
+            <div className="orbit-card-1 absolute top-0 left-[28%] md:left-[29%] w-[22%] md:w-[20%] h-full transform will-change-transform pointer-events-auto">
               <div className="card-inner-box w-full h-full border-3 border-[#2a2a2a] bg-white rounded-3xl flex flex-col justify-between p-5 md:p-6 shadow-[6px_6px_0px_#2a2a2a] transition-shadow duration-200">
                 <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                   <span>MODULE_B // 02</span>
@@ -410,7 +410,7 @@ export default function ScrollOrbitGallery() {
             </div>
 
             {/* CARD 2: Quantum Rings (Purple) */}
-            <div className="orbit-card-2 absolute top-0 left-[52vw] md:left-[52vw] w-[20vw] md:w-[19vw] h-full transform will-change-transform pointer-events-auto">
+            <div className="orbit-card-2 absolute top-0 left-[52%] w-[22%] md:w-[20%] h-full transform will-change-transform pointer-events-auto">
               <div className="card-inner-box w-full h-full border-3 border-[#2a2a2a] bg-white rounded-3xl flex flex-col justify-between p-5 md:p-6 shadow-[6px_6px_0px_#2a2a2a] transition-shadow duration-200">
                 <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                   <span>MODULE_C // 03</span>
@@ -462,7 +462,7 @@ export default function ScrollOrbitGallery() {
             </div>
 
             {/* CARD 3: Isometric Grid (Red) */}
-            <div className="orbit-card-3 absolute top-0 left-[76vw] md:left-[75vw] w-[20vw] md:w-[19vw] h-full transform will-change-transform pointer-events-auto">
+            <div className="orbit-card-3 absolute top-0 left-[76%] md:left-[75%] w-[22%] md:w-[20%] h-full transform will-change-transform pointer-events-auto">
               <div className="card-inner-box w-full h-full border-3 border-[#2a2a2a] bg-white rounded-3xl flex flex-col justify-between p-5 md:p-6 shadow-[6px_6px_0px_#2a2a2a] transition-shadow duration-200">
                 <div className="flex justify-between items-center w-full font-mono text-[9px] text-zinc-400">
                   <span>MODULE_D // 04</span>

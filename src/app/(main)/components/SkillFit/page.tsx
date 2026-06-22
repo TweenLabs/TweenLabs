@@ -277,7 +277,7 @@ export default function ScreenSkillFitPage() {
 
                   {/* Headline */}
                   <h2
-                    className="font-serif font-black text-[clamp(1.9rem,2.8vw,3.2rem)] text-[#1c1714] leading-[1.06] tracking-tight uppercase"
+                    className="font-serif font-black text-[clamp(1.4rem,3.5%,2.8rem)] text-[#1c1714] leading-[1.06] tracking-tight uppercase"
                     style={{ whiteSpace: "pre-line" }}
                   >
                     {c.left.headline}
@@ -305,7 +305,7 @@ export default function ScreenSkillFitPage() {
           {/* CENTER — card stack */}
           <div
             className="shrink-0 relative"
-            style={{ width: "clamp(220px, 22vw, 310px)", aspectRatio: "3/4.3" }}
+            style={{ width: "clamp(180px, 25%, 310px)", aspectRatio: "3/4.3" }}
           >
             {candidates.map((c, i) => (
               <div
@@ -400,7 +400,7 @@ export default function ScreenSkillFitPage() {
 
                   {/* Quote */}
                   <blockquote
-                    className="font-serif font-bold text-[clamp(1.05rem,1.9vw,1.5rem)] text-[#1c1714] leading-snug tracking-tight pl-4"
+                    className="font-serif font-bold text-[clamp(0.95rem,2.5%,1.5rem)] text-[#1c1714] leading-snug tracking-tight pl-4"
                     style={{ borderLeft: `3px solid ${c.color}` }}
                   >
                     &ldquo;{c.right.quote}&rdquo;
