@@ -240,47 +240,57 @@ export default function InstallationPageClient() {
                 </p>
               </div>
             </div>
+    
+            <Divider label="Examples &amp; Requirements" />
 
-            <Divider label="Examples" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-7 items-start">
 
-            {/* Examples */}
-            <div className="space-y-3 mb-7">
-              {[
-                { name: "KineticText",   desc: "Wave text animation" },
-                { name: "FlipCards",     desc: "3D flip card grid" },
-                { name: "MorphingText",  desc: "Colour-morphing headline" },
-                { name: "ScrollCards",   desc: "Scroll-pinned card deck" },
-                { name: "MagneticDock",  desc: "Magnetic dock interaction" },
-              ].map(({ name, desc }) => (
-                <div key={name} className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a] max-w-lg">
-                  <div className="bg-[#181818] border-b border-white/10 px-3 py-2 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="font-serif font-black text-[12px] text-white">{name}</span>
-                      <span className="font-sans text-[10px] text-zinc-500">{desc}</span>
+              {/* Examples column */}
+              <div>
+                <p className="font-mono font-black text-[9px] uppercase tracking-widest text-zinc-400 mb-3">Examples</p>
+                <div className="space-y-2.5">
+                  {[
+                    { name: "KineticText",  desc: "Wave text animation" },
+                    { name: "FlipCards",    desc: "3D flip card grid" },
+                    { name: "MorphingText", desc: "Colour-morphing headline" },
+                    { name: "ScrollCards",  desc: "Scroll-pinned card deck" },
+                  ].map(({ name, desc }) => (
+                    <div key={name} className="border-2 border-[#2a2a2a] rounded-lg overflow-hidden bg-[#121212] shadow-[2.5px_2.5px_0px_#2a2a2a]">
+                      <div className="bg-[#181818] border-b border-white/10 px-3 py-2 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-serif font-black text-[12px] text-white">{name}</span>
+                          <span className="font-sans text-[10px] text-zinc-500">{desc}</span>
+                        </div>
+                        <CopyBtn text={PKG_CMDS.cli[pkg](name)} />
+                      </div>
+                      <div className="px-3 py-2.5 font-mono text-[11px] text-emerald-400 overflow-x-auto whitespace-nowrap">
+                        {PKG_CMDS.cli[pkg](name)}
+                      </div>
                     </div>
-                    <CopyBtn text={PKG_CMDS.cli[pkg](name)} />
-                  </div>
-                  <div className="px-3 py-2.5 font-mono text-[11px] text-emerald-400 overflow-x-auto whitespace-nowrap">
-                    {PKG_CMDS.cli[pkg](name)}
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <Divider label="Requirements" />
-
-            <div className="bg-white border-2 border-[#2a2a2a] rounded-xl p-5 shadow-[3px_3px_0px_#2a2a2a] space-y-3 max-w-lg">
-              {[
-                ["Node.js 18+", <>check with <Code>node --version</Code></>],
-                ["Next.js App Router", "components use the App Router file convention"],
-                ["Tailwind CSS", "all styles use inline Tailwind classes"],
-                ["TypeScript", "components are fully typed"],
-              ].map(([title, desc], i) => (
-                <div key={i} className="flex gap-3 text-[12.5px] font-sans leading-relaxed border-b border-dashed border-[#2a2a2a]/10 pb-3 last:border-0 last:pb-0">
-                  <span className="font-mono font-black text-[#0c9367] shrink-0">✓</span>
-                  <span><strong className="text-[#2a2a2a]">{title as string}</strong> — <span className="text-zinc-500">{desc as React.ReactNode}</span></span>
+              {/* Requirements column */}
+              <div>
+                <p className="font-mono font-black text-[9px] uppercase tracking-widest text-zinc-400 mb-3">Requirements</p>
+                <div className="bg-white border-2 border-[#2a2a2a] rounded-xl p-5 shadow-[3px_3px_0px_#2a2a2a] space-y-3">
+                  {[
+                    ["Node.js 18+", <><span className="text-zinc-500">check with </span><Code>node --version</Code></>],
+                    ["Next.js App Router", "components use the App Router file convention"],
+                    ["Tailwind CSS", "all styles use inline Tailwind classes"],
+                    ["TypeScript", "components are fully typed"],
+                    ["pnpm (recommended)", <><span className="text-zinc-500">install via </span><Code>npm i -g pnpm</Code></>],
+                    ["Git", "for cloning and version control"],
+                  ].map(([title, desc], i) => (
+                    <div key={i} className="flex gap-3 text-[12.5px] font-sans leading-relaxed border-b border-dashed border-[#2a2a2a]/10 pb-3 last:border-0 last:pb-0">
+                      <span className="font-mono font-black text-[#0c9367] shrink-0">✓</span>
+                      <span><strong className="text-[#2a2a2a]">{title as string}</strong> — {desc as React.ReactNode}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
             </div>
           </div>
         )}

@@ -16,7 +16,7 @@ export default function ContributeLayout({
         <ComponentsHeader />
         <main
           id="main-scroller"
-          className="flex-grow w-full relative overflow-y-auto overflow-x-hidden bg-[#f0eadf] scroll-smooth"
+          className="flex-grow w-full relative overflow-y-auto overflow-x-hidden bg-[#f0eadf] scroll-smooth scrollbar-none"
         >
           {children}
         </main>

@@ -121,7 +121,10 @@ export function AppSidebar() {
       </div>
 
       {/* Sidebar Navigation items */}
-      <SidebarContent className="bg-white py-4">
+      <SidebarContent
+        className="bg-white py-4 overscroll-contain scrollbar-none"
+        onWheel={(e) => e.stopPropagation()}
+      >
         {categories.map((cat) => (
           <SidebarGroup key={cat.label} className="py-2 px-0">
             <SidebarGroupLabel className="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest px-4 mb-1 group-data-[collapsible=icon]:hidden">
