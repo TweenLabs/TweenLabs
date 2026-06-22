@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import LiveRunner from "./LiveRunner";
-import { RotateCcw, Code, Eye } from "lucide-react";
 
 interface PreviewPanelProps {
   code: string;
@@ -10,9 +9,10 @@ interface PreviewPanelProps {
   onCompileStart: () => void;
   onCompileSuccess: (logs: string[]) => void;
   onCompileError: (err: Error) => void;
+  remountKey: number;
+  showCode: boolean;
+  theme: "default" | "white" | "dark";
 }
-
-type ThemeType = "default" | "white" | "dark";
 
 export default function PreviewPanel({
   code,
@@ -20,15 +20,10 @@ export default function PreviewPanel({
   onCompileStart,
   onCompileSuccess,
   onCompileError,
+  remountKey,
+  showCode,
+  theme,
 }: PreviewPanelProps) {
-  const [remountKey, setRemountKey] = useState(0);
-  const [showCode, setShowCode] = useState(false);
-  const [theme, setTheme] = useState<ThemeType>("default");
-
-  const handleReplay = () => {
-    setRemountKey((prev) => prev + 1);
-  };
-
   const getThemeBg = () => {
     switch (theme) {
       case "white":
@@ -43,59 +38,6 @@ export default function PreviewPanel({
 
   return (
     <div className="w-full h-full flex flex-col bg-white overflow-hidden relative select-none">
-      {/* Simplified Controls Bar */}
-      <div className="p-3 border-b-3 border-black bg-zinc-50 flex items-center justify-between shrink-0 flex-wrap gap-2">
-        <div className="flex items-center gap-2">
-          {/* Replay Button */}
-          <button
-            onClick={handleReplay}
-            title="Replay Animation"
-            className="flex items-center gap-1 px-3 py-1.5 bg-white border-2 border-black font-mono text-xs font-black uppercase rounded shadow-[2px_2px_0px_#000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000] transition-all cursor-pointer"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Replay</span>
-          </button>
-
-          {/* View Code Toggle */}
-          <button
-            onClick={() => setShowCode(!showCode)}
-            title="Toggle Code View"
-            className={`flex items-center gap-1.5 px-3 py-1.5 border-2 border-black font-mono text-xs font-black uppercase rounded shadow-[2px_2px_0px_#000] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000] transition-all cursor-pointer ${
-              showCode ? "bg-[#6758a5] text-white" : "bg-white text-black"
-            }`}
-          >
-            {showCode ? (
-              <>
-                <Eye className="w-3.5 h-3.5" />
-                <span>View Component</span>
-              </>
-            ) : (
-              <>
-                <Code className="w-3.5 h-3.5" />
-                <span>View Code</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Theme Selectors */}
-        <div className="flex items-center border-2 border-black bg-white rounded divide-x-2 divide-black shadow-[2px_2px_0px_#000] font-mono text-xs font-black overflow-hidden">
-          {(["default", "white", "dark"] as ThemeType[]).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTheme(t)}
-              className={`px-3 py-1 text-[10px] uppercase transition-colors cursor-pointer ${
-                theme === t
-                  ? "bg-black text-white"
-                  : "hover:bg-zinc-100 text-black"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Main Container Area */}
       <div
         className={`flex-1 relative overflow-auto ${getThemeBg()} transition-colors duration-500`}

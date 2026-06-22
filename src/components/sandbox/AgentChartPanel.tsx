@@ -13,6 +13,10 @@ import {
   Code,
   ShieldCheck,
   RefreshCw,
+  Sparkles,
+  Zap,
+  MousePointerClick,
+  Layers,
 } from "lucide-react";
 import { SSEMessage } from "@/hooks/useAgentSSE";
 
@@ -309,30 +313,17 @@ export default function AgentChartPanel({
     );
   };
 
+  const SUGGESTION_CHIPS = [
+    { icon: <Zap className="w-3 h-3" />, text: "Animate a card flip on hover" },
+    { icon: <Layers className="w-3 h-3" />, text: "Create a staggered grid reveal" },
+    { icon: <MousePointerClick className="w-3 h-3" />, text: "Build a magnetic cursor effect" },
+    { icon: <Sparkles className="w-3 h-3" />, text: "Make a parallax scroll hero" },
+  ];
+
+  const hasMessages = messages.length > 0;
+
   return (
     <div className="w-full h-full flex flex-col bg-[#f0eadf] text-[#2a2a2a] overflow-hidden select-none">
-      {/* Workspace Header */}
-      <div className="p-4 border-b-3 border-black bg-white flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2">
-          <span
-            className={`w-3.5 h-3.5 rounded-full border-2 border-black ${
-              status === "running"
-                ? "bg-[#e55b3c] animate-pulse"
-                : status === "paused"
-                  ? "bg-[#f1b333] animate-pulse"
-                  : status === "completed"
-                    ? "bg-[#0c9367]"
-                    : "bg-zinc-400"
-            }`}
-          />
-          <h1 className="font-mono text-sm font-black uppercase tracking-tight">
-            TWEENBOT // {status.toUpperCase()}
-          </h1>
-        </div>
-        <div className="px-2 py-0.5 bg-[#f1b333] border-2 border-black font-mono text-[9px] font-black uppercase rounded shadow-[1.5px_1.5px_0px_#000]">
-          V0.2.0-SSE
-        </div>
-      </div>
 
       {/* Live active node banner */}
       {status === "running" && activeNode && !activeNode.startsWith("__") && (
@@ -349,6 +340,40 @@ export default function AgentChartPanel({
 
       {/* Scrollable Agent Chat Logs */}
       <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col gap-4">
+        {/* Welcome Empty State */}
+        {!hasMessages && !hasStartedPipeline && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-5 py-8">
+            {/* Bot icon */}
+            <div className="w-12 h-12 bg-white border-3 border-black rounded-xl shadow-[3px_3px_0px_#000] flex items-center justify-center">
+              <Bot className="w-6 h-6 text-[#6758a5]" />
+            </div>
+
+            {/* Welcome text */}
+            <div className="text-center space-y-1.5">
+              <h2 className="font-serif text-lg font-black text-[#2a2a2a] tracking-tight">
+                What would you like to animate?
+              </h2>
+              <p className="font-mono text-[11px] text-zinc-500 max-w-[280px] leading-relaxed">
+                Describe any GSAP animation and TweenBot will generate React code for you.
+              </p>
+            </div>
+
+            {/* Suggestion chips */}
+            <div className="flex flex-col gap-1.5 w-full max-w-[300px]">
+              {SUGGESTION_CHIPS.map((chip, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setInputValue(chip.text)}
+                  className="flex items-center gap-2 px-3 py-2 bg-white border-2 border-black/10 rounded-lg text-left font-mono text-[11px] text-[#2a2a2a] hover:border-black/30 hover:bg-[#faf8f5] transition-colors cursor-pointer"
+                >
+                  <span className="text-[#6758a5]">{chip.icon}</span>
+                  <span>{chip.text}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {messages.map((msg) => {
           const isAgent = msg.sender === "agent";
           const isSystem = msg.sender === "system";
@@ -565,7 +590,7 @@ export default function AgentChartPanel({
 
       {/* Fixed bottom input box */}
       <div className="p-4 border-t-3 border-black bg-white shrink-0">
-        <div className="relative border-3 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] overflow-hidden flex bg-white">
+        <div className="relative border-3 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] overflow-hidden flex bg-white focus-within:shadow-[4px_4px_0px_rgba(103,88,165,0.4)] transition-shadow duration-150">
           <textarea
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -573,17 +598,17 @@ export default function AgentChartPanel({
             disabled={status === "running"}
             placeholder={
               status === "running"
-                ? "TweenBot is thinking..."
-                : "Type a message or request an animation change..."
+                ? "TweenBot is working..."
+                : "Describe an animation..."
             }
-            className="flex-1 bg-transparent px-4 py-3 font-mono text-xs focus:outline-none resize-none h-16 max-h-16 text-black disabled:opacity-55"
+            className="flex-1 bg-transparent px-4 py-3 font-mono text-xs focus:outline-none resize-none h-16 max-h-16 text-black disabled:opacity-55 placeholder:text-zinc-400"
           />
           <div className="flex flex-col justify-end p-2 bg-white">
             {status === "running" ? (
               <button
                 onClick={stopExecution}
                 title="Stop Agent Execution"
-                className="p-2 bg-red-600 text-white border-2 border-black rounded shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center justify-center"
+                className="p-2 bg-[#e55b3c] text-white border-2 border-black rounded shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center justify-center"
               >
                 <XCircle className="w-3.5 h-3.5" />
               </button>
@@ -591,7 +616,7 @@ export default function AgentChartPanel({
               <button
                 onClick={handleSend}
                 disabled={!inputValue.trim()}
-                className="p-2 bg-[#6758a5] text-white border-2 border-black rounded shadow-[2px_2px_0px_rgba(0,0,0,1)] disabled:opacity-50 disabled:cursor-not-allowed hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center justify-center"
+                className="p-2 bg-[#6758a5] text-white border-2 border-black rounded shadow-[2px_2px_0px_rgba(0,0,0,1)] disabled:opacity-40 disabled:cursor-not-allowed hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[1px_1px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center justify-center"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>
@@ -601,12 +626,12 @@ export default function AgentChartPanel({
         <div className="mt-2 flex items-center justify-between text-[9px] font-mono text-zinc-400 select-none px-1">
           <span>
             {status === "running"
-              ? "Running node stream..."
+              ? "Processing..."
               : "Press Enter to send"}
           </span>
-          <span className="flex items-center gap-0.5">
-            Shift + Enter for new line{" "}
-            <CornerDownLeft className="w-2.5 h-2.5" />
+          <span className="flex items-center gap-1">
+            <kbd className="px-1 py-0.5 bg-zinc-100 border border-zinc-200 rounded text-[8px] font-bold">Shift+Enter</kbd>
+            <span>new line</span>
           </span>
         </div>
       </div>
