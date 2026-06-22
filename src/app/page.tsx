@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import AnimationGrid from "@/components/AnimationGrid";
 import Hero from "@/components/Hero";
 
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 
 // Below-the-fold: lazy-load to reduce initial JS bundle
 const FAQ = dynamic(() => import("@/components/FAQ"), {

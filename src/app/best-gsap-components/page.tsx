@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
 
 export const metadata: Metadata = {

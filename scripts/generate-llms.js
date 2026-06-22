@@ -5,8 +5,8 @@ const path = require("path");
 const projectRoot = path.resolve(__dirname, "..");
 const outputFile = path.join(projectRoot, "public", "llms.txt");
 
-// Parse components dynamically from src/data/animations.ts
-const animationsFile = path.join(projectRoot, "src", "data", "animations.ts");
+// Parse components dynamically from src/data/components.ts
+const animationsFile = path.join(projectRoot, "src", "data", "components.ts");
 const animsText = fs.readFileSync(animationsFile, "utf8");
 
 const components = [];

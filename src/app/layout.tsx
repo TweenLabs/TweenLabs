@@ -6,7 +6,7 @@ import { fetchAuthQuery, getToken } from "@/lib/auth-server";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 import { api } from "../../convex/_generated/api";
 import { cn } from "@/lib/utils";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

@@ -20,7 +20,7 @@ export default function AuthModal() {
       // User is on a protected route (e.g. /code/...) — navigate away
       closeModal(true);
       if (callbackUrl && callbackUrl.startsWith("/code/")) {
-        router.push(callbackUrl.replace("/code/", "/animations/"));
+        router.push(callbackUrl.replace("/code/", "/components/"));
       } else {
         router.push("/");
       }

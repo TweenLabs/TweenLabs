@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
 
 export default function sitemap(): MetadataRoute.Sitemap {

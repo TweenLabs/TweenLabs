@@ -1,7 +1,7 @@
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 import { isAuthenticated } from "@/lib/auth-server";
 
 export async function GET(
@@ -41,7 +41,7 @@ export async function GET(
   // Handle bulk components request
   if (slug === "all" || slug === "all-components") {
     const files = [];
-    const animationsDir = path.join(process.cwd(), "src", "app", "animations");
+    const animationsDir = path.join(process.cwd(), "src", "app", "components");
     for (const anim of animations) {
       const pagePath = path.join(animationsDir, anim.componentName, "page.tsx");
       try {
@@ -70,7 +70,7 @@ export async function GET(
     return NextResponse.json({ error: "Component not found" }, { status: 404 });
   }
 
-  const animationsDir = path.join(process.cwd(), "src", "app", "animations");
+  const animationsDir = path.join(process.cwd(), "src", "app", "components");
   const pagePath = path.join(animationsDir, anim.componentName, "page.tsx");
 
   let pageCode = "";

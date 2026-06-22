@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 import { useSession } from "@/provider/SessionProvider";
 
-import type { AnimationItem } from "@/data/animations";
+import type { AnimationItem } from "@/data/components";
 
 interface AnimationCardProps {
   anim: AnimationItem;

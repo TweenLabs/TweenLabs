@@ -8,7 +8,7 @@ import type React from "react";
 import { useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 
 export default function PageWrapper({
   children,

@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
 			{
 				// Allow AI crawlers to read docs (LLMs-full, component pages)
 				userAgent: ["GPTBot", "ChatGPT-User", "Claude-Web", "Applebot-Extended"],
-				allow: ["/", "/llms", "/llms-full", "/animations/"],
+				allow: ["/", "/llms", "/llms-full", "/components/"],
 				disallow: ["/api/", "/playground", "/_next/"],
 			},
 		],

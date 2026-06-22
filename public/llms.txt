@@ -30,112 +30,112 @@ When writing or customizing GSAP code:
 Here is the full index of 22 high-fidelity animation components available to copy-paste.
 
 - **Flip Cards**
-  - **Route**: [/animations/FlipCards](https://tweenlabs.xyz/animations/FlipCards)
+  - **Route**: [/components/FlipCards](https://tweenlabs.xyz/components/FlipCards)
   - **Code Guide**: [/code/FlipCards](https://tweenlabs.xyz/code/FlipCards)
   - **Description**: Interactive fanning cards and scroll-pinned cards flipping in 3D perspective space.
 
 - **3D Carousel**
-  - **Route**: [/animations/Carousel3D](https://tweenlabs.xyz/animations/Carousel3D)
+  - **Route**: [/components/Carousel3D](https://tweenlabs.xyz/components/Carousel3D)
   - **Code Guide**: [/code/Carousel3D](https://tweenlabs.xyz/code/Carousel3D)
   - **Description**: Interactive 3D mathematical wheel rotation with pointer drag inertia, keyboard navigation, and GSAP details panel expansion.
 
 - **Skill Fit**
-  - **Route**: [/animations/SkillFit](https://tweenlabs.xyz/animations/SkillFit)
+  - **Route**: [/components/SkillFit](https://tweenlabs.xyz/components/SkillFit)
   - **Code Guide**: [/code/SkillFit](https://tweenlabs.xyz/code/SkillFit)
   - **Description**: Premium candidate profile showcase animation with vertical ScrollTrigger pinning and technology staggers.
 
 - **Page Transition**
-  - **Route**: [/animations/PageTransition](https://tweenlabs.xyz/animations/PageTransition)
+  - **Route**: [/components/PageTransition](https://tweenlabs.xyz/components/PageTransition)
   - **Code Guide**: [/code/PageTransition](https://tweenlabs.xyz/code/PageTransition)
   - **Description**: Premium stacked page-peel scroll animation where color-themed sections slide up and overlap with dynamic skewing.
 
 - **Horizontal Cards**
-  - **Route**: [/animations/HorizontalCards](https://tweenlabs.xyz/animations/HorizontalCards)
+  - **Route**: [/components/HorizontalCards](https://tweenlabs.xyz/components/HorizontalCards)
   - **Code Guide**: [/code/HorizontalCards](https://tweenlabs.xyz/code/HorizontalCards)
   - **Description**: Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, enter from the bottom, and exit off the top of the viewport.
 
 - **Circular Scatter**
-  - **Route**: [/animations/CircularScatter](https://tweenlabs.xyz/animations/CircularScatter)
+  - **Route**: [/components/CircularScatter](https://tweenlabs.xyz/components/CircularScatter)
   - **Code Guide**: [/code/CircularScatter](https://tweenlabs.xyz/code/CircularScatter)
   - **Description**: Circular loop scatter animation where cards stack one-by-one at screen center, then scatter to the outer edges with hero text centered.
 
 - **Fluid Cursor**
-  - **Route**: [/animations/FluidCursor](https://tweenlabs.xyz/animations/FluidCursor)
+  - **Route**: [/components/FluidCursor](https://tweenlabs.xyz/components/FluidCursor)
   - **Code Guide**: [/code/FluidCursor](https://tweenlabs.xyz/code/FluidCursor)
   - **Description**: Custom elastic lagging cursor reticle that snaps, morphs, and hugs button boundaries.
 
 - **Blueprint**
-  - **Route**: [/animations/Blueprint](https://tweenlabs.xyz/animations/Blueprint)
+  - **Route**: [/components/Blueprint](https://tweenlabs.xyz/components/Blueprint)
   - **Code Guide**: [/code/Blueprint](https://tweenlabs.xyz/code/Blueprint)
   - **Description**: Premium page-load exploding cards and text scramble animation matching the layout of blueprintapps.io.
 
 - **Scroll Cards**
-  - **Route**: [/animations/ScrollCards](https://tweenlabs.xyz/animations/ScrollCards)
+  - **Route**: [/components/ScrollCards](https://tweenlabs.xyz/components/ScrollCards)
   - **Code Guide**: [/code/ScrollCards](https://tweenlabs.xyz/code/ScrollCards)
   - **Description**: Vertical scroll-pinned stacked cards container utilizing y-transform parallax staggers.
 
 - **Scroll Tags**
-  - **Route**: [/animations/ScrollTags](https://tweenlabs.xyz/animations/ScrollTags)
+  - **Route**: [/components/ScrollTags](https://tweenlabs.xyz/components/ScrollTags)
   - **Code Guide**: [/code/ScrollTags](https://tweenlabs.xyz/code/ScrollTags)
   - **Description**: Interactive scroll-triggered tags that fly into a grid board container from all offscreen directions.
 
 - **Orbit Gallery**
-  - **Route**: [/animations/OrbitGallery](https://tweenlabs.xyz/animations/OrbitGallery)
+  - **Route**: [/components/OrbitGallery](https://tweenlabs.xyz/components/OrbitGallery)
   - **Code Guide**: [/code/OrbitGallery](https://tweenlabs.xyz/code/OrbitGallery)
   - **Description**: Premium scroll-driven layout where orbiting abstract cards converge into a sleek horizontal timeline.
 
 - **Gravity Drop**
-  - **Route**: [/animations/GravityDrop](https://tweenlabs.xyz/animations/GravityDrop)
+  - **Route**: [/components/GravityDrop](https://tweenlabs.xyz/components/GravityDrop)
   - **Code Guide**: [/code/GravityDrop](https://tweenlabs.xyz/code/GravityDrop)
   - **Description**: Staggered letters falling down onto a shelf collider with realistic physics bounce.
 
 - **String Line**
-  - **Route**: [/animations/StringLine](https://tweenlabs.xyz/animations/StringLine)
+  - **Route**: [/components/StringLine](https://tweenlabs.xyz/components/StringLine)
   - **Code Guide**: [/code/StringLine](https://tweenlabs.xyz/code/StringLine)
   - **Description**: ScrollTriggered SVG network line drawing tracking node proximity scale offsets.
 
 - **Border Reveal**
-  - **Route**: [/animations/BorderReveal](https://tweenlabs.xyz/animations/BorderReveal)
+  - **Route**: [/components/BorderReveal](https://tweenlabs.xyz/components/BorderReveal)
   - **Code Guide**: [/code/BorderReveal](https://tweenlabs.xyz/code/BorderReveal)
   - **Description**: Premium horizontal text scroll where letters fly in and out from top/bottom screen borders.
 
 - **Kinetic Text**
-  - **Route**: [/animations/KineticText](https://tweenlabs.xyz/animations/KineticText)
+  - **Route**: [/components/KineticText](https://tweenlabs.xyz/components/KineticText)
   - **Code Guide**: [/code/KineticText](https://tweenlabs.xyz/code/KineticText)
   - **Description**: Interactive kinetic text sandbox showcasing liquid wave, character scramble, and magnetic motion.
 
 - **Magnetic Dock**
-  - **Route**: [/animations/MagneticDock](https://tweenlabs.xyz/animations/MagneticDock)
+  - **Route**: [/components/MagneticDock](https://tweenlabs.xyz/components/MagneticDock)
   - **Code Guide**: [/code/MagneticDock](https://tweenlabs.xyz/code/MagneticDock)
   - **Description**: Premium floating menu bar where buttons pull dynamically toward the user
 
 - **Bento Grid**
-  - **Route**: [/animations/BentoGrid](https://tweenlabs.xyz/animations/BentoGrid)
+  - **Route**: [/components/BentoGrid](https://tweenlabs.xyz/components/BentoGrid)
   - **Code Guide**: [/code/BentoGrid](https://tweenlabs.xyz/code/BentoGrid)
   - **Description**: Neo-Brutalist bento box card grid with 3D perspective mouse tilt, spring physics recovery, and vector crosshairs.
 
 - **Accordion**
-  - **Route**: [/animations/Accordion](https://tweenlabs.xyz/animations/Accordion)
+  - **Route**: [/components/Accordion](https://tweenlabs.xyz/components/Accordion)
   - **Code Guide**: [/code/Accordion](https://tweenlabs.xyz/code/Accordion)
   - **Description**: Vertical accordion showcase where selection morphs page background color and staggers content.
 
 - **Reveal Text**
-  - **Route**: [/animations/RevealText](https://tweenlabs.xyz/animations/RevealText)
+  - **Route**: [/components/RevealText](https://tweenlabs.xyz/components/RevealText)
   - **Code Guide**: [/code/RevealText](https://tweenlabs.xyz/code/RevealText)
   - **Description**: Premium line-by-line text reveal using SplitText masks with staggered choreography.
 
 - **Tabs Motion**
-  - **Route**: [/animations/TabsMotion](https://tweenlabs.xyz/animations/TabsMotion)
+  - **Route**: [/components/TabsMotion](https://tweenlabs.xyz/components/TabsMotion)
   - **Code Guide**: [/code/TabsMotion](https://tweenlabs.xyz/code/TabsMotion)
   - **Description**: Animated tab navigation with sliding indicator pill and directional content crossfade transitions.
 
 - **Parallax Hero**
-  - **Route**: [/animations/ParallaxHero](https://tweenlabs.xyz/animations/ParallaxHero)
+  - **Route**: [/components/ParallaxHero](https://tweenlabs.xyz/components/ParallaxHero)
   - **Code Guide**: [/code/ParallaxHero](https://tweenlabs.xyz/code/ParallaxHero)
   - **Description**: Multi-layer parallax hero with SplitText character scatter entrance and scroll-driven depth motion.
 
 - **Morphing Text**
-  - **Route**: [/animations/MorphingText](https://tweenlabs.xyz/animations/MorphingText)
+  - **Route**: [/components/MorphingText](https://tweenlabs.xyz/components/MorphingText)
   - **Code Guide**: [/code/MorphingText](https://tweenlabs.xyz/code/MorphingText)
   - **Description**: Smooth auto-cycling text morphing animation with SVG threshold filter and color-coded word transitions.
 

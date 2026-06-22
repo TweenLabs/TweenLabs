@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import AnimationCard from "@/components/AnimationCard";
-import type { AnimationItem } from "@/data/animations";
+import type { AnimationItem } from "@/data/components";
 
 interface AnimationGridProps {
   animations: AnimationItem[];

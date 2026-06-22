@@ -1,4 +1,4 @@
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 
 /**
  * Injects SoftwareSourceCode JSON-LD for a specific animation component.

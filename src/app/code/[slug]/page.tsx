@@ -2,7 +2,7 @@ import fs from "fs";
 import { notFound } from "next/navigation";
 import path from "path";
 import CodePageClient from "@/components/CodePageClient";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 import { isAuthenticated } from "@/lib/auth-server";
 
 export const dynamic = "force-dynamic";
@@ -139,7 +139,7 @@ export default async function CodePage({ params }: PageProps) {
 
   const authenticated = await isAuthenticated();
 
-  const animationsDir = path.join(process.cwd(), "src", "app", "animations");
+  const animationsDir = path.join(process.cwd(), "src", "app", "components");
   const pagePath = path.join(animationsDir, anim.componentName, "page.tsx");
   const howToUsePath = path.join(
     animationsDir,

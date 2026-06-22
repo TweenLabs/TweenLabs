@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { animations } from "@/data/animations";
+import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
 
 export function generateStaticParams() {
