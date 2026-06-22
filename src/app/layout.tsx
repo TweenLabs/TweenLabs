@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Space_Mono } from "next/font/google";
+import { Fraunces, Geist, Space_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import PageWrapper from "@/components/PageWrapper";
 import { fetchAuthQuery, getToken } from "@/lib/auth-server";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 import { api } from "../../convex/_generated/api";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geist = Geist({
   variable: "--font-geist",
@@ -219,7 +222,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${fraunces.variable} ${spaceMono.variable} h-full antialiased selection:bg-wtf-yellow selection:text-black`}
+      className={cn("h-full", "antialiased", "selection:bg-wtf-yellow", "selection:text-black", geist.variable, fraunces.variable, spaceMono.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col font-sans bg-[#f0eadf] text-[#2a2a2a] overflow-x-hidden relative">
         {/* Schema markup for Generative Engine Optimization (GEO) */}

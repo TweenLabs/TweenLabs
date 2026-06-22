@@ -23,6 +23,7 @@ export default function PageWrapper({
 
   // Check if current page is one of the component demo pages
   const isDemoPage = animations.some((anim) => anim.route === normalizedPath);
+  const isPlayground = normalizedPath === "/playground";
 
   // Hide scrollbar on the main homepage
   useEffect(() => {
@@ -132,6 +133,8 @@ export default function PageWrapper({
         className={
           isDemoPage
             ? "flex-grow w-full relative overflow-y-auto overflow-x-hidden mt-[53px] md:mt-16 demo-page-container"
+            : isPlayground
+            ? "flex-1 flex flex-col w-full relative pt-[59px] md:pt-[67px]"
             : "flex-1 flex flex-col w-full relative pt-[69px] md:pt-24"
         }
         style={isDemoPage ? { height: "calc(100dvh - 53px)" } : undefined}
