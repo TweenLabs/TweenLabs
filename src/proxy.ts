@@ -45,7 +45,7 @@ function _gate(
 
 const _POLICY = {
   auth: { ceil: 20, ttl: 60_000 },
-  registry: { ceil: 40, ttl: 60_000 },
+  registry: { ceil: 100, ttl: 60_000 },
 } as const;
 
 export default function proxy(request: NextRequest) {

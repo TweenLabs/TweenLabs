@@ -39,6 +39,7 @@ export default function ComponentsLenis() {
     });
 
     lenisRef.current = lenis;
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
 
     // Synchronize scroll events with GSAP ScrollTrigger
     const handleScroll = () => {
@@ -54,6 +55,9 @@ export default function ComponentsLenis() {
 
     return () => {
       lenisRef.current = null;
+      if ((window as unknown as { lenis?: Lenis }).lenis === lenis) {
+        (window as unknown as { lenis?: Lenis }).lenis = undefined;
+      }
       lenis.destroy();
       gsap.ticker.remove(gsapTick);
     };

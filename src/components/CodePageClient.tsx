@@ -986,8 +986,12 @@ export default function CodePageClient({
   useEffect(() => {
     // Small delay to let the DOM update before Lenis measures
     const timer = setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 100);
+      const globalWindow = window as unknown as { lenis?: { resize: () => void } };
+      const lenis = globalWindow.lenis;
+      if (lenis && typeof lenis.resize === "function") {
+        lenis.resize();
+      }
+    }, 50);
     return () => clearTimeout(timer);
   }, [isExpanded]);
 
@@ -1178,7 +1182,7 @@ export default function CodePageClient({
 
           {/* Code Body */}
           <div
-            className={`relative font-mono text-[10px] md:text-[13px] lg:text-sm bg-[#121212] py-3 md:py-5 px-2 md:px-4 flex items-start transition-all duration-300 ${isExpanded ? "" : "max-h-[300px] md:max-h-[380px] lg:max-h-[450px] overflow-hidden"} ${blurClass}`}
+            className={`relative font-mono text-[10px] md:text-[13px] lg:text-sm bg-[#121212] py-3 md:py-5 px-2 md:px-4 flex items-start ${isExpanded ? "" : "max-h-[300px] md:max-h-[380px] lg:max-h-[450px] overflow-hidden"} ${blurClass}`}
           >
             {/* Line Numbers */}
             <pre className="select-none text-right pr-2 md:pr-4 border-r border-zinc-800 text-zinc-650 min-w-[2.5rem] md:min-w-[3.5rem] whitespace-pre scrollbar-none">
