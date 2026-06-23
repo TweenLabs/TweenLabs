@@ -3,12 +3,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import AnimationMiniPreview from "@/components/AnimationMiniPreview";
+import AnimationCard from "@/components/AnimationCard";
 import type { AnimationItem } from "@/data/components";
-import { useAuthModal } from "@/provider/AuthModalProvider";
-import { useSession } from "@/provider/SessionProvider";
 
 gsap.registerPlugin(useGSAP);
 
@@ -29,9 +26,6 @@ export default function ComponentsPageClient({ animations }: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
   const [activeType, setActiveType] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
-  const { session } = useSession();
-  const { openModal } = useAuthModal();
 
   // Entrance animation
   useGSAP(
@@ -77,12 +71,6 @@ export default function ComponentsPageClient({ animations }: Props) {
       a.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesType && matchesSearch;
   });
-
-  const handleGetCode = (anim: AnimationItem) => {
-    const url = `/code/${anim.componentName}`;
-    session ? router.push(url) : openModal(url, true);
-  };
-
   const handleTypeChange = (type: string | null) => {
     setActiveType(type);
     // Animate cards on filter change
@@ -104,23 +92,7 @@ export default function ComponentsPageClient({ animations }: Props) {
     }
   };
 
-  const hoverMap: Record<string, string> = {
-    "bg-wtf-orange": "hover:border-[#f1903a]",
-    "bg-wtf-green": "hover:border-[#0B9B65]",
-    "bg-wtf-red": "hover:border-[#c23b3a]",
-    "bg-wtf-blue": "hover:border-[#4d8ef7]",
-    "bg-wtf-yellow": "hover:border-[#f1b333]",
-    "bg-wtf-purple": "hover:border-[#8b5cf6]",
-  };
 
-  const hoverColorsMap: Record<string, string> = {
-    "bg-wtf-orange": "hover:bg-wtf-orange hover:text-white",
-    "bg-wtf-green": "hover:bg-wtf-green hover:text-white",
-    "bg-wtf-red": "hover:bg-wtf-red hover:text-white",
-    "bg-wtf-blue": "hover:bg-wtf-blue hover:text-white",
-    "bg-wtf-yellow": "hover:bg-wtf-yellow hover:text-black",
-    "bg-wtf-purple": "hover:bg-wtf-purple hover:text-white",
-  };
 
   return (
     <div
@@ -211,95 +183,15 @@ export default function ComponentsPageClient({ animations }: Props) {
                 ref={gridRef}
                 className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5 xl:gap-6"
               >
-                {filtered.map((anim) => {
-                  const originalIndex = animations.findIndex(
-                    (a) => a.id === anim.id,
-                  );
-                  const displayId = String(
-                    originalIndex !== -1 ? originalIndex + 1 : 0,
-                  ).padStart(2, "0");
-                  return (
-                    <ComponentCard
-                      key={anim.id}
-                      anim={anim}
-                      displayId={displayId}
-                      hoverMap={hoverMap}
-                      hoverColorsMap={hoverColorsMap}
-                      onGetCode={handleGetCode}
-                    />
-                  );
-                })}
+                {filtered.map((anim) => (
+                    <div key={anim.id} className="comp-card">
+                      <AnimationCard anim={anim} />
+                    </div>
+                  ))}
               </div>
             )}
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/** Individual card with its own hover state for iframe preview */
-function ComponentCard({
-  anim,
-  displayId,
-  hoverMap,
-  hoverColorsMap,
-  onGetCode,
-}: {
-  anim: AnimationItem;
-  displayId: string;
-  hoverMap: Record<string, string>;
-  hoverColorsMap: Record<string, string>;
-  onGetCode: (anim: AnimationItem) => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`comp-card brutalist-card p-5 md:p-6 bg-white flex flex-col justify-between gap-4 md:gap-5 border-2 border-[#2a2a2a] transition-all duration-150 overflow-hidden ${hoverMap[anim.bgColor] || ""}`}
-    >
-      <div className="flex flex-col gap-3 min-w-0">
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="text-base md:text-lg font-sans font-black uppercase tracking-tight text-[#2a2a2a] leading-tight break-words">
-            <span className="font-mono font-bold text-[11px] text-zinc-400 mr-1.5">
-              [{displayId}]
-            </span>
-            {anim.name}
-          </h2>
-          <span
-            className={`shrink-0 inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
-          >
-            {anim.bgColor.replace("bg-wtf-", "")}
-          </span>
-        </div>
-
-        {/* Live preview with static thumbnail */}
-        <Link href={anim.route} className="block w-full">
-          <AnimationMiniPreview
-            componentName={anim.componentName}
-            isHovered={isHovered}
-            previewImage={anim.preview}
-            embedInteraction={anim.embedInteraction}
-          />
-        </Link>
-      </div>
-
-      <div className="flex gap-2 min-w-0">
-        <Link href={anim.route} className="flex-1 min-w-0">
-          <button
-            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
-          >
-            View →
-          </button>
-        </Link>
-        <button
-          onClick={() => onGetCode(anim)}
-          className={`flex-1 min-w-0 brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
-        >
-          Get Code
-        </button>
       </div>
     </div>
   );

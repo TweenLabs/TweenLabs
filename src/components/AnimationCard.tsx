@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AnimationMiniPreview from "@/components/AnimationMiniPreview";
 import { type AnimationItem, animations } from "@/data/components";
+import { useFavorites } from "@/hooks/useFavorites";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 import { useSession } from "@/provider/SessionProvider";
 
@@ -26,6 +27,8 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
   const { session } = useSession();
   const { openModal } = useAuthModal();
   const [isHovered, setIsHovered] = useState(false);
+  const { isFavorited, toggleFavorite, isAuthenticated } = useFavorites();
+  const [animatingHeart, setAnimatingHeart] = useState(false);
 
   const originalIndex = animations.findIndex((a) => a.id === anim.id);
   const displayId = String(
@@ -42,6 +45,24 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
     }
   };
 
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      openModal();
+      return;
+    }
+
+    // Trigger heart animation
+    setAnimatingHeart(true);
+    setTimeout(() => setAnimatingHeart(false), 300);
+
+    toggleFavorite(anim.componentName);
+  };
+
+  const favorited = isFavorited(anim.componentName);
+
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
@@ -56,11 +77,37 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
             </span>
             {anim.name}
           </h2>
-          <span
-            className={`shrink-0 inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
-          >
-            {anim.bgColor.replace("bg-wtf-", "")}
-          </span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Favorite heart button */}
+            <button
+              onClick={handleFavorite}
+              className="group/heart p-1 rounded-md hover:bg-[#2a2a2a]/5 transition-colors duration-150 cursor-pointer"
+              aria-label={favorited ? `Remove ${anim.name} from favorites` : `Add ${anim.name} to favorites`}
+              title={favorited ? "Remove from favorites" : "Add to favorites"}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className={`w-4 h-4 transition-all duration-200 ${
+                  animatingHeart ? "scale-125" : "scale-100"
+                } ${
+                  favorited
+                    ? "fill-wtf-red text-wtf-red"
+                    : "fill-none text-[#2a2a2a]/40 group-hover/heart:text-wtf-red/60"
+                }`}
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+            <span
+              className={`inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
+            >
+              {anim.bgColor.replace("bg-wtf-", "")}
+            </span>
+          </div>
         </div>
 
         <Link href={anim.route} className="block w-full">
@@ -91,3 +138,4 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
     </div>
   );
 }
+

@@ -1,12 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import type React from "react";
 import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -30,10 +31,24 @@ const AuthModalContext = createContext<AuthModalContextType | undefined>(
 
 export function AuthModalProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosable, setIsClosable] = useState(true);
   const [callbackUrl, setCallbackUrl] = useState("/");
   const dismissedRef = useRef(false);
+
+  // Auto-open the auth modal when proxy redirects with ?login=true
+  useEffect(() => {
+    if (searchParams?.get("login") === "true") {
+      setCallbackUrl(pathname || "/");
+      setIsClosable(true);
+      setIsOpen(true);
+      // Clean up the URL param without a full navigation
+      const url = new URL(window.location.href);
+      url.searchParams.delete("login");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParams, pathname]);
 
   const openModal = useCallback((url = "/", closable = true) => {
     if (dismissedRef.current) return;

@@ -9,6 +9,7 @@ import { useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { animations } from "@/data/components";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export default function PageWrapper({
   children,
@@ -17,6 +18,9 @@ export default function PageWrapper({
 }) {
   const pathname = usePathname();
   const scrollerRef = useRef<HTMLElement>(null);
+
+  // Track page views on route changes
+  useAnalytics();
 
   // Normalize path to match animations route structure
   const normalizedPath = pathname ? pathname.replace(/\/$/, "") : "";

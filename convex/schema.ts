@@ -1,6 +1,8 @@
 import { defineSchema } from "convex/server";
-import { tables } from "./betterAuth/schema";
+import { tables as betterAuthTables } from "./betterAuth/schema";
+import { tables as appTables } from "./appSchema";
 
 export default defineSchema({
-  ...tables,
+  ...betterAuthTables,
+  ...appTables,
 });

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Fraunces, Geist, Inter, Space_Mono } from "next/font/google";
 import "./globals.css";
 import PageWrapper from "@/components/PageWrapper";
 import { animations } from "@/data/components";
 import { fetchAuthQuery, getToken } from "@/lib/auth-server";
+import { parsePreferences } from "@/lib/preferences";
 import { cn } from "@/lib/utils";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 import { api } from "../../convex/_generated/api";
@@ -116,10 +118,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read user theme preference from cookie (prevents theme flash)
+  const cookieStore = await cookies();
+  const prefsCookie = cookieStore.get("tl-prefs")?.value;
+  const preferences = parsePreferences(prefsCookie);
+
   // Fetch session server-side to prevent loading flicker in the client
   const token = await getToken().catch(() => undefined);
   const user = token
-    ? await fetchAuthQuery(api.auth.getCurrentUser).catch(() => null)
+    ? await fetchAuthQuery(api.auth.getCurrentUser).catch(() => null) as {
+        _id: string;
+        name: string;
+        email: string;
+        image?: string | null;
+        pictureUrl?: string;
+      } | null
     : null;
 
   const initialSession = user
@@ -285,6 +298,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
+      data-theme={preferences.theme}
       className={cn(
         "h-full",
         "antialiased",
