@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "About TweenLabs | Open Source GSAP Animation Experts",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     "TweenLabs licensing",
   ],
   alternates: {
-    canonical: "https://tweenlabs.xyz/about",
+    canonical: siteConfig.fullUrl("/about"),
   },
 };
 
@@ -27,27 +28,27 @@ export default function AboutLayout({
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": "https://tweenlabs.xyz/about/#aboutpage",
-        url: "https://tweenlabs.xyz/about",
-        name: "About TweenLabs - Premium GSAP Animation Components",
+        "@id": `${siteConfig.url}/about/#aboutpage`,
+        url: siteConfig.fullUrl("/about"),
+        name: `About ${siteConfig.name} - Premium GSAP Animation Components`,
         isPartOf: {
-          "@id": "https://tweenlabs.xyz/#website",
+          "@id": `${siteConfig.url}/#website`,
         },
         description:
           "TweenLabs is an open-source animation workshop and catalog built to make GreenSock (GSAP) integrations in React and Next.js accessible, clean, and fully optimized.",
         publisher: {
           "@type": "Organization",
-          "@id": "https://tweenlabs.xyz/#website",
-          name: "TweenLabs",
-          url: "https://tweenlabs.xyz",
+          "@id": `${siteConfig.url}/#website`,
+          name: siteConfig.name,
+          url: siteConfig.url,
         },
         mainEntity: {
           "@type": "Organization",
-          name: "TweenLabs",
+          name: siteConfig.name,
           description:
             "A team of open-source developers and creative UI engineers specializing in high-performance web animations and interactive frontend experiences.",
-          logo: "https://tweenlabs.xyz/logo.svg",
-          sameAs: ["https://github.com/TweenLabs/TweenLabs"],
+          logo: siteConfig.fullUrl("/logo.svg"),
+          sameAs: [siteConfig.github],
         },
       },
     ],
