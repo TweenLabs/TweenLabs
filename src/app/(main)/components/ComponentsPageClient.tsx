@@ -5,6 +5,7 @@ import gsap from "gsap";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import AnimationMiniPreview from "@/components/AnimationMiniPreview";
 import type { AnimationItem } from "@/data/components";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 import { useSession } from "@/provider/SessionProvider";
@@ -218,50 +219,86 @@ export default function ComponentsPageClient({ animations }: Props) {
                     originalIndex !== -1 ? originalIndex + 1 : 0,
                   ).padStart(2, "0");
                   return (
-                    <div
+                    <ComponentCard
                       key={anim.id}
-                      className={`comp-card brutalist-card p-5 md:p-6 bg-white flex flex-col justify-between gap-5 md:gap-6 border-2 border-[#2a2a2a] transition-all duration-150 overflow-hidden ${hoverMap[anim.bgColor] || ""}`}
-                    >
-                      <div className="flex flex-col gap-3 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono font-bold text-[11px] text-zinc-400">
-                            [{displayId}]
-                          </span>
-                          <span
-                            className={`inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
-                          >
-                            {anim.bgColor.replace("bg-wtf-", "")}
-                          </span>
-                        </div>
-                        <h2 className="font-sans font-black text-base md:text-lg uppercase tracking-tight text-[#2a2a2a] leading-tight break-words">
-                          {anim.name}
-                        </h2>
-                        <p className="text-xs md:text-[13px] font-sans font-medium text-zinc-650 leading-relaxed line-clamp-3">
-                          {anim.description}
-                        </p>
-                      </div>
-                      <div className="flex gap-2 min-w-0">
-                        <Link href={anim.route} className="flex-1 min-w-0">
-                          <button
-                            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
-                          >
-                            View →
-                          </button>
-                        </Link>
-                        <button
-                          onClick={() => handleGetCode(anim)}
-                          className={`flex-1 min-w-0 brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
-                        >
-                          Get Code
-                        </button>
-                      </div>
-                    </div>
+                      anim={anim}
+                      displayId={displayId}
+                      hoverMap={hoverMap}
+                      hoverColorsMap={hoverColorsMap}
+                      onGetCode={handleGetCode}
+                    />
                   );
                 })}
               </div>
             )}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/** Individual card with its own hover state for iframe preview */
+function ComponentCard({
+  anim,
+  displayId,
+  hoverMap,
+  hoverColorsMap,
+  onGetCode,
+}: {
+  anim: AnimationItem;
+  displayId: string;
+  hoverMap: Record<string, string>;
+  hoverColorsMap: Record<string, string>;
+  onGetCode: (anim: AnimationItem) => void;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`comp-card brutalist-card p-5 md:p-6 bg-white flex flex-col justify-between gap-4 md:gap-5 border-2 border-[#2a2a2a] transition-all duration-150 overflow-hidden ${hoverMap[anim.bgColor] || ""}`}
+    >
+      <div className="flex flex-col gap-3 min-w-0">
+        <div className="flex items-center justify-between">
+          <span className="font-mono font-bold text-[11px] text-zinc-400">
+            [{displayId}]
+          </span>
+          <span
+            className={`inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
+          >
+            {anim.bgColor.replace("bg-wtf-", "")}
+          </span>
+        </div>
+        <h2 className="font-sans font-black text-base md:text-lg uppercase tracking-tight text-[#2a2a2a] leading-tight break-words">
+          {anim.name}
+        </h2>
+
+        {/* Live preview with static thumbnail */}
+        <Link href={anim.route} className="block w-full">
+          <AnimationMiniPreview
+            componentName={anim.componentName}
+            isHovered={isHovered}
+            previewImage={anim.preview}
+          />
+        </Link>
+      </div>
+
+      <div className="flex gap-2 min-w-0">
+        <Link href={anim.route} className="flex-1 min-w-0">
+          <button
+            className={`w-full brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
+          >
+            View →
+          </button>
+        </Link>
+        <button
+          onClick={() => onGetCode(anim)}
+          className={`flex-1 min-w-0 brutalist-btn bg-white ${hoverColorsMap[anim.bgColor] || ""} border-[#2a2a2a] text-[#2a2a2a] font-mono font-bold text-[10px] md:text-xs py-2.5 md:py-3 px-3 rounded-lg uppercase tracking-wider cursor-pointer transition-colors duration-150 whitespace-nowrap`}
+        >
+          Get Code
+        </button>
       </div>
     </div>
   );
