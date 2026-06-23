@@ -1,31 +1,35 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 /**
- * Gets the current authenticated user from the database.
+ * Auth queries — user lookup and profile management.
+ *
+ * Design:
+ * - getCurrentUser: auth-gated, indexed lookup by ID then email fallback
+ * - storeUser: input-validated, idempotent upsert
+ * - All user IDs derived from ctx.auth — never from client
  */
+
+// ── Get current authenticated user ──────────────────────────────
 export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      return null;
-    }
+    if (!identity) return null;
 
-    // better-auth uses the user's ID as the identity subject
+    // Primary lookup: direct ID fetch — O(1)
     let user = await ctx.db.get(identity.subject as Id<"user">);
+
+    // Fallback: email index lookup (handles edge cases during migration)
     if (!user && identity.email) {
-      const email = identity.email as string;
       user = await ctx.db
         .query("user")
-        .withIndex("email_name", (q) => q.eq("email", email))
+        .withIndex("email_name", (q) => q.eq("email", identity.email as string))
         .first();
     }
 
-    if (!user) {
-      return null;
-    }
+    if (!user) return null;
 
     return {
       ...user,
@@ -34,36 +38,45 @@ export const getCurrentUser = query({
   },
 });
 
-/**
- * Explicitly stores or updates user data in the Convex database.
- * Usually handled by better-auth, but useful for manual updates.
- */
+// ── Store or update user profile ────────────────────────────────
 export const storeUser = mutation({
   args: {
     name: v.optional(v.string()),
     image: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Auth check first — always
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      throw new Error("Called storeUser without authentication");
+      throw new ConvexError({
+        code: "UNAUTHENTICATED",
+        message: "Must be signed in to update profile.",
+      });
     }
 
-    // Input validation — prevent oversized payloads
+    // Input validation — enforce limits
     if (args.name && args.name.length > 100) {
-      throw new Error("Name must be 100 characters or less");
+      throw new ConvexError({
+        code: "VALIDATION_ERROR",
+        message: "Name must be 100 characters or less.",
+      });
     }
     if (args.image && args.image.length > 2048) {
-      throw new Error("Image URL must be 2048 characters or less");
+      throw new ConvexError({
+        code: "VALIDATION_ERROR",
+        message: "Image URL must be 2048 characters or less.",
+      });
     }
 
+    // Primary: direct ID fetch
     let userId = identity.subject as Id<"user">;
     let existingUser = await ctx.db.get(userId);
+
+    // Fallback: email index
     if (!existingUser && identity.email) {
-      const email = identity.email as string;
       existingUser = await ctx.db
         .query("user")
-        .withIndex("email_name", (q) => q.eq("email", email))
+        .withIndex("email_name", (q) => q.eq("email", identity.email as string))
         .first();
       if (existingUser) {
         userId = existingUser._id;
@@ -71,22 +84,24 @@ export const storeUser = mutation({
     }
 
     if (existingUser) {
+      // Atomic update — only touched fields
       await ctx.db.patch(userId, {
         name: args.name ?? existingUser.name,
         image: args.image ?? existingUser.image,
         updatedAt: Date.now(),
       });
       return userId;
-    } else {
-      const newUserId = await ctx.db.insert("user", {
-        name: args.name ?? identity.name ?? "User",
-        email: identity.email ?? "unknown",
-        emailVerified: identity.emailVerified ?? true,
-        image: args.image ?? identity.pictureUrl,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      });
-      return newUserId;
     }
+
+    // New user insert
+    const newUserId = await ctx.db.insert("user", {
+      name: args.name ?? identity.name ?? "User",
+      email: identity.email ?? "unknown",
+      emailVerified: identity.emailVerified ?? true,
+      image: args.image ?? identity.pictureUrl,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+    return newUserId;
   },
 });

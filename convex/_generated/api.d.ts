@@ -11,8 +11,10 @@
 import type * as analytics from "../analytics.js";
 import type * as appSchema from "../appSchema.js";
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
 import type * as favorites from "../favorites.js";
 import type * as http from "../http.js";
+import type * as maintenance from "../maintenance.js";
 
 import type {
   ApiFromModules,
@@ -24,8 +26,10 @@ declare const fullApi: ApiFromModules<{
   analytics: typeof analytics;
   appSchema: typeof appSchema;
   auth: typeof auth;
+  crons: typeof crons;
   favorites: typeof favorites;
   http: typeof http;
+  maintenance: typeof maintenance;
 }>;
 
 /**

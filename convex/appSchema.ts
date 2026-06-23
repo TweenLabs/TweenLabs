@@ -4,6 +4,12 @@ import { v } from "convex/values";
 /**
  * App-specific tables (analytics + favorites).
  * Merged into the root schema alongside Better Auth tables.
+ *
+ * Index design:
+ * - Every field used in .withIndex() or .filter() has a covering index
+ * - Compound indexes match query access patterns to eliminate full-table scans
+ * - pageViews.by_session_path: enables O(1) dedup lookups
+ * - pageViews.by_component: enables aggregation without scanning unrelated rows
  */
 export const tables = {
   // ── Page view tracking ──────────────────────────────────────
@@ -15,10 +21,11 @@ export const tables = {
     timestamp: v.number(),
     referrer: v.optional(v.string()),
   })
-    .index("path", ["path"])
-    .index("componentName", ["componentName"])
-    .index("timestamp", ["timestamp"])
-    .index("userId", ["userId"]),
+    .index("by_timestamp", ["timestamp"])
+    .index("by_path", ["path"])
+    .index("by_component", ["componentName", "timestamp"])
+    .index("by_session_path", ["sessionId", "path"])
+    .index("by_userId", ["userId"]),
 
   // ── User favorites ──────────────────────────────────────────
   userFavorites: defineTable({
@@ -26,6 +33,6 @@ export const tables = {
     componentName: v.string(),
     addedAt: v.number(),
   })
-    .index("userId", ["userId"])
-    .index("userId_componentName", ["userId", "componentName"]),
+    .index("by_userId", ["userId"])
+    .index("by_userId_componentName", ["userId", "componentName"]),
 };
