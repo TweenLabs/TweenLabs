@@ -17,7 +17,23 @@ import { api } from "../../convex/_generated/api";
  */
 export function useAnalytics() {
   const pathname = usePathname();
-  const trackPageView = useMutation(api.analytics.trackPageView);
+
+  // useMutation will crash without ConvexProvider (preview/embed pages).
+  // We can't conditionally call hooks, so we use a try-catch wrapper.
+  let trackPageView: ((args: {
+    path: string;
+    componentName?: string;
+    sessionId?: string;
+    referrer?: string;
+  }) => Promise<unknown>) | null = null;
+
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    trackPageView = useMutation(api.analytics.trackPageView);
+  } catch {
+    // No Convex provider (preview/embed pages) — analytics disabled
+  }
+
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastTrackedRef = useRef<string>("");
 
@@ -76,12 +92,12 @@ export function useAnalytics() {
         // SSR or restricted context
       }
 
-      trackPageView({
+      trackPageView?.({
         path: pathname,
         componentName,
         sessionId,
         referrer,
-      }).catch(() => {
+      })?.catch(() => {
         // Silently ignore — analytics must never break the app
       });
     }, 300);

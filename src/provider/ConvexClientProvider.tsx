@@ -25,9 +25,10 @@ export function ConvexClientProvider({
   const pathname = usePathname();
 
   // Preview/embed pages only render animations — skip Convex entirely
-  // to avoid unnecessary WebSocket connections and auth API calls.
+  // to avoid WebSocket connections and auth API calls from iframes.
+  // SessionContext has a safe default value; AuthModalProvider is lightweight.
   if (pathname?.startsWith("/preview")) {
-    return <>{children}</>;
+    return <AuthModalProvider>{children}</AuthModalProvider>;
   }
 
   return (
