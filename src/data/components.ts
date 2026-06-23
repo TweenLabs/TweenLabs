@@ -8,7 +8,11 @@ export interface AnimationItem {
   description: string;
   tiltClass: string;
   type: ("text" | "scroll" | "card" | "interactive")[];
-  preview?: string; // Static thumbnail path (e.g., "/previews/FlipCards.webp")
+  preview?: string;
+  /** How the embed preview interacts: scroll (default), cursor, tabs, click-sequence */
+  embedInteraction?: "scroll" | "cursor" | "tabs" | "click-sequence";
+  /** Zoom level for embed preview (default 1440). Lower = more zoomed in. e.g. 900 = 1.6× zoom */
+  embedZoom?: number;
 }
 
 export const animations: AnimationItem[] = [
@@ -102,6 +106,7 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
     type: ["interactive"],
     preview: "/previews/FluidCursor.webp",
+    embedInteraction: "cursor",
   },
   {
     id: "blueprint",
@@ -167,6 +172,7 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
     type: ["text", "interactive"],
     preview: "/previews/GravityDrop.webp",
+    embedZoom: 960,
   },
   {
     id: "string-line",
@@ -206,6 +212,8 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
     type: ["text", "interactive"],
     preview: "/previews/KineticText.webp",
+    embedInteraction: "cursor",
+    embedZoom: 900,
   },
   {
     id: "magnetic-dock",
@@ -219,6 +227,8 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
     type: ["interactive"],
     preview: "/previews/MagneticDock.webp",
+    embedInteraction: "cursor",
+    embedZoom: 900,
   },
   {
     id: "bento-grid",
@@ -232,6 +242,7 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right-lg",
     type: ["card", "interactive"],
     preview: "/previews/BentoGrid.webp",
+    embedInteraction: "cursor",
   },
   {
     id: "accordion",
@@ -245,6 +256,8 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
     type: ["interactive"],
     preview: "/previews/Accordion.webp",
+    embedInteraction: "click-sequence",
+    embedZoom: 960,
   },
   {
     id: "reveal-text",
@@ -271,6 +284,8 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-left",
     type: ["interactive"],
     preview: "/previews/TabsMotion.webp",
+    embedInteraction: "tabs",
+    embedZoom: 960,
   },
   {
     id: "parallax-hero",
@@ -297,5 +312,6 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
     type: ["text"],
     preview: "/previews/MorphingText.webp",
+    embedZoom: 960,
   },
 ];

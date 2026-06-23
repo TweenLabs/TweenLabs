@@ -261,19 +261,19 @@ function ComponentCard({
       className={`comp-card brutalist-card p-5 md:p-6 bg-white flex flex-col justify-between gap-4 md:gap-5 border-2 border-[#2a2a2a] transition-all duration-150 overflow-hidden ${hoverMap[anim.bgColor] || ""}`}
     >
       <div className="flex flex-col gap-3 min-w-0">
-        <div className="flex items-center justify-between">
-          <span className="font-mono font-bold text-[11px] text-zinc-400">
-            [{displayId}]
-          </span>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-base md:text-lg font-sans font-black uppercase tracking-tight text-[#2a2a2a] leading-tight break-words">
+            <span className="font-mono font-bold text-[11px] text-zinc-400 mr-1.5">
+              [{displayId}]
+            </span>
+            {anim.name}
+          </h2>
           <span
-            className={`inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
+            className={`shrink-0 inline-flex items-center border-2 border-[#2a2a2a] px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1px_1px_0px_#2a2a2a]`}
           >
             {anim.bgColor.replace("bg-wtf-", "")}
           </span>
         </div>
-        <h2 className="font-sans font-black text-base md:text-lg uppercase tracking-tight text-[#2a2a2a] leading-tight break-words">
-          {anim.name}
-        </h2>
 
         {/* Live preview with static thumbnail */}
         <Link href={anim.route} className="block w-full">
@@ -281,6 +281,8 @@ function ComponentCard({
             componentName={anim.componentName}
             isHovered={isHovered}
             previewImage={anim.preview}
+            embedInteraction={anim.embedInteraction}
+            embedZoom={anim.embedZoom}
           />
         </Link>
       </div>

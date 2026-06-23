@@ -6,7 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface AnimationMiniPreviewProps {
   componentName: string;
   isHovered: boolean;
-  previewImage?: string; // Static thumbnail path
+  previewImage?: string;
+  embedInteraction?: "scroll" | "cursor" | "tabs" | "click-sequence";
+  embedZoom?: number;
 }
 
 /**
@@ -21,6 +23,8 @@ export default function AnimationMiniPreview({
   componentName,
   isHovered,
   previewImage,
+  embedInteraction = "scroll",
+  embedZoom = 1440,
 }: AnimationMiniPreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -29,6 +33,10 @@ export default function AnimationMiniPreview({
   const [iframeReady, setIframeReady] = useState(false);
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Iframe base dimensions (lower embedZoom = more zoomed in)
+  const IFRAME_W = embedZoom;
+  const IFRAME_H = Math.round((embedZoom * 9) / 16);
+
   // ── Scale calculation via ResizeObserver ──
   useEffect(() => {
     const el = containerRef.current;
@@ -36,12 +44,12 @@ export default function AnimationMiniPreview({
 
     const ro = new ResizeObserver((entries) => {
       const width = entries[0]?.contentRect.width || 360;
-      setScale(width / 1440);
+      setScale(width / IFRAME_W);
     });
 
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [IFRAME_W]);
 
   // ── Hover lifecycle: load on hover, destroy on unhover ──
   useEffect(() => {
@@ -66,19 +74,32 @@ export default function AnimationMiniPreview({
     };
   }, [isHovered, componentName]);
 
-  // ── Auto-scroll once iframe is ready ──
+  // ── Start interaction once iframe is ready ──
   useEffect(() => {
     if (!iframeReady || !iframeRef.current?.contentWindow) return;
 
+    const commandMap: Record<string, string> = {
+      scroll: "auto-scroll-start",
+      cursor: "auto-cursor-start",
+      tabs: "auto-tabs-start",
+      "click-sequence": "auto-click-start",
+    };
+
+    // Cursor needs more time: IntersectionObserver + GSAP quickTo setup
+    const delay = embedInteraction === "cursor" ? 600 : 400;
+
     const timer = setTimeout(() => {
       iframeRef.current?.contentWindow?.postMessage(
-        { type: "tweenlabs-embed", command: "auto-scroll-start" },
+        {
+          type: "tweenlabs-embed",
+          command: commandMap[embedInteraction] || "auto-scroll-start",
+        },
         "*",
       );
-    }, 200);
+    }, delay);
 
     return () => clearTimeout(timer);
-  }, [iframeReady]);
+  }, [iframeReady, embedInteraction]);
 
   const handleIframeLoad = useCallback(() => {
     setIframeReady(true);
@@ -141,8 +162,8 @@ export default function AnimationMiniPreview({
           scrolling="no"
           className="absolute top-0 left-0 border-none pointer-events-none select-none z-10 transition-opacity duration-300"
           style={{
-            width: "1440px",
-            height: "810px",
+            width: `${IFRAME_W}px`,
+            height: `${IFRAME_H}px`,
             transform: `scale(${scale})`,
             transformOrigin: "top left",
             opacity: iframeReady ? 1 : 0,

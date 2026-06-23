@@ -49,26 +49,27 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
       className="brutalist-card brutalist-card-interactive p-6 lg:p-8 bg-white flex flex-col justify-between gap-6 h-full overflow-hidden"
     >
       <div className="flex flex-col gap-4 min-w-0">
-        <div className="flex items-center justify-between">
-          <span className="font-mono font-bold text-sm lg:text-base text-zinc-500">
-            [{displayId}]
-          </span>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-lg lg:text-xl font-sans font-black uppercase tracking-tight text-[#2a2a2a] break-words leading-tight">
+            <span className="font-mono font-bold text-sm lg:text-base text-zinc-500 mr-1.5">
+              [{displayId}]
+            </span>
+            {anim.name}
+          </h2>
           <span
-            className={`inline-flex items-center gap-2 border-2 border-[#2a2a2a] px-3 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1.5px_1.5px_0px_#2a2a2a] ${anim.tiltClass}`}
+            className={`shrink-0 inline-flex items-center gap-2 border-2 border-[#2a2a2a] px-3 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase ${anim.bgColor} ${anim.textColor} shadow-[1.5px_1.5px_0px_#2a2a2a] ${anim.tiltClass}`}
           >
             Theme Color
           </span>
         </div>
-
-        <h2 className="text-2xl lg:text-[1.65rem] font-sans font-black uppercase tracking-tight text-[#2a2a2a] break-words">
-          {anim.name}
-        </h2>
 
         <Link href={anim.route} className="block w-full">
           <AnimationMiniPreview
             componentName={anim.componentName}
             isHovered={isHovered}
             previewImage={anim.preview}
+            embedInteraction={anim.embedInteraction}
+            embedZoom={anim.embedZoom}
           />
         </Link>
       </div>

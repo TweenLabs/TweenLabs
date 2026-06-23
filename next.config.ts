@@ -85,7 +85,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/:path*",
+        // All non-preview routes: deny framing
+        source: "/((?!preview).*)",
         headers: [
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
