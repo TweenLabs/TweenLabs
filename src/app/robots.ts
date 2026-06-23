@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/lib/site-config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -26,7 +27,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/playground", "/_next/"],
       },
     ],
-    sitemap: "https://tweenlabs.xyz/sitemap.xml",
-    host: "https://tweenlabs.xyz",
+    sitemap: siteConfig.fullUrl("/sitemap.xml"),
+    host: siteConfig.url,
   };
 }

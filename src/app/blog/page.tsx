@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Blog | GSAP Tutorials, Comparisons & Animation Guides | TweenLabs",
   description:
     "Learn GSAP, React animation patterns, and web animation best practices. Tutorials, comparisons, and guides from TweenLabs.",
   alternates: {
-    canonical: "https://tweenlabs.xyz/blog",
+    canonical: siteConfig.fullUrl("/blog"),
   },
 };
 

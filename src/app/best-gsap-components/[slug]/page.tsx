@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
+import { siteConfig } from "@/lib/site-config";
 
 export function generateStaticParams() {
   return seoCategories.map((cat) => ({ slug: cat.slug }));
@@ -21,13 +22,13 @@ export function generateMetadata({
     description: cat.metaDescription,
     keywords: cat.keywords,
     alternates: {
-      canonical: `https://tweenlabs.xyz/best-gsap-components/${cat.slug}`,
+      canonical: siteConfig.fullUrl(`/best-gsap-components/${cat.slug}`),
     },
     openGraph: {
       title: cat.metaTitle,
       description: cat.metaDescription,
-      url: `https://tweenlabs.xyz/best-gsap-components/${cat.slug}`,
-      siteName: "TweenLabs",
+      url: siteConfig.fullUrl(`/best-gsap-components/${cat.slug}`),
+      siteName: siteConfig.name,
       type: "article",
     },
   };
@@ -46,12 +47,12 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     "@type": "CollectionPage",
     name: cat.heading,
     description: cat.description,
-    url: `https://tweenlabs.xyz/best-gsap-components/${cat.slug}`,
+    url: siteConfig.fullUrl(`/best-gsap-components/${cat.slug}`),
     numberOfItems: matchedComponents.length,
     isPartOf: {
       "@type": "WebSite",
-      name: "TweenLabs",
-      url: "https://tweenlabs.xyz",
+      name: siteConfig.name,
+      url: siteConfig.url,
     },
     mainEntity: {
       "@type": "ItemList",
@@ -59,7 +60,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         "@type": "ListItem",
         position: i + 1,
         name: anim?.name,
-        url: `https://tweenlabs.xyz${anim?.route}`,
+        url: siteConfig.fullUrl(anim?.route || ""),
       })),
     },
   };

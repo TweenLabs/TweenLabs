@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
+import { siteConfig } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://tweenlabs.xyz";
+  const baseUrl = siteConfig.url;
   const today = new Date().toISOString().split("T")[0];
 
   // Static high-priority routes

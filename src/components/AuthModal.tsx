@@ -65,10 +65,9 @@ export default function AuthModal() {
         provider,
         callbackURL: callbackUrl,
       });
-    } catch (err) {
-      console.error(`${provider} auth error:`, err);
-      const errorMessage = err instanceof Error ? err.message : String(err);
-      setError(errorMessage || `Failed to sign in with ${provider}`);
+    } catch {
+      // Never expose raw auth errors to users — generic safe message only
+      setError("Sign-in failed. Please try again or use a different provider.");
       setIsLoading(null);
     }
   };

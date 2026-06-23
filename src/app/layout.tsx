@@ -6,6 +6,7 @@ import PageWrapper from "@/components/PageWrapper";
 import { animations } from "@/data/components";
 import { fetchAuthQuery, getToken } from "@/lib/auth-server";
 import { parsePreferences } from "@/lib/preferences";
+import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import { ConvexClientProvider } from "@/provider/ConvexClientProvider";
 import { api } from "../../convex/_generated/api";
@@ -53,12 +54,12 @@ export const metadata: Metadata = {
     "copy paste animation components",
     "GSAP vs Framer Motion",
   ],
-  authors: [{ name: "TweenLabs", url: "https://tweenlabs.xyz" }],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: "TweenLabs",
   publisher: "TweenLabs",
   category: "Technology",
   alternates: {
-    canonical: "https://tweenlabs.xyz",
+    canonical: siteConfig.url,
   },
   robots: {
     index: true,
@@ -75,16 +76,16 @@ export const metadata: Metadata = {
     title: "TweenLabs | Best GSAP UI Components & React Animation Templates",
     description:
       "22+ premium, copy-paste GSAP animation components for React & Next.js. ScrollTrigger, 3D carousels, kinetic typography, morphing text, and more — all free and open-source.",
-    url: "https://tweenlabs.xyz",
-    siteName: "TweenLabs",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "https://tweenlabs.xyz/logo.png",
+        url: siteConfig.fullUrl("/logo.png"),
         width: 512,
         height: 512,
-        alt: "TweenLabs — Premium GSAP Animation Components",
+        alt: `${siteConfig.name} — Premium GSAP Animation Components`,
       },
     ],
   },
@@ -93,7 +94,7 @@ export const metadata: Metadata = {
     title: "TweenLabs | Best GSAP UI Components & React Animation Templates",
     description:
       "22+ premium, copy-paste GSAP animation components for React & Next.js. Free and open-source.",
-    images: ["https://tweenlabs.xyz/logo.png"],
+    images: [siteConfig.fullUrl("/logo.png")],
     creator: "@TweenLabs",
   },
   verification: {
@@ -107,9 +108,9 @@ export const metadata: Metadata = {
     apple: "/logo.svg",
   },
   other: {
-    "ai:llms": "https://tweenlabs.xyz/llms.txt",
-    "ai:llms-full": "https://tweenlabs.xyz/llms-full.txt",
-    "ai:context": "https://tweenlabs.xyz/ai.txt",
+    "ai:llms": siteConfig.fullUrl("/llms.txt"),
+    "ai:llms-full": siteConfig.fullUrl("/llms-full.txt"),
+    "ai:context": siteConfig.fullUrl("/ai.txt"),
   },
 };
 
@@ -157,11 +158,11 @@ export default async function RootLayout({
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://tweenlabs.xyz/#organization",
-        name: "TweenLabs",
-        url: "https://tweenlabs.xyz",
-        logo: "https://tweenlabs.xyz/logo.svg",
-        sameAs: ["https://github.com/TweenLabs/TweenLabs"],
+        "@id": `${siteConfig.url}/#organization`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        logo: siteConfig.fullUrl("/logo.svg"),
+        sameAs: [siteConfig.github],
         description:
           "TweenLabs is an open-source engineering repository providing high-performance, copy-paste GreenSock (GSAP) UI components, ScrollTrigger timelines, and custom animation hooks tailored specifically for React 19 and Next.js 16 (App Router) environments.",
         foundingDate: "2025",
@@ -177,23 +178,23 @@ export default async function RootLayout({
       },
       {
         "@type": "WebSite",
-        "@id": "https://tweenlabs.xyz/#website",
-        url: "https://tweenlabs.xyz",
-        name: "TweenLabs",
+        "@id": `${siteConfig.url}/#website`,
+        url: siteConfig.url,
+        name: siteConfig.name,
         description:
           "TweenLabs is a premium web design animations repository featuring copy-paste React 19, Next.js 16, and GSAP ScrollTrigger UI components.",
         publisher: {
-          "@id": "https://tweenlabs.xyz/#organization",
+          "@id": `${siteConfig.url}/#organization`,
         },
         inLanguage: "en-US",
       },
       {
         "@type": "CollectionPage",
-        "@id": "https://tweenlabs.xyz/#collectionpage",
-        url: "https://tweenlabs.xyz",
+        "@id": `${siteConfig.url}/#collectionpage`,
+        url: siteConfig.url,
         name: "Best GSAP UI Components & Animation Templates | TweenLabs",
         isPartOf: {
-          "@id": "https://tweenlabs.xyz/#website",
+          "@id": `${siteConfig.url}/#website`,
         },
         description: `A collection of ${animations.length}+ copy-paste GSAP components including ScrollTrigger decks, 3D carousels, morphing text, bento grids, parallax heroes, and interactive typography.`,
         about: {
@@ -204,7 +205,7 @@ export default async function RootLayout({
       },
       {
         "@type": "SoftwareApplication",
-        "@id": "https://tweenlabs.xyz/#software",
+        "@id": `${siteConfig.url}/#software`,
         name: "TweenLabs CLI",
         operatingSystem: "Cross-platform (Node.js)",
         applicationCategory: "DeveloperApplication",
@@ -217,14 +218,14 @@ export default async function RootLayout({
         downloadUrl: "https://www.npmjs.com/package/tweenlabs",
         installUrl: "https://www.npmjs.com/package/tweenlabs",
         author: {
-          "@id": "https://tweenlabs.xyz/#organization",
+          "@id": `${siteConfig.url}/#organization`,
         },
         description:
           "Zero-dependency CLI to install premium GSAP animation components directly into your Next.js or React project. Run npx tweenlabs@latest add ComponentName.",
       },
       {
         "@type": "FAQPage",
-        "@id": "https://tweenlabs.xyz/#faq",
+        "@id": `${siteConfig.url}/#faq`,
         mainEntity: [
           {
             "@type": "Question",

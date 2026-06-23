@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title:
@@ -17,13 +18,13 @@ export const metadata: Metadata = {
     "React animation performance",
   ],
   alternates: {
-    canonical: "https://tweenlabs.xyz/blog/gsap-vs-framer-motion",
+    canonical: siteConfig.fullUrl("/blog/gsap-vs-framer-motion"),
   },
   openGraph: {
     title: "GSAP vs Framer Motion: Which Should You Use in 2025?",
     description:
       "In-depth comparison of GSAP and Framer Motion for React & Next.js. Performance, API, ScrollTrigger, and real-world examples.",
-    url: "https://tweenlabs.xyz/blog/gsap-vs-framer-motion",
+    url: siteConfig.fullUrl("/blog/gsap-vs-framer-motion"),
     type: "article",
   },
 };

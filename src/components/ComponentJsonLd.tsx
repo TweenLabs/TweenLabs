@@ -1,4 +1,5 @@
 import { animations } from "@/data/components";
+import { siteConfig } from "@/lib/site-config";
 
 /**
  * Injects SoftwareSourceCode JSON-LD for a specific animation component.
@@ -29,11 +30,11 @@ export default function ComponentJsonLd({
     license: "https://opensource.org/licenses/MIT",
     author: {
       "@type": "Organization",
-      name: "TweenLabs",
-      url: "https://tweenlabs.xyz",
+      name: siteConfig.name,
+      url: siteConfig.url,
     },
-    url: `https://tweenlabs.xyz${anim.route}`,
-    mainEntityOfPage: `https://tweenlabs.xyz/code/${anim.componentName}`,
+    url: siteConfig.fullUrl(anim.route),
+    mainEntityOfPage: siteConfig.fullUrl(`/code/${anim.componentName}`),
   };
 
   return (

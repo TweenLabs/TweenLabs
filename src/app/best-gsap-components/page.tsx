@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { animations } from "@/data/components";
 import { seoCategories } from "@/data/seo-categories";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title:
@@ -23,14 +24,14 @@ export const metadata: Metadata = {
     "GSAP vs Framer Motion",
   ],
   alternates: {
-    canonical: "https://tweenlabs.xyz/best-gsap-components",
+    canonical: siteConfig.fullUrl("/best-gsap-components"),
   },
   openGraph: {
     title: "Best GSAP Components 2025 | Free React & Next.js Animations",
     description:
       "22+ production-ready GSAP components for React & Next.js. ScrollTrigger, 3D carousels, morphing text — all free and open-source.",
-    url: "https://tweenlabs.xyz/best-gsap-components",
-    siteName: "TweenLabs",
+    url: siteConfig.fullUrl("/best-gsap-components"),
+    siteName: siteConfig.name,
     type: "article",
   },
 };
