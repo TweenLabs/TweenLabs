@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import type React from "react";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PreviewLenis from "./PreviewLenis";
 
 /**
@@ -27,6 +29,8 @@ function EmbedBridge() {
 
   useEffect(() => {
     if (!isEmbed) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     // Hide back button and scrollbars in embed mode
     try {
@@ -64,14 +68,18 @@ function EmbedBridge() {
       }
     };
 
-    // ── Auto-scroll: bounce up/down ──
+    // ── Auto-scroll: bounce up/down (always starts from top) ──
     const startAutoScroll = (el: HTMLElement) => {
+      // Hard reset: scroll to top + rebuild all triggers from scroll=0
+      el.scrollTop = 0;
+      ScrollTrigger.refresh();
+
       const maxScroll = el.scrollHeight - el.clientHeight;
       if (maxScroll <= 20) return;
 
       let dir = 1;
-      let pos = el.scrollTop;
-      const speed = 5; // ~300px/s at 60fps
+      let pos = 0;
+      const speed = 5;
 
       const tick = () => {
         pos += speed * dir;
@@ -83,10 +91,31 @@ function EmbedBridge() {
           dir = 1;
         }
         el.scrollTop = pos;
+        ScrollTrigger.update();
         scrollRafRef.current = requestAnimationFrame(tick);
       };
 
       scrollRafRef.current = requestAnimationFrame(tick);
+    };
+
+    // ── Retry helper: wait for DOM elements after dynamic import ──
+    const waitForElements = (
+      selector: string,
+      callback: (els: NodeListOf<HTMLElement>) => void,
+      scope: Element | Document = document,
+      maxRetries = 15,
+    ) => {
+      let attempts = 0;
+      const check = () => {
+        const els = scope.querySelectorAll<HTMLElement>(selector);
+        if (els.length > 0) {
+          callback(els);
+        } else if (attempts < maxRetries) {
+          attempts++;
+          timeoutRef.current = setTimeout(check, 200);
+        }
+      };
+      check();
     };
 
     // ── Auto-cursor: waypoint-based, React-compatible ──
@@ -273,37 +302,38 @@ function EmbedBridge() {
       cursorRafRef.current = requestAnimationFrame(tick);
     };
 
-    // ── Auto-tabs: cycle tab buttons ──
+    // ── Auto-tabs: cycle tab buttons (with retry for dynamic imports) ──
     const startAutoTabs = () => {
-      const tabBtns = document.querySelectorAll<HTMLElement>(
+      waitForElements(
         ".tab-btn, [role='tab'], [data-tab-trigger]",
+        (tabBtns) => {
+          let idx = 0;
+          tabBtns[0]?.click();
+
+          intervalRef.current = setInterval(() => {
+            idx = (idx + 1) % tabBtns.length;
+            tabBtns[idx]?.click();
+          }, 1800);
+        },
       );
-      if (tabBtns.length === 0) return;
-
-      let idx = 0;
-      tabBtns[0]?.click();
-
-      intervalRef.current = setInterval(() => {
-        idx = (idx + 1) % tabBtns.length;
-        tabBtns[idx]?.click();
-      }, 1800);
     };
 
-    // ── Auto-click: click interactive elements sequentially ──
+    // ── Auto-click: click interactive elements sequentially (with retry) ──
     const startAutoClick = () => {
-      const mainEl = document.querySelector("main") || document.body;
-      const btns = mainEl.querySelectorAll<HTMLElement>(
+      const scope = document.querySelector("main") || document.body;
+      waitForElements(
         "button.cursor-pointer, [data-accordion-trigger]",
+        (btns) => {
+          let idx = 0;
+          timeoutRef.current = setTimeout(() => btns[0]?.click(), 500);
+
+          intervalRef.current = setInterval(() => {
+            idx = (idx + 1) % btns.length;
+            btns[idx]?.click();
+          }, 2200);
+        },
+        scope,
       );
-      if (btns.length === 0) return;
-
-      let idx = 0;
-      timeoutRef.current = setTimeout(() => btns[0]?.click(), 500);
-
-      intervalRef.current = setInterval(() => {
-        idx = (idx + 1) % btns.length;
-        btns[idx]?.click();
-      }, 2200);
     };
 
     // ── Message handler ──
@@ -313,23 +343,37 @@ function EmbedBridge() {
       const el = document.getElementById("main-scroller");
       if (!el) return;
 
-      stopAll(); // Always clean up before starting new interaction
-
       switch (e.data.command) {
         case "auto-scroll-start":
-          startAutoScroll(el);
+          stopAll();
+          el.scrollTop = 0;
+          // Remount component for fresh animation state
+          (window as unknown as Record<string, () => void>).__resetPreview?.();
+          // Start auto-scroll after remount settles (1 frame)
+          requestAnimationFrame(() => startAutoScroll(el));
           break;
         case "auto-cursor-start":
-          startAutoCursor();
+          stopAll();
+          el.scrollTop = 0;
+          (window as unknown as Record<string, () => void>).__resetPreview?.();
+          requestAnimationFrame(() => startAutoCursor());
           break;
         case "auto-tabs-start":
-          startAutoTabs();
+          stopAll();
+          (window as unknown as Record<string, () => void>).__resetPreview?.();
+          requestAnimationFrame(() => startAutoTabs());
           break;
         case "auto-click-start":
-          startAutoClick();
+          stopAll();
+          (window as unknown as Record<string, () => void>).__resetPreview?.();
+          requestAnimationFrame(() => startAutoClick());
+          break;
+        case "stop-all":
+          stopAll();
           break;
         case "auto-scroll-stop":
           el.scrollTop = 0;
+          ScrollTrigger.update();
           break;
       }
     };
@@ -351,6 +395,18 @@ export default function PreviewLayout({
 }) {
   const pathname = usePathname();
   const slug = pathname?.split("/").pop() || "";
+
+  // Key-based remount: changes this → React unmounts+remounts children → useGSAP re-runs
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    // Expose reset function for EmbedBridge to call
+    (window as unknown as Record<string, unknown>).__resetPreview = () =>
+      setRefreshKey((k) => k + 1);
+    return () => {
+      delete (window as unknown as Record<string, unknown>).__resetPreview;
+    };
+  }, []);
 
   return (
     <div className="relative w-full h-svh bg-[#f0eadf] overflow-hidden">
@@ -383,7 +439,7 @@ export default function PreviewLayout({
         id="main-scroller"
         className="w-full h-full overflow-y-auto overflow-x-hidden bg-[#f0eadf] scroll-smooth scrollbar-none"
       >
-        {children}
+        <div key={refreshKey}>{children}</div>
         <PreviewLenis />
       </main>
 

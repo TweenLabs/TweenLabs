@@ -71,6 +71,10 @@ const nextConfig: NextConfig = {
         // CSP frame-ancestors overrides X-Frame-Options in modern browsers
         source: "/preview/:path*",
         headers: [
+          {
+            key: "Cache-Control",
+            value: "public, s-maxage=3600, stale-while-revalidate=86400",
+          },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {
             key: "Content-Security-Policy",
