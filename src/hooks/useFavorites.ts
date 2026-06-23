@@ -8,11 +8,10 @@ import { useSession } from "@/provider/SessionProvider";
 /**
  * Hook for managing user favorites.
  *
- * Returns:
- * - `favorites`: Array of favorited component names
- * - `isFavorited(name)`: Check if a component is favorited
- * - `toggleFavorite(name)`: Toggle favorite status
- * - `isAuthenticated`: Whether the user is logged in
+ * Production hardening:
+ * - toggleFavorite catches network/server errors and returns null
+ * - isLoading state prevents flash of empty state
+ * - All Convex calls gated behind authentication check
  */
 export function useFavorites() {
   const { session } = useSession();
@@ -40,7 +39,14 @@ export function useFavorites() {
   const toggleFavorite = useCallback(
     async (componentName: string) => {
       if (!isAuthenticated) return null;
-      return toggleMutation({ componentName });
+      try {
+        return await toggleMutation({ componentName });
+      } catch {
+        // Network error / server error — silently fail
+        // The UI will stay in its current state and retry on next click
+        console.warn(`[useFavorites] Failed to toggle "${componentName}"`);
+        return null;
+      }
     },
     [isAuthenticated, toggleMutation],
   );

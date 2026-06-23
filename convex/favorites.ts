@@ -1,10 +1,18 @@
 import { v } from "convex/values";
-import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 /**
  * User Favorites — toggle, list, and check favorited components.
+ *
+ * Production hardening:
+ * - Input validation: componentName capped at 64 chars
+ * - getUserFavorites: bounded with .take(500) to prevent runaway queries
+ * - All queries use indexed scans for O(1) lookup
+ * - Auth checks return graceful responses (empty array / false) for unauthenticated users
  */
+
+const MAX_COMPONENT_NAME_LENGTH = 64;
+const MAX_FAVORITES_PER_USER = 500;
 
 // ── Toggle a favorite (add if missing, remove if exists) ────────
 export const toggleFavorite = mutation({
@@ -18,29 +26,40 @@ export const toggleFavorite = mutation({
     }
 
     const userId = identity.subject;
+    const componentName = args.componentName.slice(0, MAX_COMPONENT_NAME_LENGTH);
 
     // Check if already favorited
     const existing = await ctx.db
       .query("userFavorites")
       .withIndex("userId_componentName", (q) =>
-        q.eq("userId", userId).eq("componentName", args.componentName),
+        q.eq("userId", userId).eq("componentName", componentName),
       )
       .first();
 
     if (existing) {
-      // Remove favorite
       await ctx.db.delete(existing._id);
-      return { action: "removed" as const, componentName: args.componentName };
+      return { action: "removed" as const, componentName };
     }
 
-    // Add favorite
+    // Enforce per-user favorite limit
+    const currentCount = await ctx.db
+      .query("userFavorites")
+      .withIndex("userId", (q) => q.eq("userId", userId))
+      .take(MAX_FAVORITES_PER_USER + 1);
+
+    if (currentCount.length >= MAX_FAVORITES_PER_USER) {
+      throw new Error(
+        `Maximum of ${MAX_FAVORITES_PER_USER} favorites reached. Remove some before adding more.`,
+      );
+    }
+
     await ctx.db.insert("userFavorites", {
       userId,
-      componentName: args.componentName,
+      componentName,
       addedAt: Date.now(),
     });
 
-    return { action: "added" as const, componentName: args.componentName };
+    return { action: "added" as const, componentName };
   },
 });
 
@@ -56,7 +75,7 @@ export const getUserFavorites = query({
     const favorites = await ctx.db
       .query("userFavorites")
       .withIndex("userId", (q) => q.eq("userId", userId))
-      .collect();
+      .take(MAX_FAVORITES_PER_USER);
 
     return favorites.map((f) => ({
       componentName: f.componentName,
@@ -75,11 +94,12 @@ export const isFavorited = query({
     if (!identity) return false;
 
     const userId = identity.subject;
+    const componentName = args.componentName.slice(0, MAX_COMPONENT_NAME_LENGTH);
 
     const existing = await ctx.db
       .query("userFavorites")
       .withIndex("userId_componentName", (q) =>
-        q.eq("userId", userId).eq("componentName", args.componentName),
+        q.eq("userId", userId).eq("componentName", componentName),
       )
       .first();
 

@@ -14,14 +14,24 @@ import { type NextRequest, NextResponse } from "next/server";
 const _proxyLedger = new Map<string, { v: number; exp: number }>();
 
 let _lastSweep = Date.now();
-const _SWEEP_CYCLE = 60_000;
+const _SWEEP_CYCLE = 30_000;
+const _MAX_LEDGER_SIZE = 50_000; // Hard cap — prevents memory exhaustion under DDoS
 
 function _sweep() {
   const t = Date.now();
   if (t - _lastSweep < _SWEEP_CYCLE) return;
   _lastSweep = t;
+
+  // Evict expired entries
   for (const [k, e] of _proxyLedger) {
     if (t > e.exp) _proxyLedger.delete(k);
+  }
+
+  // Emergency flush if still over limit (shouldn't happen, but safety net)
+  if (_proxyLedger.size > _MAX_LEDGER_SIZE) {
+    const entries = Array.from(_proxyLedger.keys());
+    const toDelete = entries.slice(0, Math.floor(entries.length / 2));
+    for (const k of toDelete) _proxyLedger.delete(k);
   }
 }
 

@@ -4,10 +4,18 @@ import { mutation, query } from "./_generated/server";
 /**
  * Analytics — lightweight page view tracking stored in Convex.
  *
- * - trackPageView: Records a view (deduped by sessionId+path within 30s)
- * - getPopularComponents: Returns top N components by view count
- * - getViewStats: Returns total views and unique visitors
+ * Production considerations:
+ * - All queries use `.take()` with hard limits to prevent OOM on large tables
+ * - Deduplication uses indexed scan with bounded time window
+ * - Input validation prevents excessively long strings
  */
+
+// ── Constants ───────────────────────────────────────────────────
+const MAX_PATH_LENGTH = 512;
+const MAX_REFERRER_LENGTH = 1024;
+const MAX_SESSION_ID_LENGTH = 128;
+const DEDUP_WINDOW_MS = 30_000;
+const SCAN_LIMIT = 10_000; // Hard ceiling for any .collect() scan
 
 // ── Track a page view ───────────────────────────────────────────
 export const trackPageView = mutation({
@@ -18,35 +26,41 @@ export const trackPageView = mutation({
     referrer: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Input validation — truncate oversized strings, never reject
+    const path = args.path.slice(0, MAX_PATH_LENGTH);
+    const sessionId = args.sessionId?.slice(0, MAX_SESSION_ID_LENGTH);
+    const referrer = args.referrer?.slice(0, MAX_REFERRER_LENGTH);
+    const componentName = args.componentName?.slice(0, 64);
+
     // Get authenticated user ID if available
     const identity = await ctx.auth.getUserIdentity();
-    const userId = identity?.subject || undefined;
+    const userId = identity?.subject ?? undefined;
 
     // Deduplicate: skip if same session + path within last 30 seconds
-    if (args.sessionId) {
-      const thirtySecondsAgo = Date.now() - 30_000;
+    if (sessionId) {
+      const cutoff = Date.now() - DEDUP_WINDOW_MS;
       const recent = await ctx.db
         .query("pageViews")
         .withIndex("timestamp")
         .filter((q) =>
           q.and(
-            q.gt(q.field("timestamp"), thirtySecondsAgo),
-            q.eq(q.field("sessionId"), args.sessionId),
-            q.eq(q.field("path"), args.path),
+            q.gt(q.field("timestamp"), cutoff),
+            q.eq(q.field("sessionId"), sessionId),
+            q.eq(q.field("path"), path),
           ),
         )
         .first();
 
-      if (recent) return null; // Already tracked recently
+      if (recent) return null;
     }
 
     return await ctx.db.insert("pageViews", {
-      path: args.path,
-      componentName: args.componentName,
-      sessionId: args.sessionId,
+      path,
+      componentName,
+      sessionId,
       userId,
       timestamp: Date.now(),
-      referrer: args.referrer,
+      referrer,
     });
   },
 });
@@ -57,16 +71,15 @@ export const getPopularComponents = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const limit = args.limit ?? 10;
+    const limit = Math.min(Math.max(1, args.limit ?? 10), 50);
 
-    // Fetch all page views that have a componentName
+    // Use bounded scan to prevent OOM on large tables
     const views = await ctx.db
       .query("pageViews")
       .withIndex("componentName")
       .filter((q) => q.neq(q.field("componentName"), undefined))
-      .collect();
+      .take(SCAN_LIMIT);
 
-    // Count views per component
     const counts = new Map<string, number>();
     for (const view of views) {
       if (view.componentName) {
@@ -77,7 +90,6 @@ export const getPopularComponents = query({
       }
     }
 
-    // Sort by count descending and return top N
     return Array.from(counts.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, limit)
@@ -89,7 +101,12 @@ export const getPopularComponents = query({
 export const getViewStats = query({
   args: {},
   handler: async (ctx) => {
-    const allViews = await ctx.db.query("pageViews").collect();
+    // Bounded scan — count up to SCAN_LIMIT for stats
+    const allViews = await ctx.db
+      .query("pageViews")
+      .withIndex("timestamp")
+      .order("desc")
+      .take(SCAN_LIMIT);
 
     const uniqueSessionIds = new Set<string>();
     const uniqueUserIds = new Set<string>();
@@ -113,7 +130,7 @@ export const getRecentViews = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const limit = args.limit ?? 50;
+    const limit = Math.min(Math.max(1, args.limit ?? 50), 200);
 
     const views = await ctx.db
       .query("pageViews")
@@ -137,9 +154,14 @@ export const getTopPages = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const limit = args.limit ?? 20;
+    const limit = Math.min(Math.max(1, args.limit ?? 20), 100);
 
-    const views = await ctx.db.query("pageViews").collect();
+    // Bounded scan
+    const views = await ctx.db
+      .query("pageViews")
+      .withIndex("timestamp")
+      .order("desc")
+      .take(SCAN_LIMIT);
 
     const counts = new Map<string, number>();
     for (const view of views) {
@@ -163,7 +185,7 @@ export const getViewsByDay = query({
       .query("pageViews")
       .withIndex("timestamp")
       .filter((q) => q.gt(q.field("timestamp"), thirtyDaysAgo))
-      .collect();
+      .take(SCAN_LIMIT);
 
     const dayCounts = new Map<string, number>();
     for (const view of views) {

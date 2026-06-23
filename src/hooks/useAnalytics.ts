@@ -8,11 +8,12 @@ import { api } from "../../convex/_generated/api";
 /**
  * Tracks page views on route changes.
  *
- * - Generates a random anonymous session ID in sessionStorage
- *   (dies when the tab closes — not a persistent cookie).
- * - Sends userId automatically if the user is authenticated (handled server-side).
- * - Debounced: won't fire on rapid navigations (300ms debounce).
- * - Extracts componentName from /components/X or /code/X paths.
+ * Production hardening:
+ * - sessionStorage / crypto.randomUUID() wrapped in try-catch
+ *   (can fail in incognito, restricted iframes, older browsers)
+ * - All tracking errors silently swallowed — analytics must never crash the app
+ * - Debounced (300ms) to avoid rapid-fire on navigation
+ * - Deduplicates same path within one session
  */
 export function useAnalytics() {
   const pathname = usePathname();
@@ -23,11 +24,12 @@ export function useAnalytics() {
   useEffect(() => {
     if (!pathname) return;
 
-    // Skip tracking for preview/embed routes and API routes
+    // Skip tracking for preview/embed, API, and internal routes
     if (
       pathname.startsWith("/preview/") ||
       pathname.startsWith("/api/") ||
-      pathname.startsWith("/_next/")
+      pathname.startsWith("/_next/") ||
+      pathname.startsWith("/admin")
     ) {
       return;
     }
@@ -41,11 +43,20 @@ export function useAnalytics() {
     debounceRef.current = setTimeout(() => {
       lastTrackedRef.current = pathname;
 
-      // Get or create anonymous session ID
-      let sessionId = sessionStorage.getItem("tl-session-id");
-      if (!sessionId) {
-        sessionId = crypto.randomUUID();
-        sessionStorage.setItem("tl-session-id", sessionId);
+      // Get or create anonymous session ID (safe for restricted contexts)
+      let sessionId: string | undefined;
+      try {
+        sessionId = sessionStorage.getItem("tl-session-id") ?? undefined;
+        if (!sessionId) {
+          sessionId =
+            typeof crypto?.randomUUID === "function"
+              ? crypto.randomUUID()
+              : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+          sessionStorage.setItem("tl-session-id", sessionId);
+        }
+      } catch {
+        // sessionStorage blocked (incognito/iframe) — use ephemeral ID
+        sessionId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
       }
 
       // Extract component name from path
@@ -57,13 +68,21 @@ export function useAnalytics() {
         componentName = componentMatch[1];
       }
 
+      // Referrer — safe access
+      let referrer: string | undefined;
+      try {
+        referrer = document.referrer || undefined;
+      } catch {
+        // SSR or restricted context
+      }
+
       trackPageView({
         path: pathname,
         componentName,
         sessionId,
-        referrer: document.referrer || undefined,
+        referrer,
       }).catch(() => {
-        // Silently ignore tracking errors — analytics should never break the app
+        // Silently ignore — analytics must never break the app
       });
     }, 300);
 
