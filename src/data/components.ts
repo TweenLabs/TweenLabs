@@ -67,17 +67,17 @@ export const animations: AnimationItem[] = [
     preview: "/previews/PageTransition.webp",
   },
   {
-    id: "horizontal-cards",
-    name: "Horizontal Cards",
-    componentName: "HorizontalCards",
-    route: "/components/HorizontalCards",
-    bgColor: "bg-wtf-blue",
-    textColor: "text-white",
+    id: "string-line",
+    name: "String Line",
+    componentName: "StringLine",
+    route: "/components/StringLine",
+    bgColor: "bg-wtf-yellow",
+    textColor: "text-black",
     description:
-      "Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, enter from the bottom, and exit off the top of the viewport.",
-    tiltClass: "tilt-left-lg",
-    type: ["card", "scroll"],
-    preview: "/previews/HorizontalCards.webp",
+      "ScrollTriggered SVG network line drawing tracking node proximity scale offsets.",
+    tiltClass: "tilt-right",
+    type: ["interactive"],
+    preview: "/previews/StringLine.webp",
   },
   {
     id: "circular-scatter",
@@ -170,20 +170,19 @@ export const animations: AnimationItem[] = [
     tiltClass: "tilt-right",
     type: ["text", "interactive"],
     preview: "/previews/GravityDrop.webp",
-
   },
   {
-    id: "string-line",
-    name: "String Line",
-    componentName: "StringLine",
-    route: "/components/StringLine",
-    bgColor: "bg-wtf-yellow",
-    textColor: "text-black",
+    id: "horizontal-cards",
+    name: "Horizontal Cards",
+    componentName: "HorizontalCards",
+    route: "/components/HorizontalCards",
+    bgColor: "bg-wtf-blue",
+    textColor: "text-white",
     description:
-      "ScrollTriggered SVG network line drawing tracking node proximity scale offsets.",
-    tiltClass: "tilt-right",
-    type: ["interactive"],
-    preview: "/previews/StringLine.webp",
+      "Premium horizontal scroll layout where colorful Neo-Brutalist cards slide, float, enter from the bottom, and exit off the top of the viewport.",
+    tiltClass: "tilt-left-lg",
+    type: ["card", "scroll"],
+    preview: "/previews/HorizontalCards.webp",
   },
   {
     id: "border-reveal",
@@ -253,7 +252,6 @@ export const animations: AnimationItem[] = [
     type: ["interactive"],
     preview: "/previews/Accordion.webp",
     embedInteraction: "click-sequence",
-
   },
   {
     id: "reveal-text",
@@ -281,7 +279,6 @@ export const animations: AnimationItem[] = [
     type: ["interactive"],
     preview: "/previews/TabsMotion.webp",
     embedInteraction: "tabs",
-
   },
   {
     id: "parallax-hero",

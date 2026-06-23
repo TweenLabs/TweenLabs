@@ -9,7 +9,7 @@ keywords: TweenLabs, GSAP component library, GSAP Next.js, GSAP animations React
 
 > The open-source **GSAP animation component library** for Next.js developers — learn, copy, and contribute modern web animation patterns built with **GSAP 3.15**, **Next.js 16**, and **Lenis**.
 
-**[Live Demo](https://tweenlabs.xyz)** • **[All Components](https://tweenlabs.xyz/components)** • **[Playground](https://tweenlabs.xyz/playground)** • **[Contributing Guide](#contributing)**
+**[Live Demo](https://tweenlabs.xyz)** • **[All Components](https://tweenlabs.xyz/components)** • **[Playground](https://tweenlabs.xyz/playground)** • **[Contribution Guide](#contribution)**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
 ![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=flat-square)
@@ -239,7 +239,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contribution
 
 TweenLabs grows with the community. We welcome new components, bug fixes, docs, performance improvements, and accessibility enhancements.
 
@@ -266,10 +266,32 @@ git push origin feat/your-animation-name
 
 ### Adding a New Component
 
-- Create a folder: `src/app/(main)/components/YourComponent/`
-- Add `page.tsx` with your animation
-- Register it in `src/data/components.ts` with a unique kebab-case `id` slug (e.g. `"your-animation"`), `name`, `componentName`, `route`, `bgColor`, `textColor`, `description`, `tiltClass`, and `type` (an array of categories, avoid using numbers for `id` to prevent Git conflicts)
-- Add inline comments explaining the GSAP logic
+Only **2 steps** required (everything else is automatic):
+
+1. **Create** `src/app/(main)/components/YourComponent/page.tsx` — your animation
+2. **Register** in `src/data/components.ts`:
+
+```ts
+{
+  id: "your-animation",               // Unique kebab-case slug (NOT a number)
+  name: "Your Animation",
+  componentName: "YourComponent",      // Must match folder name
+  route: "/components/YourComponent",
+  bgColor: "bg-wtf-green",            // green | orange | red | blue | yellow | purple
+  textColor: "text-white",
+  description: "One sentence describing the animation.",
+  tiltClass: "tilt-left",
+  type: ["card", "scroll"],           // text | scroll | card | interactive
+  preview: "/previews/YourComponent.webp",  // Optional: static thumbnail
+  embedInteraction: "cursor",         // Optional: scroll | cursor | tabs | click-sequence
+}
+```
+
+3. *(Optional)* Add a `.webp` screenshot to `public/previews/YourComponent.webp`
+
+The home page, components page, preview iframes, numbering, filters, and CLI all update automatically.
+
+> 📖 **Full guide:** See [ADD_NEW_COMPONENT.md](ADD_NEW_COMPONENT.md) for the complete walkthrough.
 
 ### Good First Contributions
 

@@ -537,6 +537,8 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret`}</Terminal>
   description: "One sentence describing what this animation does.",
   tiltClass: "tilt-left",
   type: ["card", "scroll"],           // text | scroll | card | interactive (supports multiple)
+  preview: "/previews/YourAnimation.webp",   // Optional: static thumbnail
+  embedInteraction: "scroll",         // Optional: scroll | cursor | tabs | click-sequence
 }`}</Terminal>
                 <Callout icon="⚡">
                   Always use a unique kebab-case slug (e.g.{" "}
@@ -549,6 +551,13 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret`}</Terminal>
                   <Code>componentName</Code> must match your folder name exactly
                   (case-sensitive). A mismatch causes a 404 and breaks the
                   sidebar link.
+                </Callout>
+                <Callout icon="📸">
+                  <Code>preview</Code> is optional. If provided, save a{" "}
+                  <Code>.webp</Code> screenshot to{" "}
+                  <Code>public/previews/YourAnimation.webp</Code>. If missing, a
+                  &quot;Hover to preview&quot; placeholder is shown
+                  automatically.
                 </Callout>
                 {/* palette swatches */}
                 <p className="font-mono text-[9px] font-black uppercase tracking-widest text-zinc-500 mb-2 mt-4">
@@ -573,6 +582,28 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret`}</Terminal>
                       </div>
                       <span className="font-mono text-[7px] text-zinc-500 text-center leading-none">
                         bg-wtf-{name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {/* embedInteraction options */}
+                <p className="font-mono text-[9px] font-black uppercase tracking-widest text-zinc-500 mb-2 mt-5">
+                  embedInteraction options:
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { val: "scroll", desc: "Auto-scroll (default)" },
+                    { val: "cursor", desc: "Mouse movement" },
+                    { val: "tabs", desc: "Tab clicks" },
+                    { val: "click-sequence", desc: "Sequential clicks" },
+                  ].map(({ val, desc }) => (
+                    <div
+                      key={val}
+                      className="flex items-center gap-2 bg-[#f0eadf] border border-[#2a2a2a]/10 rounded-lg px-3 py-2"
+                    >
+                      <Code>{val}</Code>
+                      <span className="text-[10px] text-zinc-500 font-sans">
+                        {desc}
                       </span>
                     </div>
                   ))}

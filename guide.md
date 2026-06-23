@@ -522,20 +522,23 @@ To match TweenLabs' signature premium editorial styling:
 
 ---
 
-## 9. animations.ts — Registration
+## 9. components.ts — Registration
 
 After creating the component files, add an entry to `src/data/components.ts`:
 
 ```ts
 {
-  id: "{NN}",                                    // Zero-padded: "19", "20", etc.
-  name: "{Display Name}",                        // Human-readable: "Flip Cards"
-  componentName: "{ComponentName}",              // PascalCase: "FlipCards" — MUST match folder name
-  route: "/components/{ComponentName}",          // MUST be /components/ + componentName
-  bgColor: "bg-wtf-green",                       // Card color on homepage (pick from available)
-  textColor: "text-white",                       // Card text color
-  description: "{One-line description of animation.}",
-  tiltClass: "tilt-left",                        // Card tilt on homepage
+  id: "your-animation",                      // Unique kebab-case slug (NOT a number)
+  name: "Your Animation",                    // Human-readable: "Flip Cards"
+  componentName: "YourAnimation",            // PascalCase — MUST match folder name
+  route: "/components/YourAnimation",        // MUST be /components/ + componentName
+  bgColor: "bg-wtf-green",                   // Card badge color (pick from available)
+  textColor: "text-white",                   // Badge text: "text-white" or "text-black"
+  description: "One-line description of animation.",
+  tiltClass: "tilt-left",                    // "tilt-left" or "tilt-right"
+  type: ["card", "scroll"],                  // Categories: "text" | "scroll" | "card" | "interactive"
+  preview: "/previews/YourAnimation.webp",   // Optional: static thumbnail in /public/previews/
+  embedInteraction: "scroll",                // Optional: "scroll" | "cursor" | "tabs" | "click-sequence"
 },
 ```
 
@@ -550,8 +553,30 @@ export interface AnimationItem {
   textColor: string;
   description: string;
   tiltClass: string;
+  type: ("text" | "scroll" | "card" | "interactive")[];
+  preview?: string;
+  embedInteraction?: "scroll" | "cursor" | "tabs" | "click-sequence";
 }
 ```
+
+### Preview Interaction Modes
+
+| Value | Behavior | Best For |
+|---|---|---|
+| `"scroll"` (default) | Auto-scrolls the page | ScrollTrigger components |
+| `"cursor"` | Simulates mouse movement | FluidCursor, BentoGrid, MagneticDock |
+| `"tabs"` | Clicks tab buttons | TabsMotion |
+| `"click-sequence"` | Clicks triggers in order | Accordion |
+
+### What's Automatic After Registration
+
+Once you add the folder + data entry, these update **automatically** — no extra files to touch:
+- ✅ Home page card
+- ✅ Components page card (with filter/search)
+- ✅ Card numbering (`[01]`, `[02]`, etc.)
+- ✅ Badge color name (derived from `bgColor`)
+- ✅ Preview iframe (`/preview/{componentName}?embed=true`)
+- ✅ CLI installation (`npx tweenlabs add componentName`)
 
 > **NOTE**: `bgColor`, `textColor`, and `tiltClass` use project-level custom classes because they are ONLY used on the homepage cards (which is a project page, not a downloadable component). This is the ONE exception to the "no custom classes" rule.
 
@@ -693,11 +718,14 @@ After creating any component:
 | `guide.md` | This file — agent instructions |
 | `gsapskills.md` | GSAP coding rules and best practices |
 | `ADD_NEW_COMPONENT.md` | Abbreviated new component checklist |
+| `CONTRIBUTION.md` | Contribution guide for contributors |
 | `src/data/components.ts` | Component registry (single source of truth) |
 | `src/app/(main)/components/*/page.tsx` | Component source code |
 | `src/app/(main)/components/*/layout.tsx` | SEO metadata |
 | `src/app/(main)/components/*/HOW_TO_USE.md` | Setup guide |
+| `public/previews/*.webp` | Card thumbnail images |
 | `src/app/(main)/code/[slug]/page.tsx` | Code page renderer |
 | `src/app/api/registry/[slug]/route.ts` | CLI registry API |
 | `bin/cli.js` | CLI tool source |
 | `next.config.ts` | Redirects and rewrites |
+
