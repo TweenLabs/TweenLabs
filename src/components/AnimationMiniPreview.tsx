@@ -6,18 +6,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface AnimationMiniPreviewProps {
   componentName: string;
   isHovered: boolean;
+  /** Static thumbnail path (e.g. "/previews/FlipCards.webp") */
   previewImage?: string;
+  /** Interaction mode sent to EmbedBridge via postMessage */
   embedInteraction?: "scroll" | "cursor" | "tabs" | "click-sequence";
+  /** Viewport width for the iframe. Lower = more zoomed in (default 1440) */
   embedZoom?: number;
 }
 
 /**
- * Production-grade iframe preview:
- * - Shows a static thumbnail by default (attractive, zero cost)
- * - Iframe loads only on hover (debounced 50ms)
- * - Auto-scroll starts once iframe renders
- * - Iframe destroyed on unhover (frees memory + fresh animations next time)
- * - ResizeObserver for efficient scale tracking
+ * Production-grade iframe preview component:
+ * - Static thumbnail displayed by default (zero cost, attractive)
+ * - Iframe loads only on hover (50ms debounce prevents flicker on drive-by)
+ * - Interaction command sent once iframe reports ready
+ * - Iframe fully destroyed on unhover (frees memory, resets animations)
+ * - ResizeObserver for efficient container-to-iframe scale mapping
  */
 export default function AnimationMiniPreview({
   componentName,
@@ -32,8 +35,9 @@ export default function AnimationMiniPreview({
   const [iframeSrc, setIframeSrc] = useState<string | null>(null);
   const [iframeReady, setIframeReady] = useState(false);
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const commandTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Iframe base dimensions (lower embedZoom = more zoomed in)
+  // Iframe base dimensions — lower embedZoom creates a zoom-in effect
   const IFRAME_W = embedZoom;
   const IFRAME_H = Math.round((embedZoom * 9) / 16);
 
@@ -43,8 +47,10 @@ export default function AnimationMiniPreview({
     if (!el) return;
 
     const ro = new ResizeObserver((entries) => {
-      const width = entries[0]?.contentRect.width || 360;
-      setScale(width / IFRAME_W);
+      const width = entries[0]?.contentRect.width;
+      if (width && width > 0) {
+        setScale(width / IFRAME_W);
+      }
     });
 
     ro.observe(el);
@@ -64,17 +70,23 @@ export default function AnimationMiniPreview({
         clearTimeout(hoverTimerRef.current);
         hoverTimerRef.current = null;
       }
-      // Destroy iframe completely — frees memory, resets all animations
+      // Cancel any pending command
+      if (commandTimerRef.current) {
+        clearTimeout(commandTimerRef.current);
+        commandTimerRef.current = null;
+      }
+      // Destroy iframe — frees memory, resets all animations
       setIframeSrc(null);
       setIframeReady(false);
     }
 
     return () => {
       if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+      if (commandTimerRef.current) clearTimeout(commandTimerRef.current);
     };
   }, [isHovered, componentName]);
 
-  // ── Start interaction once iframe is ready ──
+  // ── Send interaction command once iframe is ready ──
   useEffect(() => {
     if (!iframeReady || !iframeRef.current?.contentWindow) return;
 
@@ -85,20 +97,26 @@ export default function AnimationMiniPreview({
       "click-sequence": "auto-click-start",
     };
 
-    // Cursor needs more time: IntersectionObserver + GSAP quickTo setup
+    // Cursor components need extra time for IntersectionObserver + GSAP quickTo
     const delay = embedInteraction === "cursor" ? 600 : 400;
 
-    const timer = setTimeout(() => {
-      iframeRef.current?.contentWindow?.postMessage(
-        {
-          type: "tweenlabs-embed",
-          command: commandMap[embedInteraction] || "auto-scroll-start",
-        },
-        "*",
-      );
+    commandTimerRef.current = setTimeout(() => {
+      try {
+        iframeRef.current?.contentWindow?.postMessage(
+          {
+            type: "tweenlabs-embed",
+            command: commandMap[embedInteraction] || "auto-scroll-start",
+          },
+          window.location.origin,
+        );
+      } catch {
+        // Iframe may have been destroyed between timeout scheduling and firing
+      }
     }, delay);
 
-    return () => clearTimeout(timer);
+    return () => {
+      if (commandTimerRef.current) clearTimeout(commandTimerRef.current);
+    };
   }, [iframeReady, embedInteraction]);
 
   const handleIframeLoad = useCallback(() => {
@@ -110,7 +128,7 @@ export default function AnimationMiniPreview({
       ref={containerRef}
       className="relative w-full aspect-video bg-[#f0eadf] border-2 border-[#2a2a2a] rounded-lg overflow-hidden select-none shadow-[2px_2px_0px_rgba(42,42,42,0.15)]"
     >
-      {/* ── Static thumbnail (always rendered, hidden when iframe is ready) ── */}
+      {/* ── Static thumbnail (always rendered, fades when iframe is ready) ── */}
       {previewImage ? (
         <Image
           src={previewImage}
@@ -140,7 +158,7 @@ export default function AnimationMiniPreview({
         </div>
       )}
 
-      {/* ── Loading spinner (iframe created but not yet rendered) ── */}
+      {/* ── Loading indicator ── */}
       {iframeSrc && !iframeReady && previewImage && (
         <div className="absolute bottom-2 right-2 z-30">
           <div className="w-4 h-4 border-2 border-white/80 border-t-transparent rounded-full animate-spin" />
@@ -152,7 +170,7 @@ export default function AnimationMiniPreview({
         </div>
       )}
 
-      {/* ── Live iframe (only exists while hovered) ── */}
+      {/* ── Live iframe (mount/unmount lifecycle tied to hover) ── */}
       {iframeSrc && (
         <iframe
           ref={iframeRef}

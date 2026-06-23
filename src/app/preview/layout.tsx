@@ -7,9 +7,15 @@ import { Suspense, useEffect, useRef } from "react";
 import PreviewLenis from "./PreviewLenis";
 
 /**
- * EmbedBridge — only renders when ?embed=true is in the URL.
- * Listens for postMessage commands from the parent page
- * to control auto-scroll without cross-origin contentDocument access.
+ * EmbedBridge — Only active when `?embed=true` is present.
+ * Receives postMessage commands from the parent AnimationMiniPreview
+ * and drives automated interactions inside the iframe.
+ *
+ * Interaction modes:
+ * - auto-scroll-start: Bounce scroll up/down (ScrollTrigger components)
+ * - auto-cursor-start: Waypoint-based cursor simulation (FluidCursor, BentoGrid, etc.)
+ * - auto-tabs-start:   Click tabs sequentially (TabsMotion)
+ * - auto-click-start:  Click interactive buttons in order (Accordion)
  */
 function EmbedBridge() {
   const searchParams = useSearchParams();
@@ -17,131 +23,150 @@ function EmbedBridge() {
   const scrollRafRef = useRef<number | null>(null);
   const cursorRafRef = useRef<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!isEmbed) return;
 
-    // Hide back button and scrollbars when in embed mode
-    const backBtn = document.getElementById("preview-back-btn");
-    if (backBtn) backBtn.style.display = "none";
+    // Hide back button and scrollbars in embed mode
+    try {
+      const backBtn = document.getElementById("preview-back-btn");
+      if (backBtn) backBtn.style.display = "none";
 
-    const scroller = document.getElementById("main-scroller");
-    if (scroller) {
-      scroller.style.scrollbarWidth = "none";
-      scroller.classList.remove("scroll-smooth");
-      scroller.scrollTop = 0;
+      const scroller = document.getElementById("main-scroller");
+      if (scroller) {
+        scroller.style.scrollbarWidth = "none";
+        scroller.classList.remove("scroll-smooth");
+        scroller.scrollTop = 0;
+      }
+      document.documentElement.style.scrollbarWidth = "none";
+    } catch {
+      // SSR guard — DOM may not be available
     }
-    document.documentElement.style.scrollbarWidth = "none";
 
-    // ── Cleanup helper ──
+    /** Cancel all running interactions and free resources */
     const stopAll = () => {
-      if (scrollRafRef.current) {
+      if (scrollRafRef.current != null) {
         cancelAnimationFrame(scrollRafRef.current);
         scrollRafRef.current = null;
       }
-      if (cursorRafRef.current) {
+      if (cursorRafRef.current != null) {
         cancelAnimationFrame(cursorRafRef.current);
         cursorRafRef.current = null;
       }
-      if (intervalRef.current) {
+      if (intervalRef.current != null) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
+      if (timeoutRef.current != null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
 
-    // ── Interaction: Auto-scroll (bounce up/down) ──
+    // ── Auto-scroll: bounce up/down ──
     const startAutoScroll = (el: HTMLElement) => {
       const maxScroll = el.scrollHeight - el.clientHeight;
       if (maxScroll <= 20) return;
 
-      let direction = 1;
-      let position = el.scrollTop;
-      const speed = 5;
+      let dir = 1;
+      let pos = el.scrollTop;
+      const speed = 5; // ~300px/s at 60fps
 
       const tick = () => {
-        position += speed * direction;
-        if (position >= maxScroll) {
-          position = maxScroll;
-          direction = -1;
-        } else if (position <= 0) {
-          position = 0;
-          direction = 1;
+        pos += speed * dir;
+        if (pos >= maxScroll) {
+          pos = maxScroll;
+          dir = -1;
+        } else if (pos <= 0) {
+          pos = 0;
+          dir = 1;
         }
-        el.scrollTop = position;
+        el.scrollTop = pos;
         scrollRafRef.current = requestAnimationFrame(tick);
       };
 
       scrollRafRef.current = requestAnimationFrame(tick);
     };
 
-    // ── Interaction: Auto-cursor (waypoint-based, React-compatible) ──
+    // ── Auto-cursor: waypoint-based, React-compatible ──
     const startAutoCursor = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
+      if (w === 0 || h === 0) return; // Hidden/collapsed iframe guard
 
-      // Priority targets: elements that have cursor-specific interactivity
+      // Priority: elements with cursor-specific data attributes (FluidCursor)
       const cursorTargets = document.querySelectorAll<HTMLElement>(
         "[data-cursor-text], [data-cursor-target]",
       );
-      // Fallback: general interactive elements
+
+      // General: card/button surfaces (BentoGrid, MagneticDock, KineticText)
       const generalEls = document.querySelectorAll<HTMLElement>(
-        "button, a, .brutalist-card",
+        "main > div, main button, [class*='grid'] > div, [class*='flex'] > button",
       );
 
-      type WP = { x: number; y: number; pauseMs: number; el?: HTMLElement };
+      type WP = { x: number; y: number; pauseMs: number };
       const waypoints: WP[] = [];
 
-      // Build waypoints from cursor targets first (longer pause)
+      // Cursor targets get longer dwell time
       cursorTargets.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.width > 10 && rect.height > 10) {
+        const r = el.getBoundingClientRect();
+        if (r.width > 30 && r.height > 30) {
           waypoints.push({
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2,
+            x: r.left + r.width / 2,
+            y: r.top + r.height / 2,
             pauseMs: 1200,
-            el,
           });
         }
       });
 
-      // Then add general elements with shorter pause
+      // Fallback to visible interactive surfaces
       if (waypoints.length === 0) {
         generalEls.forEach((el) => {
-          const rect = el.getBoundingClientRect();
-          if (rect.width > 10 && rect.height > 10) {
+          const r = el.getBoundingClientRect();
+          if (
+            r.width > 40 &&
+            r.height > 40 &&
+            r.top >= 0 &&
+            r.bottom <= h &&
+            r.left >= 0 &&
+            r.right <= w
+          ) {
             waypoints.push({
-              x: rect.left + rect.width / 2,
-              y: rect.top + rect.height / 2,
+              x: r.left + r.width / 2,
+              y: r.top + r.height / 2,
               pauseMs: 800,
-              el,
             });
           }
         });
       }
 
-      // Fallback ambient points
+      // Last resort: sweep viewport
       if (waypoints.length === 0) {
         waypoints.push(
-          { x: w * 0.3, y: h * 0.3, pauseMs: 500 },
-          { x: w * 0.7, y: h * 0.4, pauseMs: 500 },
-          { x: w * 0.5, y: h * 0.7, pauseMs: 500 },
+          { x: w * 0.25, y: h * 0.3, pauseMs: 500 },
+          { x: w * 0.75, y: h * 0.3, pauseMs: 500 },
+          { x: w * 0.5, y: h * 0.6, pauseMs: 500 },
+          { x: w * 0.25, y: h * 0.7, pauseMs: 500 },
+          { x: w * 0.75, y: h * 0.7, pauseMs: 500 },
         );
       }
 
       const selected = waypoints.slice(0, 8);
+      if (selected.length === 0) return;
 
       let wpIdx = 0;
       let fromX = w / 2;
       let fromY = h / 2;
       let toX = selected[0].x;
       let toY = selected[0].y;
-      let moveStartTime = performance.now();
-      const moveDuration = 700;
-      let isPausing = false;
+      let moveStart = performance.now();
+      const moveDur = 700; // ms between waypoints
+      let pausing = false;
       let pauseEnd = 0;
-      let lastHoveredEl: HTMLElement | null = null;
+      let lastHoverEl: HTMLElement | null = null;
 
-      // Find the interactive ancestor (the element with the event handler)
+      /** Walk up from hit element to find a cursor-interactive ancestor */
       const findInteractive = (el: Element | null): HTMLElement | null => {
         let node = el;
         while (node && node !== document.body) {
@@ -157,75 +182,87 @@ function EmbedBridge() {
         return null;
       };
 
-      const dispatchCursor = (x: number, y: number) => {
-        const hitEl = document.elementFromPoint(x, y);
-        const interactiveEl = findInteractive(hitEl);
+      /** Dispatch synthetic mouse events at (x, y) */
+      const dispatch = (x: number, y: number) => {
+        // Clamp to viewport
+        const cx = Math.max(0, Math.min(x, w - 1));
+        const cy = Math.max(0, Math.min(y, h - 1));
 
-        // React hover: use mouseover/mouseout which React's delegation catches
-        if (interactiveEl !== lastHoveredEl) {
-          if (lastHoveredEl) {
-            // Trigger mouseout → React processes this as onMouseLeave
-            lastHoveredEl.dispatchEvent(
+        const hitEl = document.elementFromPoint(cx, cy);
+        if (!hitEl) return;
+
+        const interEl = findInteractive(hitEl);
+
+        // mouseover/mouseout for React onMouseEnter/onMouseLeave
+        if (interEl !== lastHoverEl) {
+          if (lastHoverEl) {
+            lastHoverEl.dispatchEvent(
               new MouseEvent("mouseout", {
-                clientX: x,
-                clientY: y,
+                clientX: cx,
+                clientY: cy,
                 bubbles: true,
-                relatedTarget: interactiveEl || document.body,
+                relatedTarget: interEl || document.body,
               }),
             );
           }
-          if (interactiveEl) {
-            // Trigger mouseover → React processes this as onMouseEnter
-            interactiveEl.dispatchEvent(
+          if (interEl) {
+            interEl.dispatchEvent(
               new MouseEvent("mouseover", {
-                clientX: x,
-                clientY: y,
+                clientX: cx,
+                clientY: cy,
                 bubbles: true,
-                relatedTarget: lastHoveredEl || document.body,
+                relatedTarget: lastHoverEl || document.body,
               }),
             );
           }
-          lastHoveredEl = interactiveEl;
+          lastHoverEl = interEl;
         }
 
-        // Always dispatch mousemove on window for cursor tracking (GSAP quickTo)
+        // mousemove on element — bubbles to React onMouseMove handlers
+        hitEl.dispatchEvent(
+          new MouseEvent("mousemove", {
+            clientX: cx,
+            clientY: cy,
+            bubbles: true,
+            cancelable: true,
+          }),
+        );
+
+        // mousemove on window — for global listeners (FluidCursor)
         window.dispatchEvent(
           new MouseEvent("mousemove", {
-            clientX: x,
-            clientY: y,
+            clientX: cx,
+            clientY: cy,
             bubbles: true,
           }),
         );
       };
 
+      /** Cubic ease-in-out */
       const ease = (t: number) =>
         t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 
       const tick = () => {
         const now = performance.now();
 
-        if (isPausing) {
-          dispatchCursor(toX, toY);
+        if (pausing) {
+          dispatch(toX, toY);
           if (now >= pauseEnd) {
-            isPausing = false;
+            pausing = false;
             fromX = toX;
             fromY = toY;
             wpIdx = (wpIdx + 1) % selected.length;
             toX = selected[wpIdx].x;
             toY = selected[wpIdx].y;
-            moveStartTime = now;
+            moveStart = now;
           }
         } else {
-          const elapsed = now - moveStartTime;
-          const progress = Math.min(elapsed / moveDuration, 1);
-          const eased = ease(progress);
-
-          const x = fromX + (toX - fromX) * eased;
-          const y = fromY + (toY - fromY) * eased;
-          dispatchCursor(x, y);
+          const progress = Math.min((now - moveStart) / moveDur, 1);
+          const e = ease(progress);
+          dispatch(fromX + (toX - fromX) * e, fromY + (toY - fromY) * e);
 
           if (progress >= 1) {
-            isPausing = true;
+            pausing = true;
             pauseEnd = now + selected[wpIdx].pauseMs;
           }
         }
@@ -236,47 +273,36 @@ function EmbedBridge() {
       cursorRafRef.current = requestAnimationFrame(tick);
     };
 
-    // ── Interaction: Auto-tabs (click tab buttons sequentially) ──
+    // ── Auto-tabs: cycle tab buttons ──
     const startAutoTabs = () => {
       const tabBtns = document.querySelectorAll<HTMLElement>(
         ".tab-btn, [role='tab'], [data-tab-trigger]",
       );
       if (tabBtns.length === 0) return;
 
-      let index = 0;
-
-      // Click first tab immediately
+      let idx = 0;
       tabBtns[0]?.click();
 
       intervalRef.current = setInterval(() => {
-        index = (index + 1) % tabBtns.length;
-        tabBtns[index]?.click();
+        idx = (idx + 1) % tabBtns.length;
+        tabBtns[idx]?.click();
       }, 1800);
     };
 
-    // ── Interaction: Auto-click (click through interactive elements) ──
+    // ── Auto-click: click interactive elements sequentially ──
     const startAutoClick = () => {
-      // Find clickable accordion/interactive triggers
-      const triggers = document.querySelectorAll<HTMLElement>(
+      const mainEl = document.querySelector("main") || document.body;
+      const btns = mainEl.querySelectorAll<HTMLElement>(
         "button.cursor-pointer, [data-accordion-trigger]",
       );
-
-      // Filter to meaningful interactive buttons (not nav/utility buttons)
-      const mainContent = document.querySelector("main") || document.body;
-      const contentBtns = mainContent.querySelectorAll<HTMLElement>(
-        "button.cursor-pointer",
-      );
-      const btns = contentBtns.length > 0 ? contentBtns : triggers;
       if (btns.length === 0) return;
 
-      let index = 0;
-
-      // Click first item after a brief pause
-      setTimeout(() => btns[0]?.click(), 500);
+      let idx = 0;
+      timeoutRef.current = setTimeout(() => btns[0]?.click(), 500);
 
       intervalRef.current = setInterval(() => {
-        index = (index + 1) % btns.length;
-        btns[index]?.click();
+        idx = (idx + 1) % btns.length;
+        btns[idx]?.click();
       }, 2200);
     };
 
@@ -287,8 +313,7 @@ function EmbedBridge() {
       const el = document.getElementById("main-scroller");
       if (!el) return;
 
-      // Stop any previous interaction before starting a new one
-      stopAll();
+      stopAll(); // Always clean up before starting new interaction
 
       switch (e.data.command) {
         case "auto-scroll-start":
