@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import AnimationMiniPreview from "@/components/AnimationMiniPreview";
 import { type AnimationItem, animations } from "@/data/components";
 import { useAuthModal } from "@/provider/AuthModalProvider";
 import { useSession } from "@/provider/SessionProvider";
@@ -23,6 +25,7 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
   const router = useRouter();
   const { session } = useSession();
   const { openModal } = useAuthModal();
+  const [isHovered, setIsHovered] = useState(false);
 
   const originalIndex = animations.findIndex((a) => a.id === anim.id);
   const displayId = String(
@@ -40,7 +43,11 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
   };
 
   return (
-    <div className="brutalist-card brutalist-card-interactive p-6 lg:p-8 bg-white flex flex-col justify-between gap-6 h-full overflow-hidden">
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="brutalist-card brutalist-card-interactive p-6 lg:p-8 bg-white flex flex-col justify-between gap-6 h-full overflow-hidden"
+    >
       <div className="flex flex-col gap-4 min-w-0">
         <div className="flex items-center justify-between">
           <span className="font-mono font-bold text-sm lg:text-base text-zinc-500">
@@ -57,9 +64,12 @@ export default function AnimationCard({ anim }: AnimationCardProps) {
           {anim.name}
         </h2>
 
-        <p className="text-sm lg:text-[0.935rem] font-sans font-medium text-zinc-650 leading-relaxed">
-          {anim.description}
-        </p>
+        <Link href={anim.route} className="block w-full">
+          <AnimationMiniPreview
+            componentName={anim.componentName}
+            isHovered={isHovered}
+          />
+        </Link>
       </div>
 
       <div className="w-full mt-2 flex gap-3 min-w-0">

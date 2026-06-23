@@ -67,6 +67,24 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Allow /preview/* pages to be embedded in same-origin iframes (card previews)
+        // CSP frame-ancestors overrides X-Frame-Options in modern browsers
+        source: "/preview/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'self'",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           { key: "X-Frame-Options", value: "DENY" },
