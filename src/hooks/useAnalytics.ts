@@ -13,9 +13,11 @@ import { api } from "../../convex/_generated/api";
  * React hooks must be called unconditionally, so we always call `useMutation`
  * but catch the invariant error thrown when the provider is absent.
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 function useSafeMutation<T extends (...args: any[]) => any>(
   mutation: any,
 ): T | null {
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   try {
     // biome-ignore lint/correctness/useHookAtTopLevel: Intentional — always called, provider may be absent
     return useMutation(mutation) as unknown as T;

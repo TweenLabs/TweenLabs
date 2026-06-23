@@ -66,7 +66,7 @@ export default function SandboxPreviewPage() {
         </span>
         <p className="text-[10px] text-zinc-500 max-w-md">
           Please write or generate code in the TweenBot Playground and click
-          "Web Preview" to open this page.
+          &ldquo;Web Preview&rdquo; to open this page.
         </p>
       </div>
     );
